@@ -6,8 +6,6 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
 
-
-
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 28
@@ -47,8 +45,8 @@ dependencies {
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
 
     //RxKotlin and RxAndroid
-    implementation "io.reactivex.rxjava2:rxkotlin:$rx_kotlin_version"
-    implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
+    api "io.reactivex.rxjava2:rxkotlin:$rx_kotlin_version"
+    api "io.reactivex.rxjava2:rxandroid:$rx_android_version"
 
     //Retrofit
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
@@ -63,8 +61,8 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     //rxlifecycle
-    implementation "com.trello.rxlifecycle2:rxlifecycle-kotlin:$rx_Lifecycle2_version"
-    implementation "com.trello.rxlifecycle2:rxlifecycle-components:$rx_Lifecycle2_version"
+    api "com.trello.rxlifecycle2:rxlifecycle-kotlin:$rx_Lifecycle2_version"
+    api "com.trello.rxlifecycle2:rxlifecycle-components:$rx_Lifecycle2_version"
 
     //Glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
