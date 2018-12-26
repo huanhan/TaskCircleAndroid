@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="3dp"
+    android:paddingTop="10dp"
+    android:paddingRight="3dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:drawableLeft="@drawable/ic_add_location_blue_24dp"
+            android:drawablePadding="1dp"
+            android:ellipsize="start"
+            android:maxEms="6"
+            android:singleLine="true"
+            android:text="厦门软件职业技术学院"
+            android:textSize="18sp" />
+
+        <RelativeLayout
+            android:id="@+id/mRLSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_ellipse_gray"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@drawable/ic_search_gray_24dp"
+                android:drawablePadding="3dp"
+                android:gravity="center"
+                android:text="搜索任务" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

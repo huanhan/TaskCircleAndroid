@@ -8,12 +8,12 @@ import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseFragment
 
 
-class MyFragment : BaseFragment() {
-
+class HomeFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_my, null)
+        return inflater.inflate(R.layout.fragment_home, null)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     }
+
 }
