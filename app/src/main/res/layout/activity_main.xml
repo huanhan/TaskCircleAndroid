@@ -15,6 +15,7 @@
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/mBottomNavBar"
         style="@style/MatchWrap"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_navigation" />
 
 

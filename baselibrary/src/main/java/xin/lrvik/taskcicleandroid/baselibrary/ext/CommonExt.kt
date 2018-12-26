@@ -17,7 +17,7 @@ import xin.lrvik.taskcicleandroid.baselibrary.utils.GlideUtils
  * isShowLoading是否显示Loading
  */
 fun <T> Observable<T>.execute(lifecycleProvider: LifecycleProvider<*>,
-                              mView: BaseView, isShowLoading: Boolean=true,
+                              mView: BaseView, isShowLoading: Boolean = true,
                               function: (data: T) -> Unit) {
     this.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
