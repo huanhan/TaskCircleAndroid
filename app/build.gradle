@@ -32,6 +32,10 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.github.huanhan:EasyBanner:1.0.2'
+    implementation 'com.github.arcadefire:nice-spinner:1.3.7'
+
+    //BaseRecyclerViewAdapterHelper
+    implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:$base_recycler_view_adapter_helper_version"
 }
 repositories {
     mavenCentral()

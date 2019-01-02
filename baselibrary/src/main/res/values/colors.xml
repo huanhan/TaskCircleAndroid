@@ -17,6 +17,7 @@
     <color name="common_yellow">#fe9c2f</color>
     <color name="common_yellow_light">#E1DF66</color>
     <color name="common_green">#6BBC79</color>
+    <color name="common_transparent">#00ffffff</color>
 
     <color name="text_dark">#999999</color>
     <color name="text_light_dark">#333333</color>

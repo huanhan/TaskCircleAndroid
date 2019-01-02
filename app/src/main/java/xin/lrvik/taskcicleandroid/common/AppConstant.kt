@@ -43,5 +43,13 @@ const val HOME_TYPE_TITLE_14 = "生鲜"
 const val HOME_TYPE_TITLE_15 = "超市"
 const val HOME_TYPE_TITLE_16 = "美食"
 
+const val SORT_TOTAL = "综合排序"
+const val SORT_PRICE_UP = "价格最高"
+const val SORT_TIME_UP = "最新发布"
+const val SORT_DISTANCE_UP = "距离最近"
+
+
+
+
 
 
