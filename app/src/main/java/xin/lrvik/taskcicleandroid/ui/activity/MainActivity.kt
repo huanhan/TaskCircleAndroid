@@ -1,8 +1,13 @@
 package xin.lrvik.taskcicleandroid.ui.activity
 
 import android.os.Bundle
+import android.support.design.internal.BottomNavigationMenuView
 import android.support.v4.app.Fragment
+import android.util.DisplayMetrics
+import android.util.TypedValue
 import android.view.KeyEvent
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import xin.lrvik.taskcicleandroid.R
@@ -16,7 +21,6 @@ class MainActivity : BaseActivity() {
     private val mStack by lazy { Stack<Fragment>() }
     private val mHomeFragment by lazy { HomeFragment() }
     private val mTaskFragment by lazy { TaskManagerFragment() }
-    private val mReleaseFragment by lazy { MyFragment() }
     private val mMsgFragment by lazy { MyFragment() }
     private val mMyFragment by lazy { MyFragment() }
 
@@ -31,14 +35,12 @@ class MainActivity : BaseActivity() {
         val manager = supportFragmentManager.beginTransaction()
         manager.add(R.id.mContaier, mHomeFragment)
         manager.add(R.id.mContaier, mTaskFragment)
-        manager.add(R.id.mContaier, mReleaseFragment)
         manager.add(R.id.mContaier, mMsgFragment)
         manager.add(R.id.mContaier, mMyFragment)
         manager.commit()
 
         mStack.add(mHomeFragment)
         mStack.add(mTaskFragment)
-        mStack.add(mReleaseFragment)
         mStack.add(mMsgFragment)
         mStack.add(mMyFragment)
 
@@ -46,13 +48,21 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initView() {
+        val menuView = mBottomNavBar.getChildAt(0) as BottomNavigationMenuView
+        val iconView = menuView.getChildAt(2).findViewById(android.support.design.R.id.icon) as View
+        val layoutParams: ViewGroup.LayoutParams = iconView.layoutParams
+        val displayMetrics: DisplayMetrics = resources.displayMetrics
+
+        layoutParams.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 45f, displayMetrics).toInt()
+        layoutParams.width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 45f, displayMetrics).toInt()
+        iconView.layoutParams = layoutParams
+
         mBottomNavBar.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.navigation_home ->changeFragment(0)
+                R.id.navigation_home -> changeFragment(0)
                 R.id.navigation_task -> changeFragment(1)
-                R.id.navigation_release -> changeFragment(2)
-                R.id.navigation_msg -> changeFragment(3)
-                R.id.navigation_my ->changeFragment(4)
+                R.id.navigation_msg -> changeFragment(2)
+                R.id.navigation_my -> changeFragment(3)
             }
             return@setOnNavigationItemSelectedListener true
         }

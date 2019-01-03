@@ -12,11 +12,16 @@
         android:layout_height="match_parent"
         android:layout_weight="1"></FrameLayout>
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/mBottomNavBar"
-        style="@style/MatchWrap"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/bottom_navigation" />
+
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/mBottomNavBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_navigation" />
+
 
 
 </LinearLayout>

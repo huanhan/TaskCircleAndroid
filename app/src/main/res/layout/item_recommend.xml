@@ -52,8 +52,10 @@
                     android:layout_marginLeft="10dp"
                     android:lines="1"
                     android:text="这是一个任务名"
+                    android:textColor="@color/common_black"
                     android:textSize="13sp" />
             </LinearLayout>
+            x
 
             <TextView
                 android:id="@+id/mTvContext"
@@ -64,7 +66,8 @@
                 android:ellipsize="end"
                 android:lines="3"
                 android:text="介绍信息3行介绍信息3行介绍信息3行介绍信息3行介绍信息3行介绍信息3行介绍信息3行介绍信息3行介绍信息3行介绍信息3行"
-                android:textSize="13sp" />
+                android:textColor="@color/deep_gray"
+                android:textSize="12sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -76,6 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="赏金："
+                    android:textColor="@color/common_black"
                     android:textSize="13sp" />
 
                 <TextView
@@ -95,6 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="距离："
+                    android:textColor="@color/common_black"
                     android:textSize="13sp" />
 
                 <TextView
@@ -115,6 +120,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="时间："
+                    android:textColor="@color/common_black"
                     android:textSize="13sp" />
 
                 <TextView
