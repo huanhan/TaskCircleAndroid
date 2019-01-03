@@ -65,6 +65,7 @@ class HomeFragment : BaseFragment() {
                 TypeItem(HOME_TYPE_IMG_16, HOME_TYPE_TITLE_16))
 
         mNiceSpinner.attachDataSource(listOf(SORT_TOTAL, SORT_PRICE_UP, SORT_TIME_UP, SORT_DISTANCE_UP))
+
         var linearLayoutManager = LinearLayoutManager(context)
         mRvRecommend.layoutManager = linearLayoutManager
         linearLayoutManager.orientation = OrientationHelper.VERTICAL

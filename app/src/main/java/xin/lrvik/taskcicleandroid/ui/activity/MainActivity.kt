@@ -9,12 +9,13 @@ import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseActivity
 import xin.lrvik.taskcicleandroid.ui.fragment.HomeFragment
 import xin.lrvik.taskcicleandroid.ui.fragment.MyFragment
+import xin.lrvik.taskcicleandroid.ui.fragment.TaskManagerFragment
 import java.util.*
 
 class MainActivity : BaseActivity() {
     private val mStack by lazy { Stack<Fragment>() }
     private val mHomeFragment by lazy { HomeFragment() }
-    private val mTaskFragment by lazy { MyFragment() }
+    private val mTaskFragment by lazy { TaskManagerFragment() }
     private val mReleaseFragment by lazy { MyFragment() }
     private val mMsgFragment by lazy { MyFragment() }
     private val mMyFragment by lazy { MyFragment() }
