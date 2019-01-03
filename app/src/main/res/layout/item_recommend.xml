@@ -55,7 +55,7 @@
                     android:textColor="@color/common_black"
                     android:textSize="13sp" />
             </LinearLayout>
-            x
+
 
             <TextView
                 android:id="@+id/mTvContext"
