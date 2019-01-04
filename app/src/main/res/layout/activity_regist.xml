@@ -17,6 +17,7 @@
         android:layout_margin="@dimen/common_margin"
         android:background="@drawable/border_corner_all">
 
+
         <EditText
             android:id="@+id/mEtMobile"
             android:layout_width="match_parent"
@@ -28,6 +29,33 @@
             android:inputType="phone"
             android:paddingLeft="@dimen/common_padding_small" />
 
+
+        <View style="@style/DividerFixedHeight" />
+
+        <LinearLayout style="@style/MatchWrap.Horizontal">
+
+            <EditText
+                android:id="@+id/mEtVerifyCode"
+                android:layout_width="0dp"
+                android:layout_weight="1.0"
+                android:layout_height="@dimen/common_line_height"
+                android:background="@null"
+                android:drawableLeft="@drawable/icon_verify_code"
+                android:drawablePadding="@dimen/common_padding_small"
+                android:hint="请输入验证码"
+                android:inputType="number"
+                android:paddingLeft="@dimen/common_padding_small" />
+
+            <View style="@style/DividerFixedWidth.MarginTopBottom" />
+
+            <ImageView
+                android:id="@+id/mIvVerifyCode"
+                style="@style/WrapMatch"
+                android:background="@null"
+                android:text="获取验证码"
+                android:textColor="@color/common_blue" />
+        </LinearLayout>
+
         <View style="@style/DividerFixedHeight" />
 
         <EditText
@@ -37,42 +65,32 @@
             android:background="@null"
             android:drawableLeft="@drawable/icon_pwd"
             android:drawablePadding="@dimen/common_padding_small"
-            android:hint="请输入密码"
+            android:hint="请输入密码（6-20位字母或数字）"
+            android:inputType="textPassword"
+            android:paddingLeft="@dimen/common_padding_small" />
+
+        <View style="@style/DividerFixedHeight" />
+
+        <EditText
+            android:id="@+id/mEtPwdConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_line_height"
+            android:background="@null"
+            android:drawableLeft="@drawable/icon_pwd"
+            android:drawablePadding="@dimen/common_padding_small"
+            android:hint="请再次输入密码"
             android:inputType="textPassword"
             android:paddingLeft="@dimen/common_padding_small" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/mBtnLogin"
+        android:id="@+id/mBtnRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:background="@drawable/btn_common_selector"
         android:enabled="false"
         android:padding="10dp"
-        android:text="登录"
-        android:textColor="@color/common_white" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/mTvForgetPwd"
-            style="@style/WrapWrap"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/common_margin"
-            android:text="忘记密码？"
-            android:textColor="@color/common_blue"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/mTvRegist"
-            style="@style/WrapWrap"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/common_margin"
-            android:text="新用户注册"
-            android:textColor="@color/common_blue" />
-    </RelativeLayout>
-
+        android:textColor="@color/common_white"
+        android:text="注册" />
 </LinearLayout>

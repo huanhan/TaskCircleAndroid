@@ -237,8 +237,8 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@color/common_blue"
+            android:layout_margin="15dp"
+            android:background="@drawable/btn_common_selector"
             android:text="退出登陆"
             android:textColor="@color/common_white" />
 
