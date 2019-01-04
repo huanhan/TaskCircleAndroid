@@ -5,6 +5,7 @@ import android.widget.ImageView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import xin.lrvik.taskcicleandroid.R
+import xin.lrvik.taskcicleandroid.baselibrary.ext.loadCircleUrl
 import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
 import xin.lrvik.taskcicleandroid.data.protocol.Message
 import xin.lrvik.taskcicleandroid.data.protocol.Task
@@ -19,6 +20,6 @@ class RvMesAdapter(data: List<Message>) : BaseQuickAdapter<Message, BaseViewHold
                 .setText(R.id.mTvContent, item.context)
                 .setText(R.id.mTvDate, "${DateFormat.format("yyyy年MM月dd", item.createTime)}")
         var imageView = helper.getView<ImageView>(R.id.mIvIcon)
-        imageView.loadUrl("")
+        imageView.loadCircleUrl(R.drawable.def)
     }
 }

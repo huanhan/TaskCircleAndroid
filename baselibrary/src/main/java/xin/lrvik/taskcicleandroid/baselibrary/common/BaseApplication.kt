@@ -18,7 +18,7 @@ class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         initAppInjection()
-        context=this
+        context =this
     }
 
     private fun initAppInjection() {

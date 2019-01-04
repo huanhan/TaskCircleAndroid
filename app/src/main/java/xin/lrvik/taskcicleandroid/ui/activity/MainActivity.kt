@@ -1,6 +1,5 @@
 package xin.lrvik.taskcicleandroid.ui.activity
 
-import android.graphics.Color
 import android.os.Bundle
 import android.support.design.internal.BottomNavigationMenuView
 import android.support.v4.app.Fragment

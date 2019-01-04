@@ -10,7 +10,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import xin.lrvik.taskcicleandroid.baselibrary.presenter.view.BaseView
 import xin.lrvik.taskcicleandroid.baselibrary.rx.BaseException
-import xin.lrvik.taskcicleandroid.baselibrary.utils.GlideUtils
+import xin.lrvik.taskcicleandroid.utils.GlideUtils
 
 
 /**
@@ -66,6 +66,10 @@ fun View.onClick(listener: View.OnClickListener): View {
 /*
     ImageView加载网络图片
  */
-fun ImageView.loadUrl(url: String) {
+fun ImageView.loadUrl(url: Any) {
     GlideUtils.loadUrlImage(context, url, this)
+}
+
+fun ImageView.loadCircleUrl(url: Any) {
+    GlideUtils.loadUrlCircleImage(context, url, this)
 }
