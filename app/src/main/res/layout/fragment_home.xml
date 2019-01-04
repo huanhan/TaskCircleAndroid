@@ -96,7 +96,7 @@
             <xin.lrvik.easybanner.EasyViewPager
                 android:id="@+id/mEvpType"
                 android:layout_width="match_parent"
-                android:layout_height="90dp"></xin.lrvik.easybanner.EasyViewPager>
+                android:layout_height="140dp"></xin.lrvik.easybanner.EasyViewPager>
 
             <xin.lrvik.easybanner.indicator.EasyDotIndicator
                 android:id="@+id/mEdiType"

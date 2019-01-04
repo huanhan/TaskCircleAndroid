@@ -18,6 +18,7 @@ import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseFragment
 import xin.lrvik.taskcicleandroid.common.*
 import xin.lrvik.taskcicleandroid.data.protocol.Task
+import xin.lrvik.taskcicleandroid.ui.adapter.EvpTypeItemAdapter
 import xin.lrvik.taskcicleandroid.ui.adapter.RvRecommendAdapter
 import java.sql.Timestamp
 import java.util.*
@@ -41,13 +42,7 @@ class HomeFragment : BaseFragment() {
 
 
         mEvpType.setIndicator(mEdiType)
-                .setAdapter(object : EasyTypeItemAdapter(10, 5) {
-                    override fun convert(imageView: ImageView, textView: TextView, data: TypeItem) {
-                        imageView.loadUrl(data.imgUrl)
-                        textView.textSize = 12f
-                        textView.text = data.title
-                    }
-                }).data = listOf(TypeItem(HOME_TYPE_IMG_1, HOME_TYPE_TITLE_1),
+                .setAdapter(EvpTypeItemAdapter()).data = listOf(TypeItem(HOME_TYPE_IMG_1, HOME_TYPE_TITLE_1),
                 TypeItem(HOME_TYPE_IMG_2, HOME_TYPE_TITLE_2),
                 TypeItem(HOME_TYPE_IMG_3, HOME_TYPE_TITLE_3),
                 TypeItem(HOME_TYPE_IMG_4, HOME_TYPE_TITLE_4),
