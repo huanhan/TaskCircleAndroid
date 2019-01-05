@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mLl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
     <android.support.design.widget.CoordinatorLayout
@@ -114,6 +117,7 @@
                             android:layout_height="match_parent"
                             android:layout_toRightOf="@id/mTvTaskNum"
                             android:background="@null"
+                            android:inputType="number"
                             android:maxLength="9"
                             android:text="1" />
 
@@ -155,6 +159,7 @@
                             android:layout_height="match_parent"
                             android:layout_toRightOf="@id/mTvMoneyNum"
                             android:background="@null"
+                            android:inputType="number"
                             android:maxLength="9"
                             android:text="1"
                             android:textColor="@color/common_red" />
@@ -171,13 +176,61 @@
 
                 </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/mRvStep"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="6dp">
 
-                </android.support.v7.widget.RecyclerView>
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@color/common_white">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:paddingLeft="10dp"
+                            android:text="步骤" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/btn_common_selector"
+                            android:gravity="center"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:paddingLeft="8dp"
+                            android:paddingTop="4dp"
+                            android:paddingRight="8dp"
+                            android:paddingBottom="4dp"
+                            android:text="增加"
+                            android:textColor="#fff" />
+
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginRight="10dp">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/mRvStep"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </android.support.v7.widget.RecyclerView>
+                </android.support.v7.widget.CardView>
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>
@@ -199,7 +252,7 @@
     <xin.lrvik.taskcicleandroid.ui.widget.NumberKeyBoardView
         android:id="@+id/mKeyBoardView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:keyBackground="@drawable/bg_keyboardview"

@@ -10,7 +10,6 @@ import xin.lrvik.taskcicleandroid.ui.widget.KeyboardUtil
 
 class TaskDetailActivity : BaseActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_detail)
@@ -27,9 +26,12 @@ class TaskDetailActivity : BaseActivity() {
         KeyboardUtil(mKeyBoardView, mEtTaskNum)
         KeyboardUtil(mKeyBoardView, mEtMoneyNum)
 
-
     }
 
+    override fun onResume() {
+        super.onResume()
+        mLl.requestFocus()
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
