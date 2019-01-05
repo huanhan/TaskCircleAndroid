@@ -11,7 +11,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="@drawable/bg_me_header"
+            android:background="@mipmap/bg_me_header"
             android:gravity="center_vertical"
             android:paddingLeft="10dp">
 
@@ -21,7 +21,7 @@
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 android:layout_centerVertical="true"
-                android:src="@drawable/icon_default_user" />
+                android:src="@mipmap/icon_default_user" />
 
 
             <TextView

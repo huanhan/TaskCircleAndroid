@@ -20,6 +20,6 @@ class RvMesAdapter(data: List<Message>) : BaseQuickAdapter<Message, BaseViewHold
                 .setText(R.id.mTvContent, item.context)
                 .setText(R.id.mTvDate, "${DateFormat.format("yyyy年MM月dd", item.createTime)}")
         var imageView = helper.getView<ImageView>(R.id.mIvIcon)
-        imageView.loadCircleUrl(R.drawable.def)
+        imageView.loadCircleUrl(R.mipmap.def)
     }
 }
