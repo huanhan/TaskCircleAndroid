@@ -37,6 +37,7 @@ dependencies {
 
     //BaseRecyclerViewAdapterHelper
     implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:$base_recycler_view_adapter_helper_version"
+    implementation 'com.github.louisgeek:ClassicLinesEditView:1.0.2'
 }
 repositories {
     mavenCentral()

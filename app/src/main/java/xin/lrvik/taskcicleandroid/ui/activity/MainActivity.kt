@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.startActivity
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseActivity
 import xin.lrvik.taskcicleandroid.ui.fragment.HomeFragment
@@ -62,6 +63,7 @@ class MainActivity : BaseActivity() {
             when (it.itemId) {
                 R.id.navigation_home -> changeFragment(0)
                 R.id.navigation_task -> changeFragment(1)
+                R.id.navigation_release -> startActivity<TaskDetailActivity>()
                 R.id.navigation_msg -> changeFragment(2)
                 R.id.navigation_my -> changeFragment(3)
             }
