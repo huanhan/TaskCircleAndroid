@@ -25,4 +25,5 @@
     <color name="bg_dialog">#3000</color>
     <color name="transparent">#00000000</color>
     <color name="deep_gray">#999999</color>
+    <color name="class_title">#F4F4F4</color>
 </resources>

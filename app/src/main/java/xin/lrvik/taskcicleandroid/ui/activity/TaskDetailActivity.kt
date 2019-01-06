@@ -12,6 +12,7 @@ import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseActivity
 import xin.lrvik.taskcicleandroid.data.protocol.TaskStep
 import xin.lrvik.taskcicleandroid.ui.adapter.RvAddTaskStepAdapter
+import xin.lrvik.taskcicleandroid.ui.dialog.ClassificationDialog
 import xin.lrvik.taskcicleandroid.ui.dialog.TaskStepDialog
 import xin.lrvik.taskcicleandroid.ui.widget.KeyboardUtil
 import java.util.*
@@ -65,6 +66,10 @@ class TaskDetailActivity : BaseActivity() {
                     mRvTaskStepAdapter.notifyDataSetChanged()
                 }
             })
+        }
+
+        mTvClass.onClick {
+            ClassificationDialog.showDialog(supportFragmentManager, 2, 3)
         }
     }
 
