@@ -80,7 +80,7 @@
                     android:layout_marginTop="3dp"
                     android:layout_marginRight="10dp">
 
-                    <com.classichu.lineseditview.LinesEditView
+                    <xin.lrvik.taskcicleandroid.ui.widget.LinesEditView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/common_white"

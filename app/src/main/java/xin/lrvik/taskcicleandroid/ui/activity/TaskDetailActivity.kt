@@ -18,6 +18,7 @@ import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseActivity
 import xin.lrvik.taskcicleandroid.data.protocol.TaskStep
 import xin.lrvik.taskcicleandroid.ui.adapter.RvAddTaskStepAdapter
+import xin.lrvik.taskcicleandroid.ui.dialog.TaskStepDialog
 import xin.lrvik.taskcicleandroid.ui.widget.KeyboardUtil
 import java.util.*
 
@@ -105,6 +106,18 @@ class TaskDetailActivity : BaseActivity() {
 
         mBtAddStep.onClick {
             mRvTaskStepAdapter.addData(TaskStep("111 ", 1, "新增步骤标题", "新增步骤内容", ""))
+        }
+
+        mRvTaskStepAdapter.setOnItemClickListener { adapter, view, position ->
+            Log.d("test", "" + position)
+            val dialog=TaskStepDialog.showDialog(supportFragmentManager, list, true, position)
+
+            dialog.setOnCloseListener(object : TaskStepDialog.OnCloseListener{
+                override fun onClose() {
+                    mRvTaskStepAdapter.notifyDataSetChanged()
+                }
+            })
+
 
         }
     }
