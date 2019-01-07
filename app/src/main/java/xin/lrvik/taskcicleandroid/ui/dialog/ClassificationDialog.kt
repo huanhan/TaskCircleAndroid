@@ -1,5 +1,6 @@
 package xin.lrvik.taskcicleandroid.ui.dialog
 
+import android.animation.Animator
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -7,12 +8,13 @@ import android.support.v4.app.DialogFragment
 import android.support.v4.app.FragmentManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.OrientationHelper
-import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.dialog_classification.*
 import xin.lrvik.taskcicleandroid.R
+import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.data.protocol.TaskClass
 import xin.lrvik.taskcicleandroid.ui.adapter.RvClassLeftAdapter
 import xin.lrvik.taskcicleandroid.ui.adapter.RvClassRightAdapter
@@ -25,6 +27,7 @@ class ClassificationDialog : DialogFragment() {
 
     private var currentParentItem: Int = -1
     private var currentItem: Int = -1
+    private var top: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val bundle = arguments
@@ -80,8 +83,37 @@ class ClassificationDialog : DialogFragment() {
             mRvClassRightAapter.setNewData(arrayList[position].taskClassifies)
             mRvClassLeftAapter.notifyDataSetChanged()
         }
+        mLlClass.scaleY = 0f
+        mLlClass.pivotX = 0f
+        mLlClass.animate().scaleY(1f)
+        mIvBt.animate().rotation(180f)
+
+        mIvBt.onClick {
+            dismissDialog()
+        }
+
+        mLlClassBg.onClick {
+            dismissDialog()
+        }
     }
 
+    fun dismissDialog() {
+        mIvBt.animate().rotation(360f)
+        mLlClass.animate().scaleY(0f).setListener(object : Animator.AnimatorListener {
+            override fun onAnimationRepeat(p0: Animator?) {
+            }
+
+            override fun onAnimationCancel(p0: Animator?) {
+            }
+
+            override fun onAnimationStart(p0: Animator?) {
+            }
+
+            override fun onAnimationEnd(p0: Animator?) {
+                dialog.dismiss()
+            }
+        })
+    }
 
     /**
      * 清空一层分类选中状态
@@ -123,9 +155,15 @@ class ClassificationDialog : DialogFragment() {
 
     override fun onResume() {
         super.onResume()
+
         val window = dialog.window
         window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+        var attributes = window.attributes
+        attributes.gravity = Gravity.TOP//对齐方式
+        window.attributes = attributes
+
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 
 

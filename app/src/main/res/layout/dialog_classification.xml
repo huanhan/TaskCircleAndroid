@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/mLlClassBg"
+    android:background="@color/bg_dialog"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -18,6 +20,7 @@
             android:textColor="@color/common_black" />
 
         <ImageView
+            android:id="@+id/mIvBt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -25,8 +28,10 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/mLlClass"
         android:layout_width="match_parent"
         android:layout_height="400dp"
+        android:background="@color/common_white"
         android:orientation="horizontal">
 
         <android.support.v7.widget.RecyclerView
