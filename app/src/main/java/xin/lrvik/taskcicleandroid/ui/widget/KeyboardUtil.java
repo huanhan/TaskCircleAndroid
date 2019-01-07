@@ -37,6 +37,13 @@ public class KeyboardUtil {
             }
         });
 
+        mEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showSoftKeyboard();
+            }
+        });
+
         mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {

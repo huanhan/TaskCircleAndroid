@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
+import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
@@ -149,8 +150,8 @@ class TaskDetailActivity : BaseActivity() {
 
 
     override fun onResume() {
-        super.onResume()
         mLl.requestFocus()
+        super.onResume()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -161,5 +162,15 @@ class TaskDetailActivity : BaseActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mKeyBoardView.visibility == View.VISIBLE) {
+                mKeyBoardView.visibility = View.GONE
+                return true
+            }
+        }
+        return super.onKeyDown(keyCode, event)
     }
 }
