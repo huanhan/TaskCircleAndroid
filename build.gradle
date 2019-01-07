@@ -12,6 +12,7 @@ buildscript {
     ext.rx_Lifecycle2_version = '2.2.2'
     ext.glide_version = '4.8.0'
     ext.base_recycler_view_adapter_helper_version = '2.9.44'
+    ext.flowlayout='1.1.2'
 
     repositories {
         google()

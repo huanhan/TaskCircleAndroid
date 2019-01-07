@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:zhy="http://schemas.android.com/tools"
     android:id="@+id/mLl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -46,31 +47,68 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginRight="10dp">
 
-                    <LinearLayout
+                    <RelativeLayout
+                        android:id="@+id/mRlClass"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:background="@color/common_gray">
 
-                        <TextView
-                            android:id="@+id/mTvClass"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="10dp"
-                            android:text="分类•"
-                            android:textColor="@color/common_yellow"
-                            android:textSize="20sp" />
-
-
-                        <EditText
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/common_white"
-                            android:hint="请填写任务标题"
+                            android:padding="4dp">
+
+                            <com.zhy.view.flowlayout.TagFlowLayout
+                                android:id="@+id/mFlowlayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingBottom="10dp"
+                                zhy:max_select="1"></com.zhy.view.flowlayout.TagFlowLayout>
+
+                            <Button
+                                android:id="@+id/mBtAddClass"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom|right"
+                                android:background="@drawable/btn_common_selector"
+                                android:minWidth="0dp"
+                                android:minHeight="0dp"
+                                android:padding="4dp"
+                                android:text="点击\n增加"
+                                android:textColor="@color/common_white"
+                                android:visibility="gone" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/mTvClassTip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
                             android:padding="10dp"
-                            android:textSize="18sp" />
-                    </LinearLayout>
+                            android:text="点击增加分类"
+                            android:textColor="@color/common_white" />
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="10dp">
+
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/common_white"
+                        android:hint="请填写任务标题"
+                        android:padding="10dp"
+                        android:textSize="18sp" />
                 </android.support.v7.widget.CardView>
 
 

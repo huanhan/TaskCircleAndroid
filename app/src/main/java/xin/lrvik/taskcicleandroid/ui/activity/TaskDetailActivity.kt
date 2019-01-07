@@ -1,15 +1,25 @@
 package xin.lrvik.taskcicleandroid.ui.activity
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.widget.LinearLayout
+import android.widget.TextView
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback
+import com.zhy.view.flowlayout.FlowLayout
+import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.activity_task_detail.*
+import org.jetbrains.anko.dip
+import org.jetbrains.anko.margin
+import org.jetbrains.anko.startActivity
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseActivity
+import xin.lrvik.taskcicleandroid.data.protocol.TaskClass
 import xin.lrvik.taskcicleandroid.data.protocol.TaskStep
 import xin.lrvik.taskcicleandroid.ui.adapter.RvAddTaskStepAdapter
 import xin.lrvik.taskcicleandroid.ui.dialog.ClassificationDialog
@@ -19,6 +29,20 @@ import java.util.*
 
 
 class TaskDetailActivity : BaseActivity() {
+
+    internal var colors = intArrayOf(Color.parseColor("#90C5ED"),
+            Color.parseColor("#92CED6"),
+            Color.parseColor("#F69153"),
+            Color.parseColor("#BFAED0"),
+            Color.parseColor("#E58F8E"),
+            Color.parseColor("#66CCB7"),
+            Color.parseColor("#F4BB7E"),
+            Color.parseColor("#90C5ED"),
+            Color.parseColor("#F79153"))
+
+    var classDialog = ClassificationDialog.instance()
+
+    var classList = ArrayList<TaskClass>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,8 +92,58 @@ class TaskDetailActivity : BaseActivity() {
             })
         }
 
-        mTvClass.onClick {
-            ClassificationDialog.showDialog(supportFragmentManager, 2, 3)
+        mTvClassTip.onClick {
+            classDialog.show(supportFragmentManager, "classDialog")
+        }
+
+        mBtAddClass.onClick {
+            classDialog.show(supportFragmentManager, "classDialog")
+        }
+
+
+
+
+        mFlowlayout.adapter = object : TagAdapter<TaskClass>(classList) {
+
+            override fun getView(parent: FlowLayout, position: Int, taskStep: TaskClass): View {
+                //动态创建热词布局
+                var tv = TextView(this@TaskDetailActivity)
+                var params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                params.margin = dip(4)
+                tv.layoutParams = params
+                tv.setPadding(dip(6), dip(4), dip(6), dip(4))
+                tv.setBackgroundColor(colors[position % colors.size])
+                tv.text = taskStep.name
+                return tv
+            }
+        }
+
+        mFlowlayout.setOnTagClickListener { view, position, parent ->
+            classList.removeAt(position)
+            mFlowlayout.adapter.notifyDataChanged()
+            checkTipVisible()
+            true
+        }
+
+
+        classDialog.listener = object : ClassificationDialog.OnClassificationClickListener {
+            override fun onClassClick(taskClass: TaskClass) {
+                if (!classList.contains(taskClass)) {
+                    classList.add(taskClass)
+                    mFlowlayout.adapter.notifyDataChanged()
+                    checkTipVisible()
+                }
+            }
+        }
+    }
+
+    fun checkTipVisible() {
+        if (classList.size == 0) {
+            mTvClassTip.visibility = View.VISIBLE
+            mBtAddClass.visibility = View.GONE
+        } else {
+            mTvClassTip.visibility = View.GONE
+            mBtAddClass.visibility = View.VISIBLE
         }
     }
 

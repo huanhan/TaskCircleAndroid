@@ -37,6 +37,8 @@ dependencies {
 
     //BaseRecyclerViewAdapterHelper
     implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:$base_recycler_view_adapter_helper_version"
+
+    implementation "com.hyman:flowlayout-lib:$flowlayout"
 }
 repositories {
     mavenCentral()
