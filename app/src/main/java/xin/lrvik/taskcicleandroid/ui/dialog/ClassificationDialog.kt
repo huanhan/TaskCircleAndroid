@@ -27,7 +27,6 @@ class ClassificationDialog : DialogFragment() {
 
     private var currentParentItem: Int = -1
     private var currentItem: Int = -1
-    private var top: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val bundle = arguments
@@ -160,9 +159,10 @@ class ClassificationDialog : DialogFragment() {
         window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         var attributes = window.attributes
-        attributes.gravity = Gravity.TOP//对齐方式
+        //attributes.gravity = Gravity.TOP//对齐方式
         window.attributes = attributes
 
+        //attributes.dimAmount=0f
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 

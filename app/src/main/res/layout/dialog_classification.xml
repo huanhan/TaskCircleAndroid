@@ -1,51 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mLlClassBg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/mLlClassBg"
+    android:gravity="center"
     android:background="@color/bg_dialog"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/class_title"
-        android:padding="8dp">
+        android:layout_margin="20dp"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="请选择分类"
-            android:textStyle="bold"
-            android:textColor="@color/common_black" />
-
-        <ImageView
-            android:id="@+id/mIvBt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_expand_more_gray_24dp" />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/mLlClass"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:background="@color/common_white"
-        android:orientation="horizontal">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/mRvClassLeft"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"></android.support.v7.widget.RecyclerView>
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/class_title"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="请选择分类"
+                    android:textColor="@color/common_black"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/mIvBt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_expand_more_gray_24dp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/mLlClass"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:background="@color/common_white"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/mRvClassLeft"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"></android.support.v7.widget.RecyclerView>
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/mRvClassRight"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:background="#FFFFFF"></android.support.v7.widget.RecyclerView>
-    </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/mRvClassRight"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:background="#FFFFFF"></android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
 </LinearLayout>
