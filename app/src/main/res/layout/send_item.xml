@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/mIvIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/icon_default_user" />
+
+    <TextView
+        android:id="@+id/mTvContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="10dp"
+        android:layout_toStartOf="@+id/mIvIcon"
+        android:layout_toLeftOf="@+id/mIvIcon"
+        android:gravity="left|top"
+        android:background="@drawable/shape_ellipse_deep_blue"
+        android:padding="10dp"
+        android:text="就解开了附士大夫撒 似懂非懂 士大夫件是考虑"
+        android:textColor="#DADCE0" />
+</RelativeLayout>

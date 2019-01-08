@@ -24,11 +24,13 @@ class TaskManagerFragment : BaseFragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         mTitles.add("全部")
-        mTitles.add("待接单")
-        mTitles.add("进行中")
-        mTitles.add("待评价")
+        mTitles.add("待审核")
+        mTitles.add("待发布")
+        mTitles.add("待接取")
+        mTitles.add("已接取")
         mTitles.add("已完成")
-        mTitles.add("待完成")
+        mTitles.add("待评价")
+        mTitles.add("已放弃")
 
         mTitles.forEach {
             mFragments.add(TaskStateFragment.newInstance(it))

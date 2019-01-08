@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_mes.*
+import org.jetbrains.anko.support.v4.startActivity
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseFragment
 import xin.lrvik.taskcicleandroid.data.protocol.Message
+import xin.lrvik.taskcicleandroid.ui.activity.ChatActivity
 import xin.lrvik.taskcicleandroid.ui.adapter.RvMesAdapter
 import java.sql.Timestamp
 import java.util.*
@@ -20,6 +22,8 @@ import java.util.*
  */
 class MesFragment : BaseFragment() {
 
+    var list = ArrayList<Message>()
+    lateinit var mAdapter: RvMesAdapter
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_mes, null)
     }
@@ -28,11 +32,18 @@ class MesFragment : BaseFragment() {
         var linearLayoutManager = LinearLayoutManager(context)
         mRvMes.layoutManager = linearLayoutManager
         linearLayoutManager.orientation = OrientationHelper.VERTICAL
-        var list = ArrayList<Message>()
 
         for (i in 0..10) {
             list.add(Message("急需$i 名跑腿小老弟", Timestamp(Date().time), "小老弟$i", ""))
         }
-        mRvMes.adapter = RvMesAdapter(list)
+
+        mAdapter = RvMesAdapter(list)
+        mRvMes.adapter = mAdapter
+
+        mAdapter.setOnItemClickListener { adapter, view, position ->
+            startActivity<ChatActivity>()
+        }
+
+
     }
 }
