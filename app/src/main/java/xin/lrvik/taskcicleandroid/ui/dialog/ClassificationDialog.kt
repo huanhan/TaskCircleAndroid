@@ -25,8 +25,8 @@ import xin.lrvik.taskcicleandroid.ui.adapter.RvClassRightAdapter
  */
 class ClassificationDialog : DialogFragment() {
 
-    lateinit var listener: OnClassificationClickListener
-    lateinit var classList: ArrayList<TaskClass>
+    var listener: OnClassificationClickListener? = null
+    var classList: ArrayList<TaskClass> = ArrayList()
     lateinit var mRvClassRightAapter: RvClassRightAdapter
     lateinit var mRvClassLeftAapter: RvClassLeftAdapter
 
@@ -44,24 +44,17 @@ class ClassificationDialog : DialogFragment() {
         mRvClassLeft.layoutManager = linearLayoutManagerLeft
         mRvClassRight.layoutManager = linearLayoutManagerRight
 
-        classList = ArrayList()
-
-        //获取到的数据做清空选中处理
-        clearSelectData(classList)
-
         mRvClassRightAapter = RvClassRightAdapter(classList)
         mRvClassLeftAapter = RvClassLeftAdapter(classList)
 
         mRvClassRight.adapter = mRvClassRightAapter
         mRvClassLeft.adapter = mRvClassLeftAapter
 
-
         mRvClassRightAapter.setOnItemClickListener { adapter, view, position ->
             var arrayList = adapter.data as ArrayList<TaskClass>
             clearSelectSingleData(arrayList)
             arrayList[position].isSelect = true
             mRvClassRightAapter.notifyDataSetChanged()
-
             listener?.onClassClick(arrayList[position])
         }
 
@@ -87,6 +80,9 @@ class ClassificationDialog : DialogFragment() {
         }
 
         getData()
+
+        //设置选中
+        setCurrData(arguments!!.getInt(PARENTITEM), arguments!!.getInt(CHILDITEM))
     }
 
     fun dismissDialog() {
@@ -122,6 +118,7 @@ class ClassificationDialog : DialogFragment() {
         mRvClassLeftAapter.setNewData(classList)
     }
 
+
     /**
      * 清空一层分类选中状态
      */
@@ -146,7 +143,7 @@ class ClassificationDialog : DialogFragment() {
     }
 
 
-    fun getData(){
+    fun getData() {
         classList.clear()
         //todo 网络请求
         for (i in 0L..10L) {
@@ -173,15 +170,21 @@ class ClassificationDialog : DialogFragment() {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 
+    fun showDialog(supportFragmentManager: FragmentManager, parentItem: Int = 0, childItem: Int = -1) {
+        val bundle = Bundle()
+        bundle.putInt(PARENTITEM, parentItem)
+        bundle.putInt(CHILDITEM, childItem)
+        this.arguments = bundle
+        this.show(supportFragmentManager, "classDialog")
+    }
+
     interface OnClassificationClickListener {
         fun onClassClick(taskClass: TaskClass)
     }
 
     companion object {
-        fun instance(): ClassificationDialog {
-            val dialog = ClassificationDialog()
-            return dialog
-        }
+        private val PARENTITEM = "PARENTITEM"
+        private val CHILDITEM = "CHILDITEM"
 
     }
 

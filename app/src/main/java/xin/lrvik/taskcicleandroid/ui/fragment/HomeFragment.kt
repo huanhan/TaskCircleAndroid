@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_home.*
+import org.jetbrains.anko.support.v4.startActivity
 import xin.lrvik.easybanner.Transformer
 import xin.lrvik.easybanner.adapter.viewpager.EasyImageAdapter
 import xin.lrvik.easybanner.adapter.viewpager.EasyTypeItemAdapter
@@ -18,6 +19,7 @@ import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseFragment
 import xin.lrvik.taskcicleandroid.common.*
 import xin.lrvik.taskcicleandroid.data.protocol.Task
+import xin.lrvik.taskcicleandroid.ui.activity.ClassActivity
 import xin.lrvik.taskcicleandroid.ui.adapter.EvpTypeItemAdapter
 import xin.lrvik.taskcicleandroid.ui.adapter.RvRecommendAdapter
 import java.sql.Timestamp
@@ -42,7 +44,10 @@ class HomeFragment : BaseFragment() {
 
 
         mEvpType.setIndicator(mEdiType)
-                .setAdapter(EvpTypeItemAdapter()).data = listOf(TypeItem(HOME_TYPE_IMG_1, HOME_TYPE_TITLE_1),
+                .setAdapter(EvpTypeItemAdapter())
+                .setOnItemClickListner { v, t ->
+                    startActivity<ClassActivity>("CLASSTYPE" to (t as TypeItem).title)
+                }.data = listOf(TypeItem(HOME_TYPE_IMG_1, HOME_TYPE_TITLE_1),
                 TypeItem(HOME_TYPE_IMG_2, HOME_TYPE_TITLE_2),
                 TypeItem(HOME_TYPE_IMG_3, HOME_TYPE_TITLE_3),
                 TypeItem(HOME_TYPE_IMG_4, HOME_TYPE_TITLE_4),
@@ -58,6 +63,8 @@ class HomeFragment : BaseFragment() {
                 TypeItem(HOME_TYPE_IMG_14, HOME_TYPE_TITLE_14),
                 TypeItem(HOME_TYPE_IMG_15, HOME_TYPE_TITLE_15),
                 TypeItem(HOME_TYPE_IMG_16, HOME_TYPE_TITLE_16))
+
+
 
         mNiceSpinner.attachDataSource(listOf(SORT_TOTAL, SORT_PRICE_UP, SORT_TIME_UP, SORT_DISTANCE_UP))
 

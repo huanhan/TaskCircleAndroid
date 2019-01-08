@@ -296,6 +296,7 @@
         android:keyPreviewOffset="0dp"
         android:keyTextColor="#000"
         android:paddingTop="0dp"
+        android:visibility="gone"
         android:shadowColor="#fff"
         android:shadowRadius="0.0" />
 </LinearLayout>

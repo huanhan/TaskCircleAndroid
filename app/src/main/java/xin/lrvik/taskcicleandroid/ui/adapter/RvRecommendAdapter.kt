@@ -14,8 +14,7 @@ import xin.lrvik.taskcicleandroid.data.protocol.Task
  */
 class RvRecommendAdapter(data: List<Task>) : BaseQuickAdapter<Task, BaseViewHolder>(R.layout.item_recommend, data) {
     override fun convert(helper: BaseViewHolder, item: Task) {
-        helper.setText(R.id.mTvType, item.type)
-                .setText(R.id.mTvTaskName, item.name)
+        helper.setText(R.id.mTvTaskName, item.name)
                 .setText(R.id.mTvContext, item.context)
                 .setText(R.id.mTvMoney, item.money+"元")
                 .setText(R.id.mTvDistance, item.distance)

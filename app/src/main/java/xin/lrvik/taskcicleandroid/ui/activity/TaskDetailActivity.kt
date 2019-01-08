@@ -3,6 +3,7 @@ package xin.lrvik.taskcicleandroid.ui.activity
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
 import android.view.KeyEvent
@@ -41,7 +42,7 @@ class TaskDetailActivity : BaseActivity() {
             Color.parseColor("#90C5ED"),
             Color.parseColor("#F79153"))
 
-    var classDialog = ClassificationDialog.instance()
+    var mDialog: ClassificationDialog? = null
 
     var classList = ArrayList<TaskClass>()
 
@@ -94,15 +95,42 @@ class TaskDetailActivity : BaseActivity() {
         }
 
         mTvClassTip.onClick {
-            classDialog.show(supportFragmentManager, "classDialog")
+            if (mDialog == null) {
+                mDialog = ClassificationDialog()
+                mDialog!!.showDialog(supportFragmentManager)
+                mDialog!!.listener = object : ClassificationDialog.OnClassificationClickListener {
+                    override fun onClassClick(taskClass: TaskClass) {
+                        if (!classList.contains(taskClass)) {
+                            classList.add(taskClass)
+                            mFlowlayout.adapter.notifyDataChanged()
+                            checkTipVisible()
+                        }
+                    }
+                }
+            }else{
+                mDialog!!.showDialog(supportFragmentManager)
+            }
+
+
         }
 
         mBtAddClass.onClick {
-            classDialog.show(supportFragmentManager, "classDialog")
+            if (mDialog == null) {
+                mDialog = ClassificationDialog()
+                mDialog!!.showDialog(supportFragmentManager)
+                mDialog!!.listener = object : ClassificationDialog.OnClassificationClickListener {
+                    override fun onClassClick(taskClass: TaskClass) {
+                        if (!classList.contains(taskClass)) {
+                            classList.add(taskClass)
+                            mFlowlayout.adapter.notifyDataChanged()
+                            checkTipVisible()
+                        }
+                    }
+                }
+            }else{
+                mDialog!!.showDialog(supportFragmentManager)
+            }
         }
-
-
-
 
         mFlowlayout.adapter = object : TagAdapter<TaskClass>(classList) {
 
@@ -127,15 +155,6 @@ class TaskDetailActivity : BaseActivity() {
         }
 
 
-        classDialog.listener = object : ClassificationDialog.OnClassificationClickListener {
-            override fun onClassClick(taskClass: TaskClass) {
-                if (!classList.contains(taskClass)) {
-                    classList.add(taskClass)
-                    mFlowlayout.adapter.notifyDataChanged()
-                    checkTipVisible()
-                }
-            }
-        }
     }
 
     fun checkTipVisible() {
