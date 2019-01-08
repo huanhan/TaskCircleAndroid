@@ -22,6 +22,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -29,14 +30,19 @@
                 android:id="@+id/mTabLayout"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                app:tabMode="scrollable"
+                app:tabIndicatorColor="@color/common_white"
+                app:tabSelectedTextColor="@color/common_white"
+                app:tabTextColor="@color/tab_text_def" />
 
             <ImageView
                 android:id="@+id/mIvBt"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/ic_expand_more_gray_24dp" />
+                android:padding="5dp"
+                android:src="@drawable/ic_expand_more_white_24dp" />
 
         </LinearLayout>
     </android.support.design.widget.AppBarLayout>

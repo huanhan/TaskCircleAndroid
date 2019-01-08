@@ -148,8 +148,8 @@ class ClassificationDialog : DialogFragment() {
         //todo 网络请求
         for (i in 0L..10L) {
             var items = ArrayList<TaskClass>()
-            for (j in i + 20..i + 30) {
-                items.add(TaskClass(j, "分类$j", "", null, false))
+            for (j in 0..9L) {
+                items.add(TaskClass(j, "分类$i$j", "", null, false))
             }
             classList.add(TaskClass(i, "分类$i", "", items, false))
         }

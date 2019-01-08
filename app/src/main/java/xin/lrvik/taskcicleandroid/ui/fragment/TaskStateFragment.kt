@@ -37,7 +37,7 @@ class TaskStateFragment : BaseFragment(){
         var list = ArrayList<Task>()
 
         for (i in 0..10) {
-            list.add(Task("$i ", "$type 急需$i 名跑腿小老弟", "${i * 5}", "跑腿$i",
+            list.add(Task("$i ", "急需$i 名跑腿小老弟", "${i * 5}", "跑腿$i",
                     "马上需要跑腿小老弟一只啊，有没有跑腿小老弟马上就要跑了。马上需要跑腿小老弟一只啊，有没有跑腿小老弟马上就要跑了。马上需要跑腿小老弟一只啊，" +
                             "有没有跑腿小老弟马上就要跑了。马上需要跑腿小老弟一只啊，有没有跑腿小老弟马上就要跑了。马上需要跑腿小老弟一只啊，有没有跑腿小老弟马上就要跑了。",
                     i + 5, Timestamp(Date().time), Timestamp(Date().time + 1000 * 60 * 60 * 24), "200米", i + 5, R.mipmap.def))
