@@ -10,6 +10,7 @@ import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseFragment
 import xin.lrvik.taskcicleandroid.ui.activity.LoginActivity
+import xin.lrvik.taskcicleandroid.ui.activity.WalletActivity
 
 class MyFragment : BaseFragment() {
 
@@ -20,6 +21,10 @@ class MyFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mTvLoginOrRegist.onClick {
             startActivity<LoginActivity>()
+        }
+
+        mRlWallet.onClick {
+            startActivity<WalletActivity>()
         }
 
     }

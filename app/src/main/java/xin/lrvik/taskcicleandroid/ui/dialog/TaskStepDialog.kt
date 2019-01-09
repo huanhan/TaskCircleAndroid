@@ -1,5 +1,6 @@
 package xin.lrvik.taskcicleandroid.ui.dialog
 
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -9,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.dialog_task_step.*
-import xin.lrvik.easybanner.EasyViewPager
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.data.protocol.TaskStep
@@ -44,11 +44,15 @@ class TaskStepDialog : DialogFragment() {
 
         mIvClose.onClick {
             dialog.dismiss()
-            this.onCloseListener?.let {
-                onCloseListener.onClose()
-            }
         }
 
+    }
+
+    override fun onDismiss(dialog: DialogInterface?) {
+        super.onDismiss(dialog)
+        this.onCloseListener?.let {
+            onCloseListener.onClose()
+        }
     }
 
 

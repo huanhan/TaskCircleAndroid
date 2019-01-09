@@ -27,4 +27,6 @@
     <color name="transparent">#00000000</color>
     <color name="deep_gray">#999999</color>
     <color name="class_title">#F4F4F4</color>
+    <color name="deep_green">#06C05F</color>
+    <!--<color name="deep_green">#ECECEC</color>-->
 </resources>
