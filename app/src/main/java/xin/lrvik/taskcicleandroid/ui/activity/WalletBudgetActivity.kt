@@ -26,7 +26,7 @@ class WalletBudgetActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.title = "零钱详细"
+            actionBar.title = "零钱明细"
         }
         var lm = LinearLayoutManager(this)
         lm.orientation = LinearLayoutManager.VERTICAL

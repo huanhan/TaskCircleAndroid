@@ -25,7 +25,8 @@
         <activity android:name=".ui.activity.ClassActivity" />
         <activity android:name=".ui.activity.ChatActivity" />
         <activity android:name=".ui.activity.WalletActivity" />
-        <activity android:name=".ui.activity.WalletBudgetActivity"></activity>
+        <activity android:name=".ui.activity.WalletBudgetActivity" />
+        <activity android:name=".ui.activity.HunterTaskActivity"></activity>
     </application>
 
 </manifest>
