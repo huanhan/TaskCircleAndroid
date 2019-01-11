@@ -6,9 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.loadCircleUrl
-import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
 import xin.lrvik.taskcicleandroid.data.protocol.Message
-import xin.lrvik.taskcicleandroid.data.protocol.Task
 
 /**
  * Author by 豢涵, Email huanhanfu@126.com, Date on 2019/1/2.

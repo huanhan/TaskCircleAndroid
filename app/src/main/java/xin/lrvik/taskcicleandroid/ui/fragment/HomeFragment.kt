@@ -16,9 +16,11 @@ import xin.lrvik.easybanner.adapter.viewpager.EasyTypeItemAdapter
 import xin.lrvik.easybanner.dto.TypeItem
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
+import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseFragment
 import xin.lrvik.taskcicleandroid.common.*
 import xin.lrvik.taskcicleandroid.data.protocol.Task
+import xin.lrvik.taskcicleandroid.ui.activity.AddressPickerActivity
 import xin.lrvik.taskcicleandroid.ui.activity.ClassActivity
 import xin.lrvik.taskcicleandroid.ui.adapter.EvpTypeItemAdapter
 import xin.lrvik.taskcicleandroid.ui.adapter.RvRecommendAdapter
@@ -81,6 +83,9 @@ class HomeFragment : BaseFragment() {
         }
         mRvRecommend.adapter = RvRecommendAdapter(list)
 
+        mTvAddress.onClick {
+            startActivity<AddressPickerActivity>()
+        }
     }
 
     override fun onPause() {

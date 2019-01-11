@@ -1,5 +1,8 @@
 package xin.lrvik.taskcicleandroid.ui.activity
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.support.design.internal.BottomNavigationMenuView
 import android.support.v4.app.Fragment
@@ -20,6 +23,8 @@ import xin.lrvik.taskcicleandroid.ui.fragment.TaskManagerFragment
 import java.util.*
 
 class MainActivity : BaseActivity() {
+    private val REQUEST_CODE1 = 0x1001
+
     private val mStack by lazy { Stack<Fragment>() }
     private val mHomeFragment by lazy { HomeFragment() }
     private val mTaskFragment by lazy { TaskManagerFragment() }
@@ -29,6 +34,13 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //定位权限为必须权限，用户如果禁止，则每次进入都会申请
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    REQUEST_CODE1)
+        }
+
         initFragment()
         initView()
     }
@@ -111,6 +123,20 @@ class MainActivity : BaseActivity() {
         } else {
             finish()
             System.exit(0)
+        }
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
+                                            grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE1 && grantResults.size > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+        } else {
+            Toast.makeText(this, "拒绝了精确定位的权限,无法定位",
+                    Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 }
