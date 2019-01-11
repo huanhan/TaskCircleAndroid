@@ -3,16 +3,19 @@ package xin.lrvik.taskcicleandroid.ui.fragment
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.OrientationHelper
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
+import com.baidu.location.BDAbstractLocationListener
+import com.baidu.location.BDLocation
+import com.baidu.location.LocationClient
+import com.baidu.location.LocationClientOption
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.support.v4.startActivity
 import xin.lrvik.easybanner.Transformer
 import xin.lrvik.easybanner.adapter.viewpager.EasyImageAdapter
-import xin.lrvik.easybanner.adapter.viewpager.EasyTypeItemAdapter
 import xin.lrvik.easybanner.dto.TypeItem
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
@@ -29,6 +32,9 @@ import java.util.*
 
 
 class HomeFragment : BaseFragment() {
+
+    lateinit var mLocationClient: LocationClient
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, null)
     }
@@ -86,6 +92,38 @@ class HomeFragment : BaseFragment() {
         mTvAddress.onClick {
             startActivity<AddressPickerActivity>()
         }
+
+        initLocation()
+    }
+
+    /***
+     * 初始化定位
+     */
+    private fun initLocation() {
+        mLocationClient = LocationClient(activity)
+        mLocationClient.registerLocationListener(object : BDAbstractLocationListener() {
+            override fun onReceiveLocation(location: BDLocation) {
+                if (!TextUtils.isEmpty(location.city)) {
+                    mTvAddress.text = location.street
+                    mLocationClient.stop()
+                }
+            }
+
+        })
+
+        val option = LocationClientOption()
+        option.locationMode = LocationClientOption.LocationMode.Hight_Accuracy
+        option.setCoorType("bd09ll")
+        option.isOpenGps = true
+        option.isLocationNotify = true
+        option.SetIgnoreCacheException(false)
+        option.isIgnoreKillProcess = false
+        option.setIsNeedAddress(true)
+        option.setWifiCacheTimeOut(5 * 60 * 1000)
+        option.setEnableSimulateGps(false)
+        mLocationClient.locOption = option
+
+        mLocationClient.start()
     }
 
     override fun onPause() {

@@ -52,7 +52,6 @@ class AddressPickerActivity : BaseActivity() {
         }
         SDKInitializer.initialize(applicationContext)
 
-        //初始化定位
         initLocation()
         initPoiSearch()
         initCityPicker()
@@ -66,13 +65,13 @@ class AddressPickerActivity : BaseActivity() {
             }
 
             override fun onTextChanged(p0: CharSequence, p1: Int, p2: Int, p3: Int) {
-                if (!p0.isEmpty()) {
+                if (!p0.isEmpty() && mTvCity.text.toString() != "城市") {
                     var option = PoiCitySearchOption()
                     option.city(mTvCity.text.toString())
+                            .pageCapacity(25)
                             .keyword(p0.toString())
                     poiSearch.searchInCity(option)
                 }
-
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -133,7 +132,6 @@ class AddressPickerActivity : BaseActivity() {
                 } else if (poiResult.error == SearchResult.ERRORNO.NO_ERROR) {
                     mAdapter.setNewData(poiResult.allPoi)
                 }
-
             }
 
             override fun onGetPoiDetailResult(p0: PoiDetailResult?) {
@@ -154,7 +152,11 @@ class AddressPickerActivity : BaseActivity() {
         mLocationClient.registerLocationListener(object : BDAbstractLocationListener() {
             override fun onReceiveLocation(location: BDLocation) {
                 if (!TextUtils.isEmpty(location.city) && cityPicker != null) {
-                    cityPicker.locateComplete(LocatedCity(location.city, location.province, location.adCode), LocateState.SUCCESS)
+                    if (mTvCity.text.toString() == "城市") {
+                        mTvCity.text = location.city
+                    } else {
+                        cityPicker.locateComplete(LocatedCity(location.city, location.province, location.adCode), LocateState.SUCCESS)
+                    }
                     mLocationClient.stop()
                 }
             }
@@ -164,7 +166,7 @@ class AddressPickerActivity : BaseActivity() {
         val option = LocationClientOption()
         option.locationMode = LocationClientOption.LocationMode.Hight_Accuracy
         option.setCoorType("bd09ll")
-        option.setScanSpan(100)
+//        option.setScanSpan(100)
         option.isOpenGps = true
         option.isLocationNotify = true
         option.SetIgnoreCacheException(false)
@@ -173,6 +175,8 @@ class AddressPickerActivity : BaseActivity() {
         option.setWifiCacheTimeOut(5 * 60 * 1000)
         option.setEnableSimulateGps(false)
         mLocationClient.locOption = option
+
+        mLocationClient.start()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
