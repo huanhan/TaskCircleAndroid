@@ -1,5 +1,7 @@
 package xin.lrvik.taskcicleandroid.ui.fragment
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.OrientationHelper
@@ -12,8 +14,10 @@ import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
 import com.baidu.location.LocationClient
 import com.baidu.location.LocationClientOption
+import com.baidu.mapapi.search.core.PoiInfo
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.support.v4.startActivity
+import org.jetbrains.anko.support.v4.startActivityForResult
 import xin.lrvik.easybanner.Transformer
 import xin.lrvik.easybanner.adapter.viewpager.EasyImageAdapter
 import xin.lrvik.easybanner.dto.TypeItem
@@ -90,10 +94,17 @@ class HomeFragment : BaseFragment() {
         mRvRecommend.adapter = RvRecommendAdapter(list)
 
         mTvAddress.onClick {
-            startActivity<AddressPickerActivity>()
+            startActivityForResult<AddressPickerActivity>(requestCode = 1)
         }
 
         initLocation()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            var poiInfo = data?.getParcelableExtra<PoiInfo>("RESULT")
+            mTvAddress.text = poiInfo?.name
+        }
     }
 
     /***

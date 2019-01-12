@@ -1,5 +1,6 @@
 package xin.lrvik.taskcicleandroid.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.OrientationHelper
@@ -23,6 +24,7 @@ import com.zaaach.citypicker.model.LocateState
 import android.text.TextUtils
 import android.text.TextWatcher
 import com.baidu.mapapi.SDKInitializer
+import com.baidu.mapapi.model.LatLng
 import com.baidu.mapapi.search.core.PoiInfo
 import com.baidu.mapapi.search.core.SearchResult
 import com.baidu.mapapi.search.poi.*
@@ -52,8 +54,8 @@ class AddressPickerActivity : BaseActivity() {
         }
         SDKInitializer.initialize(applicationContext)
 
-        initLocation()
         initPoiSearch()
+        initLocation()
         initCityPicker()
 
         mTvCity.onClick {
@@ -84,6 +86,16 @@ class AddressPickerActivity : BaseActivity() {
         mRvAddress.layoutManager = linearLayoutManager
         mAdapter = RvAddressAdapter(poiInfos)
         mRvAddress.adapter = mAdapter
+
+        mAdapter.setOnItemClickListener { adapter, view, position ->
+            var poiInfo = adapter.data[position] as PoiInfo
+            val intent = Intent()
+            intent.putExtra("RESULT", poiInfo)
+            this.setResult(RESULT_OK, intent)
+            this.finish()
+        }
+
+
     }
 
     /**
@@ -154,6 +166,17 @@ class AddressPickerActivity : BaseActivity() {
                 if (!TextUtils.isEmpty(location.city) && cityPicker != null) {
                     if (mTvCity.text.toString() == "城市") {
                         mTvCity.text = location.city
+                        //默认搜索定位周边信息
+                        var option = PoiNearbySearchOption()
+                        //获取纬度信息
+                        var latitude = location.latitude
+                        //获取经度信息
+                        var longitude = location.longitude
+                        option.location(LatLng(latitude, longitude))
+                                .pageCapacity(25)
+                                .keyword("小区\$写字楼\$学校")
+                                .radius(1000)
+                        poiSearch.searchNearby(option)
                     } else {
                         cityPicker.locateComplete(LocatedCity(location.city, location.province, location.adCode), LocateState.SUCCESS)
                     }

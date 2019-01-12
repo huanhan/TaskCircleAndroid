@@ -24,10 +24,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:drawableLeft="@drawable/ic_add_location_blue_24dp"
+                android:drawableLeft="@mipmap/location"
                 android:drawablePadding="1dp"
                 android:ellipsize="end"
-                android:maxEms="6"
+                android:maxEms="10"
                 android:singleLine="true"
                 android:text="暂无地址"
                 android:textSize="18sp" />
