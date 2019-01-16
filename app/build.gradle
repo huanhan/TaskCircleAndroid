@@ -49,6 +49,9 @@ dependencies {
 
     //城市选择工具类
     implementation 'com.zaaach:citypicker:2.0.3'
+
+    //搜索控件
+    implementation "com.miguelcatalan:materialsearchview:$material_search_view"
 }
 repositories {
     mavenCentral()

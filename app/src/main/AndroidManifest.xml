@@ -43,11 +43,15 @@
         <activity android:name=".ui.activity.HunterTaskActivity" />
         <activity
             android:name=".ui.activity.AddressPickerActivity"
-            android:theme="@style/DefaultCityPickerTheme"></activity>
+            android:theme="@style/DefaultCityPickerTheme" />
+
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
+
+        <activity android:name=".ui.activity.SearchActivity" />
+        <activity android:name=".ui.activity.SearchListActivity"></activity>
     </application>
 
 </manifest>

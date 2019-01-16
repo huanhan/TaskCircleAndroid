@@ -13,6 +13,7 @@ buildscript {
     ext.glide_version = '4.8.0'
     ext.base_recycler_view_adapter_helper_version = '2.9.44'
     ext.flowlayout='1.1.2'
+    ext.material_search_view='1.4.0'
 
     repositories {
         google()

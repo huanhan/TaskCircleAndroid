@@ -29,6 +29,7 @@ import xin.lrvik.taskcicleandroid.common.*
 import xin.lrvik.taskcicleandroid.data.protocol.Task
 import xin.lrvik.taskcicleandroid.ui.activity.AddressPickerActivity
 import xin.lrvik.taskcicleandroid.ui.activity.ClassActivity
+import xin.lrvik.taskcicleandroid.ui.activity.SearchActivity
 import xin.lrvik.taskcicleandroid.ui.adapter.EvpTypeItemAdapter
 import xin.lrvik.taskcicleandroid.ui.adapter.RvRecommendAdapter
 import java.sql.Timestamp
@@ -95,6 +96,10 @@ class HomeFragment : BaseFragment() {
 
         mTvAddress.onClick {
             startActivityForResult<AddressPickerActivity>(requestCode = 1)
+        }
+
+        mRLSearch.onClick {
+            startActivity<SearchActivity>()
         }
 
         initLocation()
