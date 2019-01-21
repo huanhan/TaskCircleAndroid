@@ -6,8 +6,8 @@ package xin.lrvik.taskcicleandroid.baselibrary.common
 class BaseConstant {
 
     companion object {
-        const val SERVICE_ADDRESS = "http://192.168.31.206:8080/"
-        const val TABLE_PREFS = "smile_movie"
+        const val SERVICE_ADDRESS = "http://192.168.2.209:8080/"
+        const val TABLE_PREFS = "TASK_CIRCLE"
         const val KEY_SP_TOKEN = "token"
     }
 

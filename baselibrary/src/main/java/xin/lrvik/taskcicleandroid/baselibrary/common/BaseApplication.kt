@@ -1,13 +1,13 @@
 package xin.lrvik.taskcicleandroid.baselibrary.common
 
-import android.app.Application
 import android.content.Context
+import android.support.multidex.MultiDexApplication
 import xin.lrvik.taskcicleandroid.baselibrary.injection.component.AppComponent
 import xin.lrvik.taskcicleandroid.baselibrary.injection.component.DaggerAppComponent
 import xin.lrvik.taskcicleandroid.baselibrary.injection.module.AppModule
 
 
-class BaseApplication : Application() {
+class BaseApplication : MultiDexApplication() {
 
     lateinit var appComponent: AppComponent
 

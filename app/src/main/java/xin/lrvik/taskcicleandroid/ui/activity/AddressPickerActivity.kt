@@ -52,7 +52,6 @@ class AddressPickerActivity : BaseActivity() {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.title = "选择地址"
         }
-        SDKInitializer.initialize(applicationContext)
 
         initPoiSearch()
         initLocation()
