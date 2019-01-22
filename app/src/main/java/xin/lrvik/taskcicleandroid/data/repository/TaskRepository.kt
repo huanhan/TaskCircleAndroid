@@ -20,4 +20,10 @@ class TaskRepository @Inject constructor() {
     fun addTask(classs: List<Long>, text: String, contentText: String, data: MutableList<TaskStep>): Observable<Task> {
         return RetrofitFactory.instance.create(TaskApi::class.java).addTask(UserInfo.userId, AddTaskReq(text, contentText, classs, data))
     }
+
+    fun queryByClassid(classsId: Long,
+                       page: Int,
+                       size: Int): Observable<Page<Task>> {
+        return RetrofitFactory.instance.create(TaskApi::class.java).queryByClassid(classsId, page, size)
+    }
 }

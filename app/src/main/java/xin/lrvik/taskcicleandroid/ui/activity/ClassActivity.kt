@@ -13,6 +13,7 @@ import xin.lrvik.taskcicleandroid.presenter.ClassPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.ClassView
 import xin.lrvik.taskcicleandroid.ui.adapter.VpTaskAdapter
 import xin.lrvik.taskcicleandroid.ui.dialog.ClassificationDialog
+import xin.lrvik.taskcicleandroid.ui.fragment.TaskClassFragment
 import xin.lrvik.taskcicleandroid.ui.fragment.TaskStateFragment
 import java.util.*
 
@@ -32,7 +33,6 @@ class ClassActivity : BaseMvpActivity<ClassPresenter>(), ClassView {
 
     override fun onTaskClassResult(data: List<TaskClass>) {
         mDialog.setData(data)
-
         var parent: TaskClass? = null
         for ((indx, taskClass) in data.withIndex()) {
             if (taskClass.name == title) {
@@ -44,9 +44,11 @@ class ClassActivity : BaseMvpActivity<ClassPresenter>(), ClassView {
             parent.taskClassifies?.let {
                 it.forEach {
                     mTitles.add("${it.name}")
-                    mFragments.add(TaskStateFragment.newInstance("${it.name}"))
+                    mFragments.add(TaskClassFragment.newInstance(it.id))
                 }
             }
+
+            //关联ViewPager
             mViewPager.adapter = VpTaskAdapter(supportFragmentManager, mFragments, mTitles)
             mTabLayout.setupWithViewPager(mViewPager)
         }
@@ -79,21 +81,9 @@ class ClassActivity : BaseMvpActivity<ClassPresenter>(), ClassView {
         //让dialog弹出初始化一次
         mDialog.showDialog(supportFragmentManager)
         mDialog.dismiss()
+
         mPresenter.classData()
     }
-
-    private fun getData() {
-
-        for (i in 0..4) {
-            mTitles.add("$title $i")
-        }
-
-        mTitles.forEach {
-            mFragments.add(TaskStateFragment.newInstance(it))
-        }
-
-    }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

@@ -55,6 +55,11 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
         return inflater.inflate(R.layout.fragment_home, null)
     }
 
+    override fun injectComponent() {
+        DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
+        mPresenter.mView = this
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         mEvpBanner.setBannerAnimation(Transformer.Accordion)
@@ -139,11 +144,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
         mLocationClient.locOption = option
 
         mLocationClient.start()
-    }
-
-    override fun injectComponent() {
-        DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
-        mPresenter.mView = this
     }
 
     override fun onPause() {

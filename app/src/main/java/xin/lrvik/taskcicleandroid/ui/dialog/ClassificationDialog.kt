@@ -126,7 +126,7 @@ class ClassificationDialog : DialogFragment() {
     /**
      * 清空一层分类选中状态
      */
-    fun clearSelectSingleData(data: ArrayList<TaskClass>) {
+    private fun clearSelectSingleData(data: ArrayList<TaskClass>) {
         //获取到的数据做清空选中处理
         data.forEach {
             it.isSelect = false
