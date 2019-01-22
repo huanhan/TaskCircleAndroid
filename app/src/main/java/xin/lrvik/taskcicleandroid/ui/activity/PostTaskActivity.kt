@@ -15,7 +15,6 @@ import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.activity_task_detail.*
 import org.jetbrains.anko.dip
 import org.jetbrains.anko.margin
-import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
@@ -151,7 +150,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                     }
                 }
             }
-            mPresenter.homeData()
+            mPresenter.classData()
         } else {
             mDialog!!.showDialog(supportFragmentManager)
         }

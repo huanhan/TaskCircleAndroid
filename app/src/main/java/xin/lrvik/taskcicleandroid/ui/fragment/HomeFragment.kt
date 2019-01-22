@@ -27,7 +27,7 @@ import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseMvpFragment
 import xin.lrvik.taskcicleandroid.common.*
 import xin.lrvik.taskcicleandroid.data.protocol.Home
 import xin.lrvik.taskcicleandroid.data.protocol.Task
-import xin.lrvik.taskcicleandroid.data.protocol.TaskClassifyAppDto
+import xin.lrvik.taskcicleandroid.data.protocol.TaskClass
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.HomePresenter
 import xin.lrvik.taskcicleandroid.presenter.view.HomeView
@@ -68,7 +68,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
         mEvpType.setIndicator(mEdiType)
                 .setAdapter(EvpTypeItemAdapter())
                 .setOnItemClickListner { v, t ->
-                    startActivity<ClassActivity>("CLASSTYPE" to (t as TaskClassifyAppDto).name!!)
+                    startActivity<ClassActivity>("CLASSTYPE" to (t as TaskClass).name!!)
                 }
 
 

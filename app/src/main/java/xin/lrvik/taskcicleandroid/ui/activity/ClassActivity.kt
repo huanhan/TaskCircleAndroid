@@ -6,19 +6,33 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_class.*
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
-import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseActivity
+import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
+import xin.lrvik.taskcicleandroid.data.protocol.TaskClass
+import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
+import xin.lrvik.taskcicleandroid.presenter.ClassPresenter
+import xin.lrvik.taskcicleandroid.presenter.view.ClassView
 import xin.lrvik.taskcicleandroid.ui.adapter.VpTaskAdapter
 import xin.lrvik.taskcicleandroid.ui.dialog.ClassificationDialog
 import xin.lrvik.taskcicleandroid.ui.fragment.TaskStateFragment
 import java.util.*
 
-class ClassActivity : BaseActivity() {
+class ClassActivity : BaseMvpActivity<ClassPresenter>(), ClassView {
+
 
     var mDialog: ClassificationDialog? = null
 
     private val mFragments by lazy { Stack<Fragment>() }
     private val mTitles by lazy { Stack<String>() }
-    lateinit var title:String
+    lateinit var title: String
+
+    override fun injectComponent() {
+        DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
+        mPresenter.mView = this
+    }
+
+    override fun onTaskClassResult(data: List<TaskClass>) {
+        mDialog!!.setData(data)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,12 +54,11 @@ class ClassActivity : BaseActivity() {
             if (mDialog == null) {
                 mDialog = ClassificationDialog()
                 mDialog!!.showDialog(supportFragmentManager)
+                mPresenter.classData()
             } else {
                 mDialog!!.showDialog(supportFragmentManager)
             }
         }
-
-        getData()
 
         mViewPager.adapter = VpTaskAdapter(supportFragmentManager, mFragments, mTitles)
         mTabLayout.setupWithViewPager(mViewPager)
