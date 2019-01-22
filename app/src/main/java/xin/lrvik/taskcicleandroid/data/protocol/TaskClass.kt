@@ -6,6 +6,6 @@ package xin.lrvik.taskcicleandroid.data.protocol
  */
 data class TaskClass(var id: Long,
                      var name: String,
-                     var info: String,
+                     var classifyImg: String?,
                      var taskClassifies: ArrayList<TaskClass>?,
                      var isSelect: Boolean)

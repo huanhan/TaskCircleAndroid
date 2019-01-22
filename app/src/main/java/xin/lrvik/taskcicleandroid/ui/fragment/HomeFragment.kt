@@ -18,22 +18,17 @@ import com.baidu.mapapi.search.core.PoiInfo
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.startActivityForResult
-import org.jetbrains.anko.support.v4.toast
 import xin.lrvik.easybanner.Transformer
 import xin.lrvik.easybanner.adapter.viewpager.EasyImageAdapter
-import xin.lrvik.easybanner.dto.TypeItem
 import xin.lrvik.taskcicleandroid.R
-import xin.lrvik.taskcicleandroid.R.mipmap.location
 import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
-import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseFragment
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseMvpFragment
 import xin.lrvik.taskcicleandroid.common.*
 import xin.lrvik.taskcicleandroid.data.protocol.Home
 import xin.lrvik.taskcicleandroid.data.protocol.Task
-import xin.lrvik.taskcicleandroid.data.protocol.Task2
 import xin.lrvik.taskcicleandroid.data.protocol.TaskClassifyAppDto
-import xin.lrvik.taskcicleandroid.injection.component.DaggerHomeComponent
+import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.HomePresenter
 import xin.lrvik.taskcicleandroid.presenter.view.HomeView
 import xin.lrvik.taskcicleandroid.ui.activity.AddressPickerActivity
@@ -41,8 +36,6 @@ import xin.lrvik.taskcicleandroid.ui.activity.ClassActivity
 import xin.lrvik.taskcicleandroid.ui.activity.SearchActivity
 import xin.lrvik.taskcicleandroid.ui.adapter.EvpTypeItemAdapter
 import xin.lrvik.taskcicleandroid.ui.adapter.RvRecommendAdapter
-import xin.lrvik.taskcicleandroid.ui.adapter.RvRecommendAdapter2
-import java.sql.Timestamp
 import java.util.*
 
 
@@ -149,7 +142,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
     }
 
     override fun injectComponent() {
-        DaggerHomeComponent.builder().activityComponent(activityComponent).build().inject(this)
+        DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
         mPresenter.mView = this
     }
 

@@ -78,7 +78,7 @@ class MainActivity : BaseActivity() {
             when (it.itemId) {
                 R.id.navigation_home -> changeFragment(0)
                 R.id.navigation_task -> changeFragment(1)
-                R.id.navigation_release -> startActivity<TaskDetailActivity>()
+                R.id.navigation_release -> startActivity<PostTaskActivity>()
                 R.id.navigation_msg -> changeFragment(2)
                 R.id.navigation_my -> changeFragment(3)
             }

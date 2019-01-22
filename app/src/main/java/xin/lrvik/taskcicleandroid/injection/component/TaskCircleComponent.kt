@@ -4,6 +4,8 @@ import dagger.Component
 import lrvik.xin.base.injection.PerComponentScope
 import xin.lrvik.taskcicleandroid.baselibrary.injection.component.ActivityComponent
 import xin.lrvik.taskcicleandroid.injection.module.HomeModule
+import xin.lrvik.taskcicleandroid.injection.module.TaskModule
+import xin.lrvik.taskcicleandroid.ui.activity.PostTaskActivity
 import xin.lrvik.taskcicleandroid.ui.fragment.HomeFragment
 
 /**
@@ -11,7 +13,8 @@ import xin.lrvik.taskcicleandroid.ui.fragment.HomeFragment
  *
  */
 @PerComponentScope
-@Component(dependencies = arrayOf(ActivityComponent::class), modules = arrayOf(HomeModule::class))
-interface HomeComponent {
+@Component(dependencies = [ActivityComponent::class], modules = [HomeModule::class,TaskModule::class])
+interface TaskCircleComponent {
+    fun inject(activity: PostTaskActivity)
     fun inject(fragment: HomeFragment)
 }

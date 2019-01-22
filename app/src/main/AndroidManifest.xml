@@ -36,7 +36,7 @@
         </activity>
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.RegistActivity" />
-        <activity android:name=".ui.activity.TaskDetailActivity" />
+        <activity android:name=".ui.activity.PostTaskActivity" />
         <activity android:name=".ui.activity.ClassActivity" />
         <activity android:name=".ui.activity.ChatActivity" />
         <activity android:name=".ui.activity.WalletActivity" />

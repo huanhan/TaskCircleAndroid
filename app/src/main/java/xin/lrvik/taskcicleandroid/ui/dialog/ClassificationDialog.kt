@@ -27,6 +27,7 @@ class ClassificationDialog : DialogFragment() {
 
     var listener: OnClassificationClickListener? = null
     var classList: ArrayList<TaskClass> = ArrayList()
+    var classListRight: ArrayList<TaskClass> = ArrayList()
     lateinit var mRvClassRightAapter: RvClassRightAdapter
     lateinit var mRvClassLeftAapter: RvClassLeftAdapter
 
@@ -44,7 +45,7 @@ class ClassificationDialog : DialogFragment() {
         mRvClassLeft.layoutManager = linearLayoutManagerLeft
         mRvClassRight.layoutManager = linearLayoutManagerRight
 
-        mRvClassRightAapter = RvClassRightAdapter(classList)
+        mRvClassRightAapter = RvClassRightAdapter(classListRight)
         mRvClassLeftAapter = RvClassLeftAdapter(classList)
 
         mRvClassRight.adapter = mRvClassRightAapter
@@ -79,10 +80,10 @@ class ClassificationDialog : DialogFragment() {
             dismissDialog()
         }
 
-        getData()
-
-        //设置选中
-        setCurrData(arguments!!.getInt(PARENTITEM), arguments!!.getInt(CHILDITEM))
+        if (classList.size > 0) {
+            clearSelectData(classList)
+            setCurrData(0, -1)
+        }
     }
 
     fun dismissDialog() {
@@ -103,7 +104,7 @@ class ClassificationDialog : DialogFragment() {
         })
     }
 
-    fun setCurrData(parentItem: Int, childItem: Int) {
+    fun setCurrData(parentItem: Int = 0, childItem: Int = -1) {
         //父分类是否被选中
         if (parentItem != -1) {
             classList[parentItem].isSelect = true
@@ -142,19 +143,15 @@ class ClassificationDialog : DialogFragment() {
         }
     }
 
-
-    fun getData() {
+    fun setData(data: List<TaskClass>, parentItem: Int = 0, childItem: Int = -1) {
         classList.clear()
-        //todo 网络请求
-        for (i in 0L..10L) {
-            var items = ArrayList<TaskClass>()
-            for (j in 0..9L) {
-                items.add(TaskClass(j, "分类$i$j", "", null, false))
-            }
-            classList.add(TaskClass(i, "分类$i", "", items, false))
-        }
+        classList.addAll(data)
         mRvClassLeftAapter.notifyDataSetChanged()
+
+        //设置选中
+        setCurrData(parentItem, childItem)
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -170,10 +167,8 @@ class ClassificationDialog : DialogFragment() {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 
-    fun showDialog(supportFragmentManager: FragmentManager, parentItem: Int = 0, childItem: Int = -1) {
+    fun showDialog(supportFragmentManager: FragmentManager) {
         val bundle = Bundle()
-        bundle.putInt(PARENTITEM, parentItem)
-        bundle.putInt(CHILDITEM, childItem)
         this.arguments = bundle
         this.show(supportFragmentManager, "classDialog")
     }
