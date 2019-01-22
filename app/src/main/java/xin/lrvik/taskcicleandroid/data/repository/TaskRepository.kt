@@ -2,10 +2,9 @@ package xin.lrvik.taskcicleandroid.data.repository
 
 import io.reactivex.Observable
 import xin.lrvik.taskcicleandroid.baselibrary.data.net.RetrofitFactory
-import xin.lrvik.taskcicleandroid.data.api.HomeApi
+import xin.lrvik.taskcicleandroid.common.UserInfo
 import xin.lrvik.taskcicleandroid.data.api.TaskApi
-import xin.lrvik.taskcicleandroid.data.protocol.Home
-import xin.lrvik.taskcicleandroid.data.protocol.TaskClass
+import xin.lrvik.taskcicleandroid.data.protocol.*
 import javax.inject.Inject
 
 /**
@@ -16,5 +15,9 @@ class TaskRepository @Inject constructor() {
 
     fun taskClass(): Observable<List<TaskClass>> {
         return RetrofitFactory.instance.create(TaskApi::class.java).taskClass()
+    }
+
+    fun addTask(classs: List<Long>, text: String, contentText: String, data: MutableList<TaskStep>): Observable<Task> {
+        return RetrofitFactory.instance.create(TaskApi::class.java).addTask(UserInfo.userId, AddTaskReq(text, contentText, classs, data))
     }
 }

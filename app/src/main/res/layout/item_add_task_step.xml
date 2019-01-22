@@ -37,8 +37,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:ellipsize="end"
             android:gravity="center_vertical"
-            android:text="allencoder2013@gmail.com"
+            android:lines="1"
+            android:text="内容"
             android:textColor="@color/text_dark" />
     </LinearLayout>
 

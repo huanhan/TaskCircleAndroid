@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
-import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
@@ -12,12 +11,14 @@ import android.widget.TextView
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
-import kotlinx.android.synthetic.main.activity_task_detail.*
+import kotlinx.android.synthetic.main.activity_post_task.*
 import org.jetbrains.anko.dip
 import org.jetbrains.anko.margin
+import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
+import xin.lrvik.taskcicleandroid.data.protocol.Task
 import xin.lrvik.taskcicleandroid.data.protocol.TaskClass
 import xin.lrvik.taskcicleandroid.data.protocol.TaskStep
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
@@ -26,15 +27,17 @@ import xin.lrvik.taskcicleandroid.presenter.view.PostTaskView
 import xin.lrvik.taskcicleandroid.ui.adapter.RvAddTaskStepAdapter
 import xin.lrvik.taskcicleandroid.ui.dialog.ClassificationDialog
 import xin.lrvik.taskcicleandroid.ui.dialog.TaskStepDialog
-import xin.lrvik.taskcicleandroid.ui.widget.KeyboardUtil
 import java.util.*
 
 
 class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
+
     var mDialog: ClassificationDialog? = null
 
     var classList = ArrayList<TaskClass>()
+    lateinit var mRvTaskStepAdapter: RvAddTaskStepAdapter
+
 
     override fun injectComponent() {
         DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
@@ -46,7 +49,10 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
             it.setData(data)
             it.setCurrData(0, -1)
         }
+    }
 
+    override fun onAddTaskResult(data: Task) {
+        toast("增加任务成功")
     }
 
     internal var colors = intArrayOf(Color.parseColor("#90C5ED"),
@@ -62,7 +68,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_task_detail)
+        setContentView(R.layout.activity_post_task)
         initView()
     }
 
@@ -73,17 +79,15 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.title = "发布任务"
         }
-        KeyboardUtil(mKeyBoardView, mEtTaskNum)
-        KeyboardUtil(mKeyBoardView, mEtMoneyNum)
 
         //步骤
         mRvStep.layoutManager = LinearLayoutManager(this)
 
 
         var list = ArrayList<TaskStep>()
-        list.add(TaskStep("1 ", 1, "默认标题", "默认内容", ""))
+        list.add(TaskStep("1", 1, "默认标题", "默认内容", ""))
 
-        val mRvTaskStepAdapter = RvAddTaskStepAdapter(list)
+        mRvTaskStepAdapter = RvAddTaskStepAdapter(list)
         val mItemDragAndSwipeCallback = ItemDragAndSwipeCallback(mRvTaskStepAdapter)
         val mItemTouchHelper = ItemTouchHelper(mItemDragAndSwipeCallback)
         mItemTouchHelper.attachToRecyclerView(mRvStep)
@@ -118,7 +122,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
         mFlowlayout.adapter = object : TagAdapter<TaskClass>(classList) {
 
-            override fun getView(parent: FlowLayout, position: Int, taskStep: TaskClass): View {
+            override fun getView(parent: FlowLayout, position: Int, taskClass: TaskClass): View {
                 //动态创建热词布局
                 var tv = TextView(this@PostTaskActivity)
                 var params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
@@ -126,7 +130,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                 tv.layoutParams = params
                 tv.setPadding(dip(6), dip(4), dip(6), dip(4))
                 tv.setBackgroundColor(colors[position % colors.size])
-                tv.text = taskStep.name
+                tv.text = taskClass.name
                 return tv
             }
         }
@@ -138,7 +142,48 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
             true
         }
 
+        mBtnLogin.onClick {
+            if (validation()) {
 
+                var classs = classList.flatMap {
+                    listOf(it.id)
+                }
+                mPresenter.addTask(classs, mEtTitle.text.toString(), mLevContext.contentText, mRvTaskStepAdapter.data)
+            }
+        }
+    }
+
+    fun validation(): Boolean {
+        if (classList.size !in 1..5) {
+            toast("标签数必须在1~5个")
+            return false
+        }
+
+        if (mEtTitle.text.toString().isEmpty()) {
+            toast("任务标题不能为空")
+            return false
+        }
+
+        if (mLevContext.contentText.isEmpty()) {
+            toast("任务描述不能为空")
+            return false
+        }
+
+        if (mRvTaskStepAdapter.data.size !in 1..15) {
+            toast("步骤至少要有1步,最多不超过15步")
+            return false
+        }
+
+        for ((index, datum) in mRvTaskStepAdapter.data.withIndex()) {
+            datum.step = index
+            datum.step++
+            if (datum.title.isEmpty() || datum.context.isEmpty()) {
+                toast("步骤标题和内容不能为空")
+                return false
+            }
+        }
+
+        return true
     }
 
     private fun createDialog() {
@@ -170,12 +215,6 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         }
     }
 
-
-    override fun onResume() {
-        mLl.requestFocus()
-        super.onResume()
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
@@ -186,13 +225,4 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (mKeyBoardView.visibility == View.VISIBLE) {
-                mKeyBoardView.visibility = View.GONE
-                return true
-            }
-        }
-        return super.onKeyDown(keyCode, event)
-    }
 }

@@ -7,4 +7,5 @@ package xin.lrvik.taskcicleandroid.common
 object UserInfo {
     var longitude: Double = 0.0
     var latitude: Double = 0.0
+    var userId: Int = 6
 }
