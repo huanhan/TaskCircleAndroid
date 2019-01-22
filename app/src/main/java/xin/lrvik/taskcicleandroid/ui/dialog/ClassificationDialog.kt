@@ -80,10 +80,6 @@ class ClassificationDialog : DialogFragment() {
             dismissDialog()
         }
 
-        if (classList.size > 0) {
-            clearSelectData(classList)
-            setCurrData(0, -1)
-        }
     }
 
     fun dismissDialog() {
@@ -99,11 +95,18 @@ class ClassificationDialog : DialogFragment() {
             }
 
             override fun onAnimationEnd(p0: Animator?) {
+                if (classList.size > 0) {
+                    clearSelectData(classList)
+                    setCurrData(0, -1)
+                }
                 dialog.dismiss()
             }
         })
     }
 
+    /**
+     * 设置选中的位置
+     */
     fun setCurrData(parentItem: Int = 0, childItem: Int = -1) {
         //父分类是否被选中
         if (parentItem != -1) {
@@ -143,13 +146,17 @@ class ClassificationDialog : DialogFragment() {
         }
     }
 
-    fun setData(data: List<TaskClass>, parentItem: Int = 0, childItem: Int = -1) {
+    /**
+     * 设置数据
+     */
+    fun setData(data: List<TaskClass>) {
         classList.clear()
         classList.addAll(data)
         mRvClassLeftAapter.notifyDataSetChanged()
+    }
 
-        //设置选中
-        setCurrData(parentItem, childItem)
+    fun getData():List<TaskClass>{
+        return classList
     }
 
 

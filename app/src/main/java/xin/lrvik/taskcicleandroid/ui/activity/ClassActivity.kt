@@ -18,12 +18,12 @@ import java.util.*
 
 class ClassActivity : BaseMvpActivity<ClassPresenter>(), ClassView {
 
-
-    var mDialog: ClassificationDialog? = null
+    var mDialog: ClassificationDialog = ClassificationDialog()
 
     private val mFragments by lazy { Stack<Fragment>() }
     private val mTitles by lazy { Stack<String>() }
     lateinit var title: String
+    var pos = 0
 
     override fun injectComponent() {
         DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
@@ -31,7 +31,27 @@ class ClassActivity : BaseMvpActivity<ClassPresenter>(), ClassView {
     }
 
     override fun onTaskClassResult(data: List<TaskClass>) {
-        mDialog!!.setData(data)
+        mDialog.setData(data)
+
+        var parent: TaskClass? = null
+        for ((indx, taskClass) in data.withIndex()) {
+            if (taskClass.name == title) {
+                parent = taskClass
+                pos = indx
+            }
+        }
+        parent?.let {
+            parent.taskClassifies?.let {
+                it.forEach {
+                    mTitles.add("${it.name}")
+                    mFragments.add(TaskStateFragment.newInstance("${it.name}"))
+                }
+            }
+            mViewPager.adapter = VpTaskAdapter(supportFragmentManager, mFragments, mTitles)
+            mTabLayout.setupWithViewPager(mViewPager)
+        }
+
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,17 +71,15 @@ class ClassActivity : BaseMvpActivity<ClassPresenter>(), ClassView {
         }
 
         mIvBt.onClick {
-            if (mDialog == null) {
-                mDialog = ClassificationDialog()
-                mDialog!!.showDialog(supportFragmentManager)
-                mPresenter.classData()
-            } else {
-                mDialog!!.showDialog(supportFragmentManager)
+            if (mDialog.getData().isNotEmpty()) {
+                mDialog.showDialog(supportFragmentManager)
+                mDialog.setCurrData(pos, -1)
             }
         }
-
-        mViewPager.adapter = VpTaskAdapter(supportFragmentManager, mFragments, mTitles)
-        mTabLayout.setupWithViewPager(mViewPager)
+        //让dialog弹出初始化一次
+        mDialog.showDialog(supportFragmentManager)
+        mDialog.dismiss()
+        mPresenter.classData()
     }
 
     private fun getData() {

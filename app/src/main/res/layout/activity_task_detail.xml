@@ -87,7 +87,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:padding="10dp"
+                            android:background="@drawable/btn_common_selector"
+                            android:padding="5dp"
+                            android:layout_margin="5dp"
                             android:text="点击增加分类"
                             android:textColor="@color/common_white" />
                     </RelativeLayout>

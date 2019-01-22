@@ -42,7 +42,11 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
     }
 
     override fun onTaskClassResult(data: List<TaskClass>) {
-        mDialog!!.setData(data)
+        mDialog?.let {
+            it.setData(data)
+            it.setCurrData(0, -1)
+        }
+
     }
 
     internal var colors = intArrayOf(Color.parseColor("#90C5ED"),
