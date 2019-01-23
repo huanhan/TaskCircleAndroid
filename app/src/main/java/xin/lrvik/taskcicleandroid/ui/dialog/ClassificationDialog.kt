@@ -28,8 +28,8 @@ class ClassificationDialog : DialogFragment() {
     var listener: OnClassificationClickListener? = null
     var classList: ArrayList<TaskClass> = ArrayList()
     var classListRight: ArrayList<TaskClass> = ArrayList()
-    lateinit var mRvClassRightAapter: RvClassRightAdapter
-    lateinit var mRvClassLeftAapter: RvClassLeftAdapter
+    var mRvClassRightAapter: RvClassRightAdapter? = null
+    var mRvClassLeftAapter: RvClassLeftAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.dialog_classification, container)
@@ -45,26 +45,31 @@ class ClassificationDialog : DialogFragment() {
         mRvClassLeft.layoutManager = linearLayoutManagerLeft
         mRvClassRight.layoutManager = linearLayoutManagerRight
 
-        mRvClassRightAapter = RvClassRightAdapter(classListRight)
-        mRvClassLeftAapter = RvClassLeftAdapter(classList)
+        if (mRvClassRightAapter == null) {
+            mRvClassRightAapter = RvClassRightAdapter(classListRight)
+        }
+
+        if (mRvClassLeftAapter == null) {
+            mRvClassLeftAapter = RvClassLeftAdapter(classList)
+        }
 
         mRvClassRight.adapter = mRvClassRightAapter
         mRvClassLeft.adapter = mRvClassLeftAapter
 
-        mRvClassRightAapter.setOnItemClickListener { adapter, view, position ->
+        mRvClassRightAapter!!.setOnItemClickListener { adapter, view, position ->
             var arrayList = adapter.data as ArrayList<TaskClass>
             clearSelectSingleData(arrayList)
             arrayList[position].isSelect = true
-            mRvClassRightAapter.notifyDataSetChanged()
+            mRvClassRightAapter!!.notifyDataSetChanged()
             listener?.onClassClick(arrayList[position])
         }
 
-        mRvClassLeftAapter.setOnItemClickListener { adapter, view, position ->
+        mRvClassLeftAapter!!.setOnItemClickListener { adapter, view, position ->
             var arrayList = adapter.data as ArrayList<TaskClass>
             clearSelectData(arrayList)
             arrayList[position].isSelect = true
-            mRvClassRightAapter.setNewData(arrayList[position].taskClassifies)
-            mRvClassLeftAapter.notifyDataSetChanged()
+            mRvClassRightAapter!!.setNewData(arrayList[position].taskClassifies)
+            mRvClassLeftAapter!!.notifyDataSetChanged()
 
         }
         mLlClass.scaleY = 0f
@@ -95,10 +100,6 @@ class ClassificationDialog : DialogFragment() {
             }
 
             override fun onAnimationEnd(p0: Animator?) {
-                if (classList.size > 0) {
-                    clearSelectData(classList)
-                    setCurrData(0, -1)
-                }
                 dialog.dismiss()
             }
         })
@@ -108,18 +109,19 @@ class ClassificationDialog : DialogFragment() {
      * 设置选中的位置
      */
     fun setCurrData(parentItem: Int = 0, childItem: Int = -1) {
+        clearSelectData(classList)
         //父分类是否被选中
         if (parentItem != -1) {
             classList[parentItem].isSelect = true
             if (childItem != -1) {//子分类是否被选中
                 classList[parentItem].taskClassifies!![childItem].isSelect = true
             }
-            mRvClassRightAapter.setNewData(classList[parentItem].taskClassifies!!)
+            mRvClassRightAapter!!.setNewData(classList[parentItem].taskClassifies!!)
         } else {
             classList[0].isSelect = true
-            mRvClassRightAapter.setNewData(classList[0].taskClassifies!!)
+            mRvClassRightAapter!!.setNewData(classList[0].taskClassifies!!)
         }
-        mRvClassLeftAapter.setNewData(classList)
+        mRvClassLeftAapter!!.setNewData(classList)
     }
 
 
@@ -152,10 +154,10 @@ class ClassificationDialog : DialogFragment() {
     fun setData(data: List<TaskClass>) {
         classList.clear()
         classList.addAll(data)
-        mRvClassLeftAapter.notifyDataSetChanged()
+        mRvClassLeftAapter!!.notifyDataSetChanged()
     }
 
-    fun getData():List<TaskClass>{
+    fun getData(): List<TaskClass> {
         return classList
     }
 
