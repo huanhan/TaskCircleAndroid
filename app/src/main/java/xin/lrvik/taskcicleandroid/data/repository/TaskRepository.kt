@@ -17,7 +17,7 @@ class TaskRepository @Inject constructor() {
         return RetrofitFactory.instance.create(TaskApi::class.java).taskClass()
     }
 
-    fun addTask(classs: List<Long>, text: String, contentText: String, data: MutableList<TaskStep>): Observable<Task> {
+    fun addTask(classs: List<Long>, text: String, contentText: String, data: MutableList<TaskStep>): Observable<TaskDetail> {
         return RetrofitFactory.instance.create(TaskApi::class.java).addTask(UserInfo.userId, AddTaskReq(text, contentText, classs, data))
     }
 

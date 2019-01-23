@@ -106,7 +106,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
                 mTvAddress.text = poiInfo.name
                 poiInfo.location?.let {
                     UserInfo.latitude = poiInfo.location.latitude
-                    UserInfo.longitude = poiInfo.location.latitude
+                    UserInfo.longitude = poiInfo.location.longitude
                 }
 
             }

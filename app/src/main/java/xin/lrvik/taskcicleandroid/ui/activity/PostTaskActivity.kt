@@ -14,12 +14,14 @@ import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.activity_post_task.*
 import org.jetbrains.anko.dip
 import org.jetbrains.anko.margin
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
 import xin.lrvik.taskcicleandroid.data.protocol.Task
 import xin.lrvik.taskcicleandroid.data.protocol.TaskClass
+import xin.lrvik.taskcicleandroid.data.protocol.TaskDetail
 import xin.lrvik.taskcicleandroid.data.protocol.TaskStep
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.PostTaskPresenter
@@ -51,7 +53,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         }
     }
 
-    override fun onAddTaskResult(data: Task) {
+    override fun onAddTaskResult(data: TaskDetail) {
         toast("增加任务成功")
     }
 
@@ -77,7 +79,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.title = "发布任务"
+            actionBar.title = "保存任务"
         }
 
         //步骤
@@ -144,12 +146,12 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
         mBtnLogin.onClick {
             if (validation()) {
-
                 var classs = classList.flatMap {
                     listOf(it.id)
                 }
                 mPresenter.addTask(classs, mEtTitle.text.toString(), mLevContext.contentText, mRvTaskStepAdapter.data)
             }
+            startActivity<ReleaseTaskActivity>()
         }
     }
 

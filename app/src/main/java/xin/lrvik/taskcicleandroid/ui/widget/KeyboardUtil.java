@@ -47,9 +47,9 @@ public class KeyboardUtil {
         mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if(!b){
+                if (!b) {
                     hideKeyboard();
-                }else{
+                } else {
                     showSoftKeyboard();
                 }
             }
@@ -112,6 +112,8 @@ public class KeyboardUtil {
         public void onKey(int primaryCode, int[] keyCodes) {
             Log.d("test", "onKey: " + primaryCode);
             Editable editable = mEditText.getText();
+
+
             int start = mEditText.getSelectionStart();
 
             if (primaryCode == Keyboard.KEYCODE_DELETE) {// 回退
@@ -120,11 +122,20 @@ public class KeyboardUtil {
                         editable.delete(start - 1, start);
                     }
                 }
-            } else if (primaryCode == Keyboard.KEYCODE_CANCEL) {// 隐藏键盘
-                hideKeyboard();
-            } else if (primaryCode == Keyboard.KEYCODE_DONE) {// 隐藏键盘
+            } else if (primaryCode == Keyboard.KEYCODE_CANCEL || primaryCode == Keyboard.KEYCODE_DONE) {// 隐藏键盘
                 hideKeyboard();
             } else {
+                String content = editable.toString();
+                if (content.contains(".") && primaryCode == 46 ||
+                        content.contains(".") && content.length() >= 3 && editable.charAt(content.length() - 3) == '.') {
+                    return;
+                }
+                if(content.length()==0&&primaryCode == 46){
+                    editable.insert(start, Character.toString((char) primaryCode));
+                    editable.insert(start, "0");
+                    return;
+                }
+
                 editable.insert(start, Character.toString((char) primaryCode));
             }
         }

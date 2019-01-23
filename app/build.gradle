@@ -59,6 +59,10 @@ dependencies {
     //搜索控件
     implementation "com.miguelcatalan:materialsearchview:$material_search_view"
 
+    //日历控件
+    implementation('com.github.gzu-liyujiang.AndroidPicker:WheelPicker:1.5.6.20181018') {
+        exclude group: 'com.android.support'
+    }
 }
 repositories {
     mavenCentral()
