@@ -31,17 +31,16 @@ class TaskManagerFragment : BaseFragment() {
         }
 
         mTitles.add("全部")
+        mTitles.add("新建")
         mTitles.add("待审核")
-        mTitles.add("待发布")
-        mTitles.add("待接取")
-        mTitles.add("已接取")
+        mTitles.add("已发布")
         mTitles.add("已完成")
-        mTitles.add("待评价")
-        mTitles.add("已放弃")
 
-        mTitles.forEach {
+        listOf("ALL", "NEW", "AUDIT", "ISSUE", "FINISH").forEach {
             mFragments.add(TaskStateFragment.newInstance(it))
         }
+
+
         mViewPager.adapter = VpTaskAdapter(activity!!.supportFragmentManager, mFragments, mTitles)
         mTabLayout.setupWithViewPager(mViewPager)
     }

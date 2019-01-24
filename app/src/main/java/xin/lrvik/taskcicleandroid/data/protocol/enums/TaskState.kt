@@ -17,7 +17,7 @@ enum class TaskState constructor(private val state: String) {
     /**
      * 管理员点击提交审核，并设置审核状态
      */
-    AUDIT_FAILUER("任务审核失败"),
+    AUDIT_FAILURE("任务审核失败"),
     /**
      * 管理员点击提交审核，并设置审核状态
      */
@@ -30,10 +30,6 @@ enum class TaskState constructor(private val state: String) {
      * 用户点击发布
      */
     ISSUE("任务发布中"),
-    /**
-     * 有一个猎刃查看了任务，并点击接取按钮
-     */
-    RECEIVE("任务被接取中"),
     /**
      * 用户主动禁止，系统自动禁止（任务被接数量超出可接数量，用户账户金额不足）
      */
@@ -51,10 +47,6 @@ enum class TaskState constructor(private val state: String) {
      */
     DELETE_OK("任务被删除"),
     /**
-     * 用户点击任务删除按钮
-     */
-    DELETE("任务正在删除"),
-    /**
      * 用户提交放弃申请
      */
     ABANDON_COMMIT("用户提交放弃的申请"),
@@ -63,15 +55,11 @@ enum class TaskState constructor(private val state: String) {
      */
     ABANDON_OK("任务被放弃"),
     /**
-     * 用户点击任务放弃按钮
-     */
-    ABANDON("任务正在放弃"),
-    /**
      * 任务被猎刃接取后，用户放弃任务，并且系统默认不允许用户放弃时
      */
     USER_HUNTER_NEGOTIATE("与猎刃协商中"),
     /**
-     * 猎刃决绝与用户协商
+     * 猎刃拒绝与用户协商
      */
     HUNTER_REJECT("猎刃拒绝协商"),
     /**
@@ -83,17 +71,10 @@ enum class TaskState constructor(private val state: String) {
      */
     ADMIN_NEGOTIATE("管理员协商中"),
     /**
-     * 用户需要对任务的猎刃进行补偿
-     */
-    USER_COMPENSATION("用户赔偿"),
-    /**
-     * 系统退还用户押金
-     */
-    DEPOSIT("押金退还"),
-    /**
      * 查询专用
      */
-    HUNTER_COMMIT("猎刃放弃任务");
+    HUNTER_COMMIT("猎刃放弃任务")
+
 
 
 }

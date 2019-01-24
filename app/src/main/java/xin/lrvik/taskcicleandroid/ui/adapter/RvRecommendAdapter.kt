@@ -20,10 +20,12 @@ class RvRecommendAdapter(data: List<Task>) : BaseQuickAdapter<Task, BaseViewHold
     override fun convert(helper: BaseViewHolder, item: Task) {
         var distance = DistanceUtil.getDistance(LatLng(UserInfo.latitude, UserInfo.longitude), LatLng(item.latitude
                 ?: 0.0, item.longitude ?: 0.0)).toInt()
+
+        var dis = if (distance < 1000) "$distance 米" else "${distance / 1000} 千米"
         helper.setText(R.id.mTvTaskName, item.name)
                 .setText(R.id.mTvContext, item.context)
                 .setText(R.id.mTvMoney, "${item.money} 元")
-                .setText(R.id.mTvDistance, "$distance 米")
+                .setText(R.id.mTvDistance, "$dis")
                 .setText(R.id.mTvTime, "${DateFormat.format("yyyy年MM月dd", item.beginTime)}~${DateFormat.format("yyyy年MM月dd", item.deadline)}")
         var imageView = helper.getView<ImageView>(R.id.mIvIcon)
         imageView.loadUrl(item.headImg ?: R.mipmap.def)

@@ -78,7 +78,7 @@ class MainActivity : BaseActivity() {
             when (it.itemId) {
                 R.id.navigation_home -> changeFragment(0)
                 R.id.navigation_task -> changeFragment(1)
-                R.id.navigation_release -> startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.LOOK.name, PostTaskActivity.TASKID to "20190124220137236856064")
+                R.id.navigation_release -> startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.CREATE.name)
                 R.id.navigation_msg -> changeFragment(2)
                 R.id.navigation_my -> changeFragment(3)
             }

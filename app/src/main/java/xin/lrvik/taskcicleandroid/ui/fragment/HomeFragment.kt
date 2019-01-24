@@ -33,6 +33,7 @@ import xin.lrvik.taskcicleandroid.presenter.HomePresenter
 import xin.lrvik.taskcicleandroid.presenter.view.HomeView
 import xin.lrvik.taskcicleandroid.ui.activity.AddressPickerActivity
 import xin.lrvik.taskcicleandroid.ui.activity.ClassActivity
+import xin.lrvik.taskcicleandroid.ui.activity.PostTaskActivity
 import xin.lrvik.taskcicleandroid.ui.activity.SearchActivity
 import xin.lrvik.taskcicleandroid.ui.adapter.EvpTypeItemAdapter
 import xin.lrvik.taskcicleandroid.ui.adapter.RvRecommendAdapter
@@ -92,6 +93,11 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
 
         mRLSearch.onClick {
             startActivity<SearchActivity>()
+        }
+
+        rvRecommendAdapter.setOnItemClickListener { adapter, view, position ->
+            var task = adapter.data[position] as Task
+            startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.LOOK.name, PostTaskActivity.TASKID to task.id!!)
         }
 
         initLocation()

@@ -31,7 +31,7 @@ import xin.lrvik.taskcicleandroid.ui.dialog.ClassificationDialog
 import xin.lrvik.taskcicleandroid.ui.dialog.TaskStepDialog
 import kotlin.collections.ArrayList
 
-
+//startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.LOOK.name, PostTaskActivity.TASKID to "20190124220137236856064")
 class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
 
