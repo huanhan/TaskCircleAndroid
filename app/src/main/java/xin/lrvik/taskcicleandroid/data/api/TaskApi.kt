@@ -18,19 +18,19 @@ interface TaskApi {
 
     //增加任务
     @POST("app/task/{id}")
-    fun addTask(@Path("id") id: Int, @Body req: AddTaskReq): Observable<TaskDetail>
+    fun addTask(@Path("id") id: Long, @Body req: AddTaskReq): Observable<TaskDetail>
 
     //修改任务
-    @POST("/modify/{id}")
-    fun modifyTask(@Path("id") id: Int, @Body req: ModifyTaskReq): Observable<TaskDetail>
+    @POST("app/task/modify/{id}")
+    fun modifyTask(@Path("id") id: Long, @Body req: ModifyTaskReq): Observable<TaskDetail>
 
     //发布任务
-    @POST("/issue/{id}")
-    fun issueTask(@Path("id") id: Int, @Body req: IssueTaskReq): Observable<TaskDetail>
+    @POST("app/task/issue/{id}")
+    fun issueTask(@Path("id") id: Long, @Body req: IssueTaskReq): Observable<TaskDetail>
 
     //根据任务id查询任务详细
     @GET("app/task/{id}")
-    fun queryTaskDetail(@Path("id") id: Int): Observable<TaskDetail>
+    fun queryTaskDetail(@Path("id") id: String): Observable<TaskDetail>
 
     //查询分类下所有的已发布任务 http://localhost:8080/app/task/issue/9/0/2
     @GET("app/task/issue/{classid}/{page}/{size}")
@@ -43,6 +43,6 @@ interface TaskApi {
     fun queryByState(@Path("state") state: String,
                      @Path("page") page: Int,
                      @Path("size") size: Int,
-                     @Path("id") id: Long): Observable<List<Task>>
+                     @Path("id") id: Long): Observable<Page<Task>>
 
 }

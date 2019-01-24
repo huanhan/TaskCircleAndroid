@@ -2,6 +2,7 @@ package xin.lrvik.taskcicleandroid.ui.activity
 
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.MenuItem
@@ -19,7 +20,6 @@ import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
-import xin.lrvik.taskcicleandroid.data.protocol.Task
 import xin.lrvik.taskcicleandroid.data.protocol.TaskClass
 import xin.lrvik.taskcicleandroid.data.protocol.TaskDetail
 import xin.lrvik.taskcicleandroid.data.protocol.TaskStep
@@ -29,11 +29,25 @@ import xin.lrvik.taskcicleandroid.presenter.view.PostTaskView
 import xin.lrvik.taskcicleandroid.ui.adapter.RvAddTaskStepAdapter
 import xin.lrvik.taskcicleandroid.ui.dialog.ClassificationDialog
 import xin.lrvik.taskcicleandroid.ui.dialog.TaskStepDialog
-import java.util.*
+import kotlin.collections.ArrayList
 
 
 class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
+
+    enum class Mode {
+        CREATE(), MODIFY(), LOOK()
+    }
+
+    companion object {
+        val MODE = "MODE"
+        val TASKID = "TASKID"
+    }
+
+    var mode: Mode = Mode.LOOK
+
+    //是否可修改
+    var isModify = false
 
     var mDialog: ClassificationDialog? = null
 
@@ -55,6 +69,20 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
     override fun onAddTaskResult(data: TaskDetail) {
         toast("增加任务成功")
+        //startActivity<ReleaseTaskActivity>(ReleaseTaskActivity.TASKID to data.id)
+    }
+
+    override fun onTaskDetailResult(data: TaskDetail) {
+        mEtTitle.setText(data.name)
+        mLevContext.contentText = data.context
+        mRvTaskStepAdapter.setNewData(data.taskSteps)
+        classList.addAll(data.taskClassifyAppDtos)
+        mFlowlayout.adapter.notifyDataChanged()
+        checkTipVisible()
+    }
+
+    override fun onModifyTaskResult(it: TaskDetail) {
+        toast("修改成功")
     }
 
     internal var colors = intArrayOf(Color.parseColor("#90C5ED"),
@@ -79,15 +107,13 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.title = "保存任务"
         }
 
         //步骤
         mRvStep.layoutManager = LinearLayoutManager(this)
 
-
         var list = ArrayList<TaskStep>()
-        list.add(TaskStep("1", 1, "默认标题", "默认内容", ""))
+//        list.add(TaskStep("1", 1, "默认标题", "默认内容", ""))
 
         mRvTaskStepAdapter = RvAddTaskStepAdapter(list)
         val mItemDragAndSwipeCallback = ItemDragAndSwipeCallback(mRvTaskStepAdapter)
@@ -95,17 +121,20 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         mItemTouchHelper.attachToRecyclerView(mRvStep)
 
         mItemDragAndSwipeCallback.setSwipeMoveFlags(ItemTouchHelper.START or ItemTouchHelper.END)
+
         mRvTaskStepAdapter.enableSwipeItem()
         mRvTaskStepAdapter.enableDragItem(mItemTouchHelper)
 
         mRvStep.adapter = mRvTaskStepAdapter
 
         mBtAddStep.onClick {
-            mRvTaskStepAdapter.addData(TaskStep("111", -1, "新步骤标题", "新步骤内容", ""))
+            mRvTaskStepAdapter.addData(TaskStep("", -1, "新步骤标题", "新步骤内容", ""))
         }
 
         mRvTaskStepAdapter.setOnItemClickListener { adapter, view, position ->
-            val dialog = TaskStepDialog.showDialog(supportFragmentManager, list, true, position)
+            val dialog = TaskStepDialog.showDialog(supportFragmentManager,
+                    adapter.data as ArrayList<TaskStep>,
+                    isModify, position)
 
             dialog.setOnCloseListener(object : TaskStepDialog.OnCloseListener {
                 override fun onClose() {
@@ -144,15 +173,92 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
             true
         }
 
-        mBtnLogin.onClick {
+        mBtnAdd.onClick {
             if (validation()) {
                 var classs = classList.flatMap {
                     listOf(it.id)
                 }
-                mPresenter.addTask(classs, mEtTitle.text.toString(), mLevContext.contentText, mRvTaskStepAdapter.data)
+
+                when (mode) {
+                    Mode.MODIFY -> {
+                        try {
+                            var taskid = intent.getStringExtra(TASKID)
+                            mPresenter.modifyTask(taskid, classs, mEtTitle.text.toString(), mLevContext.contentText, mRvTaskStepAdapter.data)
+                        } catch (e: Exception) {
+                            toast("未传递任务id")
+                        }
+                    }
+                    Mode.CREATE -> {
+                        mPresenter.addTask(classs, mEtTitle.text.toString(), mLevContext.contentText, mRvTaskStepAdapter.data)
+                    }
+                }
             }
-            startActivity<ReleaseTaskActivity>()
         }
+
+        //判断模式
+        mode = Mode.valueOf(intent.getStringExtra(MODE))
+
+        when (mode) {
+            Mode.LOOK -> {
+                isModify = false
+
+                mTvClassTip.visibility = View.GONE
+                mBtAddStep.visibility = View.GONE
+                mBtnAdd.visibility = View.GONE
+                mEtTitle.isEnabled = false
+                mLevContext.id_et_input.isEnabled = false
+                mRvTaskStepAdapter.disableSwipeItem()
+                mRvTaskStepAdapter.disableDragItem()
+
+                try {
+                    var taskid = intent.getStringExtra(TASKID)
+                    mPresenter.queryTaskDetail(taskid)
+                } catch (e: Exception) {
+                    toast("未传递任务id")
+                }
+
+                mBtnAdd.text = "查看任务"
+                actionBar?.title = "查看任务"
+
+                mFlowlayout.setOnTagClickListener(null)
+            }
+            Mode.MODIFY -> {
+                isModify = true
+
+                mTvClassTip.visibility = View.VISIBLE
+                mBtAddStep.visibility = View.VISIBLE
+                mBtnAdd.visibility = View.VISIBLE
+                mEtTitle.isEnabled = true
+                mLevContext.id_et_input.isEnabled = true
+                mRvTaskStepAdapter.enableSwipeItem()
+                mRvTaskStepAdapter.enableDragItem(mItemTouchHelper)
+
+                try {
+                    var taskid = intent.getStringExtra(TASKID)
+                    mPresenter.queryTaskDetail(taskid)
+                } catch (e: Exception) {
+                    toast("未传递任务id")
+                }
+
+                mBtnAdd.text = "保存任务"
+                actionBar?.title = "保存任务"
+            }
+            Mode.CREATE -> {
+                isModify = true
+
+                mTvClassTip.visibility = View.VISIBLE
+                mBtAddStep.visibility = View.VISIBLE
+                mBtnAdd.visibility = View.VISIBLE
+                mEtTitle.isEnabled = true
+                mLevContext.id_et_input.isEnabled = true
+                mRvTaskStepAdapter.enableSwipeItem()
+                mRvTaskStepAdapter.enableDragItem(mItemTouchHelper)
+
+                mBtnAdd.text = "新建任务"
+                actionBar?.title = "新建任务"
+            }
+        }
+
     }
 
     fun validation(): Boolean {
@@ -208,6 +314,12 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
     }
 
     fun checkTipVisible() {
+        if (mode == Mode.LOOK) {
+            mBtAddClass.visibility = View.GONE
+            mTvClassTip.visibility = View.GONE
+            return
+        }
+
         if (classList.size == 0) {
             mTvClassTip.visibility = View.VISIBLE
             mBtAddClass.visibility = View.GONE

@@ -4,13 +4,8 @@ import xin.lrvik.taskcicleandroid.baselibrary.presenter.view.BaseView
 import xin.lrvik.taskcicleandroid.data.protocol.TaskClass
 import xin.lrvik.taskcicleandroid.data.protocol.TaskDetail
 
-interface PostTaskView:BaseView {
+interface ReleaseTaskView : BaseView {
 
-    fun onTaskClassResult(data : List<TaskClass>)
+    fun onReleaseTaskResult(data: TaskDetail)
 
-    fun onAddTaskResult(data : TaskDetail)
-
-    fun onTaskDetailResult(data: TaskDetail)
-
-    fun onModifyTaskResult(it: TaskDetail)
 }

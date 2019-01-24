@@ -1,5 +1,6 @@
 package xin.lrvik.taskcicleandroid.baselibrary.utils
 
+import java.sql.Timestamp
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -92,7 +93,8 @@ object DateUtils {
      * *
      * @return
      */
-    @JvmOverloads fun format(date: Date?, pattern: String = datePattern): String {
+    @JvmOverloads
+    fun format(date: Date?, pattern: String = datePattern): String {
         var returnValue = ""
         if (date != null) {
             val df = SimpleDateFormat(pattern)
@@ -113,7 +115,8 @@ object DateUtils {
      * *
      * @return
      */
-    @JvmOverloads fun parse(strDate: String, pattern: String = datePattern): Date? {
+    @JvmOverloads
+    fun parse(strDate: String, pattern: String = datePattern): Date? {
         val df = SimpleDateFormat(pattern)
         df.timeZone = defTimeZone
         try {
@@ -122,7 +125,22 @@ object DateUtils {
             e.printStackTrace()
             return null
         }
+    }
 
+    /**
+     * 使用用户格式提取时间戳
+     * @param strDate
+     * *            日期字符串
+     * *
+     * @param pattern
+     * *            日期格式
+     * *
+     * @return
+     */
+    fun str2Timestamp(strDate: String, pattern: String = FORMAT_LONG_NEW): Timestamp {
+        val df = SimpleDateFormat(pattern)
+        df.timeZone = defTimeZone
+        return Timestamp(df.parse(strDate).time)
     }
 
     /**

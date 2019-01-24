@@ -2,7 +2,6 @@ package xin.lrvik.taskcicleandroid.ui.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,15 +14,39 @@ import cn.qqtheme.framework.picker.TimePicker
 import com.baidu.mapapi.search.core.PoiInfo
 import kotlinx.android.synthetic.main.activity_release_task.*
 import org.jetbrains.anko.startActivityForResult
+import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
+import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
+import xin.lrvik.taskcicleandroid.baselibrary.utils.DateUtils
+import xin.lrvik.taskcicleandroid.data.protocol.TaskDetail
+import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
+import xin.lrvik.taskcicleandroid.presenter.ReleaseTaskPresenter
+import xin.lrvik.taskcicleandroid.presenter.view.ReleaseTaskView
 import xin.lrvik.taskcicleandroid.ui.widget.KeyboardUtil
 import java.util.*
+import cn.qqtheme.framework.picker.OptionPicker
 
-class ReleaseTaskActivity : AppCompatActivity() {
+
+class ReleaseTaskActivity : BaseMvpActivity<ReleaseTaskPresenter>(), ReleaseTaskView {
 
     var longitude: Double = 0.0
     var latitude: Double = 0.0
+    var taskid = ""
+
+    companion object {
+        const val TASKID = "TASKID"
+    }
+
+    override fun injectComponent() {
+        DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
+        mPresenter.mView = this
+    }
+
+    override fun onReleaseTaskResult(data: TaskDetail) {
+        toast(data.id)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +62,8 @@ class ReleaseTaskActivity : AppCompatActivity() {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.title = "发布任务"
         }
+
+        taskid = intent.getStringExtra(TASKID)
 
         KeyboardUtil(mKeyBoardView, mEtPeoNum)
         KeyboardUtil(mKeyBoardView, mEtMoneyNum)
@@ -59,8 +84,6 @@ class ReleaseTaskActivity : AppCompatActivity() {
         mEtPeoNum.addTextChangedListener(mTextWatcher)
         mEtMoneyNum.addTextChangedListener(mTextWatcher)
 
-
-
         mCvBeginTime.onClick {
             showDateTimePicker(mTvBeginTime)
         }
@@ -70,7 +93,7 @@ class ReleaseTaskActivity : AppCompatActivity() {
         }
 
         mCvPermitAbandonMinute.onClick {
-            showTimePicker(mTvPermitAbandonMinute)
+            showMinutePicker(mTvPermitAbandonMinute)
         }
 
         mCvLocation.onClick {
@@ -84,23 +107,106 @@ class ReleaseTaskActivity : AppCompatActivity() {
                 mCvCompensateMoney.visibility = View.GONE
             }
         }
+
+        mBtnRelease.onClick {
+            if (validation()) {
+                mPresenter.issueTask(taskid,
+                        mTvTotalMoney.text.toString().toFloat(),
+                        mEtPeoNum.text.toString().toInt(),
+                        DateUtils.str2Timestamp(mTvBeginTime.text.toString()).time,
+                        DateUtils.str2Timestamp(mTvDeadline.text.toString()).time,
+                        mTvPermitAbandonMinute.text.toString().toInt(),
+                        longitude, latitude,
+                        mSwTaskRework.isChecked,
+                        mSwCompensate.isChecked,
+                        if (mSwCompensate.isChecked) mEtCompensateMoney.text.toString().toFloat() else 0f
+                )
+            }
+
+        }
+    }
+
+
+    fun validation(): Boolean {
+        if (taskid.isEmpty()) {
+            toast("任务编号不能为空")
+            return false
+        }
+
+        if (mEtPeoNum.text.toString().isEmpty() || mEtPeoNum.text.toString().toInt() <= 0) {
+            toast("可接人数必须大于0")
+            return false
+        }
+
+        try {
+            var moneyNum = mEtMoneyNum.text.toString().toFloat()
+            if (moneyNum <= 0f) {
+                toast("佣金必须大于0")
+                return false
+            }
+        } catch (e: Exception) {
+            toast("佣金输入有误")
+            return false
+        }
+
+        if (mTvBeginTime.text.toString() == "请选择任务开始时间") {
+            toast("请选择任务开始时间")
+            return false
+        }
+
+        if (mTvDeadline.text.toString() == "请选择任务截至时间") {
+            toast("请选择任务截至时间")
+            return false
+        }
+
+        if (mTvPermitAbandonMinute.text.toString() == "请选择放弃时长") {
+            toast("请选择放弃时长")
+            return false
+        }
+
+        if (mTvLocation.text.toString() == "请选择任务位置") {
+            toast("请选择任务位置")
+            return false
+        }
+
+        if (mSwCompensate.isChecked) {
+
+            try {
+                var moneyNum = mEtCompensateMoney.text.toString().toFloat()
+                if (moneyNum <= 0f) {
+                    toast("赔偿金必须大于0")
+                    return false
+                }
+            } catch (e: java.lang.Exception) {
+                toast("赔偿金输入有误")
+                return false
+            }
+
+        }
+
+        return true
     }
 
     private fun calcMoney() {
-        var peoNumStr = mEtPeoNum.text.toString()
-        var moneyNumStr = mEtMoneyNum.text.toString()
-        if (peoNumStr.isEmpty() || moneyNumStr.isEmpty()) {
+        try {
+            var peoNumStr = mEtPeoNum.text.toString()
+            var moneyNumStr = mEtMoneyNum.text.toString()
+            if (peoNumStr.isEmpty() || moneyNumStr.isEmpty()) {
+                mTvTotalMoney.text = "0"
+                return
+            }
+
+            var peoNum = peoNumStr.toBigDecimal()
+            var money = moneyNumStr.toBigDecimal()
+            if (peoNum.toFloat() != 0.0f && money.toFloat() != 0.0f) {
+                mTvTotalMoney.text = money.multiply(peoNum).toString()
+            } else {
+                mTvTotalMoney.text = "0"
+            }
+        } catch (e: Exception) {
             mTvTotalMoney.text = "0"
-            return
         }
 
-        var peoNum = peoNumStr.toBigDecimal()
-        var money = moneyNumStr.toBigDecimal()
-        if (peoNum.toFloat() != 0.0f && money.toFloat() != 0.0f) {
-            mTvTotalMoney.text = money.multiply(peoNum).toString()
-        } else {
-            mTvTotalMoney.text = "0"
-        }
     }
 
 
@@ -151,6 +257,19 @@ class ReleaseTaskActivity : AppCompatActivity() {
         picker.setOnTimePickListener { hour, minute ->
             textView.text = "$hour:$minute"
         }
+        picker.show()
+    }
+
+    private fun showMinutePicker(textView: TextView) {
+        val picker = OptionPicker(this,
+                arrayOf("5", "6", "7", "8", "9", "10", "15", "20", "25", "30"))
+        picker.setLabel("分钟")
+        picker.selectedIndex = 0//默认选中项
+        picker.setOnOptionPickListener(object : OptionPicker.OnOptionPickListener() {
+            override fun onOptionPicked(index: Int, item: String) {
+                textView.text = "$item"
+            }
+        })
         picker.show()
     }
 

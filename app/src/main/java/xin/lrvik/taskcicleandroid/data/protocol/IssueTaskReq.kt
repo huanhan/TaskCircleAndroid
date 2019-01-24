@@ -6,17 +6,16 @@ import java.sql.Timestamp
  * 发布任务请求
  *
  */
-class IssueTaskReq {
-
-    var id: String? = null
-    var money: Float? = null
-    var peopleNumber: Int? = null
-    var beginTime: Timestamp? = null
-    var deadline: Timestamp? = null
-    var permitAbandonMinute: Int? = null
-    var longitude: Double? = null
-    var latitude: Double? = null
-    var taskRework: Boolean? = null
-    var compensate: Boolean? = null
-    var compensateMoney: Float? = null
-}
+data class IssueTaskReq(
+        var id: String,
+        var money: Float,
+        var peopleNumber: Int,
+        var beginTime: Long,
+        var deadline: Long,
+        var permitAbandonMinute: Int,
+        var longitude: Double,
+        var latitude: Double,
+        var taskRework: Boolean,
+        var compensate: Boolean,
+        var compensateMoney: Float
+)

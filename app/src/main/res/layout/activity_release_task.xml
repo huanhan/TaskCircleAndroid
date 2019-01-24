@@ -63,7 +63,7 @@
                             android:layout_height="match_parent"
                             android:layout_toRightOf="@id/mTvPeoNum"
                             android:background="@null"
-                            android:hint="点击输入可接人数"
+                            android:hint="请输入可接人数"
                             android:inputType="number"
                             android:maxLength="9"
                             android:text="1" />
@@ -106,7 +106,7 @@
                             android:layout_height="match_parent"
                             android:layout_toRightOf="@id/mTvMoneyNum"
                             android:background="@null"
-                            android:hint="点击输入佣金(元/人)"
+                            android:hint="请输入佣金(元/人)"
                             android:maxLength="9" />
 
                         <ImageView
@@ -191,7 +191,7 @@
                             android:layout_centerVertical="true"
                             android:layout_toRightOf="@id/mTvBeginTimeTag"
                             android:paddingLeft="10dp"
-                            android:text="点击选择任务开始时间"
+                            android:text="请选择任务开始时间"
                             android:textColor="@color/text_normal" />
 
 
@@ -234,7 +234,7 @@
                             android:layout_centerVertical="true"
                             android:layout_toRightOf="@id/mTvDeadlineTag"
                             android:paddingLeft="10dp"
-                            android:text="点击选择任务截至时间"
+                            android:text="请选择任务截至时间"
                             android:textColor="@color/text_normal" />
 
                         <ImageView
@@ -277,7 +277,7 @@
                             android:layout_centerVertical="true"
                             android:layout_toRightOf="@id/mTvPermitAbandonMinuteTag"
                             android:paddingLeft="10dp"
-                            android:text="点击选择放弃时长"
+                            android:text="请选择放弃时长"
                             android:textColor="@color/text_normal" />
 
                         <ImageView
@@ -325,7 +325,7 @@
                             android:maxEms="10"
                             android:maxLength="10"
                             android:paddingLeft="10dp"
-                            android:text="点击选择任务位置"
+                            android:text="请选择任务位置"
                             android:textColor="@color/text_normal" />
 
                         <ImageView
@@ -473,7 +473,7 @@
     </android.support.design.widget.CoordinatorLayout>
 
     <Button
-        android:id="@+id/mBtnLogin"
+        android:id="@+id/mBtnRelease"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"

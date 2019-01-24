@@ -7,6 +7,7 @@ import xin.lrvik.taskcicleandroid.injection.module.HomeModule
 import xin.lrvik.taskcicleandroid.injection.module.TaskModule
 import xin.lrvik.taskcicleandroid.ui.activity.ClassActivity
 import xin.lrvik.taskcicleandroid.ui.activity.PostTaskActivity
+import xin.lrvik.taskcicleandroid.ui.activity.ReleaseTaskActivity
 import xin.lrvik.taskcicleandroid.ui.fragment.HomeFragment
 import xin.lrvik.taskcicleandroid.ui.fragment.TaskClassFragment
 
@@ -19,6 +20,7 @@ import xin.lrvik.taskcicleandroid.ui.fragment.TaskClassFragment
 interface TaskCircleComponent {
     fun inject(activity: ClassActivity)
     fun inject(activity: PostTaskActivity)
+    fun inject(activity: ReleaseTaskActivity)
     fun inject(fragment: HomeFragment)
     fun inject(fragment: TaskClassFragment)
 }
