@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_task_class.*
+import org.jetbrains.anko.support.v4.startActivity
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseMvpFragment
 import xin.lrvik.taskcicleandroid.data.protocol.Page
@@ -14,6 +15,7 @@ import xin.lrvik.taskcicleandroid.data.protocol.Task
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.TaskClassPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.TaskClassView
+import xin.lrvik.taskcicleandroid.ui.activity.PostTaskActivity
 import xin.lrvik.taskcicleandroid.ui.adapter.RvRecommendAdapter
 import java.util.*
 
@@ -50,6 +52,11 @@ class TaskClassFragment : BaseMvpFragment<TaskClassPresenter>(), TaskClassView {
         mRvRecommendAdapter = RvRecommendAdapter(list)
         mRvTask.adapter = mRvRecommendAdapter
         mPresenter.queryByClassid(classId, 0, 10)
+
+        mRvRecommendAdapter.setOnItemClickListener { adapter, view, position ->
+            var task = adapter.data[position] as Task
+            startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.LOOK.name, PostTaskActivity.TASKID to task.id!!)
+        }
     }
 
 

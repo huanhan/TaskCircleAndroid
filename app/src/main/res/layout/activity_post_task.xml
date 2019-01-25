@@ -48,8 +48,7 @@
                     <RelativeLayout
                         android:id="@+id/mRlClass"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/common_gray">
+                        android:layout_height="wrap_content">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -61,9 +60,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"
-                                android:paddingBottom="10dp"
                                 zhy:max_select="1"></com.zhy.view.flowlayout.TagFlowLayout>
 
                             <Button
