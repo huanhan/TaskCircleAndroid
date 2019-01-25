@@ -43,24 +43,25 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
     }
 
     override fun onTaskStateResult(data: Page<Task>) {
-
-        //下拉刷新
-        if (mSwipeRefresh.isRefreshing) {
-            mSwipeRefresh.isRefreshing = false
-            mRvTaskStateAdapter.setNewData(data.content)
-            if (data.pageNum == data.totalPage - 1){
-                mRvTaskStateAdapter.loadMoreEnd()
-            }
+        mSwipeRefresh?.let {
+            //下拉刷新
+            if (mSwipeRefresh.isRefreshing) {
+                mSwipeRefresh.isRefreshing = false
+                mRvTaskStateAdapter.setNewData(data.content)
+                if (data.pageNum == data.totalPage - 1) {
+                    mRvTaskStateAdapter.loadMoreEnd()
+                }
 //            mRvTaskStateAdapter.notifyDataSetChanged()
-        } else {//上拉加载数据
-            if (data.pageNum == data.totalPage - 1) {//到底了
-                mRvTaskStateAdapter.loadMoreEnd()
-            } else {//还可以上拉
-                mRvTaskStateAdapter.loadMoreComplete()
+            } else {//上拉加载数据
+                if (data.pageNum == data.totalPage - 1) {//到底了
+                    mRvTaskStateAdapter.loadMoreEnd()
+                } else {//还可以上拉
+                    mRvTaskStateAdapter.loadMoreComplete()
+                }
+                mRvTaskStateAdapter.addData(data.content)
             }
-            mRvTaskStateAdapter.addData(data.content)
+            curPage = data.pageNum
         }
-        curPage = data.pageNum
     }
 
     override fun onResult(result: String) {
@@ -82,7 +83,7 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
         linearLayoutManager.orientation = OrientationHelper.VERTICAL
         var list = ArrayList<Task>()
         mRvTaskStateAdapter = RvTaskStateAdapter(list)
-        mRvTaskStateAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN)
+//        mRvTaskStateAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN)
         mRvTask.adapter = mRvTaskStateAdapter
         mRvTask.isNestedScrollingEnabled = false
 
@@ -136,6 +137,23 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
 
     }
 
+    var isInit = true
+
+    override fun onResume() {
+        super.onResume()
+        if (!isInit) {
+            mSwipeRefresh?.let {
+                curPage = 0
+                mSwipeRefresh.isRefreshing = true
+                mPresenter.getStateTaskData(type, curPage, pageSize)
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isInit = false
+    }
 
     companion object {
         val TYPE = "TYPE"

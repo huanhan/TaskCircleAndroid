@@ -8,6 +8,8 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import xin.lrvik.taskcicleandroid.baselibrary.common.BaseConstant
+import xin.lrvik.taskcicleandroid.baselibrary.rx.BaseException
+import java.lang.Exception
 import java.sql.Timestamp
 import java.util.concurrent.TimeUnit
 
@@ -23,6 +25,11 @@ class RetrofitFactory private constructor() {
     private val interceptor: Interceptor
 
     init {
+
+        val builder = GsonBuilder()
+        builder.registerTypeAdapter(Timestamp::class.java, JsonDeserializer { json, typeOfT, context -> Timestamp(json.asJsonPrimitive.asLong) })
+        var gson = builder.create()
+
         //增加过滤器，给每个请求增加请求头
         interceptor = Interceptor { chain ->
             val request = chain.request()
@@ -31,13 +38,25 @@ class RetrofitFactory private constructor() {
                     //.addHeader("charset", "utf-8")
                     //.addHeader("token",AppPrefsUtils.getString(BaseConstant.KEY_SP_TOKEN))
                     .build()
-            chain.proceed(request)
+            var response = chain.proceed(request)
+            response?.let {
+                //请求操作失败异常处理
+                if (it.code() != 200) {
+                    var errMes = ""
+                    try {
+                        var result = it.body()?.string().toString()
+                        JsonParser().parse(result).asJsonObject["messages"].asJsonArray.forEach { it ->
+                            errMes += it.asString + ","
+                        }
+                    } catch (e: Exception) {
+                        throw BaseException(it.code(), if (errMes.isEmpty()) "未知异常" else errMes)
+                    }
+                }
+            }
+            response
+
         }
 
-
-        val builder = GsonBuilder()
-        builder.registerTypeAdapter(Timestamp::class.java, JsonDeserializer { json, typeOfT, context -> Timestamp(json.asJsonPrimitive.asLong) })
-        var gson = builder.create()
 
         //创建retrofit，设置client，增加转换工厂，以及RX适配器
         retrofitGson = Retrofit.Builder()
