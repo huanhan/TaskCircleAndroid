@@ -86,7 +86,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
         var list = ArrayList<Task>()
         rvRecommendAdapter = RvRecommendAdapter(list)
         mRvRecommend.adapter = rvRecommendAdapter
-
+        mRvRecommend.isNestedScrollingEnabled = false;
         mTvAddress.onClick {
             startActivityForResult<AddressPickerActivity>(requestCode = 1)
         }
@@ -99,7 +99,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
             var task = adapter.data[position] as Task
             startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.LOOK.name, PostTaskActivity.TASKID to task.id!!)
         }
-
         initLocation()
         mPresenter.homeData()
 

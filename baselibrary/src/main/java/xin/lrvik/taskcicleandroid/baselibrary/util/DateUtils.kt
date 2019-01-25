@@ -143,12 +143,20 @@ object DateUtils {
         return Timestamp(df.parse(strDate).time)
     }
 
+
     /**
      * 时间戳转date str
-
      */
+    fun convertTimeToString(time: Long, format: String = FORMAT_LONG_NEW): String {
+        val sdf = SimpleDateFormat(format)
+        sdf.timeZone = defTimeZone
+        return sdf.format(time)
+    }
 
-    fun convertTimeToString(time: Long, format: String): String {
+    /**
+     * 时间戳转date str
+     */
+    fun convertTimeToString(time: Timestamp, format: String = FORMAT_LONG_NEW): String {
         val sdf = SimpleDateFormat(format)
         sdf.timeZone = defTimeZone
         return sdf.format(time)

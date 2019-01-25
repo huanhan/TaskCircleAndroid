@@ -2,27 +2,31 @@ package xin.lrvik.taskcicleandroid.ui.activity
 
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.baidu.mapapi.model.LatLng
+import com.baidu.mapapi.search.geocode.*
+import com.baidu.mapapi.utils.DistanceUtil
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.activity_post_task.*
 import org.jetbrains.anko.dip
 import org.jetbrains.anko.margin
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
+import xin.lrvik.taskcicleandroid.baselibrary.utils.DateUtils
+import xin.lrvik.taskcicleandroid.common.UserInfo
 import xin.lrvik.taskcicleandroid.data.protocol.TaskClass
 import xin.lrvik.taskcicleandroid.data.protocol.TaskDetail
 import xin.lrvik.taskcicleandroid.data.protocol.TaskStep
+import xin.lrvik.taskcicleandroid.data.protocol.enums.TaskState
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.PostTaskPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.PostTaskView
@@ -53,7 +57,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
     var classList = ArrayList<TaskClass>()
     lateinit var mRvTaskStepAdapter: RvAddTaskStepAdapter
-
+    var geoCoder = GeoCoder.newInstance()
 
     override fun injectComponent() {
         DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
@@ -69,20 +73,80 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
     override fun onAddTaskResult(data: TaskDetail) {
         toast("增加任务成功")
-        //startActivity<ReleaseTaskActivity>(ReleaseTaskActivity.TASKID to data.id)
+        finish()
     }
 
     override fun onTaskDetailResult(data: TaskDetail) {
+
         mEtTitle.setText(data.name)
         mLevContext.contentText = data.context
         mRvTaskStepAdapter.setNewData(data.taskSteps)
-        classList.addAll(data.taskClassifyAppDtos)
+        classList.addAll(data.taskClassifyAppDtos!!)
         mFlowlayout.adapter.notifyDataChanged()
         checkTipVisible()
+
+        isShow(mCvReleaseMsg, data.state!!, listOf(TaskState.ISSUE,
+                TaskState.FORBID_RECEIVE,
+                TaskState.OUT,
+                TaskState.FINISH,
+                TaskState.ABANDON_COMMIT,
+                TaskState.ABANDON_OK,
+                TaskState.USER_HUNTER_NEGOTIATE,
+                TaskState.HUNTER_REJECT,
+                TaskState.COMMIT_AUDIT,
+                TaskState.ADMIN_NEGOTIATE,
+                TaskState.HUNTER_COMMIT))
+
+        if (mCvReleaseMsg.visibility == View.VISIBLE) {
+            mSwTaskRework.isEnabled = false
+            mSwCompensate.isEnabled = false
+            data.peopleNumber?.let {
+                mTvPeoNum.text = "$it"
+            }
+
+            if (data.money != null && data.peopleNumber != null) {
+                mTvMoneyNum.text = "${data.money!!.toBigDecimal().multiply(data.peopleNumber!!.toBigDecimal())}"
+            }
+            data.beginTime?.let {
+                mTvBeginTime.text = "${DateUtils.convertTimeToString(it)}"
+            }
+            data.deadline?.let {
+                mTvDeadline.text = "${DateUtils.convertTimeToString(it)}"
+            }
+            data.permitAbandonMinute?.let {
+                mTvPermitAbandonMinute.text = "${it}"
+            }
+            data.taskRework?.let {
+                mSwTaskRework.isChecked = it
+                mTvCompensateMoney.visibility = if (it) View.VISIBLE else View.GONE
+                mTvCompensateMoney.text = if (it) data.compensateMoney.toString() else 0f.toString()
+            }
+            data.compensate?.let {
+                mSwCompensate.isChecked = it
+            }
+
+            if (data.latitude != null && data.longitude != null) {
+
+                //位置反编码参数
+                var reverseGeoCodeOption = ReverseGeoCodeOption()
+                reverseGeoCodeOption.location(LatLng(data.latitude!!, data.longitude!!))
+                        .radius(1000)
+                geoCoder.reverseGeoCode(reverseGeoCodeOption)
+
+                var distance = DistanceUtil.getDistance(LatLng(UserInfo.latitude, UserInfo.longitude), LatLng(data.latitude
+                        ?: 0.0, data.longitude ?: 0.0)).toInt()
+                var dis = if (distance < 1000) "$distance 米" else "${distance / 1000} 千米"
+
+                mTvLocation.text = "(距离您$dis)"
+            }
+
+
+        }
     }
 
     override fun onModifyTaskResult(it: TaskDetail) {
         toast("修改成功")
+        finish()
     }
 
     internal var colors = intArrayOf(Color.parseColor("#90C5ED"),
@@ -194,6 +258,19 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                 }
             }
         }
+
+        //位置信息反编码
+        geoCoder.setOnGetGeoCodeResultListener(object : OnGetGeoCoderResultListener {
+            override fun onGetGeoCodeResult(geoCodeResult: GeoCodeResult) {
+
+            }
+
+            override fun onGetReverseGeoCodeResult(reverseGeoCodeResult: ReverseGeoCodeResult) {
+                var dis = mTvLocation.text
+                mTvLocation.text = if (reverseGeoCodeResult.poiList != null && reverseGeoCodeResult.poiList.size > 0) "${reverseGeoCodeResult.poiList[0].name} $dis" else "未知位置 $dis"
+            }
+
+        })
 
         //判断模式
         mode = Mode.valueOf(intent.getStringExtra(MODE))
@@ -327,6 +404,11 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
             mTvClassTip.visibility = View.GONE
             mBtAddClass.visibility = View.VISIBLE
         }
+    }
+
+    //判断界面是否根据权限显示
+    private fun isShow(view: View, state: TaskState, list: List<TaskState>) {
+        view.visibility = if (list.contains(state)) View.VISIBLE else View.GONE
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

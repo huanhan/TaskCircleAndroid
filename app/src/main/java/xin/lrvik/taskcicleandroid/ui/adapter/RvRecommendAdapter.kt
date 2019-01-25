@@ -1,6 +1,5 @@
 package xin.lrvik.taskcicleandroid.ui.adapter
 
-import android.text.format.DateFormat
 import android.widget.ImageView
 import com.baidu.mapapi.model.LatLng
 import com.baidu.mapapi.utils.DistanceUtil
@@ -8,9 +7,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
+import xin.lrvik.taskcicleandroid.baselibrary.utils.DateUtils
 import xin.lrvik.taskcicleandroid.common.UserInfo
 import xin.lrvik.taskcicleandroid.data.protocol.Task
-import xin.lrvik.taskcicleandroid.data.protocol.Task2
 
 /**
  * Author by 豢涵, Email huanhanfu@126.com, Date on 2019/1/2.
@@ -26,7 +25,7 @@ class RvRecommendAdapter(data: List<Task>) : BaseQuickAdapter<Task, BaseViewHold
                 .setText(R.id.mTvContext, item.context)
                 .setText(R.id.mTvMoney, "${item.money} 元")
                 .setText(R.id.mTvDistance, "$dis")
-                .setText(R.id.mTvTime, "${DateFormat.format("yyyy年MM月dd", item.beginTime)}~${DateFormat.format("yyyy年MM月dd", item.deadline)}")
+                .setText(R.id.mTvTime, "${DateUtils.convertTimeToString(item.beginTime!!)}~${DateUtils.convertTimeToString(item.deadline!!)}")
         var imageView = helper.getView<ImageView>(R.id.mIvIcon)
         imageView.loadUrl(item.headImg ?: R.mipmap.def)
     }

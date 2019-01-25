@@ -60,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:lines="1"
-                        android:text="这是一个任务名"
+                        android:text=" 任务名"
                         android:textColor="@color/common_black"
                         android:textSize="15sp" />
                 </LinearLayout>
@@ -104,7 +104,7 @@
                             android:id="@+id/mTvMoney"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="100元"
+                            android:text="0元"
                             android:textColor="@color/common_red"
                             android:textSize="12sp" />
 
@@ -124,7 +124,7 @@
                             android:id="@+id/mTvDistance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="200米"
+                            android:text="0米"
                             android:textSize="12sp" />
                     </LinearLayout>
 

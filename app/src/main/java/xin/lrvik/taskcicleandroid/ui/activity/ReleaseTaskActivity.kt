@@ -44,7 +44,8 @@ class ReleaseTaskActivity : BaseMvpActivity<ReleaseTaskPresenter>(), ReleaseTask
     }
 
     override fun onReleaseTaskResult(data: TaskDetail) {
-        toast(data.id)
+        toast("发布成功")
+        finish()
     }
 
 

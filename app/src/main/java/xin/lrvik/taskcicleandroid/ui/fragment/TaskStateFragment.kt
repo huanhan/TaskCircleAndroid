@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_task_state.*
+import org.jetbrains.anko.support.v4.startActivity
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.R.id.mRvTask
 import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication.Companion.context
@@ -17,6 +18,8 @@ import xin.lrvik.taskcicleandroid.data.protocol.Task
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.TaskStatePresenter
 import xin.lrvik.taskcicleandroid.presenter.view.TaskStateView
+import xin.lrvik.taskcicleandroid.ui.activity.PostTaskActivity
+import xin.lrvik.taskcicleandroid.ui.activity.ReleaseTaskActivity
 import xin.lrvik.taskcicleandroid.ui.adapter.RvTaskStateAdapter
 import java.util.*
 
@@ -54,6 +57,42 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
         mRvTaskStateAdapter = RvTaskStateAdapter(list)
         mRvTask.adapter = mRvTaskStateAdapter
         mPresenter.getStateTaskData(type, 0, 20)
+
+        mRvTaskStateAdapter.setOnItemClickListener { adapter, view, position ->
+            var task = adapter.data[position] as Task
+            startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.LOOK.name, PostTaskActivity.TASKID to task.id!!)
+        }
+        mRvTaskStateAdapter.setOnItemChildClickListener { adapter, view, position ->
+            var task = adapter.data[position] as Task
+            when (view.id) {
+                R.id.mBtModify -> {
+                    startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.MODIFY.name, PostTaskActivity.TASKID to task.id!!)
+                }
+                R.id.mBtSubmitAudit -> {
+
+                }
+                R.id.mBtCancelAudit -> {
+
+                }
+                R.id.mBtRelease -> {
+                    startActivity<ReleaseTaskActivity>(ReleaseTaskActivity.TASKID to task.id!!)
+                }
+                R.id.mBtOut -> {
+
+                }
+                R.id.mBtUpper -> {
+
+                }
+                R.id.mBtAbandon -> {
+
+                }
+                R.id.mBtCancelAbandon -> {
+
+                }
+            }
+
+        }
+
     }
 
 

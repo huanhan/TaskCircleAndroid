@@ -162,7 +162,6 @@
                     </RelativeLayout>
                 </android.support.v7.widget.CardView>
 
-
                 <android.support.v7.widget.CardView
                     android:id="@+id/mCvBeginTime"
                     android:layout_width="match_parent"
@@ -225,7 +224,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:paddingLeft="10dp"
-                            android:text="截至时间" />
+                            android:text="截至时间:" />
 
                         <TextView
                             android:id="@+id/mTvDeadline"
@@ -268,7 +267,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:paddingLeft="10dp"
-                            android:text="允许放弃时长" />
+                            android:text="允许放弃时长:" />
 
                         <TextView
                             android:id="@+id/mTvPermitAbandonMinute"
@@ -311,7 +310,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:paddingLeft="10dp"
-                            android:text="任务位置" />
+                            android:text="任务位置:" />
 
 
                         <TextView

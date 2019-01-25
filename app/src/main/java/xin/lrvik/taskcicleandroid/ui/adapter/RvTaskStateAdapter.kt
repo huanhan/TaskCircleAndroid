@@ -98,7 +98,14 @@ class RvTaskStateAdapter(data: List<Task>) : BaseQuickAdapter<Task, BaseViewHold
         helper.setText(R.id.mTvTaskName, item.name)
                 .setText(R.id.mTvState, item.state!!.state)
                 .setText(R.id.mTvContext, item.context)
-
+                .addOnClickListener(R.id.mBtModify)
+                .addOnClickListener(R.id.mBtSubmitAudit)
+                .addOnClickListener(R.id.mBtCancelAudit)
+                .addOnClickListener(R.id.mBtRelease)
+                .addOnClickListener(R.id.mBtOut)
+                .addOnClickListener(R.id.mBtUpper)
+                .addOnClickListener(R.id.mBtAbandon)
+                .addOnClickListener(R.id.mBtCancelAbandon)
         var imageView = helper.getView<ImageView>(R.id.mIvIcon)
         imageView.loadUrl(item.headImg ?: R.mipmap.def)
 
