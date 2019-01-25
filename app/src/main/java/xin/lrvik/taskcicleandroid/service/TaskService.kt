@@ -2,7 +2,6 @@ package xin.lrvik.taskcicleandroid.service
 
 import io.reactivex.Observable
 import xin.lrvik.taskcicleandroid.data.protocol.*
-import java.sql.Timestamp
 
 /**
  * Author by 豢涵, Email huanhanfu@126.com, Date on 2019/1/21.
@@ -29,4 +28,28 @@ interface TaskService {
 
     //根据状态获取任务列表
     fun queryByState(state: String, page: Int, size: Int): Observable<Page<Task>>
+
+    //将用户的任务提交给管理员审核
+    fun submitAudit(taskId: String): Observable<Result>
+
+    //取消审核
+    fun cancelAudit(taskId: String): Observable<Result>
+
+    //撤回我的任务
+    fun outTask(taskId: String): Observable<Result>
+
+    //用户点击重新上架按钮功能
+    fun upperTask(taskId: String): Observable<Result>
+
+    //用户点击放弃任务
+    fun abandonTask(taskId: String): Observable<Result>
+
+    //用户点击取消放弃任务
+    fun cancelAbandon(taskId: String): Observable<Result>
+
+    //用户点击审核猎刃任务通过
+    fun auditSuccess(htId: String): Observable<Result>
+
+    //用户点击审核猎刃任务不通过
+    fun auditFailure(id: String, context: String): Observable<Result>
 }

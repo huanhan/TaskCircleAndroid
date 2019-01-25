@@ -51,4 +51,36 @@ class TaskServiceImpl @Inject constructor() : TaskService {
                               size: Int): Observable<Page<Task>> {
         return taskRepository.queryByState(state, page, size)
     }
+
+    override fun submitAudit(taskId: String): Observable<Result> {
+        return taskRepository.submitAudit(taskId)
+    }
+
+    override fun cancelAudit(taskId: String): Observable<Result> {
+        return taskRepository.cancelAudit(taskId)
+    }
+
+    override fun outTask(taskId: String): Observable<Result> {
+        return taskRepository.outTask(taskId)
+    }
+
+    override fun upperTask(taskId: String): Observable<Result> {
+        return taskRepository.upperTask(taskId)
+    }
+
+    override fun abandonTask(taskId: String): Observable<Result> {
+        return taskRepository.abandonTask(taskId)
+    }
+
+    override fun cancelAbandon(taskId: String): Observable<Result> {
+        return taskRepository.cancelAbandon(taskId)
+    }
+
+    override fun auditSuccess(htId: String): Observable<Result> {
+        return taskRepository.auditSuccess(htId)
+    }
+
+    override fun auditFailure(id: String, context: String): Observable<Result> {
+        return taskRepository.auditFailure(id, context)
+    }
 }

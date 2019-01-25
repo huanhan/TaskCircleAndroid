@@ -6,6 +6,7 @@ import xin.lrvik.taskcicleandroid.data.protocol.Task
 import xin.lrvik.taskcicleandroid.data.protocol.TaskClass
 import xin.lrvik.taskcicleandroid.data.protocol.TaskDetail
 
-interface TaskStateView:BaseView {
+interface TaskStateView : BaseView {
     fun onTaskStateResult(data: Page<Task>)
+    fun onResult(result: String)
 }

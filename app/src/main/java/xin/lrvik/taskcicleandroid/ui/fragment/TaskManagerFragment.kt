@@ -10,6 +10,7 @@ import org.jetbrains.anko.support.v4.startActivity
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseFragment
+import xin.lrvik.taskcicleandroid.common.UserInfo
 import xin.lrvik.taskcicleandroid.ui.activity.HunterTaskActivity
 import xin.lrvik.taskcicleandroid.ui.adapter.VpTaskAdapter
 import java.util.*
@@ -25,6 +26,8 @@ class TaskManagerFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        if (UserInfo.isHunter) mFabHunter.show() else mFabHunter.hide()
 
         mFabHunter.onClick {
             startActivity<HunterTaskActivity>()

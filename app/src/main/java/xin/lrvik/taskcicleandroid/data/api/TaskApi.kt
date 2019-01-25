@@ -45,4 +45,37 @@ interface TaskApi {
                      @Path("size") size: Int,
                      @Path("id") id: Long): Observable<Page<Task>>
 
+    //将用户的任务提交给管理员审核
+    @GET("app/task/user/upAudit/{taskId}/{id}")
+    fun submitAudit(@Path("taskId") taskId: String, @Path("id") id: Long): Observable<Result>
+
+    //取消审核
+    @GET("app/task/user/di/upAudit/{taskId}/{id}")
+    fun cancelAudit(@Path("taskId") taskId: String, @Path("id") id: Long): Observable<Result>
+
+    //撤回我的任务
+    @GET("app/task/out/{taskId}/{id}")
+    fun outTask(@Path("taskId") taskId: String, @Path("id") id: Long): Observable<Result>
+
+    //用户点击重新上架按钮功能
+    @GET("app/task/put/{taskId}/{id}")
+    fun upperTask(@Path("taskId") taskId: String, @Path("id") id: Long): Observable<Result>
+
+    //用户点击放弃任务
+    @GET("app/task/user/abandon/{taskId}/{id}")
+    fun abandonTask(@Path("taskId") taskId: String, @Path("id") id: Long): Observable<Result>
+
+    //用户点击取消放弃任务
+    @GET("app/task/user/di/abandon/{taskId}/{id}")
+    fun cancelAbandon(@Path("taskId") taskId: String, @Path("id") id: Long): Observable<Result>
+
+    //用户点击审核猎刃任务通过   htId 猎刃任务id
+    @GET("app/task/audit/success/{htId}/{id}")
+    fun auditSuccess(@Path("htId") htId: String, @Path("id") id: Long): Observable<Result>
+
+    //用户点击审核猎刃任务不通过   htId 猎刃任务id
+    @GET("app/task/audit/failure/{id}")
+    fun auditFailure(@Body req: AuditContextReq, @Path("id") id: Long): Observable<Result>
+
+
 }

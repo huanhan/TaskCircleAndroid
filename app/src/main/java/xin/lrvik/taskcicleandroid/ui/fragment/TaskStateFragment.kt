@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_task_state.*
 import org.jetbrains.anko.support.v4.startActivity
+import org.jetbrains.anko.support.v4.toast
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.R.id.mRvTask
 import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication.Companion.context
@@ -42,6 +43,9 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
         mRvTaskStateAdapter.setNewData(data.content)
     }
 
+    override fun onResult(result: String) {
+        toast(result)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_task_state, null)
@@ -64,30 +68,32 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
         }
         mRvTaskStateAdapter.setOnItemChildClickListener { adapter, view, position ->
             var task = adapter.data[position] as Task
-            when (view.id) {
-                R.id.mBtModify -> {
-                    startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.MODIFY.name, PostTaskActivity.TASKID to task.id!!)
-                }
-                R.id.mBtSubmitAudit -> {
-
-                }
-                R.id.mBtCancelAudit -> {
-
-                }
-                R.id.mBtRelease -> {
-                    startActivity<ReleaseTaskActivity>(ReleaseTaskActivity.TASKID to task.id!!)
-                }
-                R.id.mBtOut -> {
-
-                }
-                R.id.mBtUpper -> {
-
-                }
-                R.id.mBtAbandon -> {
-
-                }
-                R.id.mBtCancelAbandon -> {
-
+            task.id?.let {
+                when (view.id) {
+                    R.id.mBtModify -> {
+                        startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.MODIFY.name, PostTaskActivity.TASKID to it)
+                    }
+                    R.id.mBtSubmitAudit -> {
+                        mPresenter.submitAudit(it)
+                    }
+                    R.id.mBtCancelAudit -> {
+                        mPresenter.cancelAudit(it)
+                    }
+                    R.id.mBtRelease -> {
+                        startActivity<ReleaseTaskActivity>(ReleaseTaskActivity.TASKID to task.id!!)
+                    }
+                    R.id.mBtOut -> {
+                        mPresenter.outTask(it)
+                    }
+                    R.id.mBtUpper -> {
+                        mPresenter.upperTask(it)
+                    }
+                    R.id.mBtAbandon -> {
+                        mPresenter.abandonTask(it)
+                    }
+                    R.id.mBtCancelAbandon -> {
+                        mPresenter.cancelAbandon(it)
+                    }
                 }
             }
 

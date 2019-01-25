@@ -53,4 +53,38 @@ class TaskRepository @Inject constructor() {
     fun queryByState(state: String, page: Int, size: Int): Observable<Page<Task>> {
         return RetrofitFactory.instance.create(TaskApi::class.java).queryByState(state, page, size, UserInfo.userId)
     }
+
+    fun submitAudit(taskId: String): Observable<Result> {
+        return RetrofitFactory.instance.create(TaskApi::class.java).submitAudit(taskId, UserInfo.userId)
+    }
+
+    fun cancelAudit(taskId: String): Observable<Result> {
+        return RetrofitFactory.instance.create(TaskApi::class.java).cancelAudit(taskId, UserInfo.userId)
+    }
+
+    fun outTask(taskId: String): Observable<Result> {
+        return RetrofitFactory.instance.create(TaskApi::class.java).outTask(taskId, UserInfo.userId)
+    }
+
+    fun upperTask(taskId: String): Observable<Result> {
+        return RetrofitFactory.instance.create(TaskApi::class.java).upperTask(taskId, UserInfo.userId)
+    }
+
+    fun abandonTask(taskId: String): Observable<Result> {
+        return RetrofitFactory.instance.create(TaskApi::class.java).abandonTask(taskId, UserInfo.userId)
+    }
+
+    fun cancelAbandon(taskId: String): Observable<Result> {
+        return RetrofitFactory.instance.create(TaskApi::class.java).cancelAbandon(taskId, UserInfo.userId)
+    }
+
+    fun auditSuccess(htId: String): Observable<Result> {
+        return RetrofitFactory.instance.create(TaskApi::class.java).auditSuccess(htId, UserInfo.userId)
+    }
+
+    fun auditFailure(id: String, context: String): Observable<Result> {
+        return RetrofitFactory.instance.create(TaskApi::class.java).auditFailure(AuditContextReq(id, context), UserInfo.userId)
+    }
+
+
 }
