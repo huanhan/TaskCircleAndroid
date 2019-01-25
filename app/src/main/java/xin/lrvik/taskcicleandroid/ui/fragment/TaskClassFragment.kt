@@ -27,6 +27,8 @@ import java.util.*
 class TaskClassFragment : BaseMvpFragment<TaskClassPresenter>(), TaskClassView {
 
     var classId: Long = 0
+    var curPage: Int = 0
+    var pageSize: Int = 20
     lateinit var mRvRecommendAdapter: RvRecommendAdapter
 
     override fun injectComponent() {
@@ -36,6 +38,24 @@ class TaskClassFragment : BaseMvpFragment<TaskClassPresenter>(), TaskClassView {
 
     override fun onTaskListResult(data: Page<Task>) {
         mRvRecommendAdapter.setNewData(data.content)
+
+        //下拉刷新
+        if (mSwipeRefresh.isRefreshing) {
+            mSwipeRefresh.isRefreshing = false
+            mRvRecommendAdapter.setNewData(data.content)
+            if (data.pageNum == data.totalPage - 1) {
+                mRvRecommendAdapter.loadMoreEnd()
+            }
+//            mRvTaskStateAdapter.notifyDataSetChanged()
+        } else {//上拉加载数据
+            if (data.pageNum == data.totalPage - 1) {//到底了
+                mRvRecommendAdapter.loadMoreEnd()
+            } else {//还可以上拉
+                mRvRecommendAdapter.loadMoreComplete()
+            }
+            mRvRecommendAdapter.addData(data.content)
+        }
+        curPage = data.pageNum
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -57,6 +77,16 @@ class TaskClassFragment : BaseMvpFragment<TaskClassPresenter>(), TaskClassView {
             var task = adapter.data[position] as Task
             startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.LOOK.name, PostTaskActivity.TASKID to task.id!!)
         }
+
+        mSwipeRefresh.setOnRefreshListener {
+            curPage = 0
+            mPresenter.queryByClassid(classId, curPage, pageSize)
+        }
+
+        mRvRecommendAdapter.setOnLoadMoreListener({
+            mPresenter.queryByClassid(classId, ++curPage, pageSize)
+        }, mRvTask)
+        mSwipeRefresh.isRefreshing = true
     }
 
 

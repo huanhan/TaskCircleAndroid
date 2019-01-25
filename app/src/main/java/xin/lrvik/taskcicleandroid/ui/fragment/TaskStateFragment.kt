@@ -6,6 +6,7 @@ import android.support.v7.widget.OrientationHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.android.synthetic.main.fragment_task_state.*
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
@@ -33,6 +34,8 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
 
     lateinit var type: String
     lateinit var mRvTaskStateAdapter: RvTaskStateAdapter
+    var curPage: Int = 0
+    var pageSize: Int = 20
 
     override fun injectComponent() {
         DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
@@ -40,11 +43,31 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
     }
 
     override fun onTaskStateResult(data: Page<Task>) {
-        mRvTaskStateAdapter.setNewData(data.content)
+
+        //下拉刷新
+        if (mSwipeRefresh.isRefreshing) {
+            mSwipeRefresh.isRefreshing = false
+            mRvTaskStateAdapter.setNewData(data.content)
+            if (data.pageNum == data.totalPage - 1){
+                mRvTaskStateAdapter.loadMoreEnd()
+            }
+//            mRvTaskStateAdapter.notifyDataSetChanged()
+        } else {//上拉加载数据
+            if (data.pageNum == data.totalPage - 1) {//到底了
+                mRvTaskStateAdapter.loadMoreEnd()
+            } else {//还可以上拉
+                mRvTaskStateAdapter.loadMoreComplete()
+            }
+            mRvTaskStateAdapter.addData(data.content)
+        }
+        curPage = data.pageNum
     }
 
     override fun onResult(result: String) {
         toast(result)
+        curPage = 0
+        mSwipeRefresh.isRefreshing = true
+        mPresenter.getStateTaskData(type, curPage, pageSize)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -59,8 +82,9 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
         linearLayoutManager.orientation = OrientationHelper.VERTICAL
         var list = ArrayList<Task>()
         mRvTaskStateAdapter = RvTaskStateAdapter(list)
+        mRvTaskStateAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN)
         mRvTask.adapter = mRvTaskStateAdapter
-        mPresenter.getStateTaskData(type, 0, 20)
+        mRvTask.isNestedScrollingEnabled = false
 
         mRvTaskStateAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as Task
@@ -95,9 +119,20 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
                         mPresenter.cancelAbandon(it)
                     }
                 }
-            }
 
+            }
         }
+
+        mSwipeRefresh.setOnRefreshListener {
+            curPage = 0
+            mPresenter.getStateTaskData(type, curPage, pageSize)
+        }
+
+        mRvTaskStateAdapter.setOnLoadMoreListener({
+            mPresenter.getStateTaskData(type, ++curPage, pageSize)
+        }, mRvTask)
+        mSwipeRefresh.isRefreshing = true
+        mPresenter.getStateTaskData(type, curPage, pageSize)
 
     }
 
