@@ -106,6 +106,7 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
                     }
                     R.id.mBtRelease -> {
                         startActivity<ReleaseTaskActivity>(ReleaseTaskActivity.TASKID to task.id!!)
+                        isRefresh = true
                     }
                     R.id.mBtOut -> {
                         mPresenter.outTask(it)
@@ -137,22 +138,18 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
 
     }
 
-    var isInit = true
+    var isRefresh = false
 
     override fun onResume() {
         super.onResume()
-        if (!isInit) {
+        if (isRefresh) {
+            isRefresh = false
             mSwipeRefresh?.let {
                 curPage = 0
                 mSwipeRefresh.isRefreshing = true
                 mPresenter.getStateTaskData(type, curPage, pageSize)
             }
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        isInit = false
     }
 
     companion object {

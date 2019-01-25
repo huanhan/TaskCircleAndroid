@@ -34,8 +34,8 @@ class RetrofitFactory private constructor() {
         interceptor = Interceptor { chain ->
             val request = chain.request()
                     .newBuilder()
-                    //.addHeader("Content-Type", "application/json")
-                    //.addHeader("charset", "utf-8")
+                    .addHeader("Content-Type", "application/json")
+                    .addHeader("charset", "utf-8")
                     //.addHeader("token",AppPrefsUtils.getString(BaseConstant.KEY_SP_TOKEN))
                     .build()
             var response = chain.proceed(request)
@@ -43,14 +43,13 @@ class RetrofitFactory private constructor() {
                 //请求操作失败异常处理
                 if (it.code() != 200) {
                     var errMes = ""
-                    try {
-                        var result = it.body()?.string().toString()
-                        JsonParser().parse(result).asJsonObject["messages"].asJsonArray.forEach { it ->
-                            errMes += it.asString + ","
-                        }
-                    } catch (e: Exception) {
-                        throw BaseException(it.code(), if (errMes.isEmpty()) "未知异常" else errMes)
+                    var result = it.body()?.string().toString()
+                    var errArray = JsonParser().parse(result).asJsonObject["messages"].asJsonArray
+                    for ((index, ele) in errArray.withIndex()) {
+                        errMes += ele.asJsonObject["message"].asString + if (errArray.size() - 1 == index) "" else ","
                     }
+
+                    throw BaseException(it.code(), if (errMes.isEmpty()) "未知异常" else errMes)
                 }
             }
             response
