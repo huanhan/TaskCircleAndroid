@@ -8,8 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_task_state.*
 import xin.lrvik.taskcicleandroid.R
+import xin.lrvik.taskcicleandroid.R.id.mRvTask
+import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication.Companion.context
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseFragment
+import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseMvpFragment
+import xin.lrvik.taskcicleandroid.data.protocol.Page
 import xin.lrvik.taskcicleandroid.data.protocol.Task
+import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
+import xin.lrvik.taskcicleandroid.presenter.TaskStatePresenter
+import xin.lrvik.taskcicleandroid.presenter.view.TaskStateView
 import xin.lrvik.taskcicleandroid.ui.adapter.RvTaskStateAdapter
 import java.util.*
 
@@ -18,9 +25,20 @@ import java.util.*
  *
  */
 
-class TaskStateFragment : BaseFragment() {
+class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
 
     lateinit var type: String
+    lateinit var mRvTaskStateAdapter: RvTaskStateAdapter
+
+    override fun injectComponent() {
+        DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
+        mPresenter.mView = this
+    }
+
+    override fun onTaskStateResult(data: Page<Task>) {
+        mRvTaskStateAdapter.setNewData(data.content)
+    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_task_state, null)
@@ -33,7 +51,9 @@ class TaskStateFragment : BaseFragment() {
         mRvTask.layoutManager = linearLayoutManager
         linearLayoutManager.orientation = OrientationHelper.VERTICAL
         var list = ArrayList<Task>()
-        mRvTask.adapter = RvTaskStateAdapter(list)
+        mRvTaskStateAdapter = RvTaskStateAdapter(list)
+        mRvTask.adapter = mRvTaskStateAdapter
+        mPresenter.getStateTaskData(type, 0, 20)
     }
 
 

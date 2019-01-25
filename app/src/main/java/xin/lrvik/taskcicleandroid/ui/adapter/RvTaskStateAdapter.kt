@@ -22,38 +22,7 @@ import xin.lrvik.taskcicleandroid.data.protocol.enums.TaskState
  */
 class RvTaskStateAdapter(data: List<Task>) : BaseQuickAdapter<Task, BaseViewHolder>(R.layout.item_task_state, data) {
     override fun convert(helper: BaseViewHolder, item: Task) {
-        /* when (item.state) {
-             TaskState.NEW_CREATE,TaskState.AUDIT_FAILURE//新建
-             -> {
-                 taskStates.add(TaskState.NEW_CREATE)//新建
-                 taskStates.add(TaskState.AUDIT_FAILURE)//任务审核失败
-             }
-             "AUDIT"//待审核
-             -> {
-                 taskStates.add(TaskState.AWAIT_AUDIT)//等待审核
-                 taskStates.add(TaskState.AUDIT)//审核中
-                 taskStates.add(TaskState.AUDIT_SUCCESS)//任务审核成功
-                 taskStates.add(TaskState.OK_ISSUE)//任务可以发布
-             }
-             "ISSUE"//已发布
-             -> {
-                 taskStates.add(TaskState.ISSUE)//任务发布中
-                 taskStates.add(TaskState.FORBID_RECEIVE)//任务禁止被接取
-                 taskStates.add(TaskState.OUT)//任务被撤回
-             }
-             "FINISH"//已完成
-             -> {
-                 taskStates.add(TaskState.FINISH)//任务完成
-                 taskStates.add(TaskState.ABANDON_COMMIT)//用户提交放弃的申请
-                 taskStates.add(TaskState.ABANDON_OK)//任务被放弃
-                 taskStates.add(TaskState.USER_HUNTER_NEGOTIATE)//与猎刃协商中
-                 taskStates.add(TaskState.HUNTER_REJECT)//猎刃拒绝协商
-                 taskStates.add(TaskState.COMMIT_AUDIT)//提交管理员协商
-                 taskStates.add(TaskState.ADMIN_NEGOTIATE)//管理员协商中
-                 taskStates.add(TaskState.HUNTER_COMMIT)//猎刃放弃任务
-             }
-         }
-         */
+
         //按钮根据状态决定是否显示
         val mReleaseMsg = helper.getView<LinearLayout>(R.id.mReleaseMsg)
         val mBtModify = helper.getView<Button>(R.id.mBtModify)
@@ -64,33 +33,72 @@ class RvTaskStateAdapter(data: List<Task>) : BaseQuickAdapter<Task, BaseViewHold
         val mBtUpper = helper.getView<Button>(R.id.mBtUpper)
         val mBtAbandon = helper.getView<Button>(R.id.mBtAbandon)
         val mBtCancelAbandon = helper.getView<Button>(R.id.mBtCancelAbandon)
-        val mBtAuditSuc = helper.getView<Button>(R.id.mBtAuditSuc)
-        val mBtAuditFail = helper.getView<Button>(R.id.mBtAuditFail)
 
         item.state?.let {
-            isShow(mReleaseMsg,it, listOf(TaskState.NEW_CREATE,
-                    TaskState.AUDIT_FAILURE,
-                    TaskState.AWAIT_AUDIT,
-                    TaskState.AUDIT,
-                    TaskState.AUDIT_SUCCESS,TaskState.OK_ISSUE))
+            //发布的信息的界面
+            isShow(mReleaseMsg, it, listOf(TaskState.ISSUE,
+                    TaskState.FORBID_RECEIVE,
+                    TaskState.OUT,
+                    TaskState.FINISH,
+                    TaskState.ABANDON_COMMIT,
+                    TaskState.ABANDON_OK,
+                    TaskState.USER_HUNTER_NEGOTIATE,
+                    TaskState.HUNTER_REJECT,
+                    TaskState.COMMIT_AUDIT,
+                    TaskState.ADMIN_NEGOTIATE,
+                    TaskState.HUNTER_COMMIT))
 
-
+            //修改信息
             isShow(mBtModify, it, listOf(TaskState.NEW_CREATE,
                     TaskState.AUDIT_FAILURE))
 
-            // todo 按钮是否展示 还未完成
+            //提交审核
+            isShow(mBtSubmitAudit, it, listOf(TaskState.NEW_CREATE,
+                    TaskState.HUNTER_REJECT))
+
+            //取消审核
+            isShow(mBtCancelAudit, it, listOf(TaskState.AWAIT_AUDIT,
+                    TaskState.AUDIT,
+                    TaskState.ADMIN_NEGOTIATE,
+                    TaskState.COMMIT_AUDIT))
+
+            //发布
+            isShow(mBtRelease, it, listOf(TaskState.AUDIT_SUCCESS,
+                    TaskState.OK_ISSUE))
+
+            //撤回
+            isShow(mBtOut, it, listOf(TaskState.ISSUE))
+
+            //上架
+            isShow(mBtUpper, it, listOf(TaskState.OUT))
+
+            //放弃任务
+            isShow(mBtAbandon, it, listOf(TaskState.FORBID_RECEIVE, TaskState.OUT))
+
+            //取消放弃
+            isShow(mBtCancelAbandon, it, listOf(TaskState.ABANDON_COMMIT))
+
         }
 
+        if (item.latitude != null && item.longitude != null) {
+            var distance = DistanceUtil.getDistance(LatLng(UserInfo.latitude, UserInfo.longitude), LatLng(item.latitude
+                    ?: 0.0, item.longitude ?: 0.0)).toInt()
+            var dis = if (distance < 1000) "$distance 米" else "${distance / 1000} 千米"
+            helper.setText(R.id.mTvDistance, "$dis")
+        }
 
-        var distance = DistanceUtil.getDistance(LatLng(UserInfo.latitude, UserInfo.longitude), LatLng(item.latitude
-                ?: 0.0, item.longitude ?: 0.0)).toInt()
+        if (item.money != null) {
+            helper.setText(R.id.mTvMoney, "${item.money} 元")
+        }
 
-        var dis = if (distance < 1000) "$distance 米" else "${distance / 1000} 千米"
+        if (item.beginTime != null && item.deadline != null) {
+            helper.setText(R.id.mTvTime, "${DateFormat.format("yyyy年MM月dd", item.beginTime)}~${DateFormat.format("yyyy年MM月dd", item.deadline)}")
+        }
+
         helper.setText(R.id.mTvTaskName, item.name)
+                .setText(R.id.mTvState, item.state!!.state)
                 .setText(R.id.mTvContext, item.context)
-                .setText(R.id.mTvMoney, "${item.money} 元")
-                .setText(R.id.mTvDistance, "$dis")
-                .setText(R.id.mTvTime, "${DateFormat.format("yyyy年MM月dd", item.beginTime)}~${DateFormat.format("yyyy年MM月dd", item.deadline)}")
+
         var imageView = helper.getView<ImageView>(R.id.mIvIcon)
         imageView.loadUrl(item.headImg ?: R.mipmap.def)
 

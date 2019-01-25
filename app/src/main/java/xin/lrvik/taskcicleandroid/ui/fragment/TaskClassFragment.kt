@@ -25,7 +25,7 @@ import java.util.*
 class TaskClassFragment : BaseMvpFragment<TaskClassPresenter>(), TaskClassView {
 
     var classId: Long = 0
-    lateinit var rvRecommendAdapter: RvRecommendAdapter
+    lateinit var mRvRecommendAdapter: RvRecommendAdapter
 
     override fun injectComponent() {
         DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
@@ -33,7 +33,7 @@ class TaskClassFragment : BaseMvpFragment<TaskClassPresenter>(), TaskClassView {
     }
 
     override fun onTaskListResult(data: Page<Task>) {
-        rvRecommendAdapter.setNewData(data.content)
+        mRvRecommendAdapter.setNewData(data.content)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -47,8 +47,8 @@ class TaskClassFragment : BaseMvpFragment<TaskClassPresenter>(), TaskClassView {
         mRvTask.layoutManager = linearLayoutManager
         linearLayoutManager.orientation = OrientationHelper.VERTICAL
         var list = ArrayList<Task>()
-        rvRecommendAdapter = RvRecommendAdapter(list)
-        mRvTask.adapter = rvRecommendAdapter
+        mRvRecommendAdapter = RvRecommendAdapter(list)
+        mRvTask.adapter = mRvRecommendAdapter
         mPresenter.queryByClassid(classId, 0, 10)
     }
 

@@ -38,7 +38,7 @@ interface TaskApi {
                        @Path("page") page: Int,
                        @Path("size") size: Int): Observable<Page<Task>>
 
-    //查根据状态获取指定用户的任务列表 http://localhost:8080/app/task/user/AWAIT_AUDIT/0/5/6
+    //查根据状态获取指定用户的任务列表 http://localhost:8080/app/task/user/ALL/0/5/6
     @GET("app/task/user/{state}/{page}/{size}/{id}")
     fun queryByState(@Path("state") state: String,
                      @Path("page") page: Int,

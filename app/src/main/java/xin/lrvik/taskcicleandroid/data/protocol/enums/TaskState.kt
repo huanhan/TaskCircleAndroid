@@ -1,6 +1,6 @@
 package xin.lrvik.taskcicleandroid.data.protocol.enums
 
-enum class TaskState constructor(private val state: String) {
+enum class TaskState constructor(val state: String) {
 
     /**
      * 用户新建一条任务
@@ -74,7 +74,6 @@ enum class TaskState constructor(private val state: String) {
      * 查询专用
      */
     HUNTER_COMMIT("猎刃放弃任务")
-
 
 
 }

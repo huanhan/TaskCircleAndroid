@@ -10,6 +10,7 @@ import xin.lrvik.taskcicleandroid.ui.activity.PostTaskActivity
 import xin.lrvik.taskcicleandroid.ui.activity.ReleaseTaskActivity
 import xin.lrvik.taskcicleandroid.ui.fragment.HomeFragment
 import xin.lrvik.taskcicleandroid.ui.fragment.TaskClassFragment
+import xin.lrvik.taskcicleandroid.ui.fragment.TaskStateFragment
 
 /**
  * Author by 豢涵, Email huanhanfu@126.com, Date on 2019/1/21.
@@ -23,4 +24,5 @@ interface TaskCircleComponent {
     fun inject(activity: ReleaseTaskActivity)
     fun inject(fragment: HomeFragment)
     fun inject(fragment: TaskClassFragment)
+    fun inject(fragment: TaskStateFragment)
 }

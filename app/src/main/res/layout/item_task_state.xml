@@ -7,6 +7,16 @@
     android:padding="3dp"
     app:cardCornerRadius="5dp">
 
+    <TextView
+        android:id="@+id/mTvState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_margin="5dp"
+        android:text="状态"
+        android:textColor="#E65B2A"
+        android:textSize="12sp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +25,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="3dp">
 
             <android.support.v7.widget.CardView
                 android:layout_width="90dp"
@@ -143,6 +154,8 @@
             </LinearLayout>
         </LinearLayout>
 
+        <View style="@style/DividerFixedHeight" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -152,173 +165,44 @@
 
             <Button
                 android:id="@+id/mBtModify"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/btn_common_selector"
-                android:gravity="center"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:paddingLeft="6dp"
-                android:paddingTop="3dp"
-                android:paddingRight="6dp"
-                android:paddingBottom="3dp"
-                android:text="修改"
-                android:textColor="#fff"
-                android:visibility="gone" />
+                style="@style/TaskButton"
+                android:text="修改" />
 
             <Button
                 android:id="@+id/mBtSubmitAudit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/btn_common_selector"
-                android:gravity="center"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:paddingLeft="6dp"
-                android:paddingTop="3dp"
-                android:paddingRight="6dp"
-                android:paddingBottom="3dp"
-                android:text="提交审核"
-                android:textColor="#fff"
-                android:visibility="gone" />
+                style="@style/TaskButton"
+                android:text="提交审核" />
 
             <Button
                 android:id="@+id/mBtCancelAudit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/btn_common_selector"
-                android:gravity="center"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:paddingLeft="6dp"
-                android:paddingTop="3dp"
-                android:paddingRight="6dp"
-                android:paddingBottom="3dp"
-                android:text="取消审核"
-                android:textColor="#fff"
-                android:visibility="gone" />
+                style="@style/TaskButton"
+                android:text="取消审核" />
 
             <Button
                 android:id="@+id/mBtRelease"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/btn_common_selector"
-                android:gravity="center"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:paddingLeft="6dp"
-                android:paddingTop="3dp"
-                android:paddingRight="6dp"
-                android:paddingBottom="3dp"
-                android:text="发布"
-                android:textColor="#fff"
-                android:visibility="gone" />
+                style="@style/TaskButton"
+                android:text="发布" />
 
             <Button
                 android:id="@+id/mBtOut"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/btn_common_selector"
-                android:gravity="center"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:paddingLeft="6dp"
-                android:paddingTop="3dp"
-                android:paddingRight="6dp"
-                android:paddingBottom="3dp"
-                android:text="撤回"
-                android:textColor="#fff"
-                android:visibility="gone" />
+                style="@style/TaskButton"
+                android:text="撤回" />
 
             <Button
                 android:id="@+id/mBtUpper"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/btn_common_selector"
-                android:gravity="center"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:paddingLeft="6dp"
-                android:paddingTop="3dp"
-                android:paddingRight="6dp"
-                android:paddingBottom="3dp"
-                android:text="上架"
-                android:textColor="#fff"
-                android:visibility="gone" />
+                style="@style/TaskButton"
+                android:text="上架" />
 
             <Button
                 android:id="@+id/mBtAbandon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/btn_common_selector"
-                android:gravity="center"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:paddingLeft="6dp"
-                android:paddingTop="3dp"
-                android:paddingRight="6dp"
-                android:paddingBottom="3dp"
-                android:text="放弃"
-                android:textColor="#fff"
-                android:visibility="gone" />
+                style="@style/TaskButton"
+                android:text="放弃" />
 
             <Button
                 android:id="@+id/mBtCancelAbandon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/btn_common_selector"
-                android:gravity="center"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:paddingLeft="6dp"
-                android:paddingTop="3dp"
-                android:paddingRight="6dp"
-                android:paddingBottom="3dp"
-                android:text="取消放弃"
-                android:textColor="#fff"
-                android:visibility="gone" />
+                style="@style/TaskButton"
+                android:text="取消放弃" />
 
-            <Button
-                android:id="@+id/mBtAuditSuc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/btn_common_selector"
-                android:gravity="center"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:paddingLeft="6dp"
-                android:paddingTop="3dp"
-                android:paddingRight="6dp"
-                android:paddingBottom="3dp"
-                android:text="审核通过"
-                android:textColor="#fff"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/mBtAuditFail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/btn_common_selector"
-                android:gravity="center"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:paddingLeft="6dp"
-                android:paddingTop="3dp"
-                android:paddingRight="6dp"
-                android:paddingBottom="3dp"
-                android:text="审核不通过"
-                android:textColor="#fff"
-                android:visibility="gone" />
 
         </LinearLayout>
 
