@@ -42,8 +42,8 @@ class TaskServiceImpl @Inject constructor() : TaskService {
         return taskRepository.queryTaskDetail(id)
     }
 
-    override fun issueTask(id: String, money: Float, peopleNumber: Int, beginTime: Long, deadline: Long, permitAbandonMinute: Int, longitude: Double, latitude: Double, taskRework: Boolean, compensate: Boolean, compensateMoney: Float): Observable<TaskDetail> {
-        return taskRepository.issueTask(id, money, peopleNumber, beginTime, deadline, permitAbandonMinute, longitude, latitude, taskRework, compensate, compensateMoney)
+    override fun issueTask(id: String, money: Float, peopleNumber: Int, beginTime: Long, deadline: Long, permitAbandonMinute: Int, longitude: Double, latitude: Double, address: String, taskRework: Boolean, compensate: Boolean, compensateMoney: Float): Observable<TaskDetail> {
+        return taskRepository.issueTask(id, money, peopleNumber, beginTime, deadline, permitAbandonMinute, longitude, latitude, address, taskRework, compensate, compensateMoney)
     }
 
     override fun queryByState(state: String,

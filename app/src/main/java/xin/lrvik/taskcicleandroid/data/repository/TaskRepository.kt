@@ -39,11 +39,12 @@ class TaskRepository @Inject constructor() {
                   permitAbandonMinute: Int,
                   longitude: Double,
                   latitude: Double,
+                  address: String,
                   taskRework: Boolean,
                   compensate: Boolean,
                   compensateMoney: Float): Observable<TaskDetail> {
         return RetrofitFactory.instance.create(TaskApi::class.java).issueTask(UserInfo.userId,
-                IssueTaskReq(id, money, peopleNumber, beginTime, deadline, permitAbandonMinute, longitude, latitude, taskRework, compensate, compensateMoney))
+                IssueTaskReq(id, money, peopleNumber, beginTime, deadline, permitAbandonMinute, longitude, latitude,address, taskRework, compensate, compensateMoney))
     }
 
     fun queryTaskDetail(id: String): Observable<TaskDetail> {

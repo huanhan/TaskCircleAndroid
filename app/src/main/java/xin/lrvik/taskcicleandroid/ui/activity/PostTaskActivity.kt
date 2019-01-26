@@ -57,7 +57,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
     var classList = ArrayList<TaskClass>()
     lateinit var mRvTaskStepAdapter: RvAddTaskStepAdapter
-    var geoCoder = GeoCoder.newInstance()
+//    var geoCoder = GeoCoder.newInstance()
 
     override fun injectComponent() {
         DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
@@ -128,16 +128,16 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
             if (data.latitude != null && data.longitude != null) {
 
                 //位置反编码参数
-                var reverseGeoCodeOption = ReverseGeoCodeOption()
+                /*var reverseGeoCodeOption = ReverseGeoCodeOption()
                 reverseGeoCodeOption.location(LatLng(data.latitude!!, data.longitude!!))
                         .radius(1000)
-                geoCoder.reverseGeoCode(reverseGeoCodeOption)
+                geoCoder.reverseGeoCode(reverseGeoCodeOption)*/
 
                 var distance = DistanceUtil.getDistance(LatLng(UserInfo.latitude, UserInfo.longitude), LatLng(data.latitude
                         ?: 0.0, data.longitude ?: 0.0)).toInt()
                 var dis = if (distance < 1000) "$distance 米" else "${distance / 1000} 千米"
 
-                mTvLocation.text = "(距离您$dis)"
+                mTvLocation.text = "${data.address} 距您($dis)"
             }
 
 
@@ -260,7 +260,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         }
 
         //位置信息反编码
-        geoCoder.setOnGetGeoCodeResultListener(object : OnGetGeoCoderResultListener {
+       /* geoCoder.setOnGetGeoCodeResultListener(object : OnGetGeoCoderResultListener {
             override fun onGetGeoCodeResult(geoCodeResult: GeoCodeResult) {
 
             }
@@ -270,7 +270,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                 mTvLocation.text = if (reverseGeoCodeResult.poiList != null && reverseGeoCodeResult.poiList.size > 0) "${reverseGeoCodeResult.poiList[0].name} $dis" else "未知位置 $dis"
             }
 
-        })
+        })*/
 
         //判断模式
         mode = Mode.valueOf(intent.getStringExtra(MODE))

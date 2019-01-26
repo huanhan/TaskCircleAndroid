@@ -118,6 +118,7 @@ class ReleaseTaskActivity : BaseMvpActivity<ReleaseTaskPresenter>(), ReleaseTask
                         DateUtils.str2Timestamp(mTvDeadline.text.toString()).time,
                         mTvPermitAbandonMinute.text.toString().toInt(),
                         longitude, latitude,
+                        mTvLocation.text.toString(),
                         mSwTaskRework.isChecked,
                         mSwCompensate.isChecked,
                         if (mSwCompensate.isChecked) mEtCompensateMoney.text.toString().toFloat() else 0f

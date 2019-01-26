@@ -29,6 +29,7 @@ class TaskDetail {
     var permitAbandonMinute: Int? = null
     var longitude: Double? = null
     var latitude: Double? = null
+    var address: String? = null
     var taskRework: Boolean? = null
     var compensate: Boolean? = null
 

@@ -24,7 +24,7 @@ interface TaskService {
     fun queryTaskDetail(id: String): Observable<TaskDetail>
 
     //发布任务
-    fun issueTask(id: String, money: Float, peopleNumber: Int, beginTime: Long, deadline: Long, permitAbandonMinute: Int, longitude: Double, latitude: Double, taskRework: Boolean, compensate: Boolean, compensateMoney: Float): Observable<TaskDetail>
+    fun issueTask(id: String, money: Float, peopleNumber: Int, beginTime: Long, deadline: Long, permitAbandonMinute: Int, longitude: Double, latitude: Double, address: String, taskRework: Boolean, compensate: Boolean, compensateMoney: Float): Observable<TaskDetail>
 
     //根据状态获取任务列表
     fun queryByState(state: String, page: Int, size: Int): Observable<Page<Task>>
