@@ -7,6 +7,7 @@ import kotlinx.android.synthetic.main.activity_hunter_task.*
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseActivity
 import xin.lrvik.taskcicleandroid.ui.adapter.VpTaskAdapter
+import xin.lrvik.taskcicleandroid.ui.fragment.HunterTaskStateFragment
 import xin.lrvik.taskcicleandroid.ui.fragment.TaskStateFragment
 import java.util.*
 
@@ -38,15 +39,14 @@ class HunterTaskActivity : BaseActivity() {
     private fun getData() {
 
         mTitles.add("全部")
+        mTitles.add("未开始")
         mTitles.add("进行中")
+        mTitles.add("审核中")
         mTitles.add("已完成")
-        mTitles.add("待评价")
-        mTitles.add("已放弃")
 
-        mTitles.forEach {
-            mFragments.add(TaskStateFragment.newInstance(it))
+        listOf("ALL", "NEW", "RUNNING", "AUDIT", "FINISH").forEach {
+            mFragments.add(HunterTaskStateFragment.newInstance(it))
         }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

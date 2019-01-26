@@ -46,7 +46,7 @@ class TaskClassFragment : BaseMvpFragment<TaskClassPresenter>(), TaskClassView {
             if (data.pageNum == data.totalPage - 1) {
                 mRvRecommendAdapter.loadMoreEnd()
             }
-//            mRvTaskStateAdapter.notifyDataSetChanged()
+//            mRvHunterTaskStateAdapter.notifyDataSetChanged()
         } else {//上拉加载数据
             if (data.pageNum == data.totalPage - 1) {//到底了
                 mRvRecommendAdapter.loadMoreEnd()

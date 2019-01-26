@@ -3,12 +3,12 @@ package xin.lrvik.taskcicleandroid.injection.component
 import dagger.Component
 import lrvik.xin.base.injection.PerComponentScope
 import xin.lrvik.taskcicleandroid.baselibrary.injection.component.ActivityComponent
-import xin.lrvik.taskcicleandroid.injection.module.HomeModule
-import xin.lrvik.taskcicleandroid.injection.module.TaskModule
+import xin.lrvik.taskcicleandroid.injection.module.CircleTaskModule
 import xin.lrvik.taskcicleandroid.ui.activity.ClassActivity
 import xin.lrvik.taskcicleandroid.ui.activity.PostTaskActivity
 import xin.lrvik.taskcicleandroid.ui.activity.ReleaseTaskActivity
 import xin.lrvik.taskcicleandroid.ui.fragment.HomeFragment
+import xin.lrvik.taskcicleandroid.ui.fragment.HunterTaskStateFragment
 import xin.lrvik.taskcicleandroid.ui.fragment.TaskClassFragment
 import xin.lrvik.taskcicleandroid.ui.fragment.TaskStateFragment
 
@@ -17,7 +17,7 @@ import xin.lrvik.taskcicleandroid.ui.fragment.TaskStateFragment
  *
  */
 @PerComponentScope
-@Component(dependencies = [ActivityComponent::class], modules = [HomeModule::class,TaskModule::class])
+@Component(dependencies = [ActivityComponent::class], modules = [CircleTaskModule::class])
 interface TaskCircleComponent {
     fun inject(activity: ClassActivity)
     fun inject(activity: PostTaskActivity)
@@ -25,4 +25,5 @@ interface TaskCircleComponent {
     fun inject(fragment: HomeFragment)
     fun inject(fragment: TaskClassFragment)
     fun inject(fragment: TaskStateFragment)
+    fun inject(fragment: HunterTaskStateFragment)
 }

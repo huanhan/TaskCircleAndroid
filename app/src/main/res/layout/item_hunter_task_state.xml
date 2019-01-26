@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp"
+    android:padding="3dp"
+    app:cardCornerRadius="5dp">
+
+    <TextView
+        android:id="@+id/mTvState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_margin="5dp"
+        android:text="状态"
+        android:textColor="#E65B2A"
+        android:textSize="12sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingBottom="3dp">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dp"
+                app:cardCornerRadius="6dp">
+
+                <ImageView
+                    android:id="@+id/mIvIcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/def" />
+            </android.support.v7.widget.CardView>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/mTvTaskName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:lines="1"
+                        android:text=" 任务名"
+                        android:textColor="@color/common_black"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/mTvContext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:ellipsize="end"
+                    android:lines="2"
+                    android:text="介绍信息3行介绍信息3行介绍信息3行介绍信息3行介绍信息3行介绍信息3行介绍信息3行介绍信息3行介绍信息3行介绍信息3行"
+                    android:textColor="@color/deep_gray"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:id="@+id/mReleaseMsg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="5dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="赏金："
+                            android:textColor="@color/common_black"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:id="@+id/mTvMoney"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0元"
+                            android:textColor="@color/common_red"
+                            android:textSize="12sp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="接取时间："
+                            android:textColor="@color/common_black"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:id="@+id/mTvTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2019年1月1日"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View style="@style/DividerFixedHeight" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <Button
+                android:id="@+id/mBtBegin"
+                style="@style/TaskButton"
+                android:text="开始任务" />
+
+            <Button
+                android:id="@+id/mBtSubmitAudit"
+                style="@style/TaskButton"
+                android:text="提交审核" />
+
+            <Button
+                android:id="@+id/mBtReWork"
+                style="@style/TaskButton"
+                android:text="重做" />
+
+            <Button
+                android:id="@+id/mBtAbandon"
+                style="@style/TaskButton"
+                android:text="放弃" />
+
+            <Button
+                android:id="@+id/mBtSubmitAdminAudit"
+                style="@style/TaskButton"
+                android:text="提交管理员审核" />
+
+            <Button
+                android:id="@+id/mBtCancelAdminAudit"
+                style="@style/TaskButton"
+                android:text="取消管理员审核" />
+
+            <Button
+                android:id="@+id/mBtAgreeAbandon"
+                style="@style/TaskButton"
+                android:text="同意用户放弃" />
+
+            <Button
+                android:id="@+id/mBtDisAgreeAbandon"
+                style="@style/TaskButton"
+                android:text="不同意用户放弃" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

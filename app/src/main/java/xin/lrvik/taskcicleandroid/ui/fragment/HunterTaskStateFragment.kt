@@ -6,23 +6,16 @@ import android.support.v7.widget.OrientationHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.chad.library.adapter.base.BaseQuickAdapter
-import kotlinx.android.synthetic.main.fragment_task_state.*
-import org.jetbrains.anko.support.v4.startActivity
+import kotlinx.android.synthetic.main.fragment_hunter_task_state.*
 import org.jetbrains.anko.support.v4.toast
 import xin.lrvik.taskcicleandroid.R
-import xin.lrvik.taskcicleandroid.R.id.mRvTask
-import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication.Companion.context
-import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseFragment
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseMvpFragment
+import xin.lrvik.taskcicleandroid.data.protocol.HunterTask
 import xin.lrvik.taskcicleandroid.data.protocol.Page
-import xin.lrvik.taskcicleandroid.data.protocol.Task
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
-import xin.lrvik.taskcicleandroid.presenter.TaskStatePresenter
-import xin.lrvik.taskcicleandroid.presenter.view.TaskStateView
-import xin.lrvik.taskcicleandroid.ui.activity.PostTaskActivity
-import xin.lrvik.taskcicleandroid.ui.activity.ReleaseTaskActivity
-import xin.lrvik.taskcicleandroid.ui.adapter.RvTaskStateAdapter
+import xin.lrvik.taskcicleandroid.presenter.HunterTaskStatePresenter
+import xin.lrvik.taskcicleandroid.presenter.view.HunterTaskStateView
+import xin.lrvik.taskcicleandroid.ui.adapter.RvHunterTaskStateAdapter
 import java.util.*
 
 /**
@@ -30,10 +23,10 @@ import java.util.*
  *
  */
 
-class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
+class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), HunterTaskStateView {
 
     lateinit var type: String
-    lateinit var mRvTaskStateAdapter: RvTaskStateAdapter
+    lateinit var mRvHunterTaskStateAdapter: RvHunterTaskStateAdapter
     var curPage: Int = 0
     var pageSize: Int = 20
 
@@ -42,23 +35,23 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
         mPresenter.mView = this
     }
 
-    override fun onTaskStateResult(data: Page<Task>) {
+    override fun onTaskStateResult(data: Page<HunterTask>) {
         mSwipeRefresh?.let {
             //下拉刷新
             if (mSwipeRefresh.isRefreshing) {
                 mSwipeRefresh.isRefreshing = false
-                mRvTaskStateAdapter.setNewData(data.content)
+                mRvHunterTaskStateAdapter.setNewData(data.content)
                 if (data.pageNum == data.totalPage - 1) {
-                    mRvTaskStateAdapter.loadMoreEnd()
+                    mRvHunterTaskStateAdapter.loadMoreEnd()
                 }
 //            mRvHunterTaskStateAdapter.notifyDataSetChanged()
             } else {//上拉加载数据
                 if (data.pageNum == data.totalPage - 1) {//到底了
-                    mRvTaskStateAdapter.loadMoreEnd()
+                    mRvHunterTaskStateAdapter.loadMoreEnd()
                 } else {//还可以上拉
-                    mRvTaskStateAdapter.loadMoreComplete()
+                    mRvHunterTaskStateAdapter.loadMoreComplete()
                 }
-                mRvTaskStateAdapter.addData(data.content)
+                mRvHunterTaskStateAdapter.addData(data.content)
             }
             curPage = data.pageNum
         }
@@ -72,7 +65,7 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_task_state, null)
+        return inflater.inflate(R.layout.fragment_hunter_task_state, null)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -81,47 +74,36 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
         var linearLayoutManager = LinearLayoutManager(context)
         mRvTask.layoutManager = linearLayoutManager
         linearLayoutManager.orientation = OrientationHelper.VERTICAL
-        var list = ArrayList<Task>()
-        mRvTaskStateAdapter = RvTaskStateAdapter(list)
+        var list = ArrayList<HunterTask>()
+        mRvHunterTaskStateAdapter = RvHunterTaskStateAdapter(list)
 //        mRvHunterTaskStateAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN)
-        mRvTask.adapter = mRvTaskStateAdapter
+        mRvTask.adapter = mRvHunterTaskStateAdapter
         mRvTask.isNestedScrollingEnabled = false
 
-        mRvTaskStateAdapter.setOnItemClickListener { adapter, view, position ->
-            var task = adapter.data[position] as Task
-            startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.LOOK.name, PostTaskActivity.TASKID to task.id!!)
+        mRvHunterTaskStateAdapter.setOnItemClickListener { adapter, view, position ->
+            var task = adapter.data[position] as HunterTask
         }
-        mRvTaskStateAdapter.setOnItemChildClickListener { adapter, view, position ->
-            var task = adapter.data[position] as Task
+        mRvHunterTaskStateAdapter.setOnItemChildClickListener { adapter, view, position ->
+            var task = adapter.data[position] as HunterTask
             task.id?.let {
                 when (view.id) {
-                    R.id.mBtModify -> {
-                        startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.MODIFY.name, PostTaskActivity.TASKID to it)
+                    R.id.mBtBegin -> {
                     }
                     R.id.mBtSubmitAudit -> {
-                        mPresenter.submitAudit(it)
                     }
-                    R.id.mBtCancelAudit -> {
-                        mPresenter.cancelAudit(it)
-                    }
-                    R.id.mBtRelease -> {
-                        startActivity<ReleaseTaskActivity>(ReleaseTaskActivity.TASKID to task.id!!)
-                        isRefresh = true
-                    }
-                    R.id.mBtOut -> {
-                        mPresenter.outTask(it)
-                    }
-                    R.id.mBtUpper -> {
-                        mPresenter.upperTask(it)
+                    R.id.mBtReWork -> {
                     }
                     R.id.mBtAbandon -> {
-                        mPresenter.abandonTask(it)
                     }
-                    R.id.mBtCancelAbandon -> {
-                        mPresenter.cancelAbandon(it)
+                    R.id.mBtSubmitAdminAudit -> {
+                    }
+                    R.id.mBtCancelAdminAudit -> {
+                    }
+                    R.id.mBtAgreeAbandon -> {
+                    }
+                    R.id.mBtDisAgreeAbandon -> {
                     }
                 }
-
             }
         }
 
@@ -130,7 +112,7 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
             mPresenter.getStateTaskData(type, curPage, pageSize)
         }
 
-        mRvTaskStateAdapter.setOnLoadMoreListener({
+        mRvHunterTaskStateAdapter.setOnLoadMoreListener({
             mPresenter.getStateTaskData(type, ++curPage, pageSize)
         }, mRvTask)
         mSwipeRefresh.isRefreshing = true
@@ -155,8 +137,8 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
     companion object {
         val TYPE = "TYPE"
 
-        fun newInstance(type: String): TaskStateFragment {
-            var taskClassFragment = TaskStateFragment()
+        fun newInstance(type: String): HunterTaskStateFragment {
+            var taskClassFragment = HunterTaskStateFragment()
             var bundle = Bundle()
             bundle.putString(TYPE, type)
             taskClassFragment.arguments = bundle
