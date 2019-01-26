@@ -18,11 +18,11 @@ interface TaskApi {
 
     //增加任务
     @POST("app/task/{id}")
-    fun addTask(@Path("id") id: Long, @Body req: AddTaskReq): Observable<TaskDetail>
+    fun addTask(@Path("id") id: Long, @Body req: AddTaskReq): Observable<Result>
 
     //修改任务
     @POST("app/task/modify/{id}")
-    fun modifyTask(@Path("id") id: Long, @Body req: ModifyTaskReq): Observable<TaskDetail>
+    fun modifyTask(@Path("id") id: Long, @Body req: ModifyTaskReq): Observable<Result>
 
     //发布任务
     @POST("app/task/issue/{id}")

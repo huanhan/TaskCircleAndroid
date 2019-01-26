@@ -11,5 +11,5 @@ interface HunterTaskService {
 
     //根据状态获取任务列表
     fun queryByState(state: String, page: Int, size: Int): Observable<Page<HunterTask>>
-
+    fun acceptTask(taskId: String): Observable<Result>
 }

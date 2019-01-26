@@ -12,6 +12,7 @@ import javax.inject.Inject
  */
 class HunterTaskServiceImpl @Inject constructor() : HunterTaskService {
 
+
     @Inject
     lateinit var hunterTaskRepository: HunterTaskRepository
 
@@ -22,4 +23,8 @@ class HunterTaskServiceImpl @Inject constructor() : HunterTaskService {
         return hunterTaskRepository.queryByState(state, page, size)
     }
 
+    override fun acceptTask(taskId: String): Observable<Result> {
+        return hunterTaskRepository.acceptTask(taskId)
+
+    }
 }

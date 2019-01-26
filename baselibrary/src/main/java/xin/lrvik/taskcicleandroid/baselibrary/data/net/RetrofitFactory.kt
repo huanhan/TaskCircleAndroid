@@ -42,14 +42,22 @@ class RetrofitFactory private constructor() {
             response?.let {
                 //请求操作失败异常处理
                 if (it.code() != 200) {
+
                     var errMes = ""
-                    var result = it.body()?.string().toString()
-                    var errArray = JsonParser().parse(result).asJsonObject["messages"].asJsonArray
-                    for ((index, ele) in errArray.withIndex()) {
-                        errMes += ele.asJsonObject["message"].asString + if (errArray.size() - 1 == index) "" else ","
+
+                    try {
+                        var result = it.body()?.string().toString()
+                        var errArray = JsonParser().parse(result).asJsonObject["messages"].asJsonArray
+                        for ((index, ele) in errArray.withIndex()) {
+                            errMes += ele.asJsonObject["message"].asString + if (errArray.size() - 1 == index) "" else ","
+                        }
+                    } catch (e: Exception) {
+                        throw BaseException(it.code(), "未知异常")
                     }
 
-                    throw BaseException(it.code(), if (errMes.isEmpty()) "未知异常" else errMes)
+                    throw BaseException(it.code(), errMes)
+
+
                 }
             }
             response

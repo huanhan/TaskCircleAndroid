@@ -38,7 +38,6 @@ import kotlin.collections.ArrayList
 //startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.LOOK.name, PostTaskActivity.TASKID to "20190124220137236856064")
 class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
-
     enum class Mode {
         CREATE(), MODIFY(), LOOK()
     }
@@ -71,8 +70,8 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         }
     }
 
-    override fun onAddTaskResult(data: TaskDetail) {
-        toast("增加任务成功")
+    override fun onResult(result: String) {
+        toast(result)
         finish()
     }
 
@@ -142,11 +141,6 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
 
         }
-    }
-
-    override fun onModifyTaskResult(it: TaskDetail) {
-        toast("修改成功")
-        finish()
     }
 
     internal var colors = intArrayOf(Color.parseColor("#90C5ED"),
@@ -255,22 +249,30 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                     Mode.CREATE -> {
                         mPresenter.addTask(classs, mEtTitle.text.toString(), mLevContext.contentText, mRvTaskStepAdapter.data)
                     }
+                    Mode.LOOK -> {
+                        try {
+                            var taskid = intent.getStringExtra(TASKID)
+                            mPresenter.acceptTask(taskid)
+                        } catch (e: Exception) {
+                            toast("未传递任务id")
+                        }
+                    }
                 }
             }
         }
 
         //位置信息反编码
-       /* geoCoder.setOnGetGeoCodeResultListener(object : OnGetGeoCoderResultListener {
-            override fun onGetGeoCodeResult(geoCodeResult: GeoCodeResult) {
+        /* geoCoder.setOnGetGeoCodeResultListener(object : OnGetGeoCoderResultListener {
+             override fun onGetGeoCodeResult(geoCodeResult: GeoCodeResult) {
 
-            }
+             }
 
-            override fun onGetReverseGeoCodeResult(reverseGeoCodeResult: ReverseGeoCodeResult) {
-                var dis = mTvLocation.text
-                mTvLocation.text = if (reverseGeoCodeResult.poiList != null && reverseGeoCodeResult.poiList.size > 0) "${reverseGeoCodeResult.poiList[0].name} $dis" else "未知位置 $dis"
-            }
+             override fun onGetReverseGeoCodeResult(reverseGeoCodeResult: ReverseGeoCodeResult) {
+                 var dis = mTvLocation.text
+                 mTvLocation.text = if (reverseGeoCodeResult.poiList != null && reverseGeoCodeResult.poiList.size > 0) "${reverseGeoCodeResult.poiList[0].name} $dis" else "未知位置 $dis"
+             }
 
-        })*/
+         })*/
 
         //判断模式
         mode = Mode.valueOf(intent.getStringExtra(MODE))
@@ -281,7 +283,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
                 mTvClassTip.visibility = View.GONE
                 mBtAddStep.visibility = View.GONE
-                mBtnAdd.visibility = View.GONE
+                mBtnAdd.visibility = View.VISIBLE
                 mEtTitle.isEnabled = false
                 mLevContext.id_et_input.isEnabled = false
                 mRvTaskStepAdapter.disableSwipeItem()
@@ -294,7 +296,8 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                     toast("未传递任务id")
                 }
 
-                mBtnAdd.text = "查看任务"
+                mBtnAdd.text = "接取任务"
+
                 actionBar?.title = "查看任务"
 
                 mFlowlayout.setOnTagClickListener(null)
@@ -407,7 +410,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
     }
 
     //判断界面是否根据权限显示
-    private fun<T> isShow(view: View, state: T, list: List<T>) {
+    private fun <T> isShow(view: View, state: T, list: List<T>) {
         view.visibility = if (list.contains(state)) View.VISIBLE else View.GONE
     }
 

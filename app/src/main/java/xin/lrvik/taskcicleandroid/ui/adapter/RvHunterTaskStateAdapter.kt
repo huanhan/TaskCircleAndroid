@@ -70,9 +70,9 @@ class RvHunterTaskStateAdapter(data: List<HunterTask>) : BaseQuickAdapter<Hunter
                     HunterTaskState.NO_REWORK_HAVE_COMPENSATE,
                     HunterTaskState.NO_REWORK_NO_COMPENSATE))
 
-            isShow(mBtAgreeAbandon, item.stop!!)
+            isShow(mBtAgreeAbandon, item.stop ?: false)
 
-            isShow(mBtDisAgreeAbandon, item.stop!!)
+            isShow(mBtDisAgreeAbandon, item.stop ?: false)
 
         }
 

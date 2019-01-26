@@ -12,10 +12,10 @@ interface TaskService {
     fun getTaskClassData(): Observable<List<TaskClass>>
 
     //增加任务
-    fun addTask(req: List<Long>, text: String, contentText: String, data: MutableList<TaskStep>): Observable<TaskDetail>
+    fun addTask(req: List<Long>, text: String, contentText: String, data: MutableList<TaskStep>): Observable<Result>
 
     //修改任务
-    fun modifyTask(id: String, classs: List<Long>, text: String, contentText: String, data: MutableList<TaskStep>): Observable<TaskDetail>
+    fun modifyTask(id: String, classs: List<Long>, text: String, contentText: String, data: MutableList<TaskStep>): Observable<Result>
 
     //查询分类下所有任务
     fun queryByClassid(classsId: Long, page: Int, size: Int): Observable<Page<Task>>
