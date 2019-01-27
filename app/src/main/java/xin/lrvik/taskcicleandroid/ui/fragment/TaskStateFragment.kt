@@ -96,7 +96,7 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
                         startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.MODIFY.name, PostTaskActivity.TASKID to taskId)
                     }
                     R.id.mBtSubmitAudit -> {
-                        alert("任务完成，是否提交审核?") {
+                        alert("是否提交审核?") {
                             positiveButton("是") { mPresenter.submitAudit(taskId) }
                             negativeButton("否") { }
                         }.show()

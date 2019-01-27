@@ -9,6 +9,7 @@ import org.jetbrains.anko.support.v4.startActivity
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseFragment
+import xin.lrvik.taskcicleandroid.common.UserInfo
 import xin.lrvik.taskcicleandroid.ui.activity.LoginActivity
 import xin.lrvik.taskcicleandroid.ui.activity.WalletActivity
 
@@ -26,6 +27,8 @@ class MyFragment : BaseFragment() {
         mRlWallet.onClick {
             startActivity<WalletActivity>()
         }
-
+        mBtExitLogin.onClick {
+            UserInfo.userId = if (UserInfo.userId == 6L) 13 else 6
+        }
     }
 }

@@ -11,7 +11,9 @@ class HunterTask {
     var id: String? = null
     var taskId: String? = null
     var userId: Long? = null
+    var hunterId: Long? = null
     var headImg: String? = null
+    var hunterHeadImg: String? = null
     var name: String? = null
     var taskContext: String? = null
     var context: String? = null

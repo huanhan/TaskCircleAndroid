@@ -139,8 +139,14 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                 mTvLocation.text = "${data.address} 距您($dis)"
             }
 
-            //todo 到时候要放开 mBtnAdd.visibility = if (UserInfo.userId != data.userId) View.VISIBLE else View.GONE
         }
+
+        //如果用户id不是自己则展示接单按钮
+        mBtnAccept.visibility = if (UserInfo.userId != data.userId) View.VISIBLE else View.GONE
+
+        //如果任务的用户id是自己则展示查看接取猎刃
+        mBtnQueryHunter.visibility = if (UserInfo.userId === data.userId) View.VISIBLE else View.GONE
+
     }
 
     internal var colors = intArrayOf(Color.parseColor("#90C5ED"),
@@ -236,30 +242,34 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                 var classs = classList.flatMap {
                     listOf(it.id)
                 }
-
-                when (mode) {
-                    Mode.MODIFY -> {
-                        try {
-                            var taskid = intent.getStringExtra(TASKID)
-                            mPresenter.modifyTask(taskid, classs, mEtTitle.text.toString(), mLevContext.contentText, mRvTaskStepAdapter.data)
-                        } catch (e: Exception) {
-                            toast("未传递任务id")
-                        }
-                    }
-                    Mode.CREATE -> {
-                        mPresenter.addTask(classs, mEtTitle.text.toString(), mLevContext.contentText, mRvTaskStepAdapter.data)
-                    }
-                    Mode.LOOK -> {
-                        try {
-                            var taskid = intent.getStringExtra(TASKID)
-                            mPresenter.acceptTask(taskid)
-                        } catch (e: Exception) {
-                            toast("未传递任务id")
-                        }
-                    }
-                }
+                mPresenter.addTask(classs, mEtTitle.text.toString(), mLevContext.contentText, mRvTaskStepAdapter.data)
             }
         }
+
+        mBtnSave.onClick {
+            var classs = classList.flatMap {
+                listOf(it.id)
+            }
+            try {
+                var taskid = intent.getStringExtra(TASKID)
+                mPresenter.modifyTask(taskid, classs, mEtTitle.text.toString(), mLevContext.contentText, mRvTaskStepAdapter.data)
+            } catch (e: Exception) {
+                toast("未传递任务id")
+            }
+        }
+
+        mBtnAccept.onClick {
+            try {
+                var taskid = intent.getStringExtra(TASKID)
+                mPresenter.acceptTask(taskid)
+            } catch (e: Exception) {
+                toast("未传递任务id")
+            }
+        }
+        mBtnQueryHunter.onClick {
+            //todo 查询猎刃列表
+        }
+
 
         //位置信息反编码
         /* geoCoder.setOnGetGeoCodeResultListener(object : OnGetGeoCoderResultListener {
@@ -283,7 +293,10 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
                 mTvClassTip.visibility = View.GONE
                 mBtAddStep.visibility = View.GONE
-                mBtnAdd.visibility = View.VISIBLE
+                mBtnAdd.visibility = View.GONE
+                mBtnSave.visibility = View.GONE
+                mBtnAccept.visibility = View.GONE
+                mBtnQueryHunter.visibility = View.GONE
                 mEtTitle.isEnabled = false
                 mLevContext.id_et_input.isEnabled = false
                 mRvTaskStepAdapter.disableSwipeItem()
@@ -307,7 +320,10 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
                 mTvClassTip.visibility = View.VISIBLE
                 mBtAddStep.visibility = View.VISIBLE
-                mBtnAdd.visibility = View.VISIBLE
+                mBtnAdd.visibility = View.GONE
+                mBtnSave.visibility = View.VISIBLE
+                mBtnAccept.visibility = View.GONE
+                mBtnQueryHunter.visibility = View.GONE
                 mEtTitle.isEnabled = true
                 mLevContext.id_et_input.isEnabled = true
                 mRvTaskStepAdapter.enableSwipeItem()
@@ -329,6 +345,9 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                 mTvClassTip.visibility = View.VISIBLE
                 mBtAddStep.visibility = View.VISIBLE
                 mBtnAdd.visibility = View.VISIBLE
+                mBtnSave.visibility = View.GONE
+                mBtnAccept.visibility = View.GONE
+                mBtnQueryHunter.visibility = View.GONE
                 mEtTitle.isEnabled = true
                 mLevContext.id_et_input.isEnabled = true
                 mRvTaskStepAdapter.enableSwipeItem()

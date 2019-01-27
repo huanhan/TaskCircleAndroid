@@ -535,7 +535,44 @@
         android:background="@drawable/btn_common_selector"
         android:enabled="true"
         android:padding="10dp"
+        android:text="新建任务"
+        android:textColor="@color/common_white"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/mBtnSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/btn_common_selector"
+        android:enabled="true"
+        android:padding="10dp"
         android:text="保存任务"
-        android:textColor="@color/common_white" />
+        android:textColor="@color/common_white"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/mBtnAccept"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/btn_common_selector"
+        android:enabled="true"
+        android:padding="10dp"
+        android:text="接取任务"
+        android:textColor="@color/common_white"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/mBtnQueryHunter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/btn_common_selector"
+        android:enabled="true"
+        android:padding="10dp"
+        android:text="查看执行猎刃"
+        android:textColor="@color/common_white"
+        android:visibility="gone" />
 
 </LinearLayout>
