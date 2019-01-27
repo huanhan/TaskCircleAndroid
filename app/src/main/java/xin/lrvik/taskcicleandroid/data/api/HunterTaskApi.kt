@@ -3,6 +3,7 @@ package xin.lrvik.taskcicleandroid.data.api
 import io.reactivex.Observable
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import xin.lrvik.taskcicleandroid.data.protocol.*
 
@@ -32,7 +33,7 @@ interface HunterTaskApi {
     fun addTaskStep( @Body step: HunterTaskStep,@Path("id") id: Long): Observable<Result>
 
     //修改猎刃的任务步骤
-    @GET("app/ht/update/step/{id}")
+    @POST("app/ht/update/step/{id}")
     fun updateTaskStep(@Body step: HunterTaskStep,@Path("id") id: Long): Observable<Result>
 
     //猎刃将任务提交用户审核
@@ -44,7 +45,7 @@ interface HunterTaskApi {
     fun reworkTask(@Path("htId") htId: String, @Path("id") id: Long): Observable<Result>
 
     //猎刃点击放弃任务
-    @GET("app/ht/abandon/{id}")
+    @POST("app/ht/abandon/{id}")
     fun abandonTask(@Body auditContext: AuditContext, @Path("id") id: Long): Observable<Result>
 
     //猎刃点击提交管理员审核
@@ -60,7 +61,7 @@ interface HunterTaskApi {
     fun agreeAbandon(@Path("taskId") taskId: String, @Path("id") id: Long): Observable<Result>
 
     //猎刃点击用户的放弃申请不通过
-    @GET("app/ht/abandon/success/{id}")
+    @POST("app/ht/abandon/failure/{id}")
     fun disAgreeAbandon(@Body auditContext: AuditContext, @Path("id") id: Long): Observable<Result>
 
 

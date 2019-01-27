@@ -6,14 +6,11 @@ import android.support.v7.widget.OrientationHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.android.synthetic.main.fragment_task_state.*
+import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import xin.lrvik.taskcicleandroid.R
-import xin.lrvik.taskcicleandroid.R.id.mRvTask
-import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication.Companion.context
-import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseFragment
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseMvpFragment
 import xin.lrvik.taskcicleandroid.data.protocol.Page
 import xin.lrvik.taskcicleandroid.data.protocol.Task
@@ -93,32 +90,52 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
         }
         mRvTaskStateAdapter.setOnItemChildClickListener { adapter, view, position ->
             var task = adapter.data[position] as Task
-            task.id?.let {
+            task.id?.let { taskId ->
                 when (view.id) {
                     R.id.mBtModify -> {
-                        startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.MODIFY.name, PostTaskActivity.TASKID to it)
+                        startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.MODIFY.name, PostTaskActivity.TASKID to taskId)
                     }
                     R.id.mBtSubmitAudit -> {
-                        mPresenter.submitAudit(it)
+                        alert("任务完成，是否提交审核?") {
+                            positiveButton("是") { mPresenter.submitAudit(taskId) }
+                            negativeButton("否") { }
+                        }.show()
                     }
                     R.id.mBtCancelAudit -> {
-                        mPresenter.cancelAudit(it)
+                        alert("是否取消审核?") {
+                            positiveButton("是") { mPresenter.cancelAudit(taskId) }
+                            negativeButton("否") { }
+                        }.show()
                     }
                     R.id.mBtRelease -> {
                         startActivity<ReleaseTaskActivity>(ReleaseTaskActivity.TASKID to task.id!!)
                         isRefresh = true
                     }
                     R.id.mBtOut -> {
-                        mPresenter.outTask(it)
+                        alert("撤回后任务不能被接取", "是否撤回任务?") {
+                            positiveButton("是") { mPresenter.outTask(taskId) }
+                            negativeButton("否") { }
+                        }.show()
                     }
                     R.id.mBtUpper -> {
-                        mPresenter.upperTask(it)
+                        alert("上架后任务可正常被接取", "是否上架任务?") {
+                            positiveButton("是") { mPresenter.upperTask(taskId) }
+                            negativeButton("否") { }
+                        }.show()
                     }
                     R.id.mBtAbandon -> {
-                        mPresenter.abandonTask(it)
+                        alert("任务将被放弃，猎刃同意后即可放弃该任务", "是否放弃任务?") {
+                            positiveButton("是") { mPresenter.abandonTask(taskId) }
+                            negativeButton("否") { }
+                        }.show()
                     }
                     R.id.mBtCancelAbandon -> {
-                        mPresenter.cancelAbandon(it)
+                        alert("是否取消放弃任务?") {
+                            positiveButton("是") { mPresenter.cancelAbandon(taskId) }
+                            negativeButton("否") { }
+                        }.show()
+                    }
+                    else -> {
                     }
                 }
 

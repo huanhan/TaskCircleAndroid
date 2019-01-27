@@ -7,7 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_hunter_task_state.*
+import org.jetbrains.anko.customView
+import org.jetbrains.anko.editText
+import org.jetbrains.anko.matchParent
+import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.verticalLayout
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseMvpFragment
 import xin.lrvik.taskcicleandroid.data.protocol.HunterTask
@@ -84,35 +89,106 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
             var task = adapter.data[position] as HunterTask
         }
         mRvHunterTaskStateAdapter.setOnItemChildClickListener { adapter, view, position ->
-            var task = adapter.data[position] as HunterTask
+            var hunterTask = adapter.data[position] as HunterTask
 
-            task?.let {
+            hunterTask?.let { task ->
                 when (view.id) {
                     R.id.mBtBegin -> {
-                        mPresenter.beginTask(it.id!!)
+                        alert("是否开始?") {
+                            positiveButton("是") { mPresenter.beginTask(task.id!!) }
+                            negativeButton("否") { }
+                        }.show()
                     }
                     R.id.mBtSubmitAudit -> {
-                        mPresenter.submitAudit(it.id!!)
+                        alert("是否提交审核?") {
+                            positiveButton("是") { mPresenter.submitAudit(task.id!!) }
+                            negativeButton("否") { }
+                        }.show()
                     }
                     R.id.mBtReWork -> {
-                        mPresenter.reworkTask(it.id!!)
+                        alert("是否进行重做?") {
+                            positiveButton("是") { mPresenter.reworkTask(task.id!!) }
+                            negativeButton("否") { }
+                        }.show()
                     }
                     R.id.mBtAbandon -> {
-                        //mPresenter.abandonTask()
+                        alert {
+
+                            customView {
+                                title = "是否放弃该任务?"
+                                verticalLayout {
+                                    val btDisAgree = editText {
+                                        hint = "请输入放弃的理由"
+                                    }.lparams {
+                                        leftMargin = 15
+                                        rightMargin = 15
+                                        width = matchParent
+                                    }
+                                    positiveButton("是") {
+                                        var disAgreeStr = btDisAgree.text.toString().trim()
+                                        if (disAgreeStr.isEmpty() || disAgreeStr.length > 255) {
+                                            toast("请输入255字内的理由")
+                                            return@positiveButton
+                                        }
+                                        mPresenter.abandonTask(task.id!!, disAgreeStr)
+                                    }
+                                    negativeButton("否") { }
+                                }
+                            }
+                        }.show()
                     }
                     R.id.mBtSubmitAdminAudit -> {
-                        mPresenter.submitAdminAudit(it.id!!)
+                        alert("产生纠纷或对任务有异议，请将任务提交至管理员?", "是否提交至管理员?") {
+                            positiveButton("是") { mPresenter.submitAdminAudit(task.id!!) }
+                            negativeButton("否") { }
+                        }.show()
+
                     }
                     R.id.mBtCancelAdminAudit -> {
-                        mPresenter.cancelAdminAudit(it.id!!)
+                        alert("是否取消提交管理员操作?") {
+                            positiveButton("是") { mPresenter.cancelAdminAudit(task.id!!) }
+                            negativeButton("否") { }
+                        }.show()
+
                     }
                     R.id.mBtAgreeAbandon -> {
-                        mPresenter.agreeAbandon(it.taskId!!)
+                        alert("用户对任务选择了放弃,请与用户协商完成后选择，同意后任务将被放弃", "是否同意用户放弃?") {
+                            positiveButton("是") { mPresenter.agreeAbandon(task.taskId!!) }
+                            negativeButton("否") { }
+                        }.show()
                     }
                     R.id.mBtDisAgreeAbandon -> {
-                        //mPresenter.disAgreeAbandon()
+
+                        alert {
+                            customView {
+                                title = "不同意用户放弃任务"
+                                verticalLayout {
+                                    val btDisAgree = editText {
+                                        hint = "请输入不同意的理由"
+
+                                    }.lparams {
+                                        leftMargin = 15
+                                        rightMargin = 15
+                                        width = matchParent
+                                    }
+                                    positiveButton("是") {
+                                        var disAgreeStr = btDisAgree.text.toString().trim()
+                                        if (disAgreeStr.isEmpty() || disAgreeStr.length > 255) {
+                                            toast("请输入255字内的理由")
+                                            return@positiveButton
+                                        }
+                                        mPresenter.disAgreeAbandon(task.taskId!!, disAgreeStr)
+                                    }
+                                    negativeButton("否") { }
+                                }
+                            }
+                        }.show()
+                    }
+                    else -> {
+
                     }
                 }
+
             }
         }
 

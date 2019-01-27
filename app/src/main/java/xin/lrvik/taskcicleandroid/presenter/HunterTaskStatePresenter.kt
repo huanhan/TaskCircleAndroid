@@ -71,11 +71,11 @@ class HunterTaskStatePresenter @Inject constructor() : BasePresenter<HunterTaskS
         }
     }
 
-    fun abandonTask(auditContext: AuditContext) {
+    fun abandonTask(taskid: String, auditContext: String) {
         if (!checkNetWork()) {
             return
         }
-        hunterTaskService.abandonTask(auditContext).execute(lifecycleProvider, mView, false) {
+        hunterTaskService.abandonTask(taskid, auditContext).execute(lifecycleProvider, mView, false) {
             mView.onResult(it.msg)
         }
     }
@@ -107,11 +107,11 @@ class HunterTaskStatePresenter @Inject constructor() : BasePresenter<HunterTaskS
         }
     }
 
-    fun disAgreeAbandon(auditContext: AuditContext) {
+    fun disAgreeAbandon(taskid: String, auditContext: String) {
         if (!checkNetWork()) {
             return
         }
-        hunterTaskService.disAgreeAbandon(auditContext).execute(lifecycleProvider, mView, false) {
+        hunterTaskService.disAgreeAbandon(taskid, auditContext).execute(lifecycleProvider, mView, false) {
             mView.onResult(it.msg)
         }
     }

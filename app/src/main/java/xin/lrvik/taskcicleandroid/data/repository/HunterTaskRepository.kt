@@ -45,8 +45,8 @@ class HunterTaskRepository @Inject constructor() {
         return RetrofitFactory.instance.create(HunterTaskApi::class.java).reworkTask(htId, 13)
     }
 
-    fun abandonTask(auditContext: AuditContext): Observable<Result> {
-        return RetrofitFactory.instance.create(HunterTaskApi::class.java).abandonTask(auditContext, 13)
+    fun abandonTask(taskid: String, auditContext: String): Observable<Result> {
+        return RetrofitFactory.instance.create(HunterTaskApi::class.java).abandonTask(AuditContext(taskid, auditContext), 13)
     }
 
     fun submitAdminAudit(htId: String): Observable<Result> {
@@ -61,7 +61,7 @@ class HunterTaskRepository @Inject constructor() {
         return RetrofitFactory.instance.create(HunterTaskApi::class.java).agreeAbandon(taskId, 13)
     }
 
-    fun disAgreeAbandon(auditContext: AuditContext): Observable<Result> {
-        return RetrofitFactory.instance.create(HunterTaskApi::class.java).disAgreeAbandon(auditContext, 13)
+    fun disAgreeAbandon(taskid: String, auditContext: String): Observable<Result> {
+        return RetrofitFactory.instance.create(HunterTaskApi::class.java).disAgreeAbandon(AuditContext(taskid, auditContext), 13)
     }
 }

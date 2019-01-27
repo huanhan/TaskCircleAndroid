@@ -47,8 +47,8 @@ class HunterTaskServiceImpl @Inject constructor() : HunterTaskService {
         return hunterTaskRepository.reworkTask(htId)
     }
 
-    override fun abandonTask(auditContext: AuditContext): Observable<Result> {
-        return hunterTaskRepository.abandonTask(auditContext)
+    override fun abandonTask(taskid: String, auditContext: String): Observable<Result> {
+        return hunterTaskRepository.abandonTask(taskid,auditContext)
     }
 
     override fun submitAdminAudit(htId: String): Observable<Result> {
@@ -63,8 +63,8 @@ class HunterTaskServiceImpl @Inject constructor() : HunterTaskService {
         return hunterTaskRepository.agreeAbandon(taskId)
     }
 
-    override fun disAgreeAbandon(auditContext: AuditContext): Observable<Result> {
-        return hunterTaskRepository.disAgreeAbandon(auditContext)
+    override fun disAgreeAbandon(taskid: String, auditContext: String): Observable<Result> {
+        return hunterTaskRepository.disAgreeAbandon(taskid,auditContext)
     }
 
 }

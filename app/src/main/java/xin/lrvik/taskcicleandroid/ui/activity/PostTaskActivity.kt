@@ -139,7 +139,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                 mTvLocation.text = "${data.address} 距您($dis)"
             }
 
-
+            //todo 到时候要放开 mBtnAdd.visibility = if (UserInfo.userId != data.userId) View.VISIBLE else View.GONE
         }
     }
 

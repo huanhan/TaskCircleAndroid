@@ -184,7 +184,7 @@
             <Button
                 android:id="@+id/mBtDisAgreeAbandon"
                 style="@style/TaskButton"
-                android:text="不同意用户放弃" />
+                android:text="拒绝用户放弃" />
 
 
         </LinearLayout>

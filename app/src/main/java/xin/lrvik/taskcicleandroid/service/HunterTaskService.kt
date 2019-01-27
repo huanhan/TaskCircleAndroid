@@ -20,9 +20,9 @@ interface HunterTaskService {
     fun updateTaskStep(step: HunterTaskStep): Observable<Result>
     fun submitAudit(htId: String): Observable<Result>
     fun reworkTask(htId: String): Observable<Result>
-    fun abandonTask(auditContext: AuditContext): Observable<Result>
+    fun abandonTask(taskid: String, auditContext: String): Observable<Result>
     fun submitAdminAudit(htId: String): Observable<Result>
     fun cancelAdminAudit(htId: String): Observable<Result>
     fun agreeAbandon(taskId: String): Observable<Result>
-    fun disAgreeAbandon(auditContext: AuditContext): Observable<Result>
+    fun disAgreeAbandon(taskid: String, auditContext: String): Observable<Result>
 }
