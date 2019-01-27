@@ -1,11 +1,10 @@
 package xin.lrvik.taskcicleandroid.data.api
 
 import io.reactivex.Observable
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Path
-import xin.lrvik.taskcicleandroid.data.protocol.HunterTask
-import xin.lrvik.taskcicleandroid.data.protocol.Page
-import xin.lrvik.taskcicleandroid.data.protocol.Result
+import xin.lrvik.taskcicleandroid.data.protocol.*
 
 /**
  * Author by 豢涵, Email huanhanfu@126.com, Date on 2019/1/27.
@@ -23,4 +22,46 @@ interface HunterTaskApi {
     //猎刃接取任务
     @GET("app/ht/accept/{taskId}/{id}")
     fun acceptTask(@Path("taskId") taskId: String, @Path("id") id: Long): Observable<Result>
+
+    //猎刃点击按钮开始任务
+    @GET("app/ht/begin/{htId}/{id}")
+    fun beginTask(@Path("htId") htId: String, @Path("id") id: Long): Observable<Result>
+
+    //添加猎刃的任务步骤
+    @GET("app/ht/add/step/{id}")
+    fun addTaskStep( @Body step: HunterTaskStep,@Path("id") id: Long): Observable<Result>
+
+    //修改猎刃的任务步骤
+    @GET("app/ht/update/step/{id}")
+    fun updateTaskStep(@Body step: HunterTaskStep,@Path("id") id: Long): Observable<Result>
+
+    //猎刃将任务提交用户审核
+    @GET("app/ht/user/audit/{htId}/{id}")
+    fun submitAudit(@Path("htId") htId: String, @Path("id") id: Long): Observable<Result>
+
+    //猎刃点击重做任务
+    @GET("app/ht/rework/{htId}/{id}")
+    fun reworkTask(@Path("htId") htId: String, @Path("id") id: Long): Observable<Result>
+
+    //猎刃点击放弃任务
+    @GET("app/ht/abandon/{id}")
+    fun abandonTask(@Body auditContext: AuditContext, @Path("id") id: Long): Observable<Result>
+
+    //猎刃点击提交管理员审核
+    @GET("app/ht/admin/audit/{htId}/{id}")
+    fun submitAdminAudit(@Path("htId") htId: String, @Path("id") id: Long): Observable<Result>
+
+    //猎刃点击取消提交管理员审核
+    @GET("app/ht/admin/di/audit/{htId}/{id}")
+    fun cancelAdminAudit(@Path("htId") htId: String, @Path("id") id: Long): Observable<Result>
+
+    //猎刃同意用户放弃任务
+    @GET("app/ht/abandon/success/{taskId}/{id}")
+    fun agreeAbandon(@Path("taskId") taskId: String, @Path("id") id: Long): Observable<Result>
+
+    //猎刃点击用户的放弃申请不通过
+    @GET("app/ht/abandon/success/{id}")
+    fun disAgreeAbandon(@Body auditContext: AuditContext, @Path("id") id: Long): Observable<Result>
+
+
 }

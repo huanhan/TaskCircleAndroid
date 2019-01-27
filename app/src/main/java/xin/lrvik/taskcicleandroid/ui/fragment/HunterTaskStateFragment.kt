@@ -85,23 +85,32 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
         }
         mRvHunterTaskStateAdapter.setOnItemChildClickListener { adapter, view, position ->
             var task = adapter.data[position] as HunterTask
-            task.id?.let {
+
+            task?.let {
                 when (view.id) {
                     R.id.mBtBegin -> {
+                        mPresenter.beginTask(it.id!!)
                     }
                     R.id.mBtSubmitAudit -> {
+                        mPresenter.submitAudit(it.id!!)
                     }
                     R.id.mBtReWork -> {
+                        mPresenter.reworkTask(it.id!!)
                     }
                     R.id.mBtAbandon -> {
+                        //mPresenter.abandonTask()
                     }
                     R.id.mBtSubmitAdminAudit -> {
+                        mPresenter.submitAdminAudit(it.id!!)
                     }
                     R.id.mBtCancelAdminAudit -> {
+                        mPresenter.cancelAdminAudit(it.id!!)
                     }
                     R.id.mBtAgreeAbandon -> {
+                        mPresenter.agreeAbandon(it.taskId!!)
                     }
                     R.id.mBtDisAgreeAbandon -> {
+                        //mPresenter.disAgreeAbandon()
                     }
                 }
             }
