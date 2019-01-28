@@ -29,12 +29,16 @@ interface HunterTaskApi {
     fun beginTask(@Path("htId") htId: String, @Path("id") id: Long): Observable<Result>
 
     //添加猎刃的任务步骤
+    @GET("app/ht/query/{htId}/{id}")
+    fun query(@Path("htId") htId: String, @Path("id") id: Long): Observable<HunterTaskAndStep>
+
+    //添加猎刃的任务步骤
     @GET("app/ht/add/step/{id}")
-    fun addTaskStep( @Body step: HunterTaskStep,@Path("id") id: Long): Observable<Result>
+    fun addTaskStep(@Body step: HunterTaskStep, @Path("id") id: Long): Observable<Result>
 
     //修改猎刃的任务步骤
     @POST("app/ht/update/step/{id}")
-    fun updateTaskStep(@Body step: HunterTaskStep,@Path("id") id: Long): Observable<Result>
+    fun updateTaskStep(@Body step: HunterTaskStep, @Path("id") id: Long): Observable<Result>
 
     //猎刃将任务提交用户审核
     @GET("app/ht/user/audit/{htId}/{id}")

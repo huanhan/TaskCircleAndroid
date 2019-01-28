@@ -9,24 +9,26 @@ import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
 import xin.lrvik.taskcicleandroid.baselibrary.utils.DateUtils
-import xin.lrvik.taskcicleandroid.data.protocol.TaskDetail
+import xin.lrvik.taskcicleandroid.data.protocol.HunterRunningStep
+import xin.lrvik.taskcicleandroid.data.protocol.HunterTaskAndStep
 import xin.lrvik.taskcicleandroid.data.protocol.TaskStep
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.HunterTaskDetailPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.HunterTaskDetailView
-import xin.lrvik.taskcicleandroid.ui.adapter.RvAddTaskStepAdapter
+import xin.lrvik.taskcicleandroid.ui.adapter.RvHunterTaskStepAdapter
 import xin.lrvik.taskcicleandroid.ui.dialog.TaskStepDialog
 
 class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), HunterTaskDetailView {
 
-    lateinit var mRvTaskStepAdapter: RvAddTaskStepAdapter
+
+    lateinit var mRvTaskStepAdapter: RvHunterTaskStepAdapter
 
     override fun injectComponent() {
         DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
         mPresenter.mView = this
     }
 
-    override fun onTaskDetailResult(data: TaskDetail) {
+    override fun onTaskAndStepQueryResult(data: HunterTaskAndStep) {
         mTvTitle.text = data.name
         mTvContent.text = data.context
         mRvTaskStepAdapter.setNewData(data.taskSteps)
@@ -36,6 +38,7 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
         data.deadline?.let {
             mTvDeadline.text = "${DateUtils.convertTimeToString(it)}"
         }
+
     }
 
     override fun onResult(result: String) {
@@ -71,12 +74,17 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
 
         mRvStep.layoutManager = LinearLayoutManager(this)
 
-        var list = ArrayList<TaskStep>()
-        mRvTaskStepAdapter = RvAddTaskStepAdapter(list)
+        var list = ArrayList<HunterRunningStep>()
+        mRvTaskStepAdapter = RvHunterTaskStepAdapter(list)
         mRvStep.adapter = mRvTaskStepAdapter
         mRvTaskStepAdapter.setOnItemClickListener { adapter, view, position ->
+            var dialogdata = ArrayList<TaskStep>()
+            for (datum in adapter.data as ArrayList<HunterRunningStep>) {
+                dialogdata.add(TaskStep(datum.hunterTaskId?:"", datum.step?:0, datum.taskTitle?:"", datum.taskContext?:"", datum.taskImg?:""))
+            }
+
             val dialog = TaskStepDialog.showDialog(supportFragmentManager,
-                    adapter.data as ArrayList<TaskStep>,
+                    dialogdata,
                     false, position)
 
             dialog.setOnCloseListener(object : TaskStepDialog.OnCloseListener {
@@ -85,10 +93,11 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
                 }
             })
         }
+
         mTvMore.onClick {
             startActivity<TaskDetailActivity>(TaskDetailActivity.TASKID to taskid)
         }
 
-        mPresenter.queryTaskDetail(taskid)
+        mPresenter.query(taskid)
     }
 }

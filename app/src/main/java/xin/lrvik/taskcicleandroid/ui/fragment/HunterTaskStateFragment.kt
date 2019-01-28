@@ -86,7 +86,7 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
 
         mRvHunterTaskStateAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as HunterTask
-            startActivity<HunterTaskDetailActivity>(HunterTaskDetailActivity.TASKID to task.taskId!!)
+            startActivity<HunterTaskDetailActivity>(HunterTaskDetailActivity.TASKID to task.id!!)
         }
         mRvHunterTaskStateAdapter.setOnItemChildClickListener { adapter, view, position ->
             var hunterTask = adapter.data[position] as HunterTask

@@ -12,6 +12,7 @@ import javax.inject.Inject
  */
 class HunterTaskServiceImpl @Inject constructor() : HunterTaskService {
 
+
     @Inject
     lateinit var hunterTaskRepository: HunterTaskRepository
 
@@ -29,6 +30,9 @@ class HunterTaskServiceImpl @Inject constructor() : HunterTaskService {
 
     override fun beginTask(htId: String): Observable<Result> {
         return hunterTaskRepository.beginTask(htId)
+    }
+    override fun query(htId: String): Observable<HunterTaskAndStep> {
+        return hunterTaskRepository.query(htId)
     }
 
     override fun addTaskStep(step: HunterTaskStep): Observable<Result> {

@@ -17,12 +17,12 @@ class HunterTaskDetailPresenter @Inject constructor() : BasePresenter<HunterTask
     @Inject
     lateinit var hunterTaskService: HunterTaskService
 
-    fun queryTaskDetail(id: String) {
+    fun query(htId: String) {
         if (!checkNetWork()) {
             return
         }
-        taskService.queryTaskDetail(id).execute(lifecycleProvider, mView, false) {
-            mView.onTaskDetailResult(it)
+        hunterTaskService.query(htId).execute(lifecycleProvider, mView, false) {
+            mView.onTaskAndStepQueryResult(it)
         }
     }
 }

@@ -29,6 +29,10 @@ class HunterTaskRepository @Inject constructor() {
         return RetrofitFactory.instance.create(HunterTaskApi::class.java).beginTask(htId, UserInfo.userId)
     }
 
+    fun query(htId: String): Observable<HunterTaskAndStep> {
+        return RetrofitFactory.instance.create(HunterTaskApi::class.java).query(htId, UserInfo.userId)
+    }
+
     fun addTaskStep(step: HunterTaskStep): Observable<Result> {
         return RetrofitFactory.instance.create(HunterTaskApi::class.java).addTaskStep(step, UserInfo.userId)
     }
