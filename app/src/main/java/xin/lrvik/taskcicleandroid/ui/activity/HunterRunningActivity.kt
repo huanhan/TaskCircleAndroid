@@ -79,7 +79,7 @@ class HunterRunningActivity : BaseMvpActivity<HunterRunningPresenter>(), HunterR
             actionBar?.title = "猎刃执行列表"
         }
         try {
-            taskid = intent.getStringExtra(PostTaskActivity.TASKID)
+            taskid = intent.getStringExtra(TASKID)
         } catch (e: Exception) {
             toast("未传递任务id")
             finish()

@@ -16,6 +16,7 @@ import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.TaskClassPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.TaskClassView
 import xin.lrvik.taskcicleandroid.ui.activity.PostTaskActivity
+import xin.lrvik.taskcicleandroid.ui.activity.TaskDetailActivity
 import xin.lrvik.taskcicleandroid.ui.adapter.RvRecommendAdapter
 import java.util.*
 
@@ -75,7 +76,7 @@ class TaskClassFragment : BaseMvpFragment<TaskClassPresenter>(), TaskClassView {
 
         mRvRecommendAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as Task
-            startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.LOOK.name, PostTaskActivity.TASKID to task.id!!)
+            startActivity<TaskDetailActivity>(TaskDetailActivity.TASKID to task.id!!)
         }
 
         mSwipeRefresh.setOnRefreshListener {

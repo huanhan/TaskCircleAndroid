@@ -84,70 +84,6 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         classList.addAll(data.taskClassifyAppDtos!!)
         mFlowlayout.adapter.notifyDataChanged()
         checkTipVisible()
-
-        isShow(mCvReleaseMsg, data.state!!, listOf(TaskState.ISSUE,
-                TaskState.FORBID_RECEIVE,
-                TaskState.OUT,
-                TaskState.FINISH,
-                TaskState.ABANDON_COMMIT,
-                TaskState.ABANDON_OK,
-                TaskState.USER_HUNTER_NEGOTIATE,
-                TaskState.HUNTER_REJECT,
-                TaskState.COMMIT_AUDIT,
-                TaskState.ADMIN_NEGOTIATE,
-                TaskState.HUNTER_COMMIT))
-
-        if (mCvReleaseMsg.visibility == View.VISIBLE) {
-            mSwTaskRework.isEnabled = false
-            mSwCompensate.isEnabled = false
-            data.peopleNumber?.let {
-                mTvPeoNum.text = "$it"
-            }
-
-            if (data.money != null && data.peopleNumber != null) {
-                mTvMoneyNum.text = "${data.money!!.toBigDecimal().multiply(data.peopleNumber!!.toBigDecimal())}"
-            }
-            data.beginTime?.let {
-                mTvBeginTime.text = "${DateUtils.convertTimeToString(it)}"
-            }
-            data.deadline?.let {
-                mTvDeadline.text = "${DateUtils.convertTimeToString(it)}"
-            }
-            data.permitAbandonMinute?.let {
-                mTvPermitAbandonMinute.text = "${it}"
-            }
-            data.taskRework?.let {
-                mSwTaskRework.isChecked = it
-                mTvCompensateMoney.visibility = if (it) View.VISIBLE else View.GONE
-                mTvCompensateMoney.text = if (it) data.compensateMoney.toString() else 0f.toString()
-            }
-            data.compensate?.let {
-                mSwCompensate.isChecked = it
-            }
-
-            if (data.latitude != null && data.longitude != null) {
-
-                //位置反编码参数
-                /*var reverseGeoCodeOption = ReverseGeoCodeOption()
-                reverseGeoCodeOption.location(LatLng(data.latitude!!, data.longitude!!))
-                        .radius(1000)
-                geoCoder.reverseGeoCode(reverseGeoCodeOption)*/
-
-                var distance = DistanceUtil.getDistance(LatLng(UserInfo.latitude, UserInfo.longitude), LatLng(data.latitude
-                        ?: 0.0, data.longitude ?: 0.0)).toInt()
-                var dis = if (distance < 1000) "$distance 米" else "${distance / 1000} 千米"
-
-                mTvLocation.text = "${data.address} 距您($dis)"
-            }
-
-        }
-
-        //如果用户id不是自己则展示接单按钮
-        mBtnAccept.visibility = if (UserInfo.userId != data.userId && mode != Mode.MODIFY) View.VISIBLE else View.GONE
-
-        //如果任务的用户id是自己则展示查看接取猎刃
-        mBtnQueryHunter.visibility = if (UserInfo.userId === data.userId && mode != Mode.MODIFY) View.VISIBLE else View.GONE
-
     }
 
     internal var colors = intArrayOf(Color.parseColor("#90C5ED"),
@@ -248,8 +184,8 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         }
 
         mBtnSave.onClick {
-            var classs = classList.flatMap {
-                listOf(it.id)
+            var classs = classList.map {
+                it.id
             }
             try {
                 var taskid = intent.getStringExtra(TASKID)
@@ -258,38 +194,6 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                 toast("未传递任务id")
             }
         }
-
-        mBtnAccept.onClick {
-            try {
-                var taskid = intent.getStringExtra(TASKID)
-                mPresenter.acceptTask(taskid)
-            } catch (e: Exception) {
-                toast("未传递任务id")
-            }
-        }
-        mBtnQueryHunter.onClick {
-            try {
-                var taskid = intent.getStringExtra(TASKID)
-                //todo 查询猎刃列表
-                startActivity<HunterRunningActivity>( HunterRunningActivity.TASKID to taskid)
-            } catch (e: Exception) {
-                toast("未传递任务id")
-            }
-        }
-
-
-        //位置信息反编码
-        /* geoCoder.setOnGetGeoCodeResultListener(object : OnGetGeoCoderResultListener {
-             override fun onGetGeoCodeResult(geoCodeResult: GeoCodeResult) {
-
-             }
-
-             override fun onGetReverseGeoCodeResult(reverseGeoCodeResult: ReverseGeoCodeResult) {
-                 var dis = mTvLocation.text
-                 mTvLocation.text = if (reverseGeoCodeResult.poiList != null && reverseGeoCodeResult.poiList.size > 0) "${reverseGeoCodeResult.poiList[0].name} $dis" else "未知位置 $dis"
-             }
-
-         })*/
 
         //判断模式
         mode = Mode.valueOf(intent.getStringExtra(MODE))
@@ -302,8 +206,6 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                 mBtAddStep.visibility = View.GONE
                 mBtnAdd.visibility = View.GONE
                 mBtnSave.visibility = View.GONE
-                mBtnAccept.visibility = View.GONE
-                mBtnQueryHunter.visibility = View.GONE
                 mEtTitle.isEnabled = false
                 mLevContext.id_et_input.isEnabled = false
                 mRvTaskStepAdapter.disableSwipeItem()
@@ -314,6 +216,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                     mPresenter.queryTaskDetail(taskid)
                 } catch (e: Exception) {
                     toast("未传递任务id")
+                    return
                 }
 
                 mBtnAdd.text = "接取任务"
@@ -329,8 +232,6 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                 mBtAddStep.visibility = View.VISIBLE
                 mBtnAdd.visibility = View.GONE
                 mBtnSave.visibility = View.VISIBLE
-                mBtnAccept.visibility = View.GONE
-                mBtnQueryHunter.visibility = View.GONE
                 mEtTitle.isEnabled = true
                 mLevContext.id_et_input.isEnabled = true
                 mRvTaskStepAdapter.enableSwipeItem()
@@ -341,6 +242,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                     mPresenter.queryTaskDetail(taskid)
                 } catch (e: Exception) {
                     toast("未传递任务id")
+                    return
                 }
 
                 mBtnAdd.text = "保存任务"
@@ -348,13 +250,10 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
             }
             Mode.CREATE -> {
                 isModify = true
-
                 mTvClassTip.visibility = View.VISIBLE
                 mBtAddStep.visibility = View.VISIBLE
                 mBtnAdd.visibility = View.VISIBLE
                 mBtnSave.visibility = View.GONE
-                mBtnAccept.visibility = View.GONE
-                mBtnQueryHunter.visibility = View.GONE
                 mEtTitle.isEnabled = true
                 mLevContext.id_et_input.isEnabled = true
                 mRvTaskStepAdapter.enableSwipeItem()

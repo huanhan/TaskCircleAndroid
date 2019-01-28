@@ -14,11 +14,13 @@ import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseMvpFragment
 import xin.lrvik.taskcicleandroid.data.protocol.Page
 import xin.lrvik.taskcicleandroid.data.protocol.Task
+import xin.lrvik.taskcicleandroid.data.protocol.enums.TaskState
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.TaskStatePresenter
 import xin.lrvik.taskcicleandroid.presenter.view.TaskStateView
 import xin.lrvik.taskcicleandroid.ui.activity.PostTaskActivity
 import xin.lrvik.taskcicleandroid.ui.activity.ReleaseTaskActivity
+import xin.lrvik.taskcicleandroid.ui.activity.TaskDetailActivity
 import xin.lrvik.taskcicleandroid.ui.adapter.RvTaskStateAdapter
 import java.util.*
 
@@ -86,7 +88,12 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
 
         mRvTaskStateAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as Task
-            startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.LOOK.name, PostTaskActivity.TASKID to task.id!!)
+
+            if (isRelease(task.state!!)) {
+                startActivity<TaskDetailActivity>(TaskDetailActivity.TASKID to task.id!!)
+            } else {
+                startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.LOOK.name, PostTaskActivity.TASKID to task.id!!)
+            }
         }
         mRvTaskStateAdapter.setOnItemChildClickListener { adapter, view, position ->
             var task = adapter.data[position] as Task
@@ -167,6 +174,21 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
                 mPresenter.getStateTaskData(type, curPage, pageSize)
             }
         }
+    }
+
+    fun isRelease(state: TaskState): Boolean {
+        var releaseState = listOf(TaskState.ISSUE,
+                TaskState.FORBID_RECEIVE,
+                TaskState.OUT,
+                TaskState.FINISH,
+                TaskState.ABANDON_COMMIT,
+                TaskState.ABANDON_OK,
+                TaskState.USER_HUNTER_NEGOTIATE,
+                TaskState.HUNTER_REJECT,
+                TaskState.COMMIT_AUDIT,
+                TaskState.ADMIN_NEGOTIATE,
+                TaskState.HUNTER_COMMIT)
+        return releaseState.contains(state)
     }
 
     companion object {

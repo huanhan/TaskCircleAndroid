@@ -23,7 +23,7 @@ class RvRecommendAdapter(data: List<Task>) : BaseQuickAdapter<Task, BaseViewHold
         var dis = if (distance < 1000) "$distance 米" else "${distance / 1000} 千米"
         helper.setText(R.id.mTvTaskName, item.name)
                 .setText(R.id.mTvContext, item.context)
-                .setText(R.id.mTvMoney, "${item.money} 元")
+                .setText(R.id.mTvMoney, "${item.money!!.toBigDecimal().divide(item.peopleNumber!!.toBigDecimal())}元/人")
                 .setText(R.id.mTvDistance, "$dis")
                 .setText(R.id.mTvTime, "${DateUtils.convertTimeToString(item.beginTime!!)}~${DateUtils.convertTimeToString(item.deadline!!)}")
         var imageView = helper.getView<ImageView>(R.id.mIvIcon)

@@ -31,10 +31,7 @@ import xin.lrvik.taskcicleandroid.data.protocol.TaskClass
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.HomePresenter
 import xin.lrvik.taskcicleandroid.presenter.view.HomeView
-import xin.lrvik.taskcicleandroid.ui.activity.AddressPickerActivity
-import xin.lrvik.taskcicleandroid.ui.activity.ClassActivity
-import xin.lrvik.taskcicleandroid.ui.activity.PostTaskActivity
-import xin.lrvik.taskcicleandroid.ui.activity.SearchActivity
+import xin.lrvik.taskcicleandroid.ui.activity.*
 import xin.lrvik.taskcicleandroid.ui.adapter.EvpTypeItemAdapter
 import xin.lrvik.taskcicleandroid.ui.adapter.RvRecommendAdapter
 import java.util.*
@@ -97,7 +94,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
 
         rvRecommendAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as Task
-            startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.LOOK.name, PostTaskActivity.TASKID to task.id!!)
+            startActivity<TaskDetailActivity>(TaskDetailActivity.TASKID to task.id!!)
         }
         initLocation()
         mPresenter.homeData()
