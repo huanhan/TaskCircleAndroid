@@ -13,7 +13,7 @@ import xin.lrvik.taskcicleandroid.data.protocol.HunterRunningStep
  * Author by 豢涵, Email huanhanfu@126.com, Date on 2019/1/6.
  *
  */
-class RvHunterTaskStepAdapter(data: List<HunterRunningStep>) : BaseItemDraggableAdapter<HunterRunningStep,
+class RvHunterTaskStepAdapter(data: List<HunterRunningStep>, val flag: Boolean) : BaseItemDraggableAdapter<HunterRunningStep,
         BaseViewHolder>(R.layout.item_hunter_task_step, data) {
 
     override fun convert(helper: BaseViewHolder, item: HunterRunningStep) {
@@ -30,18 +30,23 @@ class RvHunterTaskStepAdapter(data: List<HunterRunningStep>) : BaseItemDraggable
         var mIvFlag = helper.getView<ImageView>(R.id.mIvFlag)
         if (item.hunterTaskContext == null) {
             helper.setVisible(R.id.mBtSubmit, true)
-            mLlHunterMarker.visibility= View.GONE
-            mBtSubmit.visibility= View.VISIBLE
-            mBtModify.visibility= View.GONE
-            mIvFlag.visibility= View.GONE
+            mLlHunterMarker.visibility = View.GONE
+            mBtSubmit.visibility = View.VISIBLE
+            mBtModify.visibility = View.GONE
+            mIvFlag.visibility = View.GONE
         } else {
             helper.setVisible(R.id.mBtSubmit, false)
                     .setText(R.id.mTvContext, item.hunterTaskContext)
                     .setText(R.id.mTvTitle, item.hunterTaskRemake)
-            mLlHunterMarker.visibility= View.VISIBLE
-            mBtSubmit.visibility= View.GONE
-            mBtModify.visibility= View.VISIBLE
-            mIvFlag.visibility= View.VISIBLE
+            mLlHunterMarker.visibility = View.VISIBLE
+            mBtSubmit.visibility = View.GONE
+            mBtModify.visibility = View.VISIBLE
+            mIvFlag.visibility = View.VISIBLE
+        }
+
+        if (!flag) {
+            mBtSubmit.visibility = View.GONE
+            mBtModify.visibility = View.GONE
         }
 
 

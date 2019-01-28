@@ -78,7 +78,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="right"
                                 android:layout_marginBottom="10dp"
-                                android:text="更多>"
+                                android:text="更多>>"
+                                android:visibility="gone"
                                 android:textColor="@color/text_normal"
                                 android:textSize="15sp"
                                 android:textStyle="italic" />

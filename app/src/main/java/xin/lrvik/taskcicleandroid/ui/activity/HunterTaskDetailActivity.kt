@@ -2,12 +2,10 @@ package xin.lrvik.taskcicleandroid.ui.activity
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.text.Editable
 import android.view.MenuItem
 import android.view.View
 import kotlinx.android.synthetic.main.activity_hunter_task_detail.*
 import org.jetbrains.anko.*
-import org.jetbrains.anko.support.v4.alert
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
@@ -24,6 +22,19 @@ import xin.lrvik.taskcicleandroid.ui.dialog.TaskStepDialog
 
 class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), HunterTaskDetailView {
 
+    enum class Mode {
+        MODIFY(), LOOK()
+    }
+
+    companion object {
+
+        val MODE = "MODE"
+        val TASKID = "TASKID"
+    }
+
+    var mode: Mode = Mode.LOOK
+    var hunterTaskid: String = ""
+    var taskid: String = ""
 
     lateinit var mRvTaskStepAdapter: RvHunterTaskStepAdapter
 
@@ -33,6 +44,7 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
     }
 
     override fun onTaskAndStepQueryResult(data: HunterTaskAndStep) {
+        taskid = data.taskId!!
         mTvTitle.text = data.name
         mTvContent.text = data.context
         mRvTaskStepAdapter.setNewData(data.taskSteps)
@@ -55,13 +67,7 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
 
     override fun onResult(result: String) {
         toast(result)
-        mPresenter.query(taskid)
-    }
-
-    var taskid: String = ""
-
-    companion object {
-        val TASKID = "TASKID"
+        mPresenter.query(hunterTaskid)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,7 +85,7 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
         }
 
         try {
-            taskid = intent.getStringExtra(TASKID)
+            hunterTaskid = intent.getStringExtra(TASKID)
         } catch (e: Exception) {
             toast("未传递任务id")
             finish()
@@ -88,24 +94,41 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
         mRvStep.layoutManager = LinearLayoutManager(this)
 
         var list = ArrayList<HunterRunningStep>()
-        mRvTaskStepAdapter = RvHunterTaskStepAdapter(list)
-        mRvStep.adapter = mRvTaskStepAdapter
-        mRvTaskStepAdapter.setOnItemClickListener { adapter, view, position ->
-            var dialogdata = ArrayList<TaskStep>()
-            for (datum in adapter.data as ArrayList<HunterRunningStep>) {
-                dialogdata.add(TaskStep(datum.hunterTaskId ?: "", datum.step ?: 0, datum.taskTitle
-                        ?: "", datum.taskContext ?: "", datum.taskImg ?: ""))
+
+
+        //判断模式
+        mode = Mode.valueOf(intent.getStringExtra(HunterTaskDetailActivity.MODE))
+        when (mode) {
+            Mode.LOOK -> {
+                mRvTaskStepAdapter = RvHunterTaskStepAdapter(list, false)
             }
+            Mode.MODIFY -> {
+                mRvTaskStepAdapter = RvHunterTaskStepAdapter(list, true)
+            }
+        }
 
-            val dialog = TaskStepDialog.showDialog(supportFragmentManager,
-                    dialogdata,
-                    false, position)
 
-            dialog.setOnCloseListener(object : TaskStepDialog.OnCloseListener {
-                override fun onClose() {
-                    mRvTaskStepAdapter.notifyDataSetChanged()
+        mRvStep.adapter = mRvTaskStepAdapter
+        if (mode != Mode.LOOK) {
+            mRvTaskStepAdapter.setOnItemClickListener { adapter, view, position ->
+                var dialogdata = ArrayList<TaskStep>()
+                for (datum in adapter.data as ArrayList<HunterRunningStep>) {
+                    dialogdata.add(TaskStep(datum.hunterTaskId ?: "", datum.step
+                            ?: 0, datum.taskTitle
+                            ?: "", datum.taskContext ?: "", datum.taskImg ?: ""))
                 }
-            })
+
+                val dialog = TaskStepDialog.showDialog(supportFragmentManager,
+                        dialogdata,
+                        false, position)
+
+                dialog.setOnCloseListener(object : TaskStepDialog.OnCloseListener {
+                    override fun onClose() {
+                        mRvTaskStepAdapter.notifyDataSetChanged()
+                    }
+                })
+            }
+            mTvMore.visibility = View.VISIBLE
         }
 
         mRvTaskStepAdapter.setOnItemChildClickListener { adapter, view, position ->
@@ -189,22 +212,19 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
                     }
                 }
             }
+        }
 
-            mBtSubmitAudit.onClick {
-                alert("是否将任务提交给用户审核?") {
-                    positiveButton("是") { mPresenter.submitAudit(taskid) }
-                    negativeButton("否") { }
-                }.show()
-
-            }
-
+        mBtSubmitAudit.onClick {
+            alert("是否将任务提交给用户审核?") {
+                positiveButton("是") { mPresenter.submitAudit(hunterTaskid) }
+                negativeButton("否") { }
+            }.show()
         }
 
         mTvMore.onClick {
             startActivity<TaskDetailActivity>(TaskDetailActivity.TASKID to taskid)
         }
-
-        mPresenter.query(taskid)
+        mPresenter.query(hunterTaskid)
     }
 
     private fun isShow(view: View, state: HunterTaskState, list: List<HunterTaskState>) {

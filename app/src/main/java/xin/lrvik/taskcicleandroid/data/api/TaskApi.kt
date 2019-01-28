@@ -87,8 +87,8 @@ interface TaskApi {
     fun abandonNotPass(@Body req: AuditContextReq, @Path("id") id: Long): Observable<Result>
 
     //根据任务编号获取猎刃执行者列表
-    @GET("app/task/hunterTask/{taskid}/{page}/{size}/{id}")
-    fun hunterRunning(@Path("taskid") taskid: String,
+    @GET("app/task/hunterTask/{htId}/{page}/{size}/{id}")
+    fun hunterRunning(@Path("htId") taskid: String,
                       @Path("page") page: Int,
                       @Path("size") size: Int,
                       @Path("id") id: Long): Observable<Page<HunterTask>>

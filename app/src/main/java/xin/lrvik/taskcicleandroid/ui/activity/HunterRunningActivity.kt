@@ -7,8 +7,6 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_post_task.*
 import kotlinx.android.synthetic.main.fragment_hunter_task_state.*
 import org.jetbrains.anko.*
-import org.jetbrains.anko.support.v4.alert
-import org.jetbrains.anko.support.v4.toast
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication.Companion.context
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
@@ -95,7 +93,8 @@ class HunterRunningActivity : BaseMvpActivity<HunterRunningPresenter>(), HunterR
 
         mRvHunterRunningAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as HunterTask
-            //todo 查看任务步骤执行情况
+            startActivity<HunterTaskDetailActivity>(HunterTaskDetailActivity.TASKID to task.id!! ,
+                    HunterTaskDetailActivity.MODE to HunterTaskDetailActivity.Mode.LOOK.name)
         }
         mRvHunterRunningAdapter.setOnItemChildClickListener { adapter, view, position ->
             var hunterTask = adapter.data[position] as HunterTask
