@@ -83,7 +83,6 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
         mRvHunterTaskStateAdapter = RvHunterTaskStateAdapter(list)
 //        mRvHunterRunningAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN)
         mRvTask.adapter = mRvHunterTaskStateAdapter
-        mRvTask.isNestedScrollingEnabled = false
 
         mRvHunterTaskStateAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as HunterTask

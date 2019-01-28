@@ -84,7 +84,6 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
         mRvTaskStateAdapter = RvTaskStateAdapter(list)
 //        mRvHunterRunningAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN)
         mRvTask.adapter = mRvTaskStateAdapter
-        mRvTask.isNestedScrollingEnabled = false
 
         mRvTaskStateAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as Task

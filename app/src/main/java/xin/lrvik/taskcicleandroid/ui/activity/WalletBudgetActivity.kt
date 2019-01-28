@@ -7,7 +7,6 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_wallet_detail.*
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.data.protocol.Budget
-import xin.lrvik.taskcicleandroid.data.protocol.Chat
 import xin.lrvik.taskcicleandroid.ui.adapter.RvWalletDetailAdapter
 import java.sql.Timestamp
 import java.util.*
