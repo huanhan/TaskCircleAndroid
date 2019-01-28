@@ -28,6 +28,10 @@ class TaskServiceImpl @Inject constructor() : TaskService {
         return taskRepository.addTask(classs, text, contentText, data)
     }
 
+    override fun deleteTask(taskId: String): Observable<Result> {
+        return taskRepository.deleteTask(taskId)
+    }
+
 
     override fun modifyTask(id: String, classs: List<Long>, text: String, contentText: String, data: MutableList<TaskStep>): Observable<Result> {
         return taskRepository.modifyTask(id, classs, text, contentText, data)

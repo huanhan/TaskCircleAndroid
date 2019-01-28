@@ -26,6 +26,7 @@ class RvTaskStateAdapter(data: List<Task>) : BaseQuickAdapter<Task, BaseViewHold
         //按钮根据状态决定是否显示
         val mReleaseMsg = helper.getView<LinearLayout>(R.id.mReleaseMsg)
         val mBtModify = helper.getView<Button>(R.id.mBtModify)
+        val mBtDelete = helper.getView<Button>(R.id.mBtDelete)
         val mBtSubmitAudit = helper.getView<Button>(R.id.mBtSubmitAudit)
         val mBtCancelAudit = helper.getView<Button>(R.id.mBtCancelAudit)
         val mBtRelease = helper.getView<Button>(R.id.mBtRelease)
@@ -51,6 +52,9 @@ class RvTaskStateAdapter(data: List<Task>) : BaseQuickAdapter<Task, BaseViewHold
             //修改信息
             isShow(mBtModify, it, listOf(TaskState.NEW_CREATE,
                     TaskState.AUDIT_FAILURE))
+
+            //删除任务
+            isShow(mBtDelete, it, listOf(TaskState.NEW_CREATE))
 
             //提交审核
             isShow(mBtSubmitAudit, it, listOf(TaskState.NEW_CREATE,
@@ -106,6 +110,7 @@ class RvTaskStateAdapter(data: List<Task>) : BaseQuickAdapter<Task, BaseViewHold
                 .addOnClickListener(R.id.mBtUpper)
                 .addOnClickListener(R.id.mBtAbandon)
                 .addOnClickListener(R.id.mBtCancelAbandon)
+                .addOnClickListener(R.id.mBtDelete)
         var imageView = helper.getView<ImageView>(R.id.mIvIcon)
         imageView.loadUrl(item.headImg ?: R.mipmap.def)
 

@@ -17,6 +17,9 @@ interface TaskService {
     //增加任务
     fun addTask(req: List<Long>, text: String, contentText: String, data: MutableList<TaskStep>): Observable<Result>
 
+    //将用户的任务提交给管理员审核
+    fun deleteTask(taskId: String): Observable<Result>
+
     //修改任务
     fun modifyTask(id: String, classs: List<Long>, text: String, contentText: String, data: MutableList<TaskStep>): Observable<Result>
 

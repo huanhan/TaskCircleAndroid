@@ -21,6 +21,10 @@ class TaskRepository @Inject constructor() {
         return RetrofitFactory.instance.create(TaskApi::class.java).addTask(UserInfo.userId, AddTaskReq(text, contentText, classs, data))
     }
 
+    fun deleteTask(taskId: String): Observable<Result> {
+        return RetrofitFactory.instance.create(TaskApi::class.java).deleteTask(taskId, UserInfo.userId)
+    }
+
     fun modifyTask(id: String, classs: List<Long>, text: String, contentText: String, data: MutableList<TaskStep>): Observable<Result> {
         return RetrofitFactory.instance.create(TaskApi::class.java).modifyTask(UserInfo.userId, ModifyTaskReq(id, text, contentText, classs, data))
     }
@@ -44,7 +48,7 @@ class TaskRepository @Inject constructor() {
                   compensate: Boolean,
                   compensateMoney: Float): Observable<TaskDetail> {
         return RetrofitFactory.instance.create(TaskApi::class.java).issueTask(UserInfo.userId,
-                IssueTaskReq(id, money, peopleNumber, beginTime, deadline, permitAbandonMinute, longitude, latitude,address, taskRework, compensate, compensateMoney))
+                IssueTaskReq(id, money, peopleNumber, beginTime, deadline, permitAbandonMinute, longitude, latitude, address, taskRework, compensate, compensateMoney))
     }
 
     fun queryTaskDetail(id: String): Observable<TaskDetail> {

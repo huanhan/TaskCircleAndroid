@@ -19,6 +19,16 @@ class TaskStatePresenter @Inject constructor() : BasePresenter<TaskStateView>() 
         }
     }
 
+
+    fun deleteTask(taskId: String) {
+        if (!checkNetWork()) {
+            return
+        }
+        taskService.deleteTask(taskId).execute(lifecycleProvider, mView, false) {
+            mView.onResult(it.msg)
+        }
+    }
+
     fun submitAudit(taskId: String) {
         if (!checkNetWork()) {
             return
@@ -72,23 +82,4 @@ class TaskStatePresenter @Inject constructor() : BasePresenter<TaskStateView>() 
             mView.onResult(it.msg)
         }
     }
-
-    //todo 审核通过
-    /*fun auditSuccess(taskId: String) {
-        if (!checkNetWork()) {
-            return
-        }
-        taskService.auditSuccess(taskId).execute(lifecycleProvider, mView, false) {
-            mView.onResult(it)
-        }
-    }
-
-    fun auditFailure(id: String, context: String) {
-        if (!checkNetWork()) {
-            return
-        }
-        taskService.auditFailure(id, context).execute(lifecycleProvider, mView, false) {
-            mView.onResult(it)
-        }
-    }*/
 }

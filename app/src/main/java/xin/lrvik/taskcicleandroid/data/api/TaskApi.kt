@@ -1,10 +1,7 @@
 package xin.lrvik.taskcicleandroid.data.api
 
 import io.reactivex.Observable
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 import xin.lrvik.taskcicleandroid.data.protocol.*
 
 /**
@@ -19,6 +16,10 @@ interface TaskApi {
     //增加任务
     @POST("app/task/{id}")
     fun addTask(@Path("id") id: Long, @Body req: AddTaskReq): Observable<Result>
+
+    //删除任务
+    @DELETE("app/task/remove/{taskId}/{id}")
+    fun deleteTask(@Path("taskId") taskId: String, @Path("id") id: Long): Observable<Result>
 
     //修改任务
     @POST("app/task/modify/{id}")
@@ -88,9 +89,9 @@ interface TaskApi {
     //根据任务编号获取猎刃执行者列表
     @GET("app/task/hunterTask/{taskid}/{page}/{size}/{id}")
     fun hunterRunning(@Path("taskid") taskid: String,
-                     @Path("page") page: Int,
-                     @Path("size") size: Int,
-                     @Path("id") id: Long): Observable<Page<HunterTask>>
+                      @Path("page") page: Int,
+                      @Path("size") size: Int,
+                      @Path("id") id: Long): Observable<Page<HunterTask>>
 
 
 }

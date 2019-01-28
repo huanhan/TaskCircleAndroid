@@ -164,6 +164,11 @@
             android:padding="5dp">
 
             <Button
+                android:id="@+id/mBtDelete"
+                style="@style/TaskButton"
+                android:text="删除" />
+
+            <Button
                 android:id="@+id/mBtModify"
                 style="@style/TaskButton"
                 android:text="修改" />

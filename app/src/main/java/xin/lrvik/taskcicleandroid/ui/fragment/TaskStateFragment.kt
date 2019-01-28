@@ -102,6 +102,12 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
                     R.id.mBtModify -> {
                         startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.MODIFY.name, PostTaskActivity.TASKID to taskId)
                     }
+                    R.id.mBtDelete -> {
+                        alert("是否删除改任务?") {
+                            positiveButton("是") { mPresenter.deleteTask(taskId) }
+                            negativeButton("否") { }
+                        }.show()
+                    }
                     R.id.mBtSubmitAudit -> {
                         alert("是否提交审核?") {
                             positiveButton("是") { mPresenter.submitAudit(taskId) }
