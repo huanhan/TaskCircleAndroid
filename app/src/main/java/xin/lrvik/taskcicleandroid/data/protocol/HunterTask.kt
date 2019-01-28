@@ -12,6 +12,7 @@ class HunterTask {
     var taskId: String? = null
     var userId: Long? = null
     var hunterId: Long? = null
+    var hunterName: String? = null
     var headImg: String? = null
     var hunterHeadImg: String? = null
     var name: String? = null
@@ -23,4 +24,5 @@ class HunterTask {
     var state: HunterTaskState? = null
     var stop: Boolean? = null
     var money: Float? = null
+    val curStep: Int? = null
 }

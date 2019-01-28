@@ -87,5 +87,17 @@ class TaskRepository @Inject constructor() {
         return RetrofitFactory.instance.create(TaskApi::class.java).auditFailure(AuditContextReq(id, context), UserInfo.userId)
     }
 
+    fun abandonPass(htId: String): Observable<Result> {
+        return RetrofitFactory.instance.create(TaskApi::class.java).abandonPass(htId, UserInfo.userId)
+    }
+
+    fun abandonNotPass(htId: String, context: String): Observable<Result> {
+        return RetrofitFactory.instance.create(TaskApi::class.java).abandonNotPass(AuditContextReq(htId, context), UserInfo.userId)
+    }
+
+    fun hunterRunning(taskid: String, page: Int, size: Int): Observable<Page<HunterTask>> {
+        return RetrofitFactory.instance.create(TaskApi::class.java).hunterRunning(taskid, page, size, UserInfo.userId)
+    }
+
 
 }

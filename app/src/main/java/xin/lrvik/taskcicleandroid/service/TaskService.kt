@@ -1,6 +1,9 @@
 package xin.lrvik.taskcicleandroid.service
 
 import io.reactivex.Observable
+import xin.lrvik.taskcicleandroid.baselibrary.data.net.RetrofitFactory
+import xin.lrvik.taskcicleandroid.common.UserInfo
+import xin.lrvik.taskcicleandroid.data.api.TaskApi
 import xin.lrvik.taskcicleandroid.data.protocol.*
 
 /**
@@ -52,4 +55,11 @@ interface TaskService {
 
     //用户点击审核猎刃任务不通过
     fun auditFailure(id: String, context: String): Observable<Result>
+
+    fun abandonPass(htId: String): Observable<Result>
+
+    fun abandonNotPass(htId: String, context: String): Observable<Result>
+
+    //根据任务编号获取猎刃执行者列表
+    fun hunterRunning(taskid: String, page: Int, size: Int): Observable<Page<HunterTask>>
 }

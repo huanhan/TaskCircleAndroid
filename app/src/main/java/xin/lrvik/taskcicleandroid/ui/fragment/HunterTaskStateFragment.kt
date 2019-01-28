@@ -49,7 +49,7 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
                 if (data.pageNum == data.totalPage - 1) {
                     mRvHunterTaskStateAdapter.loadMoreEnd()
                 }
-//            mRvHunterTaskStateAdapter.notifyDataSetChanged()
+//            mRvHunterRunningAdapter.notifyDataSetChanged()
             } else {//上拉加载数据
                 if (data.pageNum == data.totalPage - 1) {//到底了
                     mRvHunterTaskStateAdapter.loadMoreEnd()
@@ -81,12 +81,13 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
         linearLayoutManager.orientation = OrientationHelper.VERTICAL
         var list = ArrayList<HunterTask>()
         mRvHunterTaskStateAdapter = RvHunterTaskStateAdapter(list)
-//        mRvHunterTaskStateAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN)
+//        mRvHunterRunningAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN)
         mRvTask.adapter = mRvHunterTaskStateAdapter
         mRvTask.isNestedScrollingEnabled = false
 
         mRvHunterTaskStateAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as HunterTask
+            //todo 猎刃任务子项点击
         }
         mRvHunterTaskStateAdapter.setOnItemChildClickListener { adapter, view, position ->
             var hunterTask = adapter.data[position] as HunterTask
@@ -127,7 +128,7 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
                                     positiveButton("是") {
                                         var disAgreeStr = btDisAgree.text.toString().trim()
                                         if (disAgreeStr.isEmpty() || disAgreeStr.length > 255) {
-                                            toast("请输入255字内的理由")
+                                            toast("请输入0~255字内的理由")
                                             return@positiveButton
                                         }
                                         mPresenter.abandonTask(task.id!!, disAgreeStr)
@@ -138,21 +139,21 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
                         }.show()
                     }
                     R.id.mBtSubmitAdminAudit -> {
-                        alert("产生纠纷或对任务有异议，请将任务提交至管理员?", "是否提交至管理员?") {
+                        alert("产生纠纷或对任务有异议，请将任务提交至管理员", "是否提交至管理员?") {
                             positiveButton("是") { mPresenter.submitAdminAudit(task.id!!) }
                             negativeButton("否") { }
                         }.show()
 
                     }
                     R.id.mBtCancelAdminAudit -> {
-                        alert("是否取消提交管理员操作?") {
+                        alert("是否取消提交管理员?") {
                             positiveButton("是") { mPresenter.cancelAdminAudit(task.id!!) }
                             negativeButton("否") { }
                         }.show()
 
                     }
                     R.id.mBtAgreeAbandon -> {
-                        alert("用户对任务选择了放弃,请与用户协商完成后选择，同意后任务将被放弃", "是否同意用户放弃?") {
+                        alert("用户提交了任务放弃申请,是否同意该申请", "是否同意用户放弃?") {
                             positiveButton("是") { mPresenter.agreeAbandon(task.taskId!!) }
                             negativeButton("否") { }
                         }.show()
@@ -161,10 +162,10 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
 
                         alert {
                             customView {
-                                title = "不同意用户放弃任务"
+                                title = "用户提交了任务放弃申请,是否拒绝该申请"
                                 verticalLayout {
                                     val btDisAgree = editText {
-                                        hint = "请输入不同意的理由"
+                                        hint = "请输入拒绝的理由"
 
                                     }.lparams {
                                         leftMargin = 15
@@ -174,7 +175,7 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
                                     positiveButton("是") {
                                         var disAgreeStr = btDisAgree.text.toString().trim()
                                         if (disAgreeStr.isEmpty() || disAgreeStr.length > 255) {
-                                            toast("请输入255字内的理由")
+                                            toast("请输入0~255字内的理由")
                                             return@positiveButton
                                         }
                                         mPresenter.disAgreeAbandon(task.taskId!!, disAgreeStr)

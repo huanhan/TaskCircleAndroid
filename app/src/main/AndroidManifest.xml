@@ -53,7 +53,8 @@
 
         <activity android:name=".ui.activity.SearchActivity" />
         <activity android:name=".ui.activity.SearchListActivity" />
-        <activity android:name=".ui.activity.ReleaseTaskActivity"></activity>
+        <activity android:name=".ui.activity.ReleaseTaskActivity" />
+        <activity android:name=".ui.activity.HunterRunningActivity"></activity>
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package xin.lrvik.taskcicleandroid.service.impl
 
 import io.reactivex.Observable
 import retrofit2.http.Path
+import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication.Companion.context
 import xin.lrvik.taskcicleandroid.common.UserInfo.latitude
 import xin.lrvik.taskcicleandroid.common.UserInfo.longitude
 import xin.lrvik.taskcicleandroid.data.protocol.*
@@ -83,4 +84,17 @@ class TaskServiceImpl @Inject constructor() : TaskService {
     override fun auditFailure(id: String, context: String): Observable<Result> {
         return taskRepository.auditFailure(id, context)
     }
+
+    override fun abandonPass(htId: String): Observable<Result> {
+        return taskRepository.abandonPass(htId)
+    }
+
+    override fun abandonNotPass(htId: String, context: String): Observable<Result> {
+        return taskRepository.abandonNotPass(htId, context)
+    }
+
+    override fun hunterRunning(taskid: String, page: Int, size: Int): Observable<Page<HunterTask>> {
+        return taskRepository.hunterRunning(taskid, page, size)
+    }
+
 }

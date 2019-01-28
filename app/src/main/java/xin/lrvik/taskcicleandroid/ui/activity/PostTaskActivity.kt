@@ -17,6 +17,7 @@ import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.activity_post_task.*
 import org.jetbrains.anko.dip
 import org.jetbrains.anko.margin
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
@@ -142,10 +143,10 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         }
 
         //如果用户id不是自己则展示接单按钮
-        mBtnAccept.visibility = if (UserInfo.userId != data.userId) View.VISIBLE else View.GONE
+        mBtnAccept.visibility = if (UserInfo.userId != data.userId && mode != Mode.MODIFY) View.VISIBLE else View.GONE
 
         //如果任务的用户id是自己则展示查看接取猎刃
-        mBtnQueryHunter.visibility = if (UserInfo.userId === data.userId) View.VISIBLE else View.GONE
+        mBtnQueryHunter.visibility = if (UserInfo.userId === data.userId && mode != Mode.MODIFY) View.VISIBLE else View.GONE
 
     }
 
@@ -267,7 +268,13 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
             }
         }
         mBtnQueryHunter.onClick {
-            //todo 查询猎刃列表
+            try {
+                var taskid = intent.getStringExtra(TASKID)
+                //todo 查询猎刃列表
+                startActivity<HunterRunningActivity>( HunterRunningActivity.TASKID to taskid)
+            } catch (e: Exception) {
+                toast("未传递任务id")
+            }
         }
 
 

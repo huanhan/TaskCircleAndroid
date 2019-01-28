@@ -48,7 +48,7 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
                 if (data.pageNum == data.totalPage - 1) {
                     mRvTaskStateAdapter.loadMoreEnd()
                 }
-//            mRvHunterTaskStateAdapter.notifyDataSetChanged()
+//            mRvHunterRunningAdapter.notifyDataSetChanged()
             } else {//上拉加载数据
                 if (data.pageNum == data.totalPage - 1) {//到底了
                     mRvTaskStateAdapter.loadMoreEnd()
@@ -80,7 +80,7 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
         linearLayoutManager.orientation = OrientationHelper.VERTICAL
         var list = ArrayList<Task>()
         mRvTaskStateAdapter = RvTaskStateAdapter(list)
-//        mRvHunterTaskStateAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN)
+//        mRvHunterRunningAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN)
         mRvTask.adapter = mRvTaskStateAdapter
         mRvTask.isNestedScrollingEnabled = false
 

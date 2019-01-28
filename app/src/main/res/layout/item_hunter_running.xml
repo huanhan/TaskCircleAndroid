@@ -28,20 +28,14 @@
             android:orientation="horizontal"
             android:paddingBottom="3dp">
 
-            <android.support.v7.widget.CardView
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="5dp"
-                app:cardCornerRadius="6dp">
 
-                <ImageView
-                    android:id="@+id/mIvIcon"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/def" />
-            </android.support.v7.widget.CardView>
+            <ImageView
+                android:id="@+id/mIvIcon"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_margin="5dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/def" />
 
 
             <LinearLayout
@@ -52,15 +46,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp">
+                    android:padding="3dp">
 
                     <TextView
-                        android:id="@+id/mTvTaskName"
+                        android:id="@+id/mTvHunterName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:lines="1"
-                        android:text=" 任务名"
+                        android:text="猎刃名字"
                         android:textColor="@color/common_black"
                         android:textSize="15sp" />
                 </LinearLayout>
@@ -73,8 +67,9 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:ellipsize="end"
-                    android:lines="2"
-                    android:text="介绍信息3行介绍信息3行介绍信息3行介绍信息3行介绍信息3行介绍信息3行介绍信息3行介绍信息3行介绍信息3行介绍信息3行"
+                    android:lines="1"
+                    android:padding="2dp"
+                    android:text="当前完成步骤"
                     android:textColor="@color/deep_gray"
                     android:textSize="12sp" />
 
@@ -83,33 +78,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="5dp"
-                        android:paddingTop="5dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="5dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="赏金："
-                            android:textColor="@color/common_black"
-                            android:textSize="10sp" />
-
-                        <TextView
-                            android:id="@+id/mTvMoney"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0元"
-                            android:textColor="@color/common_red"
-                            android:textSize="12sp" />
-
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -147,44 +115,24 @@
             android:padding="5dp">
 
             <Button
-                android:id="@+id/mBtBegin"
+                android:id="@+id/mBtAuditSuccess"
                 style="@style/TaskButton"
-                android:text="开始任务" />
+                android:text="审核通过" />
 
             <Button
-                android:id="@+id/mBtSubmitAudit"
+                android:id="@+id/mBtAuditFailure"
                 style="@style/TaskButton"
-                android:text="提交审核" />
+                android:text="审核失败" />
 
             <Button
-                android:id="@+id/mBtReWork"
+                android:id="@+id/mBtAbandonPass"
                 style="@style/TaskButton"
-                android:text="重做" />
+                android:text="放弃通过" />
 
             <Button
-                android:id="@+id/mBtAbandon"
+                android:id="@+id/mBtAbandonNotPass"
                 style="@style/TaskButton"
-                android:text="放弃" />
-
-            <Button
-                android:id="@+id/mBtSubmitAdminAudit"
-                style="@style/TaskButton"
-                android:text="提交管理员审核" />
-
-            <Button
-                android:id="@+id/mBtCancelAdminAudit"
-                style="@style/TaskButton"
-                android:text="取消管理员审核" />
-
-            <Button
-                android:id="@+id/mBtAgreeAbandon"
-                style="@style/TaskButton"
-                android:text="同意放弃" />
-
-            <Button
-                android:id="@+id/mBtDisAgreeAbandon"
-                style="@style/TaskButton"
-                android:text="拒绝放弃" />
+                android:text="放弃不通过" />
 
 
         </LinearLayout>

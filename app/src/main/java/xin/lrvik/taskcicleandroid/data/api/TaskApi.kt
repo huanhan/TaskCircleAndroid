@@ -74,8 +74,23 @@ interface TaskApi {
     fun auditSuccess(@Path("htId") htId: String, @Path("id") id: Long): Observable<Result>
 
     //用户点击审核猎刃任务不通过   htId 猎刃任务id
-    @GET("app/task/audit/failure/{id}")
+    @POST("app/task/audit/failure/{id}")
     fun auditFailure(@Body req: AuditContextReq, @Path("id") id: Long): Observable<Result>
+
+    //用户点击审核猎刃任务放弃通过   htId 猎刃任务id
+    @GET("app/task/abandon/success/{htId}/{id}")
+    fun abandonPass(@Path("htId") htId: String, @Path("id") id: Long): Observable<Result>
+
+    //用户点击猎刃任务放弃申请不通过   htId 猎刃任务id
+    @POST("app/task/abandon/failure/{id}")
+    fun abandonNotPass(@Body req: AuditContextReq, @Path("id") id: Long): Observable<Result>
+
+    //根据任务编号获取猎刃执行者列表
+    @GET("app/task/hunterTask/{taskid}/{page}/{size}/{id}")
+    fun hunterRunning(@Path("taskid") taskid: String,
+                     @Path("page") page: Int,
+                     @Path("size") size: Int,
+                     @Path("id") id: Long): Observable<Page<HunterTask>>
 
 
 }
