@@ -1,6 +1,7 @@
 package xin.lrvik.taskcicleandroid.service.impl
 
 import io.reactivex.Observable
+import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication.Companion.context
 import xin.lrvik.taskcicleandroid.data.protocol.*
 import xin.lrvik.taskcicleandroid.data.repository.HunterTaskRepository
 import xin.lrvik.taskcicleandroid.service.HunterTaskService
@@ -35,12 +36,12 @@ class HunterTaskServiceImpl @Inject constructor() : HunterTaskService {
         return hunterTaskRepository.query(htId)
     }
 
-    override fun addTaskStep(step: HunterTaskStep): Observable<Result> {
-        return hunterTaskRepository.addTaskStep(step)
+    override fun addTaskStep(id: String, step: Int, context: String, remake: String): Observable<Result> {
+        return hunterTaskRepository.addTaskStep(id, step, context, remake)
     }
 
-    override fun updateTaskStep(step: HunterTaskStep): Observable<Result> {
-        return hunterTaskRepository.updateTaskStep(step)
+    override fun updateTaskStep(id: String, step: Int, context: String, remake: String): Observable<Result> {
+        return hunterTaskRepository.updateTaskStep(id, step, context, remake)
     }
 
     override fun submitAudit(htId: String): Observable<Result> {

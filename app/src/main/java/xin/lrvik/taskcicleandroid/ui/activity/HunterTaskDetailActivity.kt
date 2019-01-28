@@ -2,9 +2,12 @@ package xin.lrvik.taskcicleandroid.ui.activity
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Editable
+import android.view.MenuItem
+import android.view.View
 import kotlinx.android.synthetic.main.activity_hunter_task_detail.*
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.*
+import org.jetbrains.anko.support.v4.alert
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
@@ -12,6 +15,7 @@ import xin.lrvik.taskcicleandroid.baselibrary.utils.DateUtils
 import xin.lrvik.taskcicleandroid.data.protocol.HunterRunningStep
 import xin.lrvik.taskcicleandroid.data.protocol.HunterTaskAndStep
 import xin.lrvik.taskcicleandroid.data.protocol.TaskStep
+import xin.lrvik.taskcicleandroid.data.protocol.enums.HunterTaskState
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.HunterTaskDetailPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.HunterTaskDetailView
@@ -38,11 +42,20 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
         data.deadline?.let {
             mTvDeadline.text = "${DateUtils.convertTimeToString(it)}"
         }
+        if (data.currStep == data.totalStep) {
+            mBtSubmitAudit.visibility = View.VISIBLE
+        }
 
+        isShow(mBtSubmitAudit, data.state!!, listOf(HunterTaskState.TASK_COMPLETE,
+                HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
+                HunterTaskState.ALLOW_REWORK_ABANDON_NO_COMPENSATE,
+                HunterTaskState.NO_REWORK_NO_COMPENSATE,
+                HunterTaskState.NO_REWORK_HAVE_COMPENSATE))
     }
 
     override fun onResult(result: String) {
-
+        toast(result)
+        mPresenter.query(taskid)
     }
 
     var taskid: String = ""
@@ -80,7 +93,8 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
         mRvTaskStepAdapter.setOnItemClickListener { adapter, view, position ->
             var dialogdata = ArrayList<TaskStep>()
             for (datum in adapter.data as ArrayList<HunterRunningStep>) {
-                dialogdata.add(TaskStep(datum.hunterTaskId?:"", datum.step?:0, datum.taskTitle?:"", datum.taskContext?:"", datum.taskImg?:""))
+                dialogdata.add(TaskStep(datum.hunterTaskId ?: "", datum.step ?: 0, datum.taskTitle
+                        ?: "", datum.taskContext ?: "", datum.taskImg ?: ""))
             }
 
             val dialog = TaskStepDialog.showDialog(supportFragmentManager,
@@ -94,10 +108,125 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
             })
         }
 
+        mRvTaskStepAdapter.setOnItemChildClickListener { adapter, view, position ->
+            var hunterRunningStep = adapter.data[position] as HunterRunningStep
+            hunterRunningStep?.let { step ->
+                when (view.id) {
+                    R.id.mBtSubmit -> {
+                        alert {
+                            customView {
+                                title = "提交步骤完成信息"
+                                verticalLayout {
+                                    val etContext = editText {
+                                        hint = "请填写执行情况（必填）"
+                                    }.lparams {
+                                        leftMargin = 15
+                                        rightMargin = 15
+                                        width = matchParent
+                                    }
+                                    val etMarker = editText {
+                                        hint = "备注"
+                                    }.lparams {
+                                        leftMargin = 15
+                                        rightMargin = 15
+                                        width = matchParent
+                                    }
+                                    positiveButton("是") {
+                                        var context = etContext.text.toString().trim()
+                                        if (context.isEmpty() || context.length > 255) {
+                                            toast("请填写执行情况（0~255字内）")
+                                            return@positiveButton
+                                        }
+                                        mPresenter.addTaskStep(hunterRunningStep.hunterTaskId ?: "",
+                                                hunterRunningStep.step ?: 0,
+                                                context,
+                                                etMarker.text.toString())
+                                    }
+                                    negativeButton("否") { }
+                                }
+                            }
+                        }.show()
+                    }
+                    R.id.mBtModify -> {
+                        alert {
+                            customView {
+                                title = "提交步骤修改信息"
+                                verticalLayout {
+                                    val etContext = editText {
+                                        hint = "请填写执行情况（必填）"
+                                        text.append((hunterRunningStep.hunterTaskContext ?: ""))
+                                    }.lparams {
+                                        leftMargin = 15
+                                        rightMargin = 15
+                                        width = matchParent
+                                    }
+                                    val etMarker = editText {
+                                        hint = "备注"
+                                        text.append((hunterRunningStep.hunterTaskRemake ?: ""))
+                                    }.lparams {
+                                        leftMargin = 15
+                                        rightMargin = 15
+                                        width = matchParent
+                                    }
+                                    positiveButton("是") {
+                                        var context = etContext.text.toString().trim()
+                                        if (context.isEmpty() || context.length > 255) {
+                                            toast("请填写执行情况（0~255字内）")
+                                            return@positiveButton
+                                        }
+                                        mPresenter.updateTaskStep(hunterRunningStep.hunterTaskId
+                                                ?: "",
+                                                hunterRunningStep.step ?: 0,
+                                                context,
+                                                etMarker.text.toString())
+                                    }
+                                    negativeButton("否") { }
+                                }
+                            }
+                        }.show()
+                    }
+                    else -> {
+                    }
+                }
+            }
+
+            mBtSubmitAudit.onClick {
+                alert("是否将任务提交给用户审核?") {
+                    positiveButton("是") { mPresenter.submitAudit(taskid) }
+                    negativeButton("否") { }
+                }.show()
+
+            }
+
+        }
+
         mTvMore.onClick {
             startActivity<TaskDetailActivity>(TaskDetailActivity.TASKID to taskid)
         }
 
         mPresenter.query(taskid)
+    }
+
+    private fun isShow(view: View, state: HunterTaskState, list: List<HunterTaskState>) {
+        isShow(view, list.contains(state))
+    }
+
+    private fun isShow(view: View, state: HunterTaskState, list: List<HunterTaskState>, list2: List<HunterTaskState>) {
+        isShow(view, list.contains(state) && !list2.contains(state))
+    }
+
+    private fun isShow(view: View, isVis: Boolean) {
+        view.visibility = if (isVis) View.VISIBLE else View.GONE
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

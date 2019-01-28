@@ -18,6 +18,8 @@ class HunterTaskAndStep {
     var taskFinishTime: Timestamp? = null//任务完成时间
     var auditTime: Timestamp? = null//提交审核时间
     var taskBeginTime: Timestamp? = null//任务开始时间
+    val currStep: Int? = null//任务开始时间
+    val totalStep: Int? = null//任务开始时间
     var state: HunterTaskState? = null//任务状态
 
     var taskSteps: ArrayList<HunterRunningStep>? = null

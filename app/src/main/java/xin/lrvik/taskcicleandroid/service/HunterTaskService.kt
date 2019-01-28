@@ -17,8 +17,8 @@ interface HunterTaskService {
     fun acceptTask(taskId: String): Observable<Result>
     fun beginTask(htId: String): Observable<Result>
     fun query(htId: String): Observable<HunterTaskAndStep>
-    fun addTaskStep(step: HunterTaskStep): Observable<Result>
-    fun updateTaskStep(step: HunterTaskStep): Observable<Result>
+    fun addTaskStep(id: String, step: Int, context: String, remake: String): Observable<Result>
+    fun updateTaskStep(id: String, step: Int, context: String, remake: String): Observable<Result>
     fun submitAudit(htId: String): Observable<Result>
     fun reworkTask(htId: String): Observable<Result>
     fun abandonTask(taskid: String, auditContext: String): Observable<Result>

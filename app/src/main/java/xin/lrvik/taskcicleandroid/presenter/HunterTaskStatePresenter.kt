@@ -1,15 +1,9 @@
 package xin.lrvik.taskcicleandroid.presenter
 
-import io.reactivex.Observable
 import xin.lrvik.taskcicleandroid.baselibrary.ext.execute
 import xin.lrvik.taskcicleandroid.baselibrary.presenter.BasePresenter
-import xin.lrvik.taskcicleandroid.data.protocol.AuditContext
-import xin.lrvik.taskcicleandroid.data.protocol.HunterTaskStep
-import xin.lrvik.taskcicleandroid.data.protocol.Result
 import xin.lrvik.taskcicleandroid.presenter.view.HunterTaskStateView
-import xin.lrvik.taskcicleandroid.presenter.view.TaskStateView
 import xin.lrvik.taskcicleandroid.service.HunterTaskService
-import xin.lrvik.taskcicleandroid.service.TaskService
 import javax.inject.Inject
 
 class HunterTaskStatePresenter @Inject constructor() : BasePresenter<HunterTaskStateView>() {
@@ -31,24 +25,6 @@ class HunterTaskStatePresenter @Inject constructor() : BasePresenter<HunterTaskS
             return
         }
         hunterTaskService.beginTask(htId).execute(lifecycleProvider, mView, false) {
-            mView.onResult(it.msg)
-        }
-    }
-
-    fun addTaskStep(step: HunterTaskStep) {
-        if (!checkNetWork()) {
-            return
-        }
-        hunterTaskService.addTaskStep(step).execute(lifecycleProvider, mView, false) {
-            mView.onResult(it.msg)
-        }
-    }
-
-    fun updateTaskStep(step: HunterTaskStep) {
-        if (!checkNetWork()) {
-            return
-        }
-        hunterTaskService.updateTaskStep(step).execute(lifecycleProvider, mView, false) {
             mView.onResult(it.msg)
         }
     }

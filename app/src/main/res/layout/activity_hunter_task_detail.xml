@@ -273,8 +273,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:background="@drawable/btn_common_selector"
-        android:enabled="true"
         android:padding="10dp"
         android:text="任务已完成，提交审核"
-        android:textColor="@color/common_white" />
+        android:textColor="@color/common_white"
+        android:visibility="gone" />
 </LinearLayout>

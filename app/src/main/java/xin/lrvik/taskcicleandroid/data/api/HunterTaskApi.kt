@@ -33,7 +33,7 @@ interface HunterTaskApi {
     fun query(@Path("htId") htId: String, @Path("id") id: Long): Observable<HunterTaskAndStep>
 
     //添加猎刃的任务步骤
-    @GET("app/ht/add/step/{id}")
+    @POST("app/ht/add/step/{id}")
     fun addTaskStep(@Body step: HunterTaskStep, @Path("id") id: Long): Observable<Result>
 
     //修改猎刃的任务步骤
