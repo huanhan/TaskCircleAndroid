@@ -92,11 +92,10 @@ class HunterRunningActivity : BaseMvpActivity<HunterRunningPresenter>(), HunterR
         mRvHunterRunningAdapter = RvHunterRunningAdapter(list)
 //        mRvHunterRunningAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN)
         mRvTask.adapter = mRvHunterRunningAdapter
-        mRvTask.isNestedScrollingEnabled = false
 
         mRvHunterRunningAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as HunterTask
-
+            //todo 查看任务步骤执行情况
         }
         mRvHunterRunningAdapter.setOnItemChildClickListener { adapter, view, position ->
             var hunterTask = adapter.data[position] as HunterTask

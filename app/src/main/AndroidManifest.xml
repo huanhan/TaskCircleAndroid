@@ -55,7 +55,8 @@
         <activity android:name=".ui.activity.SearchListActivity" />
         <activity android:name=".ui.activity.ReleaseTaskActivity" />
         <activity android:name=".ui.activity.HunterRunningActivity" />
-        <activity android:name=".ui.activity.TaskDetailActivity"></activity>
+        <activity android:name=".ui.activity.TaskDetailActivity" />
+        <activity android:name=".ui.activity.HunterTaskDetailActivity"></activity>
     </application>
 
 </manifest>

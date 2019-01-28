@@ -149,8 +149,8 @@ class TaskDetailActivity : BaseMvpActivity<TaskDetailPresenter>(), TaskDetailVie
 
         mItemDragAndSwipeCallback.setSwipeMoveFlags(ItemTouchHelper.START or ItemTouchHelper.END)
 
-        mRvTaskStepAdapter.enableSwipeItem()
-        mRvTaskStepAdapter.enableDragItem(mItemTouchHelper)
+        mRvTaskStepAdapter.disableSwipeItem()
+        mRvTaskStepAdapter.disableDragItem()
 
         mRvStep.adapter = mRvTaskStepAdapter
 

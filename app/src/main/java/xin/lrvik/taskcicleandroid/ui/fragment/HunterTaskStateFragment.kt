@@ -7,12 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_hunter_task_state.*
-import org.jetbrains.anko.customView
-import org.jetbrains.anko.editText
-import org.jetbrains.anko.matchParent
+import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.alert
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
-import org.jetbrains.anko.verticalLayout
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseMvpFragment
 import xin.lrvik.taskcicleandroid.data.protocol.HunterTask
@@ -20,6 +18,8 @@ import xin.lrvik.taskcicleandroid.data.protocol.Page
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.HunterTaskStatePresenter
 import xin.lrvik.taskcicleandroid.presenter.view.HunterTaskStateView
+import xin.lrvik.taskcicleandroid.ui.activity.HunterTaskDetailActivity
+import xin.lrvik.taskcicleandroid.ui.activity.TaskDetailActivity
 import xin.lrvik.taskcicleandroid.ui.adapter.RvHunterTaskStateAdapter
 import java.util.*
 
@@ -86,7 +86,7 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
 
         mRvHunterTaskStateAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as HunterTask
-            //todo 猎刃任务子项点击
+            startActivity<HunterTaskDetailActivity>(HunterTaskDetailActivity.TASKID to task.taskId!!)
         }
         mRvHunterTaskStateAdapter.setOnItemChildClickListener { adapter, view, position ->
             var hunterTask = adapter.data[position] as HunterTask
