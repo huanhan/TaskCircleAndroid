@@ -27,7 +27,6 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
     }
 
     companion object {
-
         val MODE = "MODE"
         val TASKID = "TASKID"
     }
@@ -54,15 +53,20 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
         data.deadline?.let {
             mTvDeadline.text = "${DateUtils.convertTimeToString(it)}"
         }
-        if (data.currStep == data.totalStep) {
-            mBtSubmitAudit.visibility = View.VISIBLE
+
+        if (mode != Mode.LOOK) {
+            if (data.currStep == data.totalStep) {
+                mBtSubmitAudit.visibility = View.VISIBLE
+            }
+
+            isShow(mBtSubmitAudit, data.state!!, listOf(HunterTaskState.TASK_COMPLETE,
+                    HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
+                    HunterTaskState.ALLOW_REWORK_ABANDON_NO_COMPENSATE,
+                    HunterTaskState.NO_REWORK_NO_COMPENSATE,
+                    HunterTaskState.NO_REWORK_HAVE_COMPENSATE))
         }
 
-        isShow(mBtSubmitAudit, data.state!!, listOf(HunterTaskState.TASK_COMPLETE,
-                HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
-                HunterTaskState.ALLOW_REWORK_ABANDON_NO_COMPENSATE,
-                HunterTaskState.NO_REWORK_NO_COMPENSATE,
-                HunterTaskState.NO_REWORK_HAVE_COMPENSATE))
+
     }
 
     override fun onResult(result: String) {

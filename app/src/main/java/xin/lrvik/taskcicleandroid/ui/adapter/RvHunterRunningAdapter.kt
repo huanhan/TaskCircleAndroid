@@ -27,17 +27,9 @@ class RvHunterRunningAdapter(data: List<HunterTask>) : BaseQuickAdapter<HunterTa
 
         item.state?.let {
 
-            isShow(mBtAuditSuccess, it, listOf(HunterTaskState.TASK_COMPLETE,
-                    HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
-                    HunterTaskState.ALLOW_REWORK_ABANDON_NO_COMPENSATE,
-                    HunterTaskState.NO_REWORK_NO_COMPENSATE,
-                    HunterTaskState.NO_REWORK_HAVE_COMPENSATE))
+            isShow(mBtAuditSuccess, it, listOf(HunterTaskState.AWAIT_USER_AUDIT))
 
-            isShow(mBtAuditFailure, it, listOf(HunterTaskState.TASK_COMPLETE,
-                    HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
-                    HunterTaskState.ALLOW_REWORK_ABANDON_NO_COMPENSATE,
-                    HunterTaskState.NO_REWORK_NO_COMPENSATE,
-                    HunterTaskState.NO_REWORK_HAVE_COMPENSATE))
+            isShow(mBtAuditFailure, it, listOf(HunterTaskState.AWAIT_USER_AUDIT))
 
             isShow(mBtAbandonPass, it, listOf(HunterTaskState.WITH_USER_NEGOTIATE))
 
@@ -51,7 +43,7 @@ class RvHunterRunningAdapter(data: List<HunterTask>) : BaseQuickAdapter<HunterTa
 
         helper.setText(R.id.mTvHunterName, item.hunterName)
                 .setText(R.id.mTvState, item.state!!.state)
-                .setText(R.id.mTvContext, if (item.curStep == 0) "任务还未开始执行" else "当前正在执行第${item.curStep}步")
+                .setText(R.id.mTvContext, if (item.curStep == 0) "任务还未开始执行" else "已执行完第${item.curStep}步")
                 .addOnClickListener(R.id.mBtAuditSuccess)
                 .addOnClickListener(R.id.mBtAuditFailure)
                 .addOnClickListener(R.id.mBtAbandonPass)

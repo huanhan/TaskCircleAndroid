@@ -7,7 +7,6 @@ enum class HunterTaskState constructor(val state: String) {
      * 猎刃点击接取任务
      */
     RECEIVE("任务接取"),
-    AWAIT_BEGIN("等待开始"),
     BEGIN("开始"),
     EXECUTE("正在执行"),
     TASK_COMPLETE("任务完成"),
@@ -28,10 +27,8 @@ enum class HunterTaskState constructor(val state: String) {
     AWAIT_COMPENSATE("等待补偿"),
     COMPENSATE_SUCCESS("补偿成功"),
     COMPENSATE_EXCEPTION("补偿异常"),
-    TASK_STOP("任务暂停"),
     TASK_ABANDON("任务放弃"),
     TASK_BE_ABANDON("任务被放弃"),
-    NEGOTIATE_VALIDATOR("协商校验"),
     WITH_USER_NEGOTIATE("与用户协商"),
     USER_REPULSE("用户拒绝猎刃放弃"),
     HUNTER_REPULSE("猎刃拒绝用户放弃"),
