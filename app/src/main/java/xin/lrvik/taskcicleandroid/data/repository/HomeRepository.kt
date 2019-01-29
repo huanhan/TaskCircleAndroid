@@ -4,7 +4,6 @@ import io.reactivex.Observable
 import xin.lrvik.taskcicleandroid.baselibrary.data.net.RetrofitFactory
 import xin.lrvik.taskcicleandroid.data.api.HomeApi
 import xin.lrvik.taskcicleandroid.data.protocol.Home
-import xin.lrvik.taskcicleandroid.data.protocol.TaskClass
 import javax.inject.Inject
 
 /**

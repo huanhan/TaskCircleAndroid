@@ -72,7 +72,6 @@ class TaskClassFragment : BaseMvpFragment<TaskClassPresenter>(), TaskClassView {
         var list = ArrayList<Task>()
         mRvRecommendAdapter = RvRecommendAdapter(list)
         mRvTask.adapter = mRvRecommendAdapter
-        mPresenter.queryByClassid(classId, 0, 10)
 
         mRvRecommendAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as Task
@@ -88,6 +87,7 @@ class TaskClassFragment : BaseMvpFragment<TaskClassPresenter>(), TaskClassView {
             mPresenter.queryByClassid(classId, ++curPage, pageSize)
         }, mRvTask)
         mSwipeRefresh.isRefreshing = true
+        mPresenter.queryByClassid(classId, curPage, pageSize)
     }
 
 

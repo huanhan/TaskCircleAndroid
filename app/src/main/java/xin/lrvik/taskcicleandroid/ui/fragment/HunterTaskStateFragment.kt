@@ -230,6 +230,5 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
             taskClassFragment.arguments = bundle
             return taskClassFragment
         }
-
     }
 }

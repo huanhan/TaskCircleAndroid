@@ -5,10 +5,7 @@ import lrvik.xin.base.injection.PerComponentScope
 import xin.lrvik.taskcicleandroid.baselibrary.injection.component.ActivityComponent
 import xin.lrvik.taskcicleandroid.injection.module.CircleTaskModule
 import xin.lrvik.taskcicleandroid.ui.activity.*
-import xin.lrvik.taskcicleandroid.ui.fragment.HomeFragment
-import xin.lrvik.taskcicleandroid.ui.fragment.HunterTaskStateFragment
-import xin.lrvik.taskcicleandroid.ui.fragment.TaskClassFragment
-import xin.lrvik.taskcicleandroid.ui.fragment.TaskStateFragment
+import xin.lrvik.taskcicleandroid.ui.fragment.*
 
 /**
  * Author by 豢涵, Email huanhanfu@126.com, Date on 2019/1/21.
@@ -27,4 +24,7 @@ interface TaskCircleComponent {
     fun inject(fragment: TaskClassFragment)
     fun inject(fragment: TaskStateFragment)
     fun inject(fragment: HunterTaskStateFragment)
+    fun inject(fragment: UserWithdrawFragment)
+    fun inject(fragment: TransferFragment)
+    fun inject(fragment: CashPledgeFragment)
 }
