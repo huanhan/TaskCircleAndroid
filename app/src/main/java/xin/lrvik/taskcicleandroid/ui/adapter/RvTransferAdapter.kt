@@ -22,7 +22,7 @@ class RvTransferAdapter(data: List<Transfer>) : BaseQuickAdapter<Transfer, BaseV
                 .setText(R.id.mTvTime, "${DateUtils.convertTimeToString(item.createTime)}")
 
         if (UserInfo.userId==item.me) {
-            helper.setText(R.id.mTvContent, "支出给 用户：${item.toName} 金额：${item.money}元")
+            helper.setText(R.id.mTvContent, "支出金额：${item.money}元，给用户：${item.toName} ")
             mIvIcon.loadUrl(R.mipmap.recharge)
         } else {
             helper.setText(R.id.mTvContent, "从 用户：${item.meName} 收入金额：${item.money}元")

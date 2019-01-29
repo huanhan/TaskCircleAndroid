@@ -47,15 +47,17 @@
                 android:textColor="@color/common_black" />
 
             <TextView
+                android:id="@+id/mTvMoney"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="¥500.23"
+                android:text="¥"
                 android:textColor="@color/common_black"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
             <Button
+                android:id="@+id/mBtAddMoney"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="120dp"
@@ -65,6 +67,7 @@
                 android:textColor="@color/common_white" />
 
             <Button
+                android:id="@+id/mBtWithdrawMoney"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"

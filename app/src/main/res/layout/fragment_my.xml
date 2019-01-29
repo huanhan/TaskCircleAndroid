@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    android:text="1000.15元"
+                    android:text="0元"
                     android:textColor="@color/common_blue"
                     android:textSize="18sp" />
 
@@ -120,7 +120,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    android:text="4.5"
                     android:textColor="@color/common_red"
                     android:textSize="18sp" />
 
@@ -148,7 +147,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    android:text="100条"
+                    android:text="0条"
                     android:textColor="@color/common_yellow"
                     android:textSize="18sp" />
 

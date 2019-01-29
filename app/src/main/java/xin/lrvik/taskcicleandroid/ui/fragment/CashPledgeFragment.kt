@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_transfer.*
+import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.support.v4.startActivity
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseFragment
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseMvpFragment
@@ -16,6 +18,8 @@ import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.CashPledgePresenter
 import xin.lrvik.taskcicleandroid.presenter.view.CashPledgeView
 import xin.lrvik.taskcicleandroid.service.WalletService
+import xin.lrvik.taskcicleandroid.ui.activity.HunterTaskDetailActivity
+import xin.lrvik.taskcicleandroid.ui.activity.TaskDetailActivity
 import xin.lrvik.taskcicleandroid.ui.adapter.RvCashPledgeAdapter
 import xin.lrvik.taskcicleandroid.ui.adapter.RvTransferAdapter
 import java.util.ArrayList
@@ -49,6 +53,16 @@ class CashPledgeFragment : BaseMvpFragment<CashPledgePresenter>(), CashPledgeVie
         mRvCashPledgeAdapter = RvCashPledgeAdapter(list)
         mRvRecord.adapter = mRvCashPledgeAdapter
 
+        mRvCashPledgeAdapter.setOnItemClickListener { adapter, view, position ->
+            var cashPledge = adapter.data[position] as CashPledge
+            if(cashPledge.name=="任务"){
+                startActivity<TaskDetailActivity>(TaskDetailActivity.TASKID to cashPledge.id!!)
+            }else if(cashPledge.name=="猎刃任务"){
+                startActivity<HunterTaskDetailActivity>(HunterTaskDetailActivity.TASKID to cashPledge.id!! ,
+                        HunterTaskDetailActivity.MODE to HunterTaskDetailActivity.Mode.LOOK.name)
+            }
+
+        }
 
         mSwipeRefresh.setOnRefreshListener {
             mPresenter.cashPledgeList()

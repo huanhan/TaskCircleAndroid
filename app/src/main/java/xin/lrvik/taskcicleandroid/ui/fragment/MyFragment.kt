@@ -20,6 +20,10 @@ class MyFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        mTvMoney.text = "${UserInfo.money}元"
+        mTvStart.text = "${UserInfo.start}"
+        mTvEvaluate.text = "${UserInfo.comment}条"
+
         mTvLoginOrRegist.onClick {
             startActivity<LoginActivity>()
         }

@@ -3,10 +3,13 @@ package xin.lrvik.taskcicleandroid.ui.activity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_chat.*
+import kotlinx.android.synthetic.main.activity_wallet.*
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
+import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseActivity
+import xin.lrvik.taskcicleandroid.common.UserInfo
 
 class WalletActivity : BaseActivity() {
 
@@ -22,6 +25,14 @@ class WalletActivity : BaseActivity() {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.title = "钱包"
+        }
+
+        mTvMoney.text = "¥${UserInfo.money}"
+        mBtAddMoney.onClick {
+            toast("充值暂未开放")
+        }
+        mBtWithdrawMoney.onClick {
+            toast("提现暂未开放")
         }
     }
 
