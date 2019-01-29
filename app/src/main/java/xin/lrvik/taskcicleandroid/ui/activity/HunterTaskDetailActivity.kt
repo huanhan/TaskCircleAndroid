@@ -85,7 +85,7 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar?.title = "任务步骤"
+            actionBar?.title = "猎刃任务信息"
         }
 
         try {

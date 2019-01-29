@@ -23,7 +23,7 @@ interface WalletApi {
             @Path("size") size: Int,
             @Path("id") id: Long): Observable<Page<UserWithdraw>>
 
-    @GET("app/money/{id}")
+    @GET("app/finance/money/{id}")
     fun cashPledgeList(
             @Path("id") id: Long): Observable<List<CashPledge>>
 }
