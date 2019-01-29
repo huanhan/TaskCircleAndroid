@@ -31,6 +31,8 @@ class ClassificationDialog : DialogFragment() {
     var mRvClassRightAapter: RvClassRightAdapter? = null
     var mRvClassLeftAapter: RvClassLeftAdapter? = null
 
+    var mPPos: Int = 0
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.dialog_classification, container)
     }
@@ -61,7 +63,7 @@ class ClassificationDialog : DialogFragment() {
             clearSelectSingleData(arrayList)
             arrayList[position].isSelect = true
             mRvClassRightAapter!!.notifyDataSetChanged()
-            listener?.onClassClick(arrayList[position])
+            listener?.onClassClick(mPPos, position, arrayList[position])
         }
 
         mRvClassLeftAapter!!.setOnItemClickListener { adapter, view, position ->
@@ -70,6 +72,7 @@ class ClassificationDialog : DialogFragment() {
             arrayList[position].isSelect = true
             mRvClassRightAapter!!.setNewData(arrayList[position].taskClassifies)
             mRvClassLeftAapter!!.notifyDataSetChanged()
+            mPPos = position
 
         }
         mLlClass.scaleY = 0f
@@ -183,7 +186,7 @@ class ClassificationDialog : DialogFragment() {
     }
 
     interface OnClassificationClickListener {
-        fun onClassClick(taskClass: TaskClass)
+        fun onClassClick(pPos: Int, cPos: Int, taskClass: TaskClass)
     }
 
     companion object {

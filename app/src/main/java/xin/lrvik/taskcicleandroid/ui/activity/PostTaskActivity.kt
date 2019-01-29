@@ -304,7 +304,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
             mDialog = ClassificationDialog()
             mDialog!!.showDialog(supportFragmentManager)
             mDialog!!.listener = object : ClassificationDialog.OnClassificationClickListener {
-                override fun onClassClick(taskClass: TaskClass) {
+                override fun onClassClick(pPos: Int, cPos: Int,taskClass: TaskClass) {
                     if (!classList.contains(taskClass)) {
                         classList.add(taskClass)
                         mFlowlayout.adapter.notifyDataChanged()
