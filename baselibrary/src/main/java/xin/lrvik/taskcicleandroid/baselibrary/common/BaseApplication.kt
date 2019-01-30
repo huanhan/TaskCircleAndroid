@@ -7,7 +7,7 @@ import xin.lrvik.taskcicleandroid.baselibrary.injection.component.DaggerAppCompo
 import xin.lrvik.taskcicleandroid.baselibrary.injection.module.AppModule
 
 
-class BaseApplication : MultiDexApplication() {
+open class BaseApplication : MultiDexApplication() {
 
     lateinit var appComponent: AppComponent
 

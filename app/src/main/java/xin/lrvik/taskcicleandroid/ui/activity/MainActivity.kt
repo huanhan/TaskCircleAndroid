@@ -40,8 +40,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //初始化百度地图
-        SDKInitializer.initialize(applicationContext)
+
 
         /*//定位权限为必须权限，用户如果禁止，则每次进入都会申请
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
