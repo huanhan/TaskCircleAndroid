@@ -19,11 +19,12 @@
 
             <ImageView
                 android:id="@+id/mIvIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="88dp"
+                android:layout_height="70dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="16dp"
-                android:src="@mipmap/icon_default_user" />
+                android:scaleType="centerCrop"
+                android:src="@mipmap/picture" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -57,9 +58,10 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:orientation="vertical"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
+
                 <Button
                     android:id="@+id/mBtSubmit"
                     style="@style/TaskButton"
@@ -74,7 +76,6 @@
                     android:text="修改"
                     android:visibility="visible" />
             </LinearLayout>
-
 
 
             <ImageView
@@ -99,16 +100,17 @@
     </RelativeLayout>
 
 
-
     <LinearLayout
         android:id="@+id/mLlHunterMarker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <View
             style="@style/DividerFixedHeight"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

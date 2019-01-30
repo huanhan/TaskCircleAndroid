@@ -1,8 +1,10 @@
 package xin.lrvik.taskcicleandroid.ui.adapter
 
+import android.widget.ImageView
 import com.chad.library.adapter.base.BaseItemDraggableAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import xin.lrvik.taskcicleandroid.R
+import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
 import xin.lrvik.taskcicleandroid.data.protocol.TaskStep
 
 /**
@@ -14,5 +16,10 @@ class RvAddTaskStepAdapter(data: List<TaskStep>) : BaseItemDraggableAdapter<Task
 
     override fun convert(helper: BaseViewHolder, item: TaskStep) {
         helper.setText(R.id.mTvtitle, item.title).setText(R.id.mTvContent, item.context)
+
+        var mIvIcon = helper.getView<ImageView>(R.id.mIvIcon)
+        item.img?.let {
+            mIvIcon.loadUrl(item.img)
+        }
     }
 }

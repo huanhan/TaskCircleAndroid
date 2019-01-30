@@ -8,11 +8,12 @@
 
     <ImageView
         android:id="@+id/mIvIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="88dp"
+        android:layout_height="70dp"
         android:layout_gravity="center_vertical"
+        android:scaleType="centerCrop"
         android:layout_marginLeft="16dp"
-        android:src="@mipmap/icon_default_user" />
+        android:src="@mipmap/picture" />
 
     <LinearLayout
         android:layout_width="0dp"

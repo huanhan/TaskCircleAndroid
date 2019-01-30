@@ -13,10 +13,10 @@ import xin.lrvik.taskcicleandroid.baselibrary.R
 object GlideUtils {
 
     fun loadUrlImage(context: Context, url: Any, imageView: ImageView) {
-        Glide.with(context).load(url).apply(RequestOptions.placeholderOf(R.drawable.icon_back).error(R.drawable.icon_back)).into(imageView)
+        Glide.with(context).load(url).apply(RequestOptions.placeholderOf(R.drawable.picture).error(R.drawable.picture)).into(imageView)
     }
 
     fun loadUrlCircleImage(context: Context, url: Any, imageView: ImageView) {
-        Glide.with(context).load(url).apply(RequestOptions.circleCropTransform().placeholder(R.drawable.icon_back).error(R.drawable.icon_back)).into(imageView)
+        Glide.with(context).load(url).apply(RequestOptions.circleCropTransform().placeholder(R.drawable.picture).error(R.drawable.picture)).into(imageView)
     }
 }

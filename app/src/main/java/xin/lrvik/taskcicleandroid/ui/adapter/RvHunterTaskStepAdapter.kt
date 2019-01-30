@@ -1,5 +1,6 @@
 package xin.lrvik.taskcicleandroid.ui.adapter
 
+import android.text.TextUtils.isEmpty
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -7,6 +8,7 @@ import android.widget.LinearLayout
 import com.chad.library.adapter.base.BaseItemDraggableAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import xin.lrvik.taskcicleandroid.R
+import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
 import xin.lrvik.taskcicleandroid.data.protocol.HunterRunningStep
 
 /**
@@ -17,6 +19,12 @@ class RvHunterTaskStepAdapter(data: List<HunterRunningStep>, val flag: Boolean) 
         BaseViewHolder>(R.layout.item_hunter_task_step, data) {
 
     override fun convert(helper: BaseViewHolder, item: HunterRunningStep) {
+        var mIvIcon = helper.getView<ImageView>(R.id.mIvIcon)
+        item.taskImg?.let {
+            if (!it.isEmpty()) {
+                mIvIcon.loadUrl(it)
+            }
+        }
 
         helper.setText(R.id.mTvtitle, item.taskTitle)
                 .setText(R.id.mTvContent, item.taskContext)
