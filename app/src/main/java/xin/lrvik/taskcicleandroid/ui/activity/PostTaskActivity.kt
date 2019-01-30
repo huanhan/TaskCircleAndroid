@@ -2,41 +2,38 @@ package xin.lrvik.taskcicleandroid.ui.activity
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.baidu.mapapi.model.LatLng
-import com.baidu.mapapi.search.geocode.*
-import com.baidu.mapapi.utils.DistanceUtil
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback
+import com.leo.matisse.Glide4Engine
 import com.zhihu.matisse.Matisse
+import com.zhihu.matisse.MimeType
+import com.zhihu.matisse.internal.entity.CaptureStrategy
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.activity_post_task.*
 import org.jetbrains.anko.dip
 import org.jetbrains.anko.margin
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
-import xin.lrvik.taskcicleandroid.baselibrary.utils.DateUtils
-import xin.lrvik.taskcicleandroid.common.UserInfo
 import xin.lrvik.taskcicleandroid.data.protocol.TaskClass
 import xin.lrvik.taskcicleandroid.data.protocol.TaskDetail
 import xin.lrvik.taskcicleandroid.data.protocol.TaskStep
-import xin.lrvik.taskcicleandroid.data.protocol.enums.TaskState
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.PostTaskPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.PostTaskView
-import xin.lrvik.taskcicleandroid.ui.adapter.RvAddTaskStepAdapter
 import xin.lrvik.taskcicleandroid.ui.adapter.RvModifyTaskStepAdapter
 import xin.lrvik.taskcicleandroid.ui.dialog.ClassificationDialog
 import xin.lrvik.taskcicleandroid.ui.dialog.TaskStepDialog
@@ -52,6 +49,8 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
     companion object {
         val MODE = "MODE"
         val TASKID = "TASKID"
+        val REQUEST_CODE_CHOOSE = 1
+        val REQUEST_CODE_CROP = 2
     }
 
     var mode: Mode = Mode.LOOK
@@ -64,6 +63,9 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
     var classList = ArrayList<TaskClass>()
     lateinit var mRvTaskStepAdapter: RvModifyTaskStepAdapter
 //    var geoCoder = GeoCoder.newInstance()
+
+    //当前选择图片的缓存对象
+    lateinit var taskStep: TaskStep
 
     override fun injectComponent() {
         DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
@@ -151,10 +153,19 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         }
 
         mRvTaskStepAdapter.setOnItemChildClickListener { adapter, view, position ->
-            var taskStep = adapter.data[position] as TaskStep
+            taskStep = adapter.data[position] as TaskStep
 
             when (view.id) {
                 R.id.mIvIcon -> {
+                    //调用图片选择器
+                    Matisse.from(this@PostTaskActivity)
+                            .choose(MimeType.ofImage())//图片类型
+                            .countable(false)//true:选中后显示数字;false:选中后显示对号
+                            .maxSelectable(1)//可选的最大数
+                            .capture(true)//选择照片时，是否显示拍照
+                            .captureStrategy(CaptureStrategy(true, "xin.lrvik.taskcicleandroid.fileprovider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
+                            .imageEngine(Glide4Engine())//图片加载引擎
+                            .forResult(REQUEST_CODE_CHOOSE)
 
                 }
                 else -> {
@@ -317,14 +328,37 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         return true
     }
 
-
     lateinit var mSelected: List<Uri>
+
+    val IMAGE_FILE_LOCATION = "file:///" + Environment.getExternalStorageDirectory().getPath() + "/temp.jpg"
+    var imageUri: Uri = Uri.parse(IMAGE_FILE_LOCATION)
 
     protected override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+        if (requestCode == REQUEST_CODE_CHOOSE && resultCode == Activity.RESULT_OK) {
             mSelected = Matisse.obtainResult(data!!)
-            toast("选中了$mSelected")
+            var intent = Intent("com.android.camera.action.CROP")
+            intent.setDataAndType(mSelected[0], "image/*")
+            // 下面这个crop=true是设置在开启的Intent中设置显示的VIEW可裁剪
+            intent.putExtra("crop", "true")
+            //该参数可以不设定用来规定裁剪区的宽高比
+//             intent.putExtra("aspectX", 1)
+//             intent.putExtra("aspectY", 1)
+            //该参数设定为你的imageView的大小
+//            intent.putExtra("outputX", 300)
+//            intent.putExtra("outputY", 300)
+//            intent.putExtra("scale", true)
+            //是否返回bitmap对象
+//            intent.putExtra("return-data", false)
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+//            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString())//输出图片的格式
+//            intent.putExtra("noFaceDetection", true)// 头像识别
+            startActivityForResult(intent, REQUEST_CODE_CROP)
+        } else if (requestCode == REQUEST_CODE_CROP && resultCode == Activity.RESULT_OK) {
+            var mCrop = imageUri.path!!
+            taskStep.img = mCrop
+            toast("选中了${mCrop}")
+            mRvTaskStepAdapter.notifyDataSetChanged()
         }
     }
 

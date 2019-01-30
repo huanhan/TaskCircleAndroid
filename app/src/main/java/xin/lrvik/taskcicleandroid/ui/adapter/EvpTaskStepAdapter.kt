@@ -41,10 +41,6 @@ class EvpTaskStepAdapter(var isModify: Boolean,var activity: FragmentActivity) :
             mLevStepContent.isEnabled = true
             mLevStepContent.id_et_input.isEnabled = true
 
-            mIvStep.onClick {
-                //todo 看大图
-            }
-
             mEtStepTitle.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 }
@@ -57,7 +53,6 @@ class EvpTaskStepAdapter(var isModify: Boolean,var activity: FragmentActivity) :
                 }
 
             })
-
             mLevStepContent.id_et_input.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 }
@@ -70,8 +65,6 @@ class EvpTaskStepAdapter(var isModify: Boolean,var activity: FragmentActivity) :
                 }
 
             })
-
-            //todo 还要增加图片地址赋值
         } else {
             mIvStep.isEnabled = false
             mEtStepTitle.isEnabled = false
@@ -79,6 +72,10 @@ class EvpTaskStepAdapter(var isModify: Boolean,var activity: FragmentActivity) :
         }
 
         mIvStep.loadUrl(taskStep.img)
+
+        mIvStep.onClick {
+            //todo 看大图
+        }
         mEtStepTitle.text = taskStep.title
         mLevStepContent.contentText = taskStep.context
 

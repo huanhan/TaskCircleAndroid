@@ -7,6 +7,7 @@ import android.widget.TextView
 import com.chad.library.adapter.base.BaseItemDraggableAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import xin.lrvik.taskcicleandroid.R
+import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.data.protocol.TaskStep
 import xin.lrvik.taskcicleandroid.ui.widget.LinesEditView
@@ -23,6 +24,10 @@ class RvModifyTaskStepAdapter(data: List<TaskStep>) : BaseItemDraggableAdapter<T
                 .addOnClickListener(R.id.mIvIcon)
 
         var mIvIcon = helper.getView<ImageView>(R.id.mIvIcon)
+
+        if (!item.img.isEmpty()) {
+            mIvIcon.loadUrl(item.img)
+        }
 
         var mTvtitle = helper.getView<TextView>(R.id.mTvtitle)
         var mTvContent = helper.getView<TextView>(R.id.mTvContent)

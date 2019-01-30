@@ -63,15 +63,6 @@ class TaskStepDialog : DialogFragment() {
         }
     }
 
-    lateinit var mSelected: List<Uri>
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            mSelected = Matisse.obtainResult(data!!)
-            toast("fragment选中了$mSelected")
-        }
-    }
-
     interface OnCloseListener {
         fun onClose()
     }
@@ -88,8 +79,6 @@ class TaskStepDialog : DialogFragment() {
         window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
-
-
 
     companion object {
         private val STEPDATA = "STEPDATA"
