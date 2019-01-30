@@ -37,6 +37,7 @@ import xin.lrvik.taskcicleandroid.presenter.view.PostTaskView
 import xin.lrvik.taskcicleandroid.ui.adapter.RvModifyTaskStepAdapter
 import xin.lrvik.taskcicleandroid.ui.dialog.ClassificationDialog
 import xin.lrvik.taskcicleandroid.ui.dialog.TaskStepDialog
+import xin.lrvik.taskcicleandroid.util.OssUtil
 import kotlin.collections.ArrayList
 
 //startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.LOOK.name, PostTaskActivity.TASKID to "20190124220137236856064")
@@ -341,23 +342,18 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
             intent.setDataAndType(mSelected[0], "image/*")
             // 下面这个crop=true是设置在开启的Intent中设置显示的VIEW可裁剪
             intent.putExtra("crop", "true")
-            //该参数可以不设定用来规定裁剪区的宽高比
-//             intent.putExtra("aspectX", 1)
-//             intent.putExtra("aspectY", 1)
-            //该参数设定为你的imageView的大小
-//            intent.putExtra("outputX", 300)
-//            intent.putExtra("outputY", 300)
-//            intent.putExtra("scale", true)
-            //是否返回bitmap对象
-//            intent.putExtra("return-data", false)
             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-//            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString())//输出图片的格式
-//            intent.putExtra("noFaceDetection", true)// 头像识别
             startActivityForResult(intent, REQUEST_CODE_CROP)
         } else if (requestCode == REQUEST_CODE_CROP && resultCode == Activity.RESULT_OK) {
             var mCrop = imageUri.path!!
-            taskStep.img = mCrop
-            toast("选中了${mCrop}")
+            //taskStep.img = mCrop
+            OssUtil.instance.putFile("test", mCrop, {
+                taskStep.img = it
+            }, {
+                runOnUiThread {
+                    toast("上传失败")
+                }
+            })
             mRvTaskStepAdapter.notifyDataSetChanged()
         }
     }

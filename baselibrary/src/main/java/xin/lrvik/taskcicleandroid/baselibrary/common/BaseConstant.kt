@@ -7,6 +7,7 @@ class BaseConstant {
 
     companion object {
         const val SERVICE_ADDRESS = "http://192.168.2.209:8080/"
+        const val OSS_BASE_URL = "http://src.taskcircle.lrvik.xin"
         const val TABLE_PREFS = "TASK_CIRCLE"
         const val KEY_SP_TOKEN = "token"
     }

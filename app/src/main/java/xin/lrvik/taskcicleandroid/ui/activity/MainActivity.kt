@@ -10,6 +10,11 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.alibaba.sdk.android.oss.OSS
+import com.alibaba.sdk.android.oss.OSSClient
+import com.alibaba.sdk.android.oss.common.OSSLog
+import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider
+import com.alibaba.sdk.android.oss.common.auth.OSSFederationCredentialProvider
 import com.baidu.mapapi.SDKInitializer
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
@@ -22,9 +27,9 @@ import xin.lrvik.taskcicleandroid.ui.fragment.MesFragment
 import xin.lrvik.taskcicleandroid.ui.fragment.MyFragment
 import xin.lrvik.taskcicleandroid.ui.fragment.TaskManagerFragment
 import java.util.*
+import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
-    private val REQUEST_CODE1 = 0x1001
 
     private val mStack by lazy { Stack<Fragment>() }
     private val mHomeFragment by lazy { HomeFragment() }

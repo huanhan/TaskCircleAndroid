@@ -1,7 +1,9 @@
 package xin.lrvik.taskcicleandroid.service.impl
 
 import io.reactivex.Observable
+import retrofit2.Call
 import xin.lrvik.taskcicleandroid.data.protocol.Home
+import xin.lrvik.taskcicleandroid.data.protocol.OssToken
 import xin.lrvik.taskcicleandroid.data.repository.HomeRepository
 import xin.lrvik.taskcicleandroid.service.HomeService
 import javax.inject.Inject
