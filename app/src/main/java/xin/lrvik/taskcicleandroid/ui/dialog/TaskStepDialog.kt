@@ -1,5 +1,7 @@
 package xin.lrvik.taskcicleandroid.ui.dialog
 
+import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -14,6 +16,11 @@ import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.data.protocol.TaskStep
 import xin.lrvik.taskcicleandroid.ui.adapter.EvpTaskStepAdapter
+import com.zhihu.matisse.Matisse
+import android.content.Intent
+import android.net.Uri
+import org.jetbrains.anko.support.v4.toast
+
 
 /**
  * Author by 豢涵, Email huanhanfu@126.com, Date on 2019/1/6.
@@ -34,10 +41,11 @@ class TaskStepDialog : DialogFragment() {
         return inflater.inflate(R.layout.dialog_task_step, container)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         mEvpTaskStep.setIndicator(mEdiTaskStep)
-                .setAdapter(EvpTaskStepAdapter(isModify))
+                .setAdapter(EvpTaskStepAdapter(isModify, activity!!))
                 .data = data
 
         mEvpTaskStep.currentItem = currentItem
@@ -55,6 +63,14 @@ class TaskStepDialog : DialogFragment() {
         }
     }
 
+    lateinit var mSelected: List<Uri>
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            mSelected = Matisse.obtainResult(data!!)
+            toast("fragment选中了$mSelected")
+        }
+    }
 
     interface OnCloseListener {
         fun onClose()
@@ -63,7 +79,7 @@ class TaskStepDialog : DialogFragment() {
     private lateinit var onCloseListener: OnCloseListener
 
     fun setOnCloseListener(onCloseListener: OnCloseListener) {
-       this.onCloseListener=onCloseListener
+        this.onCloseListener = onCloseListener
     }
 
     override fun onResume() {
@@ -74,12 +90,13 @@ class TaskStepDialog : DialogFragment() {
     }
 
 
+
     companion object {
         private val STEPDATA = "STEPDATA"
         private val ISMODIFY = "ISMODIFY"
         private val CURRENTITEM = "CURRENTITEM"
 
-        fun showDialog(fm: FragmentManager, data: ArrayList<TaskStep>, isModify: Boolean, currentItem: Int):TaskStepDialog {
+        fun showDialog(fm: FragmentManager, data: ArrayList<TaskStep>, isModify: Boolean, currentItem: Int): TaskStepDialog {
             val dialog = TaskStepDialog()
             val bundle = Bundle()
             bundle.putParcelableArrayList(STEPDATA, data)

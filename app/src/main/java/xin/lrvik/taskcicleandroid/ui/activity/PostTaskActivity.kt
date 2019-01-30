@@ -1,6 +1,9 @@
 package xin.lrvik.taskcicleandroid.ui.activity
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -12,12 +15,14 @@ import com.baidu.mapapi.model.LatLng
 import com.baidu.mapapi.search.geocode.*
 import com.baidu.mapapi.utils.DistanceUtil
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback
+import com.zhihu.matisse.Matisse
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.activity_post_task.*
 import org.jetbrains.anko.dip
 import org.jetbrains.anko.margin
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
@@ -32,6 +37,7 @@ import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.PostTaskPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.PostTaskView
 import xin.lrvik.taskcicleandroid.ui.adapter.RvAddTaskStepAdapter
+import xin.lrvik.taskcicleandroid.ui.adapter.RvModifyTaskStepAdapter
 import xin.lrvik.taskcicleandroid.ui.dialog.ClassificationDialog
 import xin.lrvik.taskcicleandroid.ui.dialog.TaskStepDialog
 import kotlin.collections.ArrayList
@@ -56,7 +62,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
     var mDialog: ClassificationDialog? = null
 
     var classList = ArrayList<TaskClass>()
-    lateinit var mRvTaskStepAdapter: RvAddTaskStepAdapter
+    lateinit var mRvTaskStepAdapter: RvModifyTaskStepAdapter
 //    var geoCoder = GeoCoder.newInstance()
 
     override fun injectComponent() {
@@ -116,7 +122,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         var list = ArrayList<TaskStep>()
 //        list.add(TaskStep("1", 1, "默认标题", "默认内容", ""))
 
-        mRvTaskStepAdapter = RvAddTaskStepAdapter(list)
+        mRvTaskStepAdapter = RvModifyTaskStepAdapter(list)
         val mItemDragAndSwipeCallback = ItemDragAndSwipeCallback(mRvTaskStepAdapter)
         val mItemTouchHelper = ItemTouchHelper(mItemDragAndSwipeCallback)
         mItemTouchHelper.attachToRecyclerView(mRvStep)
@@ -135,13 +141,25 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         mRvTaskStepAdapter.setOnItemClickListener { adapter, view, position ->
             val dialog = TaskStepDialog.showDialog(supportFragmentManager,
                     adapter.data as ArrayList<TaskStep>,
-                    isModify, position)
+                    false, position)
 
             dialog.setOnCloseListener(object : TaskStepDialog.OnCloseListener {
                 override fun onClose() {
                     mRvTaskStepAdapter.notifyDataSetChanged()
                 }
             })
+        }
+
+        mRvTaskStepAdapter.setOnItemChildClickListener { adapter, view, position ->
+            var taskStep = adapter.data[position] as TaskStep
+
+            when (view.id) {
+                R.id.mIvIcon -> {
+
+                }
+                else -> {
+                }
+            }
         }
 
         mTvClassTip.onClick {
@@ -299,12 +317,23 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         return true
     }
 
+
+    lateinit var mSelected: List<Uri>
+
+    protected override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            mSelected = Matisse.obtainResult(data!!)
+            toast("选中了$mSelected")
+        }
+    }
+
     private fun createDialog() {
         if (mDialog == null) {
             mDialog = ClassificationDialog()
             mDialog!!.showDialog(supportFragmentManager)
             mDialog!!.listener = object : ClassificationDialog.OnClassificationClickListener {
-                override fun onClassClick(pPos: Int, cPos: Int,taskClass: TaskClass) {
+                override fun onClassClick(pPos: Int, cPos: Int, taskClass: TaskClass) {
                     if (!classList.contains(taskClass)) {
                         classList.add(taskClass)
                         mFlowlayout.adapter.notifyDataChanged()

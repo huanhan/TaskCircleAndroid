@@ -1,22 +1,32 @@
 package xin.lrvik.taskcicleandroid.ui.adapter
 
+import android.content.pm.ActivityInfo
+import android.support.v4.app.FragmentActivity
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.leo.matisse.Glide4Engine
+import com.zhihu.matisse.Matisse
+import com.zhihu.matisse.MimeType
+import com.zhihu.matisse.filter.Filter
+import com.zhihu.matisse.internal.entity.CaptureStrategy
+import com.zhihu.matisse.sample.GifSizeFilter
 import xin.lrvik.easybanner.adapter.viewpager.BaseEasyViewPagerAdapter
 import xin.lrvik.taskcicleandroid.R
+import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
+import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.data.protocol.TaskStep
 import xin.lrvik.taskcicleandroid.ui.widget.LinesEditView
+
 
 /**
  * Author by 豢涵, Email huanhanfu@126.com, Date on 2019/1/6.
  *
  */
-class EvpTaskStepAdapter(var isModify: Boolean) : BaseEasyViewPagerAdapter<TaskStep>(1, 1) {
+class EvpTaskStepAdapter(var isModify: Boolean,var activity: FragmentActivity) : BaseEasyViewPagerAdapter<TaskStep>(1, 1) {
 
     override fun createView(container: ViewGroup, data: MutableList<TaskStep>): View {
         var taskStep = data[0]
@@ -30,6 +40,10 @@ class EvpTaskStepAdapter(var isModify: Boolean) : BaseEasyViewPagerAdapter<TaskS
             mEtStepTitle.isEnabled = true
             mLevStepContent.isEnabled = true
             mLevStepContent.id_et_input.isEnabled = true
+
+            mIvStep.onClick {
+                //todo 看大图
+            }
 
             mEtStepTitle.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -64,7 +78,7 @@ class EvpTaskStepAdapter(var isModify: Boolean) : BaseEasyViewPagerAdapter<TaskS
             mLevStepContent.id_et_input.isEnabled = false
         }
 
-//        mIvStep.loadUrl(data.)
+        mIvStep.loadUrl(taskStep.img)
         mEtStepTitle.text = taskStep.title
         mLevStepContent.contentText = taskStep.context
 

@@ -1,8 +1,6 @@
 package xin.lrvik.taskcicleandroid.ui.activity
 
 import android.Manifest
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.support.design.internal.BottomNavigationMenuView
 import android.support.v4.app.Fragment
@@ -13,8 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.baidu.mapapi.SDKInitializer
+import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseActivity
 import xin.lrvik.taskcicleandroid.ui.fragment.HomeFragment
@@ -38,11 +38,23 @@ class MainActivity : BaseActivity() {
         //初始化百度地图
         SDKInitializer.initialize(applicationContext)
 
-        //定位权限为必须权限，用户如果禁止，则每次进入都会申请
+        /*//定位权限为必须权限，用户如果禁止，则每次进入都会申请
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                     REQUEST_CODE1)
-        }
+        }*/
+
+        RxPermissions(this@MainActivity)
+                .request(Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA)
+                .subscribe {
+                    if (!it) {
+                        toast("拒绝了应用需要的权限，请在应用权限内重新授予")
+                        finish()
+                    }
+
+                }
 
         initFragment()
         initView()
@@ -130,16 +142,16 @@ class MainActivity : BaseActivity() {
     }
 
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
-                                            grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_CODE1 && grantResults.size > 0
-                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+    /*   override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
+                                               grantResults: IntArray) {
+           super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+           if (requestCode == REQUEST_CODE1 && grantResults.size > 0
+                   && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-        } else {
-            Toast.makeText(this, "拒绝了精确定位的权限,无法定位",
-                    Toast.LENGTH_SHORT).show()
-            finish()
-        }
-    }
+           } else {
+               Toast.makeText(this, "拒绝了精确定位的权限,无法定位",
+                       Toast.LENGTH_SHORT).show()
+               finish()
+           }
+       }*/
 }
