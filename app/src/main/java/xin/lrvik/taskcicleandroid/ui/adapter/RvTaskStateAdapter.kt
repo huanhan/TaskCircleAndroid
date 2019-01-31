@@ -10,6 +10,7 @@ import com.baidu.mapapi.utils.DistanceUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import xin.lrvik.taskcicleandroid.R
+import xin.lrvik.taskcicleandroid.baselibrary.ext.isShow
 import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
 import xin.lrvik.taskcicleandroid.common.UserInfo
 import xin.lrvik.taskcicleandroid.data.protocol.Task
@@ -115,11 +116,5 @@ class RvTaskStateAdapter(data: List<Task>) : BaseQuickAdapter<Task, BaseViewHold
         imageView.loadUrl(item.headImg ?: R.mipmap.def)
 
     }
-
-    //判断界面是否根据权限显示
-    private fun <T> isShow(view: View, state: T, list: List<T>) {
-        view.visibility = if (list.contains(state)) View.VISIBLE else View.GONE
-    }
-
 
 }

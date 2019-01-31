@@ -102,3 +102,8 @@ fun md5Encode(text: String): String {
 
     return ""
 }
+
+//判断界面是否根据权限显示
+fun <T> isShow(view: View, state: T, list: List<T>) {
+    view.visibility = if (list.contains(state)) View.VISIBLE else View.GONE
+}

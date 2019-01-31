@@ -22,8 +22,11 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.activity_post_task.*
+import org.jetbrains.anko.alert
 import org.jetbrains.anko.dip
 import org.jetbrains.anko.margin
+import org.jetbrains.anko.support.v4.alert
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
@@ -31,6 +34,7 @@ import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
 import xin.lrvik.taskcicleandroid.data.protocol.TaskClass
 import xin.lrvik.taskcicleandroid.data.protocol.TaskDetail
 import xin.lrvik.taskcicleandroid.data.protocol.TaskStep
+import xin.lrvik.taskcicleandroid.data.protocol.enums.TaskState
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.PostTaskPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.PostTaskView
@@ -58,6 +62,8 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
     //是否可修改
     var isModify = false
+
+    lateinit var taskid: String
 
     var mDialog: ClassificationDialog? = null
 
@@ -93,6 +99,23 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         classList.addAll(data.taskClassifyAppDtos!!)
         mFlowlayout.adapter.notifyDataChanged()
         checkTipVisible()
+
+        data.state?.let {
+
+            //删除任务
+            isShow(mBtDelete, it, listOf(TaskState.NEW_CREATE))
+
+            //提交审核
+            isShow(mBtSubmitAudit, it, listOf(TaskState.NEW_CREATE,
+                    TaskState.HUNTER_REJECT))
+
+            //取消审核
+            isShow(mBtCancelAudit, it, listOf(TaskState.AWAIT_AUDIT,
+                    TaskState.AUDIT,
+                    TaskState.ADMIN_NEGOTIATE,
+                    TaskState.COMMIT_AUDIT))
+        }
+
     }
 
     internal var colors = intArrayOf(Color.parseColor("#90C5ED"),
@@ -117,6 +140,17 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
+        }
+
+        mode = Mode.valueOf(intent.getStringExtra(MODE))
+        if (mode != Mode.CREATE) {
+            try {
+                taskid = intent.getStringExtra(TASKID)
+            } catch (e: Exception) {
+                toast("未传递任务id")
+                finish()
+            }
+
         }
 
         //步骤
@@ -217,12 +251,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
             var classs = classList.map {
                 it.id
             }
-            try {
-                var taskid = intent.getStringExtra(TASKID)
-                mPresenter.modifyTask(taskid, classs, mEtTitle.text.toString(), mLevContext.contentText, mRvTaskStepAdapter.data)
-            } catch (e: Exception) {
-                toast("未传递任务id")
-            }
+            mPresenter.modifyTask(taskid, classs, mEtTitle.text.toString(), mLevContext.contentText, mRvTaskStepAdapter.data)
         }
 
         //判断模式
@@ -241,13 +270,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                 mRvTaskStepAdapter.disableSwipeItem()
                 mRvTaskStepAdapter.disableDragItem()
 
-                try {
-                    var taskid = intent.getStringExtra(TASKID)
-                    mPresenter.queryTaskDetail(taskid)
-                } catch (e: Exception) {
-                    toast("未传递任务id")
-                    return
-                }
+                mPresenter.queryTaskDetail(taskid)
 
                 mBtnAdd.text = "接取任务"
 
@@ -267,13 +290,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                 mRvTaskStepAdapter.enableSwipeItem()
                 mRvTaskStepAdapter.enableDragItem(mItemTouchHelper)
 
-                try {
-                    var taskid = intent.getStringExtra(TASKID)
-                    mPresenter.queryTaskDetail(taskid)
-                } catch (e: Exception) {
-                    toast("未传递任务id")
-                    return
-                }
+                mPresenter.queryTaskDetail(taskid)
 
                 mBtnAdd.text = "保存任务"
                 actionBar?.title = "保存任务"
@@ -294,6 +311,24 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
             }
         }
 
+        mBtDelete.onClick {
+            alert("是否删除改任务?") {
+                positiveButton("是") { mPresenter.deleteTask(taskid) }
+                negativeButton("否") { }
+            }.show()
+        }
+        mBtSubmitAudit.onClick {
+            alert("是否提交审核?") {
+                positiveButton("是") { mPresenter.submitAudit(taskid) }
+                negativeButton("否") { }
+            }.show()
+        }
+        mBtCancelAudit.onClick {
+            alert("是否取消审核?") {
+                positiveButton("是") { mPresenter.cancelAudit(taskid) }
+                negativeButton("否") { }
+            }.show()
+        }
     }
 
     fun validation(): Boolean {

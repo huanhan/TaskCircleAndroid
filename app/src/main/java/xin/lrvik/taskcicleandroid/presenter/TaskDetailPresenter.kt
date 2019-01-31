@@ -33,4 +33,41 @@ class TaskDetailPresenter @Inject constructor() : BasePresenter<TaskDetailView>(
             mView.onResult(it.msg)
         }
     }
+
+
+    fun outTask(taskId: String) {
+        if (!checkNetWork()) {
+            return
+        }
+        taskService.outTask(taskId).execute(lifecycleProvider, mView, false) {
+            mView.onResult(it.msg)
+        }
+    }
+
+    fun upperTask(taskId: String) {
+        if (!checkNetWork()) {
+            return
+        }
+        taskService.upperTask(taskId).execute(lifecycleProvider, mView, false) {
+            mView.onResult(it.msg)
+        }
+    }
+
+    fun abandonTask(taskId: String) {
+        if (!checkNetWork()) {
+            return
+        }
+        taskService.abandonTask(taskId).execute(lifecycleProvider, mView, false) {
+            mView.onResult(it.msg)
+        }
+    }
+
+    fun cancelAbandon(taskId: String) {
+        if (!checkNetWork()) {
+            return
+        }
+        taskService.cancelAbandon(taskId).execute(lifecycleProvider, mView, false) {
+            mView.onResult(it.msg)
+        }
+    }
 }

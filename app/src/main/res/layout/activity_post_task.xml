@@ -190,28 +190,39 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
-    <Button
-        android:id="@+id/mBtnAdd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:background="@drawable/btn_common_selector"
-        android:enabled="true"
-        android:padding="10dp"
-        android:text="新建任务"
-        android:textColor="@color/common_white"
-        android:visibility="gone" />
 
-    <Button
-        android:id="@+id/mBtnSave"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:background="@drawable/btn_common_selector"
-        android:enabled="true"
-        android:padding="10dp"
-        android:text="保存任务"
-        android:textColor="@color/common_white"
-        android:visibility="gone" />
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <Button
+            android:id="@+id/mBtnAdd"
+            style="@style/TaskDetailButton"
+            android:text="新建任务" />
+
+        <Button
+            android:id="@+id/mBtnSave"
+            style="@style/TaskDetailButton"
+            android:text="保存任务" />
+
+        <Button
+            android:id="@+id/mBtDelete"
+            style="@style/TaskDetailButton"
+            android:text="删除" />
+
+        <Button
+            android:id="@+id/mBtSubmitAudit"
+            style="@style/TaskDetailButton"
+            android:text="提交审核" />
+
+        <Button
+            android:id="@+id/mBtCancelAudit"
+            style="@style/TaskDetailButton"
+            android:text="取消审核" />
+
+    </LinearLayout>
 
 </LinearLayout>

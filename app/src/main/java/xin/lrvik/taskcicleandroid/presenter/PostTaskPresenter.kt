@@ -12,9 +12,6 @@ class PostTaskPresenter @Inject constructor() : BasePresenter<PostTaskView>() {
     @Inject
     lateinit var taskService: TaskService
 
-    @Inject
-    lateinit var hunterTaskService: HunterTaskService
-
     fun classData() {
         if (!checkNetWork()) {
             return
@@ -52,11 +49,29 @@ class PostTaskPresenter @Inject constructor() : BasePresenter<PostTaskView>() {
         }
     }
 
-    fun acceptTask(taskId: String) {
+    fun deleteTask(taskId: String) {
         if (!checkNetWork()) {
             return
         }
-        hunterTaskService.acceptTask(taskId).execute(lifecycleProvider, mView, false) {
+        taskService.deleteTask(taskId).execute(lifecycleProvider, mView, false) {
+            mView.onResult(it.msg)
+        }
+    }
+
+    fun submitAudit(taskId: String) {
+        if (!checkNetWork()) {
+            return
+        }
+        taskService.submitAudit(taskId).execute(lifecycleProvider, mView, false) {
+            mView.onResult(it.msg)
+        }
+    }
+
+    fun cancelAudit(taskId: String) {
+        if (!checkNetWork()) {
+            return
+        }
+        taskService.cancelAudit(taskId).execute(lifecycleProvider, mView, false) {
             mView.onResult(it.msg)
         }
     }

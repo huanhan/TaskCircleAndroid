@@ -81,10 +81,10 @@
                                 android:id="@+id/mTvClass"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="暂无分类信息"
                                 android:layout_centerVertical="true"
                                 android:layout_toRightOf="@id/mTvClassTag"
-                                android:background="@null" />
+                                android:background="@null"
+                                android:text="暂无分类信息" />
 
                             <ImageView
                                 android:layout_width="20dp"
@@ -116,9 +116,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
-                                android:text="默认标题"
                                 android:layout_toRightOf="@id/mTvTitleTag"
-                                android:background="@null" />
+                                android:background="@null"
+                                android:text="默认标题" />
 
                             <ImageView
                                 android:layout_width="20dp"
@@ -216,9 +216,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
-                                android:textColor="@color/common_red"
                                 android:layout_toRightOf="@id/mTvMoneyNumTag"
-                                android:background="@null" />
+                                android:background="@null"
+                                android:textColor="@color/common_red" />
 
                             <ImageView
                                 android:layout_width="20dp"
@@ -521,28 +521,51 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
-    <Button
-        android:id="@+id/mBtnAccept"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:background="@drawable/btn_common_selector"
-        android:enabled="true"
-        android:padding="10dp"
-        android:text="接取任务"
-        android:textColor="@color/common_white"
-        android:visibility="gone" />
 
-    <Button
-        android:id="@+id/mBtnQueryHunter"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:background="@drawable/btn_common_selector"
-        android:enabled="true"
-        android:padding="10dp"
-        android:text="查看执行猎刃"
-        android:textColor="@color/common_white"
-        android:visibility="gone" />
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <Button
+            android:id="@+id/mBtnAccept"
+            style="@style/TaskDetailButton"
+            android:text="接取任务" />
+
+        <Button
+            android:id="@+id/mBtnQueryHunter"
+            style="@style/TaskDetailButton"
+            android:text="查看执行猎刃" />
+
+        <Button
+            android:id="@+id/mBtRelease"
+            style="@style/TaskDetailButton"
+            android:text="发布" />
+
+        <Button
+            android:id="@+id/mBtOut"
+            style="@style/TaskDetailButton"
+            android:text="撤回" />
+
+        <Button
+            android:id="@+id/mBtUpper"
+            style="@style/TaskDetailButton"
+            android:text="上架" />
+
+        <Button
+            android:id="@+id/mBtAbandon"
+            style="@style/TaskDetailButton"
+            android:text="放弃" />
+
+        <Button
+            android:id="@+id/mBtCancelAbandon"
+            style="@style/TaskDetailButton"
+            android:text="取消放弃" />
+
+
+    </LinearLayout>
+
 
 </LinearLayout>

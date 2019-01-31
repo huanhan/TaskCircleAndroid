@@ -9,15 +9,20 @@ import com.baidu.mapapi.model.LatLng
 import com.baidu.mapapi.utils.DistanceUtil
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback
 import kotlinx.android.synthetic.main.activity_task_detail.*
+import org.jetbrains.anko.alert
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.support.v4.alert
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
+import xin.lrvik.taskcicleandroid.baselibrary.ext.isShow
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
 import xin.lrvik.taskcicleandroid.baselibrary.utils.DateUtils
 import xin.lrvik.taskcicleandroid.common.UserInfo
 import xin.lrvik.taskcicleandroid.data.protocol.TaskDetail
 import xin.lrvik.taskcicleandroid.data.protocol.TaskStep
+import xin.lrvik.taskcicleandroid.data.protocol.enums.TaskState
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.TaskDetailPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.TaskDetailView
@@ -26,21 +31,9 @@ import xin.lrvik.taskcicleandroid.ui.dialog.TaskStepDialog
 
 class TaskDetailActivity : BaseMvpActivity<TaskDetailPresenter>(), TaskDetailView {
 
-    //                TaskState.ISSUE,
-    //                TaskState.FORBID_RECEIVE,
-    //                TaskState.OUT,
-    //                TaskState.FINISH,
-    //                TaskState.ABANDON_COMMIT,
-    //                TaskState.ABANDON_OK,
-    //                TaskState.USER_HUNTER_NEGOTIATE,
-    //                TaskState.HUNTER_REJECT,
-    //                TaskState.COMMIT_AUDIT,
-    //                TaskState.ADMIN_NEGOTIATE,
-    //                TaskState.HUNTER_COMMIT
-
     lateinit var mRvTaskStepAdapter: RvAddTaskStepAdapter
 
-    var taskid: String = ""
+    lateinit var taskid: String
 
     companion object {
         val TASKID = "TASKID"
@@ -109,7 +102,28 @@ class TaskDetailActivity : BaseMvpActivity<TaskDetailPresenter>(), TaskDetailVie
 
         //如果任务的用户id是自己则展示查看接取猎刃
         mBtnQueryHunter.visibility = if (UserInfo.userId === data.userId) View.VISIBLE else View.GONE
+
+        data.state?.let {
+            //发布
+            isShow(mBtRelease, it, listOf(TaskState.AUDIT_SUCCESS,
+                    TaskState.OK_ISSUE))
+
+            //撤回
+            isShow(mBtOut, it, listOf(TaskState.ISSUE))
+
+            //上架
+            isShow(mBtUpper, it, listOf(TaskState.OUT))
+
+            //放弃任务
+            isShow(mBtAbandon, it, listOf(TaskState.FORBID_RECEIVE, TaskState.OUT))
+
+            //取消放弃
+            isShow(mBtCancelAbandon, it, listOf(TaskState.ABANDON_COMMIT))
+        }
+
+
     }
+
 
     override fun onResult(result: String) {
         toast(result)
@@ -171,12 +185,35 @@ class TaskDetailActivity : BaseMvpActivity<TaskDetailPresenter>(), TaskDetailVie
         }
 
         mBtnQueryHunter.onClick {
-            try {
-                var taskid = intent.getStringExtra(TASKID)
-                startActivity<HunterRunningActivity>(HunterRunningActivity.TASKID to taskid)
-            } catch (e: Exception) {
-                toast("未传递任务id")
-            }
+            startActivity<HunterRunningActivity>(HunterRunningActivity.TASKID to taskid)
+        }
+
+        mBtRelease.onClick {
+            startActivity<ReleaseTaskActivity>(ReleaseTaskActivity.TASKID to taskid)
+        }
+        mBtOut.onClick {
+            alert("撤回后任务不能被接取", "是否撤回任务?") {
+                positiveButton("是") { mPresenter.outTask(taskid) }
+                negativeButton("否") { }
+            }.show()
+        }
+        mBtUpper.onClick {
+            alert("上架后任务可正常被接取", "是否上架任务?") {
+                positiveButton("是") { mPresenter.upperTask(taskid) }
+                negativeButton("否") { }
+            }.show()
+        }
+        mBtAbandon.onClick {
+            alert("任务将被放弃，猎刃同意后即可放弃该任务", "是否放弃任务?") {
+                positiveButton("是") { mPresenter.abandonTask(taskid) }
+                negativeButton("否") { }
+            }.show()
+        }
+        mBtCancelAbandon.onClick {
+            alert("是否取消放弃任务?") {
+                positiveButton("是") { mPresenter.cancelAbandon(taskid) }
+                negativeButton("否") { }
+            }.show()
         }
 
         mPresenter.queryTaskDetail(taskid)
