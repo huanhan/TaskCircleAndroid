@@ -26,7 +26,7 @@
             android:drawableLeft="@mipmap/icon_user_name"
             android:drawablePadding="@dimen/common_padding_small"
             android:hint="请输入账号"
-            android:inputType="phone"
+            android:inputType="textPersonName"
             android:paddingLeft="@dimen/common_padding_small" />
 
 
@@ -89,7 +89,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:background="@drawable/btn_common_selector"
-        android:enabled="false"
         android:padding="10dp"
         android:textColor="@color/common_white"
         android:text="注册" />

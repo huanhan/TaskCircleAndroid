@@ -48,7 +48,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:background="@drawable/btn_common_selector"
-        android:enabled="false"
         android:padding="10dp"
         android:text="登录"
         android:textColor="@color/common_white" />
