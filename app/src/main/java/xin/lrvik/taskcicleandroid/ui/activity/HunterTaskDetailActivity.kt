@@ -59,11 +59,50 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
                 mBtSubmitAudit.visibility = View.VISIBLE
             }
 
-            isShow(mBtSubmitAudit, data.state!!, listOf(HunterTaskState.TASK_COMPLETE,
-                    HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
-                    HunterTaskState.ALLOW_REWORK_ABANDON_NO_COMPENSATE,
-                    HunterTaskState.NO_REWORK_NO_COMPENSATE,
-                    HunterTaskState.NO_REWORK_HAVE_COMPENSATE))
+            data.state?.let {
+
+                isShow(mBtSubmitAudit, data.state!!, listOf(HunterTaskState.TASK_COMPLETE,
+                        HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
+                        HunterTaskState.ALLOW_REWORK_ABANDON_NO_COMPENSATE,
+                        HunterTaskState.NO_REWORK_NO_COMPENSATE,
+                        HunterTaskState.NO_REWORK_HAVE_COMPENSATE))
+
+                isShow(mBtBegin, it, listOf(HunterTaskState.RECEIVE))
+
+                isShow(mBtReWork, it, listOf(HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
+                        HunterTaskState.ALLOW_REWORK_ABANDON_NO_COMPENSATE))
+
+                isShow(mBtAbandon, it, listOf(HunterTaskState.RECEIVE,
+                        HunterTaskState.BEGIN,
+                        HunterTaskState.EXECUTE,
+                        HunterTaskState.TASK_COMPLETE,
+                        HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
+                        HunterTaskState.ALLOW_REWORK_ABANDON_NO_COMPENSATE,
+                        HunterTaskState.NO_REWORK_NO_COMPENSATE,
+                        HunterTaskState.NO_REWORK_HAVE_COMPENSATE),
+                        listOf(HunterTaskState.END_NO,
+                                HunterTaskState.END_OK,
+                                HunterTaskState.TASK_ABANDON,
+                                HunterTaskState.TASK_BE_ABANDON))
+
+                isShow(mBtSubmitAdminAudit, it, listOf(HunterTaskState.USER_REPULSE,
+                        HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
+                        HunterTaskState.ALLOW_REWORK_ABANDON_NO_COMPENSATE,
+                        HunterTaskState.NO_REWORK_NO_COMPENSATE,
+                        HunterTaskState.NO_REWORK_HAVE_COMPENSATE))
+
+                isShow(mBtCancelAdminAudit, it, listOf(HunterTaskState.COMMIT_TO_ADMIN,
+                        HunterTaskState.WITH_ADMIN_NEGOTIATE,
+                        HunterTaskState.COMMIT_ADMIN_AUDIT,
+                        HunterTaskState.ADMIN_AUDIT,
+                        HunterTaskState.ALLOW_REWORK_ABANDON_NO_COMPENSATE,
+                        HunterTaskState.NO_REWORK_HAVE_COMPENSATE,
+                        HunterTaskState.NO_REWORK_NO_COMPENSATE))
+
+            }
+
+            isShow(mBtAgreeAbandon, data.stop ?: false)
+            isShow(mBtDisAgreeAbandon, data.stop ?: false)
         }
 
 
@@ -218,6 +257,88 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
             }
         }
 
+        mBtBegin.onClick {
+            alert("是否开始?") {
+                positiveButton("是") { mPresenter.beginTask(taskid) }
+                negativeButton("否") { }
+            }.show()
+        }
+        mBtReWork.onClick {
+            alert("是否进行重做?") {
+                positiveButton("是") { mPresenter.reworkTask(taskid) }
+                negativeButton("否") { }
+            }.show()
+        }
+        mBtAbandon.onClick {
+            alert {
+                customView {
+                    title = "是否放弃该任务?"
+                    verticalLayout {
+                        val btDisAgree = editText {
+                            hint = "请输入放弃的理由"
+                        }.lparams {
+                            leftMargin = 15
+                            rightMargin = 15
+                            width = matchParent
+                        }
+                        positiveButton("是") {
+                            var disAgreeStr = btDisAgree.text.toString().trim()
+                            if (disAgreeStr.isEmpty() || disAgreeStr.length > 255) {
+                                toast("请输入0~255字内的理由")
+                                return@positiveButton
+                            }
+                            mPresenter.abandonTask(taskid, disAgreeStr)
+                        }
+                        negativeButton("否") { }
+                    }
+                }
+            }.show()
+        }
+        mBtSubmitAdminAudit.onClick {
+            alert("产生纠纷或对任务有异议，请将任务提交至管理员", "是否提交至管理员?") {
+                positiveButton("是") { mPresenter.submitAdminAudit(taskid) }
+                negativeButton("否") { }
+            }.show()
+        }
+        mBtCancelAdminAudit.onClick {
+            alert("是否取消提交管理员?") {
+                positiveButton("是") { mPresenter.cancelAdminAudit(taskid) }
+                negativeButton("否") { }
+            }.show()
+        }
+        mBtAgreeAbandon.onClick {
+            alert("用户提交了任务放弃申请,是否同意该申请", "是否同意用户放弃?") {
+                positiveButton("是") { mPresenter.agreeAbandon(taskid) }
+                negativeButton("否") { }
+            }.show()
+        }
+        mBtDisAgreeAbandon.onClick {
+
+            alert {
+                customView {
+                    title = "用户提交了任务放弃申请,是否拒绝该申请"
+                    verticalLayout {
+                        val btDisAgree = editText {
+                            hint = "请输入拒绝的理由"
+
+                        }.lparams {
+                            leftMargin = 15
+                            rightMargin = 15
+                            width = matchParent
+                        }
+                        positiveButton("是") {
+                            var disAgreeStr = btDisAgree.text.toString().trim()
+                            if (disAgreeStr.isEmpty() || disAgreeStr.length > 255) {
+                                toast("请输入0~255字内的理由")
+                                return@positiveButton
+                            }
+                            mPresenter.disAgreeAbandon(taskid, disAgreeStr)
+                        }
+                        negativeButton("否") { }
+                    }
+                }
+            }.show()
+        }
         mBtSubmitAudit.onClick {
             alert("是否将任务提交给用户审核?") {
                 positiveButton("是") { mPresenter.submitAudit(hunterTaskid) }

@@ -21,6 +21,7 @@ class HunterTaskAndStep {
     val currStep: Int? = null//任务开始时间
     val totalStep: Int? = null//任务开始时间
     var state: HunterTaskState? = null//任务状态
+    var stop: Boolean? = null
 
     var taskSteps: ArrayList<HunterRunningStep>? = null
 }

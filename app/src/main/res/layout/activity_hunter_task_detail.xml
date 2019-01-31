@@ -268,14 +268,53 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
-    <Button
-        android:id="@+id/mBtSubmitAudit"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:background="@drawable/btn_common_selector"
-        android:padding="10dp"
-        android:text="任务已完成，提交审核"
-        android:textColor="@color/common_white"
-        android:visibility="gone" />
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <Button
+            android:id="@+id/mBtBegin"
+            style="@style/TaskDetailButton"
+            android:text="开始任务" />
+
+        <Button
+            android:id="@+id/mBtSubmitAudit"
+            style="@style/TaskDetailButton"
+            android:text="提交审核" />
+
+        <Button
+            android:id="@+id/mBtReWork"
+            style="@style/TaskDetailButton"
+            android:text="重做" />
+
+        <Button
+            android:id="@+id/mBtAbandon"
+            style="@style/TaskDetailButton"
+            android:text="放弃" />
+
+        <Button
+            android:id="@+id/mBtSubmitAdminAudit"
+            style="@style/TaskDetailButton"
+            android:text="提交管理员审核" />
+
+        <Button
+            android:id="@+id/mBtCancelAdminAudit"
+            style="@style/TaskDetailButton"
+            android:text="取消管理员审核" />
+
+        <Button
+            android:id="@+id/mBtAgreeAbandon"
+            style="@style/TaskDetailButton"
+            android:text="同意放弃" />
+
+        <Button
+            android:id="@+id/mBtDisAgreeAbandon"
+            style="@style/TaskDetailButton"
+            android:text="拒绝放弃" />
+
+
+    </LinearLayout>
 </LinearLayout>

@@ -28,7 +28,7 @@ interface HunterTaskApi {
     @GET("app/ht/begin/{htId}/{id}")
     fun beginTask(@Path("htId") htId: String, @Path("id") id: Long): Observable<Result>
 
-    //添加猎刃的任务步骤
+    //查询猎刃任务详细
     @GET("app/ht/query/{htId}/{id}")
     fun query(@Path("htId") htId: String, @Path("id") id: Long): Observable<HunterTaskAndStep>
 
