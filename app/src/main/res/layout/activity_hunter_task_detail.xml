@@ -275,6 +275,14 @@
         android:orientation="horizontal"
         android:padding="5dp">
 
+        <ImageView
+            android:id="@+id/mBtChat"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/chat"
+            android:text="联系" />
+
         <Button
             android:id="@+id/mBtBegin"
             style="@style/TaskDetailButton"

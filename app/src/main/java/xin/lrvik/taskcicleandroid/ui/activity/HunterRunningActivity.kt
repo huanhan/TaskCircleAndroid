@@ -7,9 +7,11 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_post_task.*
 import kotlinx.android.synthetic.main.fragment_hunter_task_state.*
 import org.jetbrains.anko.*
+import org.jetbrains.anko.support.v4.startActivity
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication.Companion.context
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
+import xin.lrvik.taskcicleandroid.common.UserInfo
 import xin.lrvik.taskcicleandroid.data.protocol.HunterTask
 import xin.lrvik.taskcicleandroid.data.protocol.Page
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
@@ -93,7 +95,7 @@ class HunterRunningActivity : BaseMvpActivity<HunterRunningPresenter>(), HunterR
 
         mRvHunterRunningAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as HunterTask
-            startActivity<HunterTaskDetailActivity>(HunterTaskDetailActivity.TASKID to task.id!! ,
+            startActivity<HunterTaskDetailActivity>(HunterTaskDetailActivity.TASKID to task.id!!,
                     HunterTaskDetailActivity.MODE to HunterTaskDetailActivity.Mode.LOOK.name)
         }
         mRvHunterRunningAdapter.setOnItemChildClickListener { adapter, view, position ->
@@ -162,6 +164,12 @@ class HunterRunningActivity : BaseMvpActivity<HunterRunningPresenter>(), HunterR
                                 }
                             }
                         }.show()
+                    }
+                    R.id.mBtChat -> {
+                        //todo 聊天
+                        startActivity<ChatActivity>(ChatActivity.HUNTERID to hunterTask.hunterId,
+                                ChatActivity.TASKID to hunterTask.taskId,
+                                ChatActivity.USERID to hunterTask.userId)
                     }
                     else -> {
 

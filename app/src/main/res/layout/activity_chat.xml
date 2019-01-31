@@ -43,6 +43,7 @@
         android:padding="5dp">
 
         <EditText
+            android:id="@+id/mEtContent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
@@ -52,7 +53,7 @@
             android:textSize="16sp" />
 
         <Button
-            android:id="@+id/mBtAddStep"
+            android:id="@+id/mBtSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"

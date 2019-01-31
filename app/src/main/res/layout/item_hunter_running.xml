@@ -17,6 +17,17 @@
         android:textColor="#E65B2A"
         android:textSize="12sp" />
 
+
+    <ImageView
+        android:id="@+id/mBtChat"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_vertical|right"
+        android:layout_marginRight="15dp"
+        android:src="@mipmap/chat"
+        android:text="联系" />
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
