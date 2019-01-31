@@ -104,21 +104,24 @@ class TaskDetailActivity : BaseMvpActivity<TaskDetailPresenter>(), TaskDetailVie
         mBtnQueryHunter.visibility = if (UserInfo.userId === data.userId) View.VISIBLE else View.GONE
 
         data.state?.let {
-            //发布
-            isShow(mBtRelease, it, listOf(TaskState.AUDIT_SUCCESS,
-                    TaskState.OK_ISSUE))
+            if (data.userId==UserInfo.userId) {
+                //发布
+                isShow(mBtRelease, it, listOf(TaskState.AUDIT_SUCCESS,
+                        TaskState.OK_ISSUE))
 
-            //撤回
-            isShow(mBtOut, it, listOf(TaskState.ISSUE))
+                //撤回
+                isShow(mBtOut, it, listOf(TaskState.ISSUE))
 
-            //上架
-            isShow(mBtUpper, it, listOf(TaskState.OUT))
+                //上架
+                isShow(mBtUpper, it, listOf(TaskState.OUT))
 
-            //放弃任务
-            isShow(mBtAbandon, it, listOf(TaskState.FORBID_RECEIVE, TaskState.OUT))
+                //放弃任务
+                isShow(mBtAbandon, it, listOf(TaskState.FORBID_RECEIVE, TaskState.OUT))
 
-            //取消放弃
-            isShow(mBtCancelAbandon, it, listOf(TaskState.ABANDON_COMMIT))
+                //取消放弃
+                isShow(mBtCancelAbandon, it, listOf(TaskState.ABANDON_COMMIT))
+            }
+
         }
 
 
