@@ -10,6 +10,7 @@ import java.sql.Timestamp
  */
 data class Chat(val hunterId: Long,
                 val userId: Long,
+                val sender: Long,
                 val taskId: String,
                 val createTime: Timestamp,
                 val context: String,
@@ -17,7 +18,7 @@ data class Chat(val hunterId: Long,
                 val hunterIcon: String) : MultiItemEntity {
 
     override fun getItemType(): Int {
-        return if (UserInfo.userId == userId) 1 else 0
+        return if (UserInfo.userId == sender) SEND_TYPE else RECEIVE_TYPE
     }
 
     companion object {

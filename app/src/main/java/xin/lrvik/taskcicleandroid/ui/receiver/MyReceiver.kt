@@ -1,22 +1,35 @@
 package xin.lrvik.taskcicleandroid.ui.receiver
 
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.content.ContextCompat.startActivity
+import android.support.v4.app.NotificationCompat
 import android.text.TextUtils
 
 import org.json.JSONException
 import org.json.JSONObject
 
 import cn.jpush.android.api.JPushInterface
+import com.google.gson.Gson
 import com.google.gson.JsonParser
-import org.jetbrains.anko.startActivity
+import xin.lrvik.taskcicleandroid.R
+import xin.lrvik.taskcicleandroid.data.protocol.ChatMsg
 import xin.lrvik.taskcicleandroid.data.protocol.PushMsgState
+import xin.lrvik.taskcicleandroid.data.protocol.TaskMsg
 import xin.lrvik.taskcicleandroid.ui.activity.HunterRunningActivity
 import xin.lrvik.taskcicleandroid.ui.activity.HunterTaskDetailActivity
 import xin.lrvik.taskcicleandroid.ui.activity.TaskDetailActivity
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.content.Context.NOTIFICATION_SERVICE
+import android.support.v4.content.ContextCompat.getSystemService
+import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication
+import xin.lrvik.taskcicleandroid.ui.activity.ChatActivity
+import xin.lrvik.taskcicleandroid.util.NotificationUtils
+
 
 /**
  * 自定义接收器
@@ -43,41 +56,41 @@ class MyReceiver : BroadcastReceiver() {
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED == intent.action) {
                 Logger.d(TAG, "[MyReceiver] 用户点击打开了通知")
 
-                var type = JsonParser().parse(bundle.getString(JPushInterface.EXTRA_EXTRA)).asJsonObject["type"].asString
-                var extra = JsonParser().parse(bundle.getString(JPushInterface.EXTRA_EXTRA)).asJsonObject["extra"].asString
+//                var type = JsonParser().parse(bundle.getString(JPushInterface.EXTRA_EXTRA)).asJsonObject["type"].asString
+//                var extra = JsonParser().parse(bundle.getString(JPushInterface.EXTRA_EXTRA)).asJsonObject["extra"].asString
 
 //                var type = JsonParser().parse(extraStr).asJsonObject["type"].asInt
 //                var extra = JsonParser().parse(extraStr).asJsonObject["extra"].asString
 
-                when (PushMsgState.valueOf(type)) {
-                    PushMsgState.TASK -> {//有关系到任务id的通知
-                        val i = Intent(context, TaskDetailActivity::class.java)
-                        i.putExtra(TaskDetailActivity.TASKID, extra)
-                        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        context.startActivity(i)
-                    }
-                    PushMsgState.HUNTER_TASK -> {//有关系到猎刃任务id的通知
-                        val i = Intent(context, HunterTaskDetailActivity::class.java)
-                        i.putExtra(HunterTaskDetailActivity.TASKID, extra)
-                        i.putExtra(HunterTaskDetailActivity.MODE, HunterTaskDetailActivity.Mode.LOOK.name)
-                        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        context.startActivity(i)
-                    }
-                    PushMsgState.HUNTER_LIST -> {//有关系到聊天消息的通知
-                        val i = Intent(context, HunterRunningActivity::class.java)
+                /* when (PushMsgState.valueOf(type)) {
+                     PushMsgState.TASK -> {//有关系到任务id的通知
+                         val i = Intent(context, TaskDetailActivity::class.java)
+                         i.putExtra(TaskDetailActivity.TASKID, extra)
+                         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                         context.startActivity(i)
+                     }
+                     PushMsgState.HUNTER_TASK -> {//有关系到猎刃任务id的通知
+                         val i = Intent(context, HunterTaskDetailActivity::class.java)
+                         i.putExtra(HunterTaskDetailActivity.TASKID, extra)
+                         i.putExtra(HunterTaskDetailActivity.MODE, HunterTaskDetailActivity.Mode.LOOK.name)
+                         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                         context.startActivity(i)
+                     }
+                     PushMsgState.HUNTER_LIST -> {//有关系到聊天消息的通知
+                         val i = Intent(context, HunterRunningActivity::class.java)
+                         i.putExtra(HunterRunningActivity.TASKID, extra)
+                         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                         context.startActivity(i)
+                     }
+                     PushMsgState.NOTICE -> {//有关系到聊天消息的通知
+                         *//*val i = Intent(context, HunterRunningActivity::class.java)
                         i.putExtra(HunterRunningActivity.TASKID, extra)
                         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        context.startActivity(i)
-                    }
-                    PushMsgState.NOTICE -> {//有关系到聊天消息的通知
-                        /*val i = Intent(context, HunterRunningActivity::class.java)
-                        i.putExtra(HunterRunningActivity.TASKID, extra)
-                        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        context.startActivity(i)*/
+                        context.startActivity(i)*//*
                     }
                     else -> {
                     }
-                }
+                }*/
 
                 //打开自定义的Activity
                 /*Intent i = new Intent(context, TestActivity.class);
@@ -90,13 +103,60 @@ class MyReceiver : BroadcastReceiver() {
                 Logger.d(TAG, "[MyReceiver] Unhandled intent - " + intent.action!!)
             }
         } catch (e: Exception) {
-
+            e.printStackTrace()
         }
 
     }
 
     //send msg to MainActivity
     private fun processCustomMessage(context: Context, bundle: Bundle) {
+        var type = JsonParser().parse(bundle.getString(JPushInterface.EXTRA_EXTRA)).asJsonObject["type"].asString
+        var extra = JsonParser().parse(bundle.getString(JPushInterface.EXTRA_EXTRA)).asJsonObject["extra"].asString
+
+        when (PushMsgState.valueOf(type)) {
+            PushMsgState.TASK -> {//有关系到任务id的通知
+                var task = Gson().fromJson(extra, TaskMsg::class.java)
+                val intent = Intent(context, TaskDetailActivity::class.java)
+                intent.putExtra(TaskDetailActivity.TASKID, task.extraData)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                NotificationUtils(context).sendNotification(task.title, task.content, intent)
+            }
+            PushMsgState.HUNTER_TASK -> {//有关系到猎刃任务id的通知
+                var task = Gson().fromJson(extra, TaskMsg::class.java)
+                val intent = Intent(context, HunterTaskDetailActivity::class.java)
+                intent.putExtra(HunterTaskDetailActivity.TASKID, task.extraData)
+                intent.putExtra(HunterTaskDetailActivity.MODE, HunterTaskDetailActivity.Mode.LOOK.name)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                NotificationUtils(context).sendNotification(task.title, task.content, intent)
+            }
+            PushMsgState.HUNTER_LIST -> {//有关系到聊天消息的通知
+                var task = Gson().fromJson(extra, TaskMsg::class.java)
+                val intent = Intent(context, HunterRunningActivity::class.java)
+                intent.putExtra(HunterRunningActivity.TASKID, task.extraData)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+
+                NotificationUtils(context).sendNotification(task.title, task.content, intent)
+            }
+            PushMsgState.NOTICE -> {//有关系到消息通知的
+                //todo 通知相关的推送
+            }
+            PushMsgState.CHAT -> {//有关系到聊天消息的通知
+                var chatMsg = Gson().fromJson(extra, ChatMsg::class.java)
+//                TitleTextWindow(context).show(chatMsg.icon, chatMsg.title, chatMsg.content)
+
+                var intent = Intent(BaseApplication.context, ChatActivity::class.java)
+                intent.putExtra(ChatActivity.HUNTERID, chatMsg.hunterId)
+                intent.putExtra(ChatActivity.TASKID, chatMsg.taskId)
+                intent.putExtra(ChatActivity.USERID, chatMsg.userId)
+                NotificationUtils(context).sendNotification(chatMsg.title, chatMsg.content, intent)
+
+            }
+            else -> {
+            }
+        }
+
+
+
         /*if (MainActivity.isForeground) {
 			String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
 			String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);

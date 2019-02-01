@@ -22,7 +22,7 @@ class RvChatAdapter(data: ArrayList<Chat>) : BaseMultiItemQuickAdapter<Chat, Bas
     override fun convert(helper: BaseViewHolder, item: Chat) {
         helper.setText(R.id.mTvContent, item.context)
         var mIvIcon = helper.getView<ImageView>(R.id.mIvIcon)
-        mIvIcon.loadUrl(if (item.userId == UserInfo.userId) item.userIcon else item.hunterIcon)
+        mIvIcon.loadUrl(if (item.sender == UserInfo.userId) item.userIcon else item.hunterIcon)
     }
 
 }

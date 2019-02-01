@@ -10,12 +10,6 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.alibaba.sdk.android.oss.OSS
-import com.alibaba.sdk.android.oss.OSSClient
-import com.alibaba.sdk.android.oss.common.OSSLog
-import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider
-import com.alibaba.sdk.android.oss.common.auth.OSSFederationCredentialProvider
-import com.baidu.mapapi.SDKInitializer
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity

@@ -1,7 +1,5 @@
 package xin.lrvik.taskcicleandroid.ui.dialog
 
-import android.app.Activity
-import android.app.Activity.RESULT_OK
 import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -16,10 +14,6 @@ import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.data.protocol.TaskStep
 import xin.lrvik.taskcicleandroid.ui.adapter.EvpTaskStepAdapter
-import com.zhihu.matisse.Matisse
-import android.content.Intent
-import android.net.Uri
-import org.jetbrains.anko.support.v4.toast
 
 
 /**
