@@ -59,57 +59,7 @@ class MyFragment : BaseFragment() {
         mBtExitLogin.onClick {
             UserInfo.userId = if (UserInfo.userId == 6L) 13 else 6
 
-            NotificationUtils(activity!!).sendNotification("test", "测试通知")
-
-            /*val manger = activity!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
-
-            val channel = NotificationChannel("2",
-                    "新消息通知",
-                    NotificationManager.IMPORTANCE_HIGH)
-            channel.enableVibration(true)
-            channel.enableLights(true)
-            channel.lockscreenVisibility = Notification.VISIBILITY_SECRET
-            channel.setBypassDnd(true)
-
-            channel.description = "新消息通知的描述"
-
-            manger!!.createNotificationChannel(channel)
-
-            val builder = NotificationCompat.Builder(activity!!, "2")
-            builder.setContentTitle("测试横幅通知")
-            builder.setContentText("测试横幅通知的内容")
-
-//            builder.setDefaults(NotificationCompat.DEFAULT_ALL)
-
-            builder.setSmallIcon(R.mipmap.ic_launcher)
-            builder.setLargeIcon(BitmapFactory.decodeResource(activity!!.getResources(), R.mipmap.ic_launcher))
-
-            var intent = Intent(context, ChatActivity::class.java)
-            intent.putExtra(ChatActivity.HUNTERID, 13)
-            intent.putExtra(ChatActivity.TASKID, "20190201040203278856064")
-            intent.putExtra(ChatActivity.USERID, 6)
-
-            var pIntent = PendingIntent.getActivity(context, 1, intent, 0)
-            builder.setContentIntent(pIntent)
-//            builder.setFullScreenIntent(pIntent, true)
-//            builder.setAutoCancel(true)
-
-            val notification = builder.build()
-            manger!!.notify(1, notification)
-
-            toast("横幅")
-
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                Toast.makeText(context, "此类通知在Android 5.0以上版本才会有横幅有效！", Toast.LENGTH_SHORT).show()
-
-            }
-
-            var timer = Timer()
-            timer.schedule(object : TimerTask() {
-                override fun run() {
-                    manger.cancel(1)
-                }
-            }, 5000)*/
+//            NotificationUtils(activity!!).sendNotification("test", "测试通知")
 
         }
     }

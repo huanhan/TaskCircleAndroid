@@ -27,7 +27,7 @@ class ChatRepository @Inject constructor() {
     fun saveChat(hunterId: Long,
                  userId: Long,
                  taskId: String,
-                 context: String): Observable<Result> {
+                 context: String): Observable<Chat> {
         return RetrofitFactory.instance.create(ChatApi::class.java).saveChat(AddChatReq(hunterId, userId, taskId, context),UserInfo.userId)
     }
 }

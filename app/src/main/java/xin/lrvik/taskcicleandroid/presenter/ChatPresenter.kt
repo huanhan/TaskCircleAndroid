@@ -35,7 +35,7 @@ class ChatPresenter @Inject constructor() : BasePresenter<ChatView>() {
         }
 
         chatService.saveChat(hunterId, userId, taskId, context).execute(lifecycleProvider, mView, false) {
-            mView.onResult(it.msg)
+            mView.onSendResult(it)
         }
     }
 }

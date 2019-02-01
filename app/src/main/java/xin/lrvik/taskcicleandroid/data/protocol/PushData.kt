@@ -8,7 +8,6 @@ import java.sql.Timestamp
  */
 
 data class TaskMsg(var content: String,
-                   var icon: String,
                    var title: String,
                    var extraData: String)
 
@@ -19,5 +18,6 @@ data class ChatMsg(var title: String,
                    var sender: Long,
                    var taskId: String,
                    var createTime: Timestamp,
-                   var icon: String
+                   val userIcon: String,
+                   val hunterIcon: String
 )

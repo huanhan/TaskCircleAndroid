@@ -25,7 +25,7 @@ interface ChatApi {
                    @Path("size") size: Int): Observable<Page<Chat>>
 
     @POST("app/chat/{id}")
-    fun saveChat(@Body req: AddChatReq, @Path("id") id: Long): Observable<Result>
+    fun saveChat(@Body req: AddChatReq, @Path("id") id: Long): Observable<Chat>
 
 
 }

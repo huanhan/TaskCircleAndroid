@@ -21,7 +21,7 @@ class ChatServiceImpl @Inject constructor() : ChatService {
         return chatRepository.chatDetail(taskId, hunterid, userid, page, size)
     }
 
-    override fun saveChat(hunterId: Long, userId: Long, taskId: String, context: String): Observable<Result> {
+    override fun saveChat(hunterId: Long, userId: Long, taskId: String, context: String): Observable<Chat> {
         return chatRepository.saveChat(hunterId, userId, taskId, context)
     }
 }

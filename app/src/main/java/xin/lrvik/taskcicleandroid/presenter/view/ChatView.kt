@@ -10,4 +10,6 @@ interface ChatView:BaseView {
 
     fun onResult(result: String)
 
+    fun onSendResult(result: Chat)
+
 }

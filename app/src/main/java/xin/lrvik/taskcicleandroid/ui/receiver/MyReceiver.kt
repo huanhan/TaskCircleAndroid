@@ -19,15 +19,13 @@ import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.data.protocol.ChatMsg
 import xin.lrvik.taskcicleandroid.data.protocol.PushMsgState
 import xin.lrvik.taskcicleandroid.data.protocol.TaskMsg
-import xin.lrvik.taskcicleandroid.ui.activity.HunterRunningActivity
-import xin.lrvik.taskcicleandroid.ui.activity.HunterTaskDetailActivity
-import xin.lrvik.taskcicleandroid.ui.activity.TaskDetailActivity
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.content.Context.NOTIFICATION_SERVICE
 import android.support.v4.content.ContextCompat.getSystemService
+import android.support.v4.content.LocalBroadcastManager
 import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication
-import xin.lrvik.taskcicleandroid.ui.activity.ChatActivity
+import xin.lrvik.taskcicleandroid.ui.activity.*
 import xin.lrvik.taskcicleandroid.util.NotificationUtils
 
 
@@ -134,27 +132,32 @@ class MyReceiver : BroadcastReceiver() {
                 val intent = Intent(context, HunterRunningActivity::class.java)
                 intent.putExtra(HunterRunningActivity.TASKID, task.extraData)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-
                 NotificationUtils(context).sendNotification(task.title, task.content, intent)
             }
             PushMsgState.NOTICE -> {//有关系到消息通知的
                 //todo 通知相关的推送
             }
             PushMsgState.CHAT -> {//有关系到聊天消息的通知
-                var chatMsg = Gson().fromJson(extra, ChatMsg::class.java)
-//                TitleTextWindow(context).show(chatMsg.icon, chatMsg.title, chatMsg.content)
+                //如果当前聊天activity是前台显示，则将消息传递给他
+                if (ChatActivity.isForeground) {
+                    var msgIntent = Intent(ChatActivity.MESSAGE_RECEIVED_ACTION)
+                    msgIntent.putExtra(ChatActivity.CHATMSG, extra)
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(msgIntent)
+                }else{//否则打开该消息界面
+                    var chatMsg = Gson().fromJson(extra, ChatMsg::class.java)
+                    var intent = Intent(BaseApplication.context, ChatActivity::class.java)
+                    intent.putExtra(ChatActivity.HUNTERID, chatMsg.hunterId)
+                    intent.putExtra(ChatActivity.TASKID, chatMsg.taskId)
+                    intent.putExtra(ChatActivity.USERID, chatMsg.userId)
+                    NotificationUtils(context).sendNotification(chatMsg.title, chatMsg.content, intent)
+                }
 
-                var intent = Intent(BaseApplication.context, ChatActivity::class.java)
-                intent.putExtra(ChatActivity.HUNTERID, chatMsg.hunterId)
-                intent.putExtra(ChatActivity.TASKID, chatMsg.taskId)
-                intent.putExtra(ChatActivity.USERID, chatMsg.userId)
-                NotificationUtils(context).sendNotification(chatMsg.title, chatMsg.content, intent)
+
 
             }
             else -> {
             }
         }
-
 
 
         /*if (MainActivity.isForeground) {

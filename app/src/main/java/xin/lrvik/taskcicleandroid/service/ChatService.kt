@@ -19,5 +19,5 @@ interface ChatService {
     fun saveChat(hunterId: Long,
                  userId: Long,
                  taskId: String,
-                 context: String): Observable<Result>
+                 context: String): Observable<Chat>
 }
