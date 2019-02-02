@@ -357,6 +357,8 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
             startActivity<TaskDetailActivity>(TaskDetailActivity.TASKID to taskid)
         }
 
+
+
         mPresenter.query(hunterTaskid)
     }
 

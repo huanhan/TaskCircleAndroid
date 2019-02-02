@@ -18,8 +18,8 @@ import xin.lrvik.taskcicleandroid.data.protocol.Page
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.HunterTaskStatePresenter
 import xin.lrvik.taskcicleandroid.presenter.view.HunterTaskStateView
+import xin.lrvik.taskcicleandroid.ui.activity.ChatActivity
 import xin.lrvik.taskcicleandroid.ui.activity.HunterTaskDetailActivity
-import xin.lrvik.taskcicleandroid.ui.activity.TaskDetailActivity
 import xin.lrvik.taskcicleandroid.ui.adapter.RvHunterTaskStateAdapter
 import java.util.*
 
@@ -86,7 +86,7 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
 
         mRvHunterTaskStateAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as HunterTask
-            startActivity<HunterTaskDetailActivity>(HunterTaskDetailActivity.TASKID to task.id!! ,
+            startActivity<HunterTaskDetailActivity>(HunterTaskDetailActivity.TASKID to task.id!!,
                     HunterTaskDetailActivity.MODE to HunterTaskDetailActivity.Mode.MODIFY.name)
         }
         mRvHunterTaskStateAdapter.setOnItemChildClickListener { adapter, view, position ->
@@ -184,6 +184,22 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
                                 }
                             }
                         }.show()
+                    }
+                    R.id.mBtChat -> {
+                        //todo 聊天
+                        startActivity<ChatActivity>(ChatActivity.HUNTERID to task.hunterId!!,
+                                ChatActivity.TASKID to task.taskId!!,
+                                ChatActivity.USERID to task.userId!!)
+                    }
+                    R.id.mBtWarning -> {
+                        var mes = ""
+                        if (!task.auditContext.isNullOrEmpty()) {
+                            mes = mes.plus("理由：${task.auditContext}")
+                        }
+                        alert(mes, "用户回复") {
+                            positiveButton("确定") { }
+                        }.show()
+
                     }
                     else -> {
 

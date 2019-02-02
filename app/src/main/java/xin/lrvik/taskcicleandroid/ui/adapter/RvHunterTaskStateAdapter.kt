@@ -96,6 +96,9 @@ class RvHunterTaskStateAdapter(data: List<HunterTask>) : BaseQuickAdapter<Hunter
                 .addOnClickListener(R.id.mBtCancelAdminAudit)
                 .addOnClickListener(R.id.mBtAgreeAbandon)
                 .addOnClickListener(R.id.mBtDisAgreeAbandon)
+                .addOnClickListener(R.id.mBtChat)
+                .addOnClickListener(R.id.mBtWarning)
+                .setVisible(R.id.mBtWarning, (!item.context.isNullOrEmpty() || !item.hunterRejectContext.isNullOrEmpty()))
         var imageView = helper.getView<ImageView>(R.id.mIvIcon)
         imageView.loadUrl(item.headImg ?: R.mipmap.def)
 

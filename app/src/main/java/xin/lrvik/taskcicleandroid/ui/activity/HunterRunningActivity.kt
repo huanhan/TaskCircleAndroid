@@ -1,5 +1,6 @@
 package xin.lrvik.taskcicleandroid.ui.activity
 
+import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.OrientationHelper
@@ -170,6 +171,19 @@ class HunterRunningActivity : BaseMvpActivity<HunterRunningPresenter>(), HunterR
                         startActivity<ChatActivity>(ChatActivity.HUNTERID to hunterTask.hunterId,
                                 ChatActivity.TASKID to hunterTask.taskId,
                                 ChatActivity.USERID to hunterTask.userId)
+                    }
+                    R.id.mBtWarning -> {
+                        var mes = ""
+                        if (!task.context.isNullOrEmpty()) {
+                            mes = mes.plus("放弃理由：${task.context} \n")
+                        }
+                        if (!task.hunterRejectContext.isNullOrEmpty()) {
+                            mes = mes.plus("拒绝理由：${task.hunterRejectContext}")
+                        }
+                        alert(mes, "猎刃回复") {
+                            positiveButton("确定") { }
+                        }.show()
+
                     }
                     else -> {
 

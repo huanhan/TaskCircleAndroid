@@ -17,7 +17,7 @@ class HunterTask {
     var hunterHeadImg: String? = null
     var name: String? = null
     var taskContext: String? = null
-    var context: String? = null
+    var context: String? = null //猎刃放弃任务理由
     var acceptTime: Timestamp? = null
     var finishTime: Timestamp? = null
     var beginTime: Timestamp? = null
@@ -25,4 +25,6 @@ class HunterTask {
     var stop: Boolean? = null
     var money: Float? = null
     val curStep: Int? = null
+    val auditContext: String? = null //用户审核失败理由，拒绝猎刃放弃理由
+    val hunterRejectContext: String? = null //猎刃拒绝理由
 }

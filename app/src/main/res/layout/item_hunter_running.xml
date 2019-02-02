@@ -19,13 +19,20 @@
 
 
     <ImageView
+        android:id="@+id/mBtWarning"
+        android:layout_width="30dp"
+        android:layout_gravity="center_vertical|right"
+        android:layout_height="30dp"
+        android:layout_marginRight="55dp"
+        android:src="@mipmap/warning" />
+
+    <ImageView
         android:id="@+id/mBtChat"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="center_vertical|right"
         android:layout_marginRight="15dp"
-        android:src="@mipmap/chat"
-        android:text="联系" />
+        android:src="@mipmap/chat" />
 
 
     <LinearLayout

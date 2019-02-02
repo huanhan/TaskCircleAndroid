@@ -49,6 +49,8 @@ class RvHunterRunningAdapter(data: List<HunterTask>) : BaseQuickAdapter<HunterTa
                 .addOnClickListener(R.id.mBtAbandonPass)
                 .addOnClickListener(R.id.mBtAbandonNotPass)
                 .addOnClickListener(R.id.mBtChat)
+                .addOnClickListener(R.id.mBtWarning)
+                .setVisible(R.id.mBtWarning, !item.auditContext.isNullOrEmpty())
         var imageView = helper.getView<ImageView>(R.id.mIvIcon)
         imageView.loadCircleUrl(item.hunterHeadImg ?: R.mipmap.def)
 
