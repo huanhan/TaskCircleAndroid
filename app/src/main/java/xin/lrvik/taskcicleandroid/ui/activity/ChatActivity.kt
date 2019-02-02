@@ -8,11 +8,14 @@ import android.os.Bundle
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.OrientationHelper
+import android.util.Log
 import android.view.MenuItem
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_chat.*
 import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
+import xin.lrvik.taskcicleandroid.R.mipmap.chat
+import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
 import xin.lrvik.taskcicleandroid.baselibrary.utils.DateUtils
@@ -26,12 +29,12 @@ import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.ChatPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.ChatView
 import xin.lrvik.taskcicleandroid.ui.adapter.RvChatAdapter
+import xin.lrvik.taskcicleandroid.util.NotificationUtils
 
 
 class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
     override fun onSendResult(chat: Chat) {
-        mRvChatAdapter.addData(chat)
-        mRvChat.scrollToPosition(mRvChatAdapter.itemCount - 1)
+        addData(chat)
     }
 
     override fun injectComponent() {
@@ -47,6 +50,7 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
     override fun onResult(result: String) {
         toast(result)
     }
+
 
     //任务id,猎刃id，用户id
     var hunterid: Long = 0
@@ -66,6 +70,13 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
 
     override fun onResume() {
         isForeground = true
+
+        mRvChatAdapter.data.clear()
+        if (UserInfo.userId == userid) {
+            mPresenter.chatDetail(taskid, hunterid, userid, 0, 30)
+        } else {
+            mPresenter.chatDetail(taskid, UserInfo.userId, userid, 0, 30)
+        }
         super.onResume()
     }
 
@@ -92,6 +103,7 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
             hunterid = intent.getLongExtra(ChatActivity.HUNTERID, 0)
             taskid = intent.getStringExtra(ChatActivity.TASKID)
             userid = intent.getLongExtra(ChatActivity.USERID, 0)
+            Log.d("test", "hunterid $hunterid 任务id $taskid  userid:$userid ")
         } catch (e: Exception) {
             toast("信息不全")
             finish()
@@ -106,11 +118,6 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
         mRvChat.adapter = mRvChatAdapter
 
 
-        if (UserInfo.userId == userid) {
-            mPresenter.chatDetail(taskid, hunterid, userid, 0, 30)
-        } else {
-            mPresenter.chatDetail(taskid, UserInfo.userId, userid, 0, 30)
-        }
 //        mPresenter.chatDetail(taskid, hunterid, userid, 0, 10)
 
         mBtSend.onClick {
@@ -123,6 +130,30 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
                 mEtContent.text.clear()
 
             }
+        }
+    }
+
+    fun addData(chat: Chat) {
+        if (mRvChatAdapter.data.size == 0) {
+            mRvChatAdapter.setNewData(mutableListOf(chat))
+        } else {
+            mRvChatAdapter.addData(chat)
+        }
+        mRvChat.scrollToPosition(mRvChatAdapter.itemCount - 1)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        setIntent(intent)
+        super.onNewIntent(intent)
+        try {
+            hunterid = intent.getLongExtra(ChatActivity.HUNTERID, 0)
+            taskid = intent.getStringExtra(ChatActivity.TASKID)
+            userid = intent.getLongExtra(ChatActivity.USERID, 0)
+
+            intent.getStringExtra("test")
+            Log.d("test", "onNewIntent   hunterid $hunterid 任务id ${intent.getStringExtra(ChatActivity.TASKID)}  userid:$userid ")
+        } catch (e: Exception) {
+            toast("信息不全")
         }
     }
 
@@ -143,21 +174,59 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
         override fun onReceive(context: Context, intent: Intent) {
             try {
                 if (MESSAGE_RECEIVED_ACTION == intent.action) {
+                    //判断对方是否是当前消息对象，是的话增加数据，不是的话弹出通知
+
                     val chatMsgStr = intent.getStringExtra(CHATMSG)
                     var chatMsg = Gson().fromJson(chatMsgStr, ChatMsg::class.java)
+                    //判断是否是当前任务
+                    if (chatMsg.taskId == taskid) {
+                        //判断当前用户是猎刃还是雇主
+                        if (UserInfo.userId == userId) {
+                            //说明本人是雇主，猎刃给雇主发了一条新消息
+                            if (hunterid == chatMsg.sender) {
+                                //收到新消息聊天用户是当前猎刃
+                                //将消息从新序列化会RV中
+                                addData(Chat.toChat(chatMsg))
 
-                    var chat = Chat(chatMsg.hunterId,
-                            chatMsg.userId,
-                            chatMsg.sender,
-                            chatMsg.taskId,
-                            chatMsg.createTime,
-                            chatMsg.content,
-                            chatMsg.userIcon,
-                            chatMsg.hunterIcon)
+                            } else {
+                                var intent = Intent(this@ChatActivity, ChatActivity::class.java)
+//                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                                intent.putExtra(ChatActivity.HUNTERID, chatMsg.hunterId)
+                                intent.putExtra(ChatActivity.TASKID, chatMsg.taskId)
+                                intent.putExtra(ChatActivity.USERID, chatMsg.userId)
 
-                    //将消息从新序列化会RV中
-                    mRvChatAdapter.addData(chat)
-                    mRvChat.scrollToPosition(mRvChatAdapter.itemCount - 1)
+                                Log.d("test", "更新消息推送  hunterid ${chatMsg.hunterId} 任务id ${chatMsg.taskId}  userid:${chatMsg.userId} ")
+                                NotificationUtils(context).sendNotification(chatMsg.title, chatMsg.content, intent)
+                            }
+                        } else {
+                            //说明本人是猎刃， 雇主给猎刃发了一条新消息
+                            if (userid == chatMsg.sender) {
+                                //收到新消息聊天用户是当前雇主
+                                //将消息从新序列化会RV中
+                                addData(Chat.toChat(chatMsg))
+
+                            } else {
+                                var intent = Intent(this@ChatActivity, ChatActivity::class.java)
+//                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                                intent.putExtra(ChatActivity.HUNTERID, chatMsg.hunterId)
+                                intent.putExtra(ChatActivity.TASKID, chatMsg.taskId)
+                                intent.putExtra(ChatActivity.USERID, chatMsg.userId)
+
+                                Log.d("test", "更新消息推送  hunterid ${chatMsg.hunterId} 任务id ${chatMsg.taskId}  userid:${chatMsg.userId} ")
+                                NotificationUtils(context).sendNotification(chatMsg.title, chatMsg.content, intent)
+                            }
+                        }
+                    } else {
+                        var intent = Intent(this@ChatActivity, ChatActivity::class.java)
+//                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        intent.putExtra(ChatActivity.HUNTERID, chatMsg.hunterId)
+                        intent.putExtra(ChatActivity.TASKID, chatMsg.taskId)
+                        intent.putExtra(ChatActivity.USERID, chatMsg.userId)
+
+                        Log.d("test", "更新消息推送  hunterid ${chatMsg.hunterId} 任务id ${chatMsg.taskId}  userid:${chatMsg.userId} ")
+                        NotificationUtils(context).sendNotification(chatMsg.title, chatMsg.content, intent)
+                    }
+
                 }
             } catch (e: Exception) {
             }

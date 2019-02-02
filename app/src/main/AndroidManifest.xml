@@ -53,7 +53,8 @@
         <activity android:name=".ui.activity.RegistActivity" />
         <activity android:name=".ui.activity.PostTaskActivity" />
         <activity android:name=".ui.activity.ClassActivity" />
-        <activity android:name=".ui.activity.ChatActivity" />
+        <activity android:name=".ui.activity.ChatActivity" android:launchMode="singleTask">
+        </activity>
         <activity android:name=".ui.activity.WalletActivity" />
         <activity android:name=".ui.activity.WalletBudgetActivity" />
         <activity android:name=".ui.activity.HunterTaskActivity" />

@@ -22,6 +22,17 @@ data class Chat(val hunterId: Long,
     }
 
     companion object {
+        fun toChat(chatMsg: ChatMsg):Chat {
+            return Chat(chatMsg.hunterId,
+                    chatMsg.userId,
+                    chatMsg.sender,
+                    chatMsg.taskId,
+                    chatMsg.createTime,
+                    chatMsg.content,
+                    chatMsg.userIcon,
+                    chatMsg.hunterIcon)
+        }
+
         val RECEIVE_TYPE = 1
         val SEND_TYPE = 0
     }

@@ -24,6 +24,7 @@ import android.net.Uri
 import android.content.Context.NOTIFICATION_SERVICE
 import android.support.v4.content.ContextCompat.getSystemService
 import android.support.v4.content.LocalBroadcastManager
+import android.util.Log
 import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication
 import xin.lrvik.taskcicleandroid.ui.activity.*
 import xin.lrvik.taskcicleandroid.util.NotificationUtils
@@ -127,7 +128,7 @@ class MyReceiver : BroadcastReceiver() {
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 NotificationUtils(context).sendNotification(task.title, task.content, intent)
             }
-            PushMsgState.HUNTER_LIST -> {//有关系到聊天消息的通知
+            PushMsgState.HUNTER_LIST -> {//有关系到猎刃列表的通知
                 var task = Gson().fromJson(extra, TaskMsg::class.java)
                 val intent = Intent(context, HunterRunningActivity::class.java)
                 intent.putExtra(HunterRunningActivity.TASKID, task.extraData)
@@ -142,6 +143,8 @@ class MyReceiver : BroadcastReceiver() {
                 if (ChatActivity.isForeground) {
                     var msgIntent = Intent(ChatActivity.MESSAGE_RECEIVED_ACTION)
                     msgIntent.putExtra(ChatActivity.CHATMSG, extra)
+                    Log.d("test", "收到信息 $extra ")
+
                     LocalBroadcastManager.getInstance(context).sendBroadcast(msgIntent)
                 }else{//否则打开该消息界面
                     var chatMsg = Gson().fromJson(extra, ChatMsg::class.java)

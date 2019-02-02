@@ -77,7 +77,7 @@ class NotificationUtils(base: Context) : ContextWrapper(base) {
      */
     fun sendNotification(title: String, content: String, intent: Intent) {
         val builder = getNotification(title, content)
-        var pIntent = PendingIntent.getActivity(context, 1, intent, 0)
+        var pIntent = PendingIntent.getActivity(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         builder.setContentIntent(pIntent)
         manager.notify(1, builder.build())
     }
