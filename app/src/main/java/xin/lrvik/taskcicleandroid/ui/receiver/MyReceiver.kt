@@ -42,64 +42,21 @@ class MyReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         try {
             val bundle = intent.extras
-            Logger.d(TAG, "[MyReceiver] onReceive - " + intent.action + ", extras: " + printBundle(bundle!!))
+            Log.d(TAG, "[MyReceiver] onReceive - " + intent.action + ", extras: " + printBundle(bundle!!))
 
             if (JPushInterface.ACTION_MESSAGE_RECEIVED == intent.action) {
-                Logger.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE)!!)
+                Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE)!!)
                 processCustomMessage(context, bundle)
 
             } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED == intent.action) {
                 val notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID)
-                Logger.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: $notifactionId")
+                Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: $notifactionId")
 
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED == intent.action) {
-                Logger.d(TAG, "[MyReceiver] 用户点击打开了通知")
-
-//                var type = JsonParser().parse(bundle.getString(JPushInterface.EXTRA_EXTRA)).asJsonObject["type"].asString
-//                var extra = JsonParser().parse(bundle.getString(JPushInterface.EXTRA_EXTRA)).asJsonObject["extra"].asString
-
-//                var type = JsonParser().parse(extraStr).asJsonObject["type"].asInt
-//                var extra = JsonParser().parse(extraStr).asJsonObject["extra"].asString
-
-                /* when (PushMsgState.valueOf(type)) {
-                     PushMsgState.TASK -> {//有关系到任务id的通知
-                         val i = Intent(context, TaskDetailActivity::class.java)
-                         i.putExtra(TaskDetailActivity.TASKID, extra)
-                         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                         context.startActivity(i)
-                     }
-                     PushMsgState.HUNTER_TASK -> {//有关系到猎刃任务id的通知
-                         val i = Intent(context, HunterTaskDetailActivity::class.java)
-                         i.putExtra(HunterTaskDetailActivity.TASKID, extra)
-                         i.putExtra(HunterTaskDetailActivity.MODE, HunterTaskDetailActivity.Mode.LOOK.name)
-                         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                         context.startActivity(i)
-                     }
-                     PushMsgState.HUNTER_LIST -> {//有关系到聊天消息的通知
-                         val i = Intent(context, HunterRunningActivity::class.java)
-                         i.putExtra(HunterRunningActivity.TASKID, extra)
-                         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                         context.startActivity(i)
-                     }
-                     PushMsgState.NOTICE -> {//有关系到聊天消息的通知
-                         *//*val i = Intent(context, HunterRunningActivity::class.java)
-                        i.putExtra(HunterRunningActivity.TASKID, extra)
-                        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        context.startActivity(i)*//*
-                    }
-                    else -> {
-                    }
-                }*/
-
-                //打开自定义的Activity
-                /*Intent i = new Intent(context, TestActivity.class);
-				i.putExtras(bundle);
-				//i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
-				context.startActivity(i);*/
+                Log.d(TAG, "[MyReceiver] 用户点击打开了通知")
 
             } else {
-                Logger.d(TAG, "[MyReceiver] Unhandled intent - " + intent.action!!)
+                Log.d(TAG, "[MyReceiver] Unhandled intent - " + intent.action!!)
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -143,7 +100,6 @@ class MyReceiver : BroadcastReceiver() {
                 if (ChatActivity.isForeground) {
                     var msgIntent = Intent(ChatActivity.MESSAGE_RECEIVED_ACTION)
                     msgIntent.putExtra(ChatActivity.CHATMSG, extra)
-                    Log.d("test", "收到信息 $extra ")
 
                     LocalBroadcastManager.getInstance(context).sendBroadcast(msgIntent)
                 }else{//否则打开该消息界面
@@ -162,25 +118,6 @@ class MyReceiver : BroadcastReceiver() {
             }
         }
 
-
-        /*if (MainActivity.isForeground) {
-			String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
-			String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
-			Intent msgIntent = new Intent(MainActivity.MESSAGE_RECEIVED_ACTION);
-			msgIntent.putExtra(MainActivity.KEY_MESSAGE, message);
-			if (!ExampleUtil.isEmpty(extras)) {
-				try {
-					JSONObject extraJson = new JSONObject(extras);
-					if (extraJson.length() > 0) {
-						msgIntent.putExtra(MainActivity.KEY_EXTRAS, extras);
-					}
-				} catch (JSONException e) {
-
-				}
-
-			}
-			LocalBroadcastManager.getInstance(context).sendBroadcast(msgIntent);
-		}*/
     }
 
     companion object {
@@ -197,7 +134,7 @@ class MyReceiver : BroadcastReceiver() {
                     sb.append("\nkey:" + key + ", value:" + bundle.getBoolean(key))
                 } else if (key == JPushInterface.EXTRA_EXTRA) {
                     if (TextUtils.isEmpty(bundle.getString(JPushInterface.EXTRA_EXTRA))) {
-                        Logger.i(TAG, "This message has no Extra data")
+                        Log.i(TAG, "This message has no Extra data")
                         continue
                     }
 
@@ -211,7 +148,7 @@ class MyReceiver : BroadcastReceiver() {
                                     myKey + " - " + json.optString(myKey) + "]")
                         }
                     } catch (e: JSONException) {
-                        Logger.e(TAG, "Get message extra JSON error!")
+                        Log.e(TAG, "Get message extra JSON error!")
                     }
 
                 } else {

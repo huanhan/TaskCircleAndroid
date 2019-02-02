@@ -151,7 +151,6 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
             userid = intent.getLongExtra(ChatActivity.USERID, 0)
 
             intent.getStringExtra("test")
-            Log.d("test", "onNewIntent   hunterid $hunterid 任务id ${intent.getStringExtra(ChatActivity.TASKID)}  userid:$userid ")
         } catch (e: Exception) {
             toast("信息不全")
         }
@@ -195,7 +194,6 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
                                 intent.putExtra(ChatActivity.TASKID, chatMsg.taskId)
                                 intent.putExtra(ChatActivity.USERID, chatMsg.userId)
 
-                                Log.d("test", "更新消息推送  hunterid ${chatMsg.hunterId} 任务id ${chatMsg.taskId}  userid:${chatMsg.userId} ")
                                 NotificationUtils(context).sendNotification(chatMsg.title, chatMsg.content, intent)
                             }
                         } else {
@@ -212,7 +210,6 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
                                 intent.putExtra(ChatActivity.TASKID, chatMsg.taskId)
                                 intent.putExtra(ChatActivity.USERID, chatMsg.userId)
 
-                                Log.d("test", "更新消息推送  hunterid ${chatMsg.hunterId} 任务id ${chatMsg.taskId}  userid:${chatMsg.userId} ")
                                 NotificationUtils(context).sendNotification(chatMsg.title, chatMsg.content, intent)
                             }
                         }
@@ -223,7 +220,6 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
                         intent.putExtra(ChatActivity.TASKID, chatMsg.taskId)
                         intent.putExtra(ChatActivity.USERID, chatMsg.userId)
 
-                        Log.d("test", "更新消息推送  hunterid ${chatMsg.hunterId} 任务id ${chatMsg.taskId}  userid:${chatMsg.userId} ")
                         NotificationUtils(context).sendNotification(chatMsg.title, chatMsg.content, intent)
                     }
 
