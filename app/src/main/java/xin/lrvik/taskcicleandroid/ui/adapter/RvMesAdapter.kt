@@ -14,10 +14,8 @@ import xin.lrvik.taskcicleandroid.data.protocol.Message
  */
 class RvMesAdapter(data: List<Message>) : BaseQuickAdapter<Message, BaseViewHolder>(R.layout.item_mes, data) {
     override fun convert(helper: BaseViewHolder, item: Message) {
-        helper.setText(R.id.mTvName, item.name)
+        helper.setText(R.id.mTvTitle, item.title)
                 .setText(R.id.mTvContent, item.context)
                 .setText(R.id.mTvDate, "${DateFormat.format("yyyy年MM月dd", item.createTime)}")
-        var imageView = helper.getView<ImageView>(R.id.mIvIcon)
-        imageView.loadCircleUrl(R.mipmap.def)
     }
 }

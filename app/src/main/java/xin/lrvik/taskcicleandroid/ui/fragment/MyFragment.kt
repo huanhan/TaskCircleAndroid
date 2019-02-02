@@ -57,7 +57,6 @@ class MyFragment : BaseFragment() {
         }
 
         mBtExitLogin.onClick {
-            UserInfo.userId = if (UserInfo.userId == 6L) 13 else 6
 
 //            NotificationUtils(activity!!).sendNotification("test", "测试通知")
 

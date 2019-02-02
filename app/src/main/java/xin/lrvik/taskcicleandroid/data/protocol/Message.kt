@@ -8,5 +8,5 @@ import java.sql.Timestamp
  */
 data class Message (val context:String,
                     val createTime :Timestamp,
-                    val name:String,
-                    val img:String)
+                    val title:String,
+                    val id:Int)

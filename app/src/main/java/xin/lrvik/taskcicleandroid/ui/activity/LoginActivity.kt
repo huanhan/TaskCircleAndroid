@@ -36,7 +36,9 @@ class LoginActivity : BaseActivity() {
             if (validation()) {
                 //todo 调用登陆逻辑
                 //todo 设置极光别名，到时候要加入到登陆信息回调然后设置别名
-                JPushInterface.setAlias(this@LoginActivity,0,"app_${mEtMobile.text}")
+                JPushInterface.setAlias(this@LoginActivity, 0, "app_${mEtMobile.text}")
+                //todo 本地对象赋值
+                UserInfo.userId = mEtMobile.text.toString().toLong()
             }
         }
     }

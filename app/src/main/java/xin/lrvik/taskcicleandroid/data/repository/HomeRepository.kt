@@ -3,9 +3,12 @@ package xin.lrvik.taskcicleandroid.data.repository
 import io.reactivex.Observable
 import retrofit2.Call
 import xin.lrvik.taskcicleandroid.baselibrary.data.net.RetrofitFactory
+import xin.lrvik.taskcicleandroid.common.UserInfo
 import xin.lrvik.taskcicleandroid.data.api.HomeApi
 import xin.lrvik.taskcicleandroid.data.protocol.Home
+import xin.lrvik.taskcicleandroid.data.protocol.Message
 import xin.lrvik.taskcicleandroid.data.protocol.OssToken
+import xin.lrvik.taskcicleandroid.data.protocol.Page
 import javax.inject.Inject
 
 /**
@@ -16,5 +19,9 @@ class HomeRepository @Inject constructor() {
 
     fun home(): Observable<Home> {
         return RetrofitFactory.instance.create(HomeApi::class.java).home()
+    }
+
+    fun message(page: Int, size: Int): Observable<Page<Message>> {
+        return RetrofitFactory.instance.create(HomeApi::class.java).message(page,size,UserInfo.userId)
     }
 }
