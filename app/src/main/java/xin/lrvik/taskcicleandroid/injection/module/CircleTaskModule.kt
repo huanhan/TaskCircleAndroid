@@ -36,4 +36,9 @@ class CircleTaskModule {
     fun providesChatService(service: ChatServiceImpl): ChatService {
         return service
     }
+
+    @Provides
+    fun provideUserService(service: UserServiceImpl): UserService {
+        return service
+    }
 }

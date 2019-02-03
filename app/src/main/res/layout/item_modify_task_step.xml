@@ -130,5 +130,5 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:scaleType="center"
-        android:src="@drawable/ic_expand_more_gray_24dp" />
+        android:src="@mipmap/edit" />
 </RelativeLayout>

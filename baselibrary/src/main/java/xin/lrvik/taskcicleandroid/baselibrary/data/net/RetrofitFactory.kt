@@ -9,6 +9,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import xin.lrvik.taskcicleandroid.baselibrary.common.BaseConstant
 import xin.lrvik.taskcicleandroid.baselibrary.rx.BaseException
+import xin.lrvik.taskcicleandroid.baselibrary.util.DeviceUtil
 import java.lang.Exception
 import java.sql.Timestamp
 import java.util.concurrent.TimeUnit
@@ -36,6 +37,7 @@ class RetrofitFactory private constructor() {
                     .newBuilder()
                     .addHeader("Content-Type", "application/json")
                     .addHeader("charset", "utf-8")
+                    .addHeader("deviceId", DeviceUtil.getDeviceId())
                     //.addHeader("token",AppPrefsUtils.getString(BaseConstant.KEY_SP_TOKEN))
                     .build()
             var response = chain.proceed(request)
