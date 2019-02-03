@@ -22,7 +22,18 @@ class UserServiceImpl @Inject constructor() : UserService {
         return userRepository.detail()
     }
 
-    override fun update( name: String, gender: UserGender, idCard: String, address: String, school: String, major: String, interest: String, intro: String, height: Int, weight: Int, birthday: Timestamp, phone: String): Observable<Result> {
+    override fun update(name: String,
+                        gender: UserGender,
+                        idCard: String,
+                        address: String,
+                        school: String,
+                        major: String,
+                        interest: String,
+                        intro: String,
+                        height: Int?,
+                        weight: Int?,
+                        birthday: Long?,
+                        phone: String): Observable<Result> {
         return userRepository.update(name, gender, idCard, address, school, major, interest, intro, height, weight, birthday, phone)
     }
 

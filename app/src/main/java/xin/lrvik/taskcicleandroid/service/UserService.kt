@@ -21,9 +21,9 @@ interface UserService {
                major: String,
                interest: String,
                intro: String,
-               height: Int,
-               weight: Int,
-               birthday: Timestamp,
+               height: Int?,
+               weight: Int?,
+               birthday: Long?,
                phone: String): Observable<Result>
 
     fun updateIcon(header: String): Observable<Result>

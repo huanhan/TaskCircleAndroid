@@ -1,8 +1,5 @@
 package xin.lrvik.taskcicleandroid.data.protocol
 
-
-import java.sql.Timestamp
-
 import xin.lrvik.taskcicleandroid.data.protocol.enums.UserGender
 
 data class ModifyUser (
@@ -45,15 +42,15 @@ data class ModifyUser (
     /**
      * 身高
      */
-    var height: Int,
+    var height: Int?,
     /**
      * 体重
      */
-    var weight: Int,
+    var weight: Int?,
     /**
      * 生日
      */
-    var birthday: Timestamp,
+    var birthday: Long?,
     /**
      * 用户手机号码
      */

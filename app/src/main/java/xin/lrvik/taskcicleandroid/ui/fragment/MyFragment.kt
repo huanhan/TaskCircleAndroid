@@ -12,6 +12,8 @@ import kotlinx.android.synthetic.main.fragment_my.*
 import org.jetbrains.anko.support.v4.startActivity
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.common.BaseConstant.Companion.KEY_SP_HISTORY
+import xin.lrvik.taskcicleandroid.baselibrary.ext.loadCircleUrl
+import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
 import xin.lrvik.taskcicleandroid.ui.activity.LoginActivity
 import xin.lrvik.taskcicleandroid.ui.activity.WalletActivity
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
@@ -24,6 +26,7 @@ import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.MyPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.MyView
 import xin.lrvik.taskcicleandroid.ui.activity.TaskHistoryActivity
+import xin.lrvik.taskcicleandroid.ui.activity.UserDetailActivity
 
 
 class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
@@ -34,14 +37,16 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
     }
 
     override fun onUserResult(data: User) {
-        UserInfo.money=data.money?:0f
-
+        UserInfo.money = data.money ?: 0f
+        UserInfo.userId = data.id ?: 0
 
         mTvUserName.visibility = View.VISIBLE
         mBtExitLogin.visibility = View.VISIBLE
         mTvLoginOrRegist.visibility = View.GONE
         mTvUserName.text = data.name
         mTvMoney.text = "${data.money}元"
+
+        mIvIcon.loadCircleUrl(data.headImg ?: "")
 
         var historys = AppPrefsUtils.getString(KEY_SP_HISTORY)
         if (historys.isNullOrEmpty()) {
@@ -65,10 +70,12 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
 
         mTvUserName.onClick {
             //todo 跳转到个人信息
+            startActivity<UserDetailActivity>()
         }
 
         mIvIcon.onClick {
             //todo 跳转到个人信息
+            startActivity<UserDetailActivity>()
         }
 
         mRlWallet.onClick {

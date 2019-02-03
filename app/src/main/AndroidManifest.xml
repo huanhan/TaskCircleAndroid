@@ -54,7 +54,7 @@
         <activity android:name=".ui.activity.ClassActivity" />
         <activity
             android:name=".ui.activity.ChatActivity"
-            android:launchMode="singleTask"></activity>
+            android:launchMode="singleTask" />
         <activity android:name=".ui.activity.WalletActivity" />
         <activity android:name=".ui.activity.WalletBudgetActivity" />
         <activity android:name=".ui.activity.HunterTaskActivity" />
@@ -110,7 +110,9 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.activity.TaskHistoryActivity"></activity>
+        <activity android:name=".ui.activity.TaskHistoryActivity" />
+        <activity android:name=".ui.activity.UserDetailActivity" />
+        <activity android:name=".ui.activity.ModifyUserInfoActivity"></activity>
     </application>
 
 </manifest>

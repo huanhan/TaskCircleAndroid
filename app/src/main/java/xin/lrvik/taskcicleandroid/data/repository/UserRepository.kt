@@ -30,15 +30,15 @@ class UserRepository @Inject constructor() {
                major: String,
                interest: String,
                intro: String,
-               height: Int,
-               weight: Int,
-               birthday: Timestamp,
+               height: Int?,
+               weight: Int?,
+               birthday: Long?,
                phone: String): Observable<Result> {
-        return RetrofitFactory.instance.create(UserApi::class.java).update(ModifyUser(UserInfo.userId, name, gender, idCard, address, school, major, interest, intro, height, weight, birthday, phone))
+        return RetrofitFactory.instance.create(UserApi::class.java).update(ModifyUser(UserInfo.userId, name, gender, idCard, address, school, major, interest, intro, height, weight, birthday, phone), UserInfo.userId)
     }
 
     fun updateIcon(header: String): Observable<Result> {
-        return RetrofitFactory.instance.create(UserApi::class.java).updateIcon(ModifyUserHeader(UserInfo.userId, header))
+        return RetrofitFactory.instance.create(UserApi::class.java).updateIcon(ModifyUserHeader(UserInfo.userId, header), UserInfo.userId)
     }
 
     fun upAudit(): Observable<Result> {

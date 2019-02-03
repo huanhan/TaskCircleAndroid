@@ -14,10 +14,10 @@ interface UserApi {
     fun detail(@Path("id") id: Long): Observable<User>
 
     @PUT("/app/user/{id}")
-    fun update(@Body info: ModifyUser): Observable<Result>
+    fun update(@Body info: ModifyUser,@Path("id") id: Long): Observable<Result>
 
     @PUT("/app/user/header/{id}")
-    fun updateIcon(@Body info: ModifyUserHeader): Observable<Result>
+    fun updateIcon(@Body info: ModifyUserHeader,@Path("id") id: Long): Observable<Result>
 
     @POST("/app/user/upAudit/{id}")
     fun upAudit(@Path("id") id: Long): Observable<Result>
