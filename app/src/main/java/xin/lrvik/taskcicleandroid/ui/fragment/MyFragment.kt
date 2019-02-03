@@ -4,43 +4,99 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
-import android.support.annotation.RequiresApi
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_my.*
 import org.jetbrains.anko.support.v4.startActivity
 import xin.lrvik.taskcicleandroid.R
-import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
-import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseFragment
-import xin.lrvik.taskcicleandroid.common.UserInfo
+import xin.lrvik.taskcicleandroid.baselibrary.common.BaseConstant.Companion.KEY_SP_HISTORY
 import xin.lrvik.taskcicleandroid.ui.activity.LoginActivity
 import xin.lrvik.taskcicleandroid.ui.activity.WalletActivity
-import xin.lrvik.taskcicleandroid.util.NotificationUtils
-import android.provider.Settings.EXTRA_APP_PACKAGE
-import android.provider.Settings.EXTRA_CHANNEL_ID
+import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
+import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseMvpFragment
+import xin.lrvik.taskcicleandroid.baselibrary.utils.AppPrefsUtils
+import xin.lrvik.taskcicleandroid.common.UserInfo
+import xin.lrvik.taskcicleandroid.data.protocol.TaskHistory
+import xin.lrvik.taskcicleandroid.data.protocol.User
+import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
+import xin.lrvik.taskcicleandroid.presenter.MyPresenter
+import xin.lrvik.taskcicleandroid.presenter.view.MyView
+import xin.lrvik.taskcicleandroid.ui.activity.TaskHistoryActivity
 
 
-class MyFragment : BaseFragment() {
+class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_my, null)
+    override fun injectComponent() {
+        DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
+        mPresenter.mView = this
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mTvMoney.text = "${UserInfo.money}元"
-        mTvStart.text = "${UserInfo.start}"
-        mTvEvaluate.text = "${UserInfo.comment}条"
+    override fun onUserResult(data: User) {
+        UserInfo.money=data.money?:0f
 
-        mTvLoginOrRegist.onClick {
-            startActivity<LoginActivity>()
+
+        mTvUserName.visibility = View.VISIBLE
+        mBtExitLogin.visibility = View.VISIBLE
+        mTvLoginOrRegist.visibility = View.GONE
+        mTvUserName.text = data.name
+        mTvMoney.text = "${data.money}元"
+
+        var historys = AppPrefsUtils.getString(KEY_SP_HISTORY)
+        if (historys.isNullOrEmpty()) {
+            var taskHistory = TaskHistory()
+            taskHistory.size = 0
+            taskHistory.tasks = ArrayList()
+            var taskHistoryStr = Gson().toJson(taskHistory)
+            AppPrefsUtils.putString(KEY_SP_HISTORY, taskHistoryStr)
+            historys = taskHistoryStr
+        }
+
+        var taskHistorys = Gson().fromJson(historys, TaskHistory::class.java)
+
+        //历史记录从本地获取
+        mTvHistory.text = "${taskHistorys.size}"
+        mTvEvaluate.text = "${data.commentsNum}条"
+
+        mRlHistory.onClick {
+            startActivity<TaskHistoryActivity>()
+        }
+
+        mTvUserName.onClick {
+            //todo 跳转到个人信息
+        }
+
+        mIvIcon.onClick {
+            //todo 跳转到个人信息
         }
 
         mRlWallet.onClick {
             startActivity<WalletActivity>()
         }
+
+        mBtExitLogin.onClick {
+            //todo 退出登陆
+//            NotificationUtils(activity!!).sendNotification("test", "测试通知")
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        mPresenter.detail()
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_my, null)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        mTvUserName.visibility = View.GONE
+        mTvLoginOrRegist.visibility = View.VISIBLE
+
+        //设置系统通知
         mRlMsgSetting.onClick {
             var mIntent = Intent()
             mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -53,13 +109,15 @@ class MyFragment : BaseFragment() {
                 mIntent.putExtra("com.android.settings.ApplicationPkgName", context!!.packageName)
             }
             context!!.startActivity(mIntent)
-
         }
 
-        mBtExitLogin.onClick {
-
-//            NotificationUtils(activity!!).sendNotification("test", "测试通知")
-
+        mIvIcon.onClick {
+            startActivity<LoginActivity>()
         }
+
+        mTvLoginOrRegist.onClick {
+            startActivity<LoginActivity>()
+        }
+
     }
 }

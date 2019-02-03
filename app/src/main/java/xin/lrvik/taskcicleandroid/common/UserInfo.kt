@@ -9,8 +9,8 @@ object UserInfo {
     var latitude: Double = 0.0
     var userId: Long = 6
     var token: String = ""
-    var money: Float = 100.0f
-    var start: Float = 4.5f
-    var comment:Int = 152
+    var money: Float = 0.0f
+    var history: Float = 0f
+    var comment:Int = 0
     var isHunter = true
 }

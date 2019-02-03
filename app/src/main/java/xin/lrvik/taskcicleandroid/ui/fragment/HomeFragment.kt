@@ -15,19 +15,24 @@ import com.baidu.location.BDLocation
 import com.baidu.location.LocationClient
 import com.baidu.location.LocationClientOption
 import com.baidu.mapapi.search.core.PoiInfo
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.startActivityForResult
 import xin.lrvik.easybanner.Transformer
 import xin.lrvik.easybanner.adapter.viewpager.EasyImageAdapter
 import xin.lrvik.taskcicleandroid.R
+import xin.lrvik.taskcicleandroid.baselibrary.common.BaseConstant
+import xin.lrvik.taskcicleandroid.baselibrary.common.BaseConstant.Companion.KEY_SP_HISTORY
 import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseMvpFragment
+import xin.lrvik.taskcicleandroid.baselibrary.utils.AppPrefsUtils
 import xin.lrvik.taskcicleandroid.common.*
 import xin.lrvik.taskcicleandroid.data.protocol.Home
 import xin.lrvik.taskcicleandroid.data.protocol.Task
 import xin.lrvik.taskcicleandroid.data.protocol.TaskClass
+import xin.lrvik.taskcicleandroid.data.protocol.TaskHistory
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.HomePresenter
 import xin.lrvik.taskcicleandroid.presenter.view.HomeView
@@ -35,6 +40,7 @@ import xin.lrvik.taskcicleandroid.ui.activity.*
 import xin.lrvik.taskcicleandroid.ui.adapter.EvpTypeItemAdapter
 import xin.lrvik.taskcicleandroid.ui.adapter.RvRecommendAdapter
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
@@ -95,6 +101,17 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
         rvRecommendAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as Task
             startActivity<TaskDetailActivity>(TaskDetailActivity.TASKID to task.id!!)
+
+            var historys = AppPrefsUtils.getString(KEY_SP_HISTORY)
+            var taskHistorys = Gson().fromJson(historys, TaskHistory::class.java)
+            if (taskHistorys.tasks.isNullOrEmpty()) {
+                taskHistorys.tasks = ArrayList()
+            }
+            if (!taskHistorys.tasks!!.contains(task)) {
+                taskHistorys.tasks!!.add(task)
+                taskHistorys.size = taskHistorys.tasks!!.size
+                AppPrefsUtils.putString(KEY_SP_HISTORY, Gson().toJson(taskHistorys))
+            }
         }
         initLocation()
         mPresenter.homeData()

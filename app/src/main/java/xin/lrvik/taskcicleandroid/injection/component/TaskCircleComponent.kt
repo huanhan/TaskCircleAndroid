@@ -30,4 +30,5 @@ interface TaskCircleComponent {
     fun inject(fragment: TransferFragment)
     fun inject(fragment: CashPledgeFragment)
     fun inject(fragment: MesFragment)
+    fun inject(fragment: MyFragment)
 }

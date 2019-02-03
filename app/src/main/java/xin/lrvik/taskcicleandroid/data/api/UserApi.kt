@@ -11,7 +11,7 @@ import xin.lrvik.taskcicleandroid.data.protocol.*
 interface UserApi {
 
     @GET("/app/user/{id}")
-    fun detail(@Path("id") id: Int): Observable<User>
+    fun detail(@Path("id") id: Long): Observable<User>
 
     @PUT("/app/user/{id}")
     fun update(@Body info: ModifyUser): Observable<Result>
@@ -20,7 +20,7 @@ interface UserApi {
     fun updateIcon(@Body info: ModifyUserHeader): Observable<Result>
 
     @POST("/app/user/upAudit/{id}")
-    fun upAudit(@Path("id") id: Int): Observable<Result>
+    fun upAudit(@Path("id") id: Long): Observable<Result>
 
     @POST("app/user/register")
     fun register(@Body user: RegisterUser): Observable<Result>

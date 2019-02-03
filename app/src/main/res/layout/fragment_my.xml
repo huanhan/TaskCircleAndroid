@@ -35,6 +35,17 @@
                 android:textSize="17sp"
                 android:text="登陆/注册" />
 
+            <TextView
+                android:id="@+id/mTvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/mIvIcon"
+                android:textColor="@color/common_white"
+                android:textSize="17sp"
+                android:text="用户名小老弟" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -109,26 +120,28 @@
             <View style="@style/DividerFixedWidth" />
 
             <RelativeLayout
+                android:id="@+id/mRlHistory"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/common_white">
 
                 <TextView
-                    android:id="@+id/mTvStart"
+                    android:id="@+id/mTvHistory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
+                    android:text="0"
                     android:textColor="@color/common_red"
                     android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/mTvStart"
+                    android:layout_below="@id/mTvHistory"
                     android:layout_centerHorizontal="true"
-                    android:text="星级"
+                    android:text="足迹"
                     android:textColor="@color/text_dark" />
 
             </RelativeLayout>
@@ -162,29 +175,6 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/common_white">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:text="足迹"
-                android:textSize="18sp" />
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/ic_keyboard_arrow_right_gray_24dp" />
-
-        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/mRlMsgSetting"
@@ -262,6 +252,7 @@
             android:id="@+id/mBtExitLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_margin="15dp"
             android:background="@drawable/btn_common_selector"
             android:text="退出登陆"

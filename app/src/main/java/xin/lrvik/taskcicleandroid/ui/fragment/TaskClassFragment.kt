@@ -6,12 +6,16 @@ import android.support.v7.widget.OrientationHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_task_class.*
 import org.jetbrains.anko.support.v4.startActivity
 import xin.lrvik.taskcicleandroid.R
+import xin.lrvik.taskcicleandroid.baselibrary.common.BaseConstant
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseMvpFragment
+import xin.lrvik.taskcicleandroid.baselibrary.utils.AppPrefsUtils
 import xin.lrvik.taskcicleandroid.data.protocol.Page
 import xin.lrvik.taskcicleandroid.data.protocol.Task
+import xin.lrvik.taskcicleandroid.data.protocol.TaskHistory
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.TaskClassPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.TaskClassView
@@ -76,6 +80,17 @@ class TaskClassFragment : BaseMvpFragment<TaskClassPresenter>(), TaskClassView {
         mRvRecommendAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as Task
             startActivity<TaskDetailActivity>(TaskDetailActivity.TASKID to task.id!!)
+
+            var historys = AppPrefsUtils.getString(BaseConstant.KEY_SP_HISTORY)
+            var taskHistorys = Gson().fromJson(historys, TaskHistory::class.java)
+            if (taskHistorys.tasks.isNullOrEmpty()) {
+                taskHistorys.tasks = ArrayList()
+            }
+            if (!taskHistorys.tasks!!.contains(task)) {
+                taskHistorys.tasks!!.add(task)
+                taskHistorys.size = taskHistorys.tasks!!.size
+                AppPrefsUtils.putString(BaseConstant.KEY_SP_HISTORY, Gson().toJson(taskHistorys))
+            }
         }
 
         mSwipeRefresh.setOnRefreshListener {

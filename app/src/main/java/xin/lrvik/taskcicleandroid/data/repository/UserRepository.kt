@@ -18,12 +18,11 @@ import javax.inject.Inject
  */
 class UserRepository @Inject constructor() {
 
-    fun detail(id: Int): Observable<User> {
-        return RetrofitFactory.instance.create(UserApi::class.java).detail(id)
+    fun detail(): Observable<User> {
+        return RetrofitFactory.instance.create(UserApi::class.java).detail(UserInfo.userId)
     }
 
-    fun update(id: Long,
-               name: String,
+    fun update(name: String,
                gender: UserGender,
                idCard: String,
                address: String,
@@ -35,15 +34,15 @@ class UserRepository @Inject constructor() {
                weight: Int,
                birthday: Timestamp,
                phone: String): Observable<Result> {
-        return RetrofitFactory.instance.create(UserApi::class.java).update(ModifyUser(id, name, gender, idCard, address, school, major, interest, intro, height, weight, birthday, phone))
+        return RetrofitFactory.instance.create(UserApi::class.java).update(ModifyUser(UserInfo.userId, name, gender, idCard, address, school, major, interest, intro, height, weight, birthday, phone))
     }
 
-    fun updateIcon(id: Long, header: String): Observable<Result> {
-        return RetrofitFactory.instance.create(UserApi::class.java).updateIcon(ModifyUserHeader(id, header))
+    fun updateIcon(header: String): Observable<Result> {
+        return RetrofitFactory.instance.create(UserApi::class.java).updateIcon(ModifyUserHeader(UserInfo.userId, header))
     }
 
-    fun upAudit(id: Int): Observable<Result> {
-        return RetrofitFactory.instance.create(UserApi::class.java).upAudit(id)
+    fun upAudit(): Observable<Result> {
+        return RetrofitFactory.instance.create(UserApi::class.java).upAudit(UserInfo.userId)
     }
 
     fun register(username: String, password: String, imageCode: String): Observable<Result> {

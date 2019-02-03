@@ -18,20 +18,20 @@ class UserServiceImpl @Inject constructor() : UserService {
     @Inject
     lateinit var userRepository: UserRepository
 
-    override fun detail(id: Int): Observable<User> {
-        return userRepository.detail(id)
+    override fun detail(): Observable<User> {
+        return userRepository.detail()
     }
 
-    override fun update(id: Long, name: String, gender: UserGender, idCard: String, address: String, school: String, major: String, interest: String, intro: String, height: Int, weight: Int, birthday: Timestamp, phone: String): Observable<Result> {
-        return userRepository.update(id, name, gender, idCard, address, school, major, interest, intro, height, weight, birthday, phone)
+    override fun update( name: String, gender: UserGender, idCard: String, address: String, school: String, major: String, interest: String, intro: String, height: Int, weight: Int, birthday: Timestamp, phone: String): Observable<Result> {
+        return userRepository.update(name, gender, idCard, address, school, major, interest, intro, height, weight, birthday, phone)
     }
 
-    override fun updateIcon(id: Long, header: String): Observable<Result> {
-        return userRepository.updateIcon(id, header)
+    override fun updateIcon(header: String): Observable<Result> {
+        return userRepository.updateIcon(header)
     }
 
-    override fun upAudit(id: Int): Observable<Result> {
-        return userRepository.upAudit(id)
+    override fun upAudit(): Observable<Result> {
+        return userRepository.upAudit()
     }
 
     override fun register(username: String, password: String, imageCode: String): Observable<Result> {

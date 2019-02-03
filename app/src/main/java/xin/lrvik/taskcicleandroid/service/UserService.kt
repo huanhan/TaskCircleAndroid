@@ -11,10 +11,9 @@ import java.sql.Timestamp
  */
 interface UserService {
 
-    fun detail(id: Int): Observable<User>
+    fun detail(): Observable<User>
 
-    fun update(id: Long,
-               name: String,
+    fun update(name: String,
                gender: UserGender,
                idCard: String,
                address: String,
@@ -27,9 +26,9 @@ interface UserService {
                birthday: Timestamp,
                phone: String): Observable<Result>
 
-    fun updateIcon(id: Long, header: String): Observable<Result>
+    fun updateIcon(header: String): Observable<Result>
 
-    fun upAudit(id: Int): Observable<Result>
+    fun upAudit(): Observable<Result>
 
     fun register(username: String, password: String, imageCode: String): Observable<Result>
 }

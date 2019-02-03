@@ -22,11 +22,10 @@
         android:name="xin.lrvik.taskcicleandroid.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
 
-    <!-- 极光-->
+    <!-- 极光 -->
     <uses-permission android:name="xin.lrvik.taskcicleandroid.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-
 
     <application
         android:name=".common.TaskCircleBaseApplication"
@@ -53,8 +52,9 @@
         <activity android:name=".ui.activity.RegistActivity" />
         <activity android:name=".ui.activity.PostTaskActivity" />
         <activity android:name=".ui.activity.ClassActivity" />
-        <activity android:name=".ui.activity.ChatActivity" android:launchMode="singleTask">
-        </activity>
+        <activity
+            android:name=".ui.activity.ChatActivity"
+            android:launchMode="singleTask"></activity>
         <activity android:name=".ui.activity.WalletActivity" />
         <activity android:name=".ui.activity.WalletBudgetActivity" />
         <activity android:name=".ui.activity.HunterTaskActivity" />
@@ -72,8 +72,7 @@
         <activity android:name=".ui.activity.ReleaseTaskActivity" />
         <activity android:name=".ui.activity.HunterRunningActivity" />
         <activity android:name=".ui.activity.TaskDetailActivity" />
-        <activity android:name=".ui.activity.HunterTaskDetailActivity"></activity>
-
+        <activity android:name=".ui.activity.HunterTaskDetailActivity" />
         <activity android:name="com.zhihu.matisse.ui.MatisseActivity" />
 
         <provider
@@ -92,24 +91,26 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.DaemonService" />
+
                 <category android:name="${applicationId}" />
             </intent-filter>
-
         </service>
 
         <receiver
             android:name=".ui.receiver.MyReceiver"
-            android:exported="false"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="false">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!--Required  用户接收SDK消息的intent-->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!--Required  用户接收SDK通知栏信息的intent-->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required  用户打开自定义通知栏的intent-->
-                <action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!-- Required  用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!-- Required  用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!-- Required  用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!-- Required  用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /> <!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <category android:name="${applicationId}" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".ui.activity.TaskHistoryActivity"></activity>
     </application>
 
 </manifest>

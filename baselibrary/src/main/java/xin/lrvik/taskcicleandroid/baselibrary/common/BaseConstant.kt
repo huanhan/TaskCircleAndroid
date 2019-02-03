@@ -10,6 +10,7 @@ class BaseConstant {
         const val OSS_BASE_URL = "http://src.taskcircle.lrvik.xin"
         const val TABLE_PREFS = "TASK_CIRCLE"
         const val KEY_SP_TOKEN = "token"
+        const val KEY_SP_HISTORY = "history"
     }
 
 }

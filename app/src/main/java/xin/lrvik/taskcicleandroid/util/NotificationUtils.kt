@@ -21,6 +21,8 @@ import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication.Companion.c
 class NotificationUtils(base: Context) : ContextWrapper(base) {
     private var mManager: NotificationManager? = null
 
+    var notifyId:Int=1
+
     private val manager: NotificationManager
         get() {
             if (mManager == null) {
@@ -69,7 +71,7 @@ class NotificationUtils(base: Context) : ContextWrapper(base) {
      */
     fun sendNotification(title: String, content: String) {
         val builder = getNotification(title, content)
-        manager.notify(1, builder.build())
+        manager.notify(notifyId++, builder.build())
     }
 
     /**
@@ -79,7 +81,7 @@ class NotificationUtils(base: Context) : ContextWrapper(base) {
         val builder = getNotification(title, content)
         var pIntent = PendingIntent.getActivity(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         builder.setContentIntent(pIntent)
-        manager.notify(1, builder.build())
+        manager.notify(notifyId++, builder.build())
     }
 
     private fun getNotification(title: String, content: String): NotificationCompat.Builder {
@@ -115,7 +117,7 @@ class NotificationUtils(base: Context) : ContextWrapper(base) {
      */
     fun sendNotificationProgress(title: String, content: String, progress: Int, intent: PendingIntent) {
         val builder = getNotificationProgress(title, content, progress, intent)
-        manager.notify(0, builder.build())
+        manager.notify(notifyId++, builder.build())
     }
 
     /**
@@ -140,7 +142,7 @@ class NotificationUtils(base: Context) : ContextWrapper(base) {
         //设置大图标，未设置时使用小图标代替，拉下通知栏显示的那个图标
         //设置大图片 BitmpFactory.decodeResource(Resource res,int id) 根据给定的资源Id解析成位图
         builder.setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
-        if (progress > 0 && progress < 100) {
+        if (progress in 1..99) {
             //一种是有进度刻度的（false）,一种是循环流动的（true）
             //设置为false，表示刻度，设置为true，表示流动
             builder.setProgress(100, progress, false)
