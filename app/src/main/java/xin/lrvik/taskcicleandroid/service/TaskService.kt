@@ -35,6 +35,8 @@ interface TaskService {
     //根据状态获取任务列表
     fun queryByState(state: String, page: Int, size: Int): Observable<Page<Task>>
 
+    fun search(key: String, page: Int, size: Int): Observable<Page<Task>>
+
     //将用户的任务提交给管理员审核
     fun submitAudit(taskId: String): Observable<Result>
 

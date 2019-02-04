@@ -46,6 +46,13 @@ interface TaskApi {
                      @Path("size") size: Int,
                      @Path("id") id: Long): Observable<Page<Task>>
 
+    //搜索
+    @GET("app/task/search/{key}/{page}/{size}/{id}")
+    fun search(@Path("key") key: String,
+                     @Path("page") page: Int,
+                     @Path("size") size: Int,
+                     @Path("id") id: Long): Observable<Page<Task>>
+
     //将用户的任务提交给管理员审核
     @GET("app/task/user/upAudit/{taskId}/{id}")
     fun submitAudit(@Path("taskId") taskId: String, @Path("id") id: Long): Observable<Result>

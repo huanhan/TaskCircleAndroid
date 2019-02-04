@@ -35,6 +35,12 @@ class TaskRepository @Inject constructor() {
         return RetrofitFactory.instance.create(TaskApi::class.java).queryByClassid(classsId, page, size)
     }
 
+    fun search(key: String,
+               page: Int,
+               size: Int): Observable<Page<Task>> {
+        return RetrofitFactory.instance.create(TaskApi::class.java).search(key, page, size, UserInfo.userId)
+    }
+
     fun issueTask(id: String,
                   money: Float,
                   peopleNumber: Int,

@@ -16,7 +16,6 @@ import javax.inject.Inject
  *
  */
 class TaskServiceImpl @Inject constructor() : TaskService {
-
     @Inject
     lateinit var taskRepository: TaskRepository
 
@@ -55,6 +54,10 @@ class TaskServiceImpl @Inject constructor() : TaskService {
                               page: Int,
                               size: Int): Observable<Page<Task>> {
         return taskRepository.queryByState(state, page, size)
+    }
+
+    override fun search(key: String, page: Int, size: Int): Observable<Page<Task>> {
+        return taskRepository.search(key, page, size)
     }
 
     override fun submitAudit(taskId: String): Observable<Result> {
