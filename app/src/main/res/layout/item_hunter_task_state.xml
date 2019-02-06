@@ -170,6 +170,11 @@
             android:padding="5dp">
 
             <Button
+                android:id="@+id/mBtEva"
+                style="@style/TaskButton"
+                android:text="评价" />
+
+            <Button
                 android:id="@+id/mBtBegin"
                 style="@style/TaskButton"
                 android:text="开始任务" />

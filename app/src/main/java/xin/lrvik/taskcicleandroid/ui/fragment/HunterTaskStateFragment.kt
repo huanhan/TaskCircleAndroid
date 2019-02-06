@@ -19,6 +19,7 @@ import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.HunterTaskStatePresenter
 import xin.lrvik.taskcicleandroid.presenter.view.HunterTaskStateView
 import xin.lrvik.taskcicleandroid.ui.activity.ChatActivity
+import xin.lrvik.taskcicleandroid.ui.activity.HunterEvaluateActivity
 import xin.lrvik.taskcicleandroid.ui.activity.HunterTaskDetailActivity
 import xin.lrvik.taskcicleandroid.ui.adapter.RvHunterTaskStateAdapter
 import java.util.*
@@ -200,6 +201,9 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
                             positiveButton("确定") { }
                         }.show()
 
+                    }
+                    R.id.mBtEva -> {
+                        startActivity<HunterEvaluateActivity>()
                     }
                     else -> {
 

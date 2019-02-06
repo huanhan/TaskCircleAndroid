@@ -112,7 +112,9 @@
 
         <activity android:name=".ui.activity.TaskHistoryActivity" />
         <activity android:name=".ui.activity.UserDetailActivity" />
-        <activity android:name=".ui.activity.ModifyUserInfoActivity"></activity>
+        <activity android:name=".ui.activity.ModifyUserInfoActivity" />
+        <activity android:name=".ui.activity.HunterEvaluateActivity" />
+        <activity android:name=".ui.activity.UserEvaluateActivity"></activity>
     </application>
 
 </manifest>

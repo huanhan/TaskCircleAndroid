@@ -28,8 +28,15 @@ class RvHunterTaskStateAdapter(data: List<HunterTask>) : BaseQuickAdapter<Hunter
         val mBtCancelAdminAudit = helper.getView<Button>(R.id.mBtCancelAdminAudit)
         val mBtAgreeAbandon = helper.getView<Button>(R.id.mBtAgreeAbandon)
         val mBtDisAgreeAbandon = helper.getView<Button>(R.id.mBtDisAgreeAbandon)
+        val mBtEva = helper.getView<Button>(R.id.mBtEva)
 
         item.state?.let {
+
+            //评价
+            isShow(mBtEva, it, listOf(HunterTaskState.END_NO,
+                    HunterTaskState.END_OK,
+                    HunterTaskState.TASK_ABANDON,
+                    HunterTaskState.TASK_BE_ABANDON))
 
             //开始按钮
             isShow(mBtBegin, it, listOf(HunterTaskState.RECEIVE))
@@ -98,6 +105,7 @@ class RvHunterTaskStateAdapter(data: List<HunterTask>) : BaseQuickAdapter<Hunter
                 .addOnClickListener(R.id.mBtDisAgreeAbandon)
                 .addOnClickListener(R.id.mBtChat)
                 .addOnClickListener(R.id.mBtWarning)
+                .addOnClickListener(R.id.mBtEva)
                 .setVisible(R.id.mBtWarning, (!item.context.isNullOrEmpty() || !item.hunterRejectContext.isNullOrEmpty()))
         var imageView = helper.getView<ImageView>(R.id.mIvIcon)
         imageView.loadUrl(item.headImg ?: R.mipmap.def)
