@@ -116,6 +116,7 @@
         <activity android:name=".ui.activity.HunterEvaluateActivity" />
         <activity android:name=".ui.activity.UserEvaluateActivity" />
         <activity android:name=".ui.activity.UserEvaListActivity"></activity>
+        <activity android:name=".ui.activity.HunterEvaListActivity"></activity>
     </application>
 
 </manifest>

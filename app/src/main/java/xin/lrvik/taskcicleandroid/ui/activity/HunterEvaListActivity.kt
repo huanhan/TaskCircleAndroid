@@ -4,15 +4,13 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_user_eva_list.*
-import org.jetbrains.anko.startActivity
+import kotlinx.android.synthetic.main.activity_hunter_eva_list.*
 import xin.lrvik.taskcicleandroid.R
-import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.ui.adapter.VpAdapter
 import xin.lrvik.taskcicleandroid.ui.fragment.*
 import java.util.*
 
-class UserEvaListActivity : AppCompatActivity() {
+class HunterEvaListActivity : AppCompatActivity() {
 
     private val mFragments by lazy { Stack<Fragment>() }
     private val mTitles by lazy { Stack<String>() }
@@ -28,22 +26,18 @@ class UserEvaListActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.title = "我的评价"
+            actionBar.title = "我的评价(猎刃)"
         }
         getData()
         mViewPager.adapter = VpAdapter(supportFragmentManager, mFragments, mTitles)
         mTabLayout.setupWithViewPager(mViewPager)
-
-        mFabHunter.onClick {
-            startActivity<HunterEvaListActivity>()
-        }
     }
 
     private fun getData() {
         mTitles.add("收到的")
         mTitles.add("发出的")
-        mFragments.add(UserReEvaFragment.newInstance())
-        mFragments.add(UserSdEvaFragment.newInstance())
+        mFragments.add(HunterReEvaFragment.newInstance())
+        mFragments.add(HunterSdEvaFragment.newInstance())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

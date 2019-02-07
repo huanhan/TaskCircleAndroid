@@ -21,7 +21,7 @@ class RvUserReEvaAdapter(data: List<CommentUser>) : BaseQuickAdapter<CommentUser
         var mIvIcon = helper.getView<ImageView>(R.id.mIvIcon)
         var mSrbStart = helper.getView<SimpleRatingBar>(R.id.mSrbStart)
         mSrbStart.rating = item.start
-        mIvIcon.loadCircleUrl(item.img)
+        mIvIcon.loadCircleUrl(item.img?:"")
         helper.setText(R.id.mTvName, "${item.name}评价我")
                 .setText(R.id.mTvTime, "${DateUtils.convertTimeToString(item.createTime, FORMAT_SHORT)}")
                 .setText(R.id.mTvContent, item.context)

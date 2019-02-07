@@ -10,5 +10,5 @@ data class CommentHunter(
         var hunterId: Long,
         var name: String,
         var hunterTaskId: String,
-        var img: String
+        var img: String?
 )

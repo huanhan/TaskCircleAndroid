@@ -14,5 +14,5 @@ data class CommentUser(
         var userId: Long,
         var name: String,
         var taskId: String,
-        var img: String
+        var img: String?
 )

@@ -38,4 +38,6 @@ interface TaskCircleComponent {
     fun inject(fragment: MyFragment)
     fun inject(fragment: UserReEvaFragment)
     fun inject(fragment: UserSdEvaFragment)
+    fun inject(fragment: HunterSdEvaFragment)
+    fun inject(fragment: HunterReEvaFragment)
 }
