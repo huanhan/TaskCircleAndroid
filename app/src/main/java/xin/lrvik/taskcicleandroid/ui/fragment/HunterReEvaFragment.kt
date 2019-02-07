@@ -14,10 +14,7 @@ import xin.lrvik.taskcicleandroid.data.protocol.CommentUser
 import xin.lrvik.taskcicleandroid.data.protocol.Page
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.HunterReEvaPresenter
-import xin.lrvik.taskcicleandroid.presenter.UserSdEvaPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.HunterReEvaView
-import xin.lrvik.taskcicleandroid.presenter.view.UserSdEvaView
-import xin.lrvik.taskcicleandroid.ui.adapter.RvUserReEvaAdapter
 import xin.lrvik.taskcicleandroid.ui.adapter.RvUserSdEvaAdapter
 import java.util.ArrayList
 

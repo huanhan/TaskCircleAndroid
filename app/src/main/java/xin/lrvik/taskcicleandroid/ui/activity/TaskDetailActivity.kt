@@ -104,7 +104,7 @@ class TaskDetailActivity : BaseMvpActivity<TaskDetailPresenter>(), TaskDetailVie
         mBtnQueryHunter.visibility = if (UserInfo.userId === data.userId) View.VISIBLE else View.GONE
 
         data.state?.let {
-            if (data.userId==UserInfo.userId) {
+            if (data.userId == UserInfo.userId) {
                 //发布
                 isShow(mBtRelease, it, listOf(TaskState.AUDIT_SUCCESS,
                         TaskState.OK_ISSUE))
@@ -123,7 +123,7 @@ class TaskDetailActivity : BaseMvpActivity<TaskDetailPresenter>(), TaskDetailVie
             }
 
         }
-
+        mBtnEva.visibility = View.VISIBLE
 
     }
 
@@ -217,6 +217,9 @@ class TaskDetailActivity : BaseMvpActivity<TaskDetailPresenter>(), TaskDetailVie
                 positiveButton("是") { mPresenter.cancelAbandon(taskid) }
                 negativeButton("否") { }
             }.show()
+        }
+        mBtnEva.onClick {
+            startActivity<TaskEvaActivity>(TaskEvaActivity.TASKID to taskid)
         }
 
         mPresenter.queryTaskDetail(taskid)

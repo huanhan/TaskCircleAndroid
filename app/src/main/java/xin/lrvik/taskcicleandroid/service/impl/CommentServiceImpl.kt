@@ -1,10 +1,7 @@
 package xin.lrvik.taskcicleandroid.service.impl
 
 import io.reactivex.Observable
-import xin.lrvik.taskcicleandroid.data.protocol.CommentHunter
-import xin.lrvik.taskcicleandroid.data.protocol.CommentUser
-import xin.lrvik.taskcicleandroid.data.protocol.Page
-import xin.lrvik.taskcicleandroid.data.protocol.Result
+import xin.lrvik.taskcicleandroid.data.protocol.*
 import xin.lrvik.taskcicleandroid.data.repository.CommentRepository
 import xin.lrvik.taskcicleandroid.service.CommentService
 import javax.inject.Inject
@@ -32,6 +29,10 @@ class CommentServiceImpl @Inject constructor() : CommentService {
 
     override fun evaHunterByHunter(page: Int, size: Int): Observable<Page<CommentHunter>> {
         return commentRepository.evaHunterByHunter(page, size)
+    }
+
+    override fun taskComment(taskid: String, page: Int, size: Int): Observable<Page<CommentTask>> {
+        return commentRepository.taskComment(taskid, page, size)
     }
 
     override fun evaTaskAndTask(taskContext: String, taskStart: Float, hunterTaskId: String, userContext: String, userStart: Float): Observable<Result> {

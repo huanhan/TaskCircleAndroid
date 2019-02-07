@@ -10,19 +10,20 @@ import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
 import xin.lrvik.taskcicleandroid.baselibrary.utils.DateUtils
 import xin.lrvik.taskcicleandroid.baselibrary.utils.DateUtils.FORMAT_SHORT
 import xin.lrvik.taskcicleandroid.common.UserInfo
+import xin.lrvik.taskcicleandroid.data.protocol.CommentTask
 import xin.lrvik.taskcicleandroid.data.protocol.CommentUser
 
 /**
  * Author by 豢涵, Email huanhanfu@126.com, Date on 2019/1/2.
  *
  */
-class RvUserReEvaAdapter(data: List<CommentUser>) : BaseQuickAdapter<CommentUser, BaseViewHolder>(R.layout.item_user_re_eva, data) {
-    override fun convert(helper: BaseViewHolder, item: CommentUser) {
+class RvTaskEvaAdapter(data: List<CommentTask>) : BaseQuickAdapter<CommentTask, BaseViewHolder>(R.layout.item_user_re_eva, data) {
+    override fun convert(helper: BaseViewHolder, item: CommentTask) {
         var mIvIcon = helper.getView<ImageView>(R.id.mIvIcon)
         var mSrbStart = helper.getView<SimpleRatingBar>(R.id.mSrbStart)
         mSrbStart.rating = item.start
         mIvIcon.loadCircleUrl(item.img?:"")
-        helper.setText(R.id.mTvName, "${item.name} 评价我")
+        helper.setText(R.id.mTvName, "${item.name}")
                 .setText(R.id.mTvTime, "${DateUtils.convertTimeToString(item.createTime, FORMAT_SHORT)}")
                 .setText(R.id.mTvContent, item.context)
 

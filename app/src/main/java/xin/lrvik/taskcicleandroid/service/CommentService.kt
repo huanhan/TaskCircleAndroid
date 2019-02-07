@@ -21,4 +21,5 @@ interface CommentService {
 
     fun evaHunter(content: String, start: Float, hunterTaskId: String): Observable<Result>
 
+    fun taskComment(taskid: String, page: Int, size: Int): Observable<Page<CommentTask>>
 }

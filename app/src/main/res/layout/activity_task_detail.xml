@@ -530,6 +530,11 @@
         android:padding="5dp">
 
         <Button
+            android:id="@+id/mBtnEva"
+            style="@style/TaskDetailButton"
+            android:text="任务评论" />
+
+        <Button
             android:id="@+id/mBtnAccept"
             style="@style/TaskDetailButton"
             android:text="接取任务" />

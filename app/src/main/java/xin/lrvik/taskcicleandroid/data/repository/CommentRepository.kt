@@ -33,6 +33,12 @@ class CommentRepository @Inject constructor() {
         return RetrofitFactory.instance.create(CommentApi::class.java).evaHunterByHunter(page, size, UserInfo.userId)
     }
 
+    fun taskComment(taskid: String,
+                    page: Int,
+                    size: Int): Observable<Page<CommentTask>> {
+        return RetrofitFactory.instance.create(CommentApi::class.java).taskComment(taskid, page, size, UserInfo.userId)
+    }
+
     fun evaTaskAndTask(taskContext: String,
                        taskStart: Float,
                        hunterTaskId: String,
