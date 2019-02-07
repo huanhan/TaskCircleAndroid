@@ -185,6 +185,10 @@ class HunterRunningActivity : BaseMvpActivity<HunterRunningPresenter>(), HunterR
                         }.show()
 
                     }
+                    R.id.mBtEva -> {
+                        startActivity<UserEvaluateActivity>(UserEvaluateActivity.HUNTERTASKID to hunterTask.id!!)
+                        isRefresh = true
+                    }
                     else -> {
 
                     }
@@ -206,6 +210,19 @@ class HunterRunningActivity : BaseMvpActivity<HunterRunningPresenter>(), HunterR
 
     }
 
+    var isRefresh = false
+
+    override fun onResume() {
+        super.onResume()
+        if (isRefresh) {
+            isRefresh = false
+            mSwipeRefresh?.let {
+                curPage = 0
+                mSwipeRefresh.isRefreshing = true
+                mPresenter.hunterRunning(taskid, curPage, pageSize)
+            }
+        }
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

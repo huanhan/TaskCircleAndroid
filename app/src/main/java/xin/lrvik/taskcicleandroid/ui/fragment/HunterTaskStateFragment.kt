@@ -203,7 +203,8 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
 
                     }
                     R.id.mBtEva -> {
-                        startActivity<HunterEvaluateActivity>()
+                        startActivity<HunterEvaluateActivity>(HunterEvaluateActivity.HUNTERTASKID to task.id!!)
+                        isRefresh = true
                     }
                     else -> {
 

@@ -27,4 +27,7 @@ class HunterTask {
     val curStep: Int? = null
     val auditContext: String? = null //用户审核失败理由，拒绝猎刃放弃理由
     val hunterRejectContext: String? = null //猎刃拒绝理由
+    val userCHunter: Boolean? = null
+    val hunterCUser: Boolean? = null
+    val hunterCTask: Boolean? = null
 }

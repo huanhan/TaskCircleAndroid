@@ -7,6 +7,7 @@ import android.widget.ImageView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import xin.lrvik.taskcicleandroid.R
+import xin.lrvik.taskcicleandroid.baselibrary.ext.isShow
 import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
 import xin.lrvik.taskcicleandroid.data.protocol.HunterTask
 import xin.lrvik.taskcicleandroid.data.protocol.enums.HunterTaskState
@@ -37,6 +38,10 @@ class RvHunterTaskStateAdapter(data: List<HunterTask>) : BaseQuickAdapter<Hunter
                     HunterTaskState.END_OK,
                     HunterTaskState.TASK_ABANDON,
                     HunterTaskState.TASK_BE_ABANDON))
+
+            if (mBtEva.visibility==View.VISIBLE) {
+                isShow(mBtEva, !item.hunterCTask!! || !item.hunterCUser!!)
+            }
 
             //开始按钮
             isShow(mBtBegin, it, listOf(HunterTaskState.RECEIVE))

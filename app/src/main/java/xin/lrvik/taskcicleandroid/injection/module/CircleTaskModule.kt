@@ -41,4 +41,9 @@ class CircleTaskModule {
     fun provideUserService(service: UserServiceImpl): UserService {
         return service
     }
+
+    @Provides
+    fun provideCommentService(service: CommentServiceImpl): CommentService {
+        return service
+    }
 }

@@ -7,6 +7,7 @@ import android.widget.ImageView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import xin.lrvik.taskcicleandroid.R
+import xin.lrvik.taskcicleandroid.baselibrary.ext.isShow
 import xin.lrvik.taskcicleandroid.baselibrary.ext.loadCircleUrl
 import xin.lrvik.taskcicleandroid.data.protocol.HunterTask
 import xin.lrvik.taskcicleandroid.data.protocol.enums.HunterTaskState
@@ -24,6 +25,7 @@ class RvHunterRunningAdapter(data: List<HunterTask>) : BaseQuickAdapter<HunterTa
         val mBtAuditFailure = helper.getView<Button>(R.id.mBtAuditFailure)
         val mBtAbandonPass = helper.getView<Button>(R.id.mBtAbandonPass)
         val mBtAbandonNotPass = helper.getView<Button>(R.id.mBtAbandonNotPass)
+        val mBtEva = helper.getView<Button>(R.id.mBtEva)
 
         item.state?.let {
 
@@ -35,6 +37,14 @@ class RvHunterRunningAdapter(data: List<HunterTask>) : BaseQuickAdapter<HunterTa
 
             isShow(mBtAbandonNotPass, it, listOf(HunterTaskState.WITH_USER_NEGOTIATE))
 
+            isShow(mBtEva, it, listOf(HunterTaskState.END_NO,
+                    HunterTaskState.END_OK,
+                    HunterTaskState.TASK_ABANDON,
+                    HunterTaskState.TASK_BE_ABANDON))
+
+            if (mBtEva.visibility == View.VISIBLE) {
+                isShow(mBtEva, !item.userCHunter!!)
+            }
         }
 
         if (item.acceptTime != null) {
@@ -50,6 +60,7 @@ class RvHunterRunningAdapter(data: List<HunterTask>) : BaseQuickAdapter<HunterTa
                 .addOnClickListener(R.id.mBtAbandonNotPass)
                 .addOnClickListener(R.id.mBtChat)
                 .addOnClickListener(R.id.mBtWarning)
+                .addOnClickListener(R.id.mBtEva)
                 .setVisible(R.id.mBtWarning, !item.auditContext.isNullOrEmpty())
         var imageView = helper.getView<ImageView>(R.id.mIvIcon)
         imageView.loadCircleUrl(item.hunterHeadImg ?: R.mipmap.def)

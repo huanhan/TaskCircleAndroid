@@ -63,12 +63,13 @@
                     android:textSize="18sp" />
 
                 <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                    android:id="@+id/mSrbStart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srb_borderColor="@color/common_yellow"
                     app:srb_fillColor="@color/common_yellow_light"
                     app:srb_numberOfStars="5"
-                    app:srb_rating="3"
+                    app:srb_rating="5"
                     app:srb_starSize="30dp"
                     app:srb_stepSize="0.5" />
 

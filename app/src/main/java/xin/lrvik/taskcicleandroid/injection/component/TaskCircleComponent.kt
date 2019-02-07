@@ -25,6 +25,8 @@ interface TaskCircleComponent {
     fun inject(activity: UserDetailActivity)
     fun inject(activity: ModifyUserInfoActivity)
     fun inject(activity: SearchListActivity)
+    fun inject(activity: HunterEvaluateActivity)
+    fun inject(activity: UserEvaluateActivity)
     fun inject(fragment: HomeFragment)
     fun inject(fragment: TaskClassFragment)
     fun inject(fragment: TaskStateFragment)
