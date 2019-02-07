@@ -14,8 +14,6 @@ import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.common.BaseConstant.Companion.KEY_SP_HISTORY
 import xin.lrvik.taskcicleandroid.baselibrary.ext.loadCircleUrl
 import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
-import xin.lrvik.taskcicleandroid.ui.activity.LoginActivity
-import xin.lrvik.taskcicleandroid.ui.activity.WalletActivity
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseMvpFragment
 import xin.lrvik.taskcicleandroid.baselibrary.utils.AppPrefsUtils
@@ -25,8 +23,7 @@ import xin.lrvik.taskcicleandroid.data.protocol.User
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.MyPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.MyView
-import xin.lrvik.taskcicleandroid.ui.activity.TaskHistoryActivity
-import xin.lrvik.taskcicleandroid.ui.activity.UserDetailActivity
+import xin.lrvik.taskcicleandroid.ui.activity.*
 
 
 class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
@@ -86,11 +83,14 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
             //todo 退出登陆
 //            NotificationUtils(activity!!).sendNotification("test", "测试通知")
         }
+
+        mRlEva.onClick {
+            startActivity<UserEvaListActivity>()
+        }
     }
 
     override fun onResume() {
         super.onResume()
-
         mPresenter.detail()
     }
 

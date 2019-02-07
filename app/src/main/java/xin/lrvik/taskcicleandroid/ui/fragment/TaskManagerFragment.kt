@@ -12,7 +12,7 @@ import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseFragment
 import xin.lrvik.taskcicleandroid.common.UserInfo
 import xin.lrvik.taskcicleandroid.ui.activity.HunterTaskActivity
-import xin.lrvik.taskcicleandroid.ui.adapter.VpTaskAdapter
+import xin.lrvik.taskcicleandroid.ui.adapter.VpAdapter
 import java.util.*
 
 
@@ -44,7 +44,7 @@ class TaskManagerFragment : BaseFragment() {
         }
 
 
-        mViewPager.adapter = VpTaskAdapter(activity!!.supportFragmentManager, mFragments, mTitles)
+        mViewPager.adapter = VpAdapter(activity!!.supportFragmentManager, mFragments, mTitles)
         mTabLayout.setupWithViewPager(mViewPager)
     }
 

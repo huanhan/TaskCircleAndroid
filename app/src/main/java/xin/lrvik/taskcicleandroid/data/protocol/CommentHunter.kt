@@ -9,5 +9,6 @@ data class CommentHunter(
         var start: Float,
         var hunterId: Long,
         var name: String,
-        var hunterTaskId: String
+        var hunterTaskId: String,
+        var img: String
 )

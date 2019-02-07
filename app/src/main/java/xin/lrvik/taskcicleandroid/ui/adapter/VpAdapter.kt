@@ -9,9 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import java.util.*
 
-class VpTaskAdapter(supportFragmentManager: FragmentManager,
-                    private val fragments:Stack<Fragment>,
-                    private val titles:Stack<String>) : FragmentStatePagerAdapter(supportFragmentManager) {
+class VpAdapter(supportFragmentManager: FragmentManager,
+                private val fragments:Stack<Fragment>,
+                private val titles:Stack<String>) : FragmentStatePagerAdapter(supportFragmentManager) {
 
     override fun getItem(i: Int): Fragment {
         return fragments[i]

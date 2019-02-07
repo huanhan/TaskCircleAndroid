@@ -6,9 +6,8 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_hunter_task.*
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseActivity
-import xin.lrvik.taskcicleandroid.ui.adapter.VpTaskAdapter
+import xin.lrvik.taskcicleandroid.ui.adapter.VpAdapter
 import xin.lrvik.taskcicleandroid.ui.fragment.HunterTaskStateFragment
-import xin.lrvik.taskcicleandroid.ui.fragment.TaskStateFragment
 import java.util.*
 
 class HunterTaskActivity : BaseActivity() {
@@ -32,7 +31,7 @@ class HunterTaskActivity : BaseActivity() {
         }
 
         getData()
-        mViewPager.adapter = VpTaskAdapter(supportFragmentManager, mFragments, mTitles)
+        mViewPager.adapter = VpAdapter(supportFragmentManager, mFragments, mTitles)
         mTabLayout.setupWithViewPager(mViewPager)
     }
 

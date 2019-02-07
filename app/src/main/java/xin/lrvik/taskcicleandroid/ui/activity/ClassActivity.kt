@@ -11,7 +11,7 @@ import xin.lrvik.taskcicleandroid.data.protocol.TaskClass
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.ClassPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.ClassView
-import xin.lrvik.taskcicleandroid.ui.adapter.VpTaskAdapter
+import xin.lrvik.taskcicleandroid.ui.adapter.VpAdapter
 import xin.lrvik.taskcicleandroid.ui.dialog.ClassificationDialog
 import xin.lrvik.taskcicleandroid.ui.fragment.TaskClassFragment
 import java.util.*
@@ -25,7 +25,7 @@ class ClassActivity : BaseMvpActivity<ClassPresenter>(), ClassView {
     lateinit var mTitle: String
     var mPPos = 0
     var mCPos = 0
-    lateinit var mViewPagerAdapter: VpTaskAdapter
+    lateinit var mViewPagerAdapter: VpAdapter
 
     override fun injectComponent() {
         DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
@@ -63,7 +63,7 @@ class ClassActivity : BaseMvpActivity<ClassPresenter>(), ClassView {
     }
 
     override fun onTaskClassResult(data: List<TaskClass>) {
-        mViewPagerAdapter = VpTaskAdapter(supportFragmentManager, mFragments, mTitles)
+        mViewPagerAdapter = VpAdapter(supportFragmentManager, mFragments, mTitles)
         mViewPager.adapter = mViewPagerAdapter
         //关联ViewPager
         mTabLayout.setupWithViewPager(mViewPager)
