@@ -87,6 +87,10 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
         mRlEva.onClick {
             startActivity<UserEvaListActivity>()
         }
+
+        mRlHunterAudit.onClick {
+            startActivity<HunterAuditActivity>()
+        }
     }
 
     override fun onResume() {

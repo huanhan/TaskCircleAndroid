@@ -31,9 +31,9 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/mIvIcon"
+                android:text="登陆/注册"
                 android:textColor="@color/common_white"
-                android:textSize="17sp"
-                android:text="登陆/注册" />
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/mTvUserName"
@@ -42,18 +42,18 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/mIvIcon"
+                android:text="用户名小老弟"
                 android:textColor="@color/common_white"
-                android:textSize="17sp"
-                android:text="用户名小老弟" />
+                android:textSize="17sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:visibility="gone"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/mIvIcon"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/mTvName"
@@ -178,6 +178,31 @@
 
 
         <RelativeLayout
+            android:id="@+id/mRlHunterAudit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/common_white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="申请成为猎刃"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_keyboard_arrow_right_gray_24dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/mRlMsgSetting"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -201,7 +226,8 @@
                 android:src="@drawable/ic_keyboard_arrow_right_gray_24dp" />
 
         </RelativeLayout>
-   <RelativeLayout
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="1dp"
@@ -253,11 +279,11 @@
             android:id="@+id/mBtExitLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_margin="15dp"
             android:background="@drawable/btn_common_selector"
             android:text="退出登陆"
-            android:textColor="@color/common_white" />
+            android:textColor="@color/common_white"
+            android:visibility="gone" />
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
