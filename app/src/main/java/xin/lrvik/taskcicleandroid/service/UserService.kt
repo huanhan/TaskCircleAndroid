@@ -28,7 +28,14 @@ interface UserService {
 
     fun updateIcon(header: String): Observable<Result>
 
-    fun upAudit(): Observable<Result>
+    fun upAudit(idCard: String,
+                address: String,
+                phone: String,
+                idCardImgFront: String,
+                idCardImgBack: String): Observable<Result>
+
+    fun hunterAudit(): Observable<HunterAudit>
 
     fun register(username: String, password: String, imageCode: String): Observable<Result>
+
 }

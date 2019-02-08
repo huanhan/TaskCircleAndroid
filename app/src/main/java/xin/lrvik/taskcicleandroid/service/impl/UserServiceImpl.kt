@@ -1,6 +1,7 @@
 package xin.lrvik.taskcicleandroid.service.impl
 
 import io.reactivex.Observable
+import xin.lrvik.taskcicleandroid.data.protocol.HunterAudit
 import xin.lrvik.taskcicleandroid.data.protocol.Result
 import xin.lrvik.taskcicleandroid.data.protocol.User
 import xin.lrvik.taskcicleandroid.data.protocol.enums.UserGender
@@ -14,6 +15,7 @@ import javax.inject.Inject
  *
  */
 class UserServiceImpl @Inject constructor() : UserService {
+
 
     @Inject
     lateinit var userRepository: UserRepository
@@ -41,8 +43,16 @@ class UserServiceImpl @Inject constructor() : UserService {
         return userRepository.updateIcon(header)
     }
 
-    override fun upAudit(): Observable<Result> {
-        return userRepository.upAudit()
+    override fun upAudit(idCard: String,
+                         address: String,
+                         phone: String,
+                         idCardImgFront: String,
+                         idCardImgBack: String): Observable<Result> {
+        return userRepository.upAudit(idCard, address, phone, idCardImgFront, idCardImgBack)
+    }
+
+    override fun hunterAudit(): Observable<HunterAudit> {
+        return userRepository.hunterAudit()
     }
 
     override fun register(username: String, password: String, imageCode: String): Observable<Result> {

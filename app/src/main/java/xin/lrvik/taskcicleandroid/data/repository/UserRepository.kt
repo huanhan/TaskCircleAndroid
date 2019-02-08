@@ -41,8 +41,16 @@ class UserRepository @Inject constructor() {
         return RetrofitFactory.instance.create(UserApi::class.java).updateIcon(ModifyUserHeader(UserInfo.userId, header), UserInfo.userId)
     }
 
-    fun upAudit(): Observable<Result> {
-        return RetrofitFactory.instance.create(UserApi::class.java).upAudit(UserInfo.userId)
+    fun upAudit(idCard: String,
+                address: String,
+                phone: String,
+                idCardImgFront: String,
+                idCardImgBack: String): Observable<Result> {
+        return RetrofitFactory.instance.create(UserApi::class.java).upAudit(HunterAuditReq(idCard, address, phone, idCardImgFront, idCardImgBack), UserInfo.userId)
+    }
+
+    fun hunterAudit(): Observable<HunterAudit> {
+        return RetrofitFactory.instance.create(UserApi::class.java).hunterAudit(UserInfo.userId)
     }
 
     fun register(username: String, password: String, imageCode: String): Observable<Result> {

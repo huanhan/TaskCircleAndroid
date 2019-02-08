@@ -14,19 +14,22 @@ interface UserApi {
     fun detail(@Path("id") id: Long): Observable<User>
 
     @PUT("/app/user/{id}")
-    fun update(@Body info: ModifyUser,@Path("id") id: Long): Observable<Result>
+    fun update(@Body info: ModifyUser, @Path("id") id: Long): Observable<Result>
 
     @PUT("/app/user/header/{id}")
-    fun updateIcon(@Body info: ModifyUserHeader,@Path("id") id: Long): Observable<Result>
-
-    @POST("/app/user/upAudit/{id}")
-    fun upAudit(@Path("id") id: Long): Observable<Result>
+    fun updateIcon(@Body info: ModifyUserHeader, @Path("id") id: Long): Observable<Result>
 
     @POST("app/user/register")
     fun register(@Body user: RegisterUser): Observable<Result>
 
     @GET("app/user/code/Image")
     fun validateCode(): Observable<Result>
+
+    @GET("app/user/hunterAudit/{id}")
+    fun hunterAudit(@Path("id") id: Long): Observable<HunterAudit>
+
+    @POST("app/user/upAudit/{id}")
+    fun upAudit(@Body req: HunterAuditReq, @Path("id") id: Long): Observable<Result>
 
 
 }
