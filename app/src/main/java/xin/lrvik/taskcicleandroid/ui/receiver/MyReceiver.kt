@@ -1,5 +1,6 @@
 package xin.lrvik.taskcicleandroid.ui.receiver
 
+import android.app.ActivityManager
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -26,6 +27,7 @@ import android.support.v4.content.ContextCompat.getSystemService
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
 import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication
+import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication.Companion.context
 import xin.lrvik.taskcicleandroid.ui.activity.*
 import xin.lrvik.taskcicleandroid.util.NotificationUtils
 
@@ -54,7 +56,13 @@ class MyReceiver : BroadcastReceiver() {
 
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED == intent.action) {
                 Log.d(TAG, "[MyReceiver] 用户点击打开了通知")
-
+                if (!getCurrentTask(context)) {
+                    var i = Intent(context, MainActivity::class.java)
+                    i.putExtras(bundle)
+                    //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    context.startActivity(i)
+                }
             } else {
                 Log.d(TAG, "[MyReceiver] Unhandled intent - " + intent.action!!)
             }
@@ -62,6 +70,22 @@ class MyReceiver : BroadcastReceiver() {
             e.printStackTrace()
         }
 
+    }
+
+    private fun getCurrentTask(context: Context): Boolean {
+
+        var activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        //获取当前所有存活task的信息
+        var appProcessInfos = activityManager.getRunningTasks(Integer.MAX_VALUE)
+
+        //遍历，若task的name与当前task的name相同，则返回true，否则，返回false
+        for (process in appProcessInfos) {
+            if (process.baseActivity.packageName == context.packageName
+                    || process.topActivity.packageName == context.packageName) {
+                return true
+            }
+        }
+        return false
     }
 
     //send msg to MainActivity
@@ -94,6 +118,8 @@ class MyReceiver : BroadcastReceiver() {
             }
             PushMsgState.NOTICE -> {//有关系到消息通知的
                 //todo 通知相关的推送
+                //NotificationUtils(context).sendNotification()
+
             }
             PushMsgState.CHAT -> {//有关系到聊天消息的通知
                 //如果当前聊天activity是前台显示，则将消息传递给他
@@ -102,7 +128,7 @@ class MyReceiver : BroadcastReceiver() {
                     msgIntent.putExtra(ChatActivity.CHATMSG, extra)
 
                     LocalBroadcastManager.getInstance(context).sendBroadcast(msgIntent)
-                }else{//否则打开该消息界面
+                } else {//否则打开该消息界面
                     var chatMsg = Gson().fromJson(extra, ChatMsg::class.java)
                     var intent = Intent(BaseApplication.context, ChatActivity::class.java)
                     intent.putExtra(ChatActivity.HUNTERID, chatMsg.hunterId)
@@ -110,7 +136,6 @@ class MyReceiver : BroadcastReceiver() {
                     intent.putExtra(ChatActivity.USERID, chatMsg.userId)
                     NotificationUtils(context).sendNotification(chatMsg.title, chatMsg.content, intent)
                 }
-
 
 
             }

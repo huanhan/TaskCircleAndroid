@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
+import xin.lrvik.taskcicleandroid.baselibrary.common.AppManger
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseActivity
 import xin.lrvik.taskcicleandroid.ui.fragment.HomeFragment
 import xin.lrvik.taskcicleandroid.ui.fragment.MesFragment
@@ -135,7 +136,7 @@ class MainActivity : BaseActivity() {
             }, 2000) // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
 
         } else {
-            finish()
+            AppManger.instance.exitApp(this)
             System.exit(0)
         }
     }
