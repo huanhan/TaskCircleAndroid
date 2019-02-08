@@ -98,7 +98,7 @@ class TaskDetailActivity : BaseMvpActivity<TaskDetailPresenter>(), TaskDetailVie
         }
 
         //如果用户id不是自己则展示接单按钮
-        mBtnAccept.visibility = if (UserInfo.userId != data.userId) View.VISIBLE else View.GONE
+        mBtnAccept.visibility = if (UserInfo.userId != data.userId && data.pick) View.VISIBLE else View.GONE
 
         //如果任务的用户id是自己则展示查看接取猎刃
         mBtnQueryHunter.visibility = if (UserInfo.userId === data.userId) View.VISIBLE else View.GONE
@@ -184,7 +184,14 @@ class TaskDetailActivity : BaseMvpActivity<TaskDetailPresenter>(), TaskDetailVie
         }
 
         mBtnAccept.onClick {
-            mPresenter.acceptTask(taskid)
+            if (UserInfo.isHunter) {
+                mPresenter.acceptTask(taskid)
+            } else {
+                alert("还不是猎刃，无法接取任务。是否申请猎刃权限？") {
+                    positiveButton("是") { startActivity<HunterAuditActivity>() }
+                    negativeButton("否") { }
+                }.show()
+            }
         }
 
         mBtnQueryHunter.onClick {

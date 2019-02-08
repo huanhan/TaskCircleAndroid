@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.activity_user_eva_list.*
 import org.jetbrains.anko.startActivity
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
+import xin.lrvik.taskcicleandroid.common.UserInfo
 import xin.lrvik.taskcicleandroid.ui.adapter.VpAdapter
 import xin.lrvik.taskcicleandroid.ui.fragment.*
 import java.util.*
@@ -33,6 +34,8 @@ class UserEvaListActivity : AppCompatActivity() {
         getData()
         mViewPager.adapter = VpAdapter(supportFragmentManager, mFragments, mTitles)
         mTabLayout.setupWithViewPager(mViewPager)
+
+        if (UserInfo.isHunter) mFabHunter.show() else mFabHunter.hide()
 
         mFabHunter.onClick {
             startActivity<HunterEvaListActivity>()

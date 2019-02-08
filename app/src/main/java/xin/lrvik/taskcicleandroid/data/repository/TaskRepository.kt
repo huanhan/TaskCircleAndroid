@@ -57,8 +57,8 @@ class TaskRepository @Inject constructor() {
                 IssueTaskReq(id, money, peopleNumber, beginTime, deadline, permitAbandonMinute, longitude, latitude, address, taskRework, compensate, compensateMoney))
     }
 
-    fun queryTaskDetail(id: String): Observable<TaskDetail> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).queryTaskDetail(id)
+    fun queryTaskDetail(taskId: String): Observable<TaskDetail> {
+        return RetrofitFactory.instance.create(TaskApi::class.java).queryTaskDetail(taskId, UserInfo.userId)
     }
 
     fun queryByState(state: String, page: Int, size: Int): Observable<Page<Task>> {

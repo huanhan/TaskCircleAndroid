@@ -272,8 +272,6 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
                 mPresenter.queryTaskDetail(taskid)
 
-                mBtnAdd.text = "接取任务"
-
                 actionBar?.title = "查看任务"
 
                 mFlowlayout.setOnTagClickListener(null)
@@ -292,7 +290,6 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
                 mPresenter.queryTaskDetail(taskid)
 
-                mBtnAdd.text = "保存任务"
                 actionBar?.title = "保存任务"
             }
             Mode.CREATE -> {
@@ -306,7 +303,6 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                 mRvTaskStepAdapter.enableSwipeItem()
                 mRvTaskStepAdapter.enableDragItem(mItemTouchHelper)
 
-                mBtnAdd.text = "新建任务"
                 actionBar?.title = "新建任务"
             }
         }

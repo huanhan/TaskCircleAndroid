@@ -12,5 +12,5 @@ object UserInfo {
     var money: Float = 0.0f
     var history: Float = 0f
     var comment:Int = 0
-    var isHunter = true
+    var isHunter = false
 }

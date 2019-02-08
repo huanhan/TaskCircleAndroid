@@ -30,8 +30,8 @@ interface TaskApi {
     fun issueTask(@Path("id") id: Long, @Body req: IssueTaskReq): Observable<TaskDetail>
 
     //根据任务id查询任务详细
-    @GET("app/task/{id}")
-    fun queryTaskDetail(@Path("id") id: String): Observable<TaskDetail>
+    @GET("app/task/{taskId}/{id}")
+    fun queryTaskDetail(@Path("taskId") taskId: String, @Path("id") id: Long): Observable<TaskDetail>
 
     //查询分类下所有的已发布任务 http://localhost:8080/app/task/issue/9/0/2
     @GET("app/task/issue/{classid}/{page}/{size}")
@@ -49,9 +49,9 @@ interface TaskApi {
     //搜索
     @GET("app/task/search/{key}/{page}/{size}/{id}")
     fun search(@Path("key") key: String,
-                     @Path("page") page: Int,
-                     @Path("size") size: Int,
-                     @Path("id") id: Long): Observable<Page<Task>>
+               @Path("page") page: Int,
+               @Path("size") size: Int,
+               @Path("id") id: Long): Observable<Page<Task>>
 
     //将用户的任务提交给管理员审核
     @GET("app/task/user/upAudit/{taskId}/{id}")

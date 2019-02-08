@@ -13,13 +13,13 @@ import org.jetbrains.anko.support.v4.startActivity
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.common.BaseConstant.Companion.KEY_SP_HISTORY
 import xin.lrvik.taskcicleandroid.baselibrary.ext.loadCircleUrl
-import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseMvpFragment
 import xin.lrvik.taskcicleandroid.baselibrary.utils.AppPrefsUtils
 import xin.lrvik.taskcicleandroid.common.UserInfo
 import xin.lrvik.taskcicleandroid.data.protocol.TaskHistory
 import xin.lrvik.taskcicleandroid.data.protocol.User
+import xin.lrvik.taskcicleandroid.data.protocol.enums.UserCategory
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.MyPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.MyView
@@ -36,7 +36,7 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
     override fun onUserResult(data: User) {
         UserInfo.money = data.money ?: 0f
         UserInfo.userId = data.id ?: 0
-
+        UserInfo.isHunter = data.category == UserCategory.HUNTER
         mTvUserName.visibility = View.VISIBLE
         mBtExitLogin.visibility = View.VISIBLE
         mTvLoginOrRegist.visibility = View.GONE
@@ -44,6 +44,9 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
         mTvMoney.text = "${data.money}元"
 
         mIvIcon.loadCircleUrl(data.headImg ?: "")
+
+
+        mRlHunterAudit.visibility = if (UserInfo.isHunter) View.GONE else View.VISIBLE
 
         var historys = AppPrefsUtils.getString(KEY_SP_HISTORY)
         if (historys.isNullOrEmpty()) {
