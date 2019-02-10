@@ -4,12 +4,21 @@ import com.google.gson.*
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.Headers
+import retrofit2.http.POST
 import xin.lrvik.taskcicleandroid.baselibrary.common.BaseConstant
+import xin.lrvik.taskcicleandroid.baselibrary.common.UserInfo
+import xin.lrvik.taskcicleandroid.baselibrary.data.protocol.TokenResult
 import xin.lrvik.taskcicleandroid.baselibrary.rx.BaseException
 import xin.lrvik.taskcicleandroid.baselibrary.util.DeviceUtil
+import xin.lrvik.taskcicleandroid.baselibrary.utils.AppPrefsUtils
+import xin.lrvik.taskcicleandroid.baselibrary.utils.DateUtils
 import java.lang.Exception
 import java.sql.Timestamp
 import java.util.concurrent.TimeUnit
@@ -33,32 +42,56 @@ class RetrofitFactory private constructor() {
 
         //增加过滤器，给每个请求增加请求头
         interceptor = Interceptor { chain ->
-            val request = chain.request()
+            val requestBuilder = chain.request()
                     .newBuilder()
                     .addHeader("Content-Type", "application/json")
                     .addHeader("charset", "utf-8")
                     .addHeader("deviceId", DeviceUtil.getDeviceId())
-                    //.addHeader("token",AppPrefsUtils.getString(BaseConstant.KEY_SP_TOKEN))
-                    .build()
+            if (!UserInfo.access_token.isNullOrEmpty()) {
+                requestBuilder.addHeader("Authorization", "bearer ${UserInfo.access_token}")
+            }
+
+            var request = requestBuilder.build()
+
             var response = chain.proceed(request)
             response?.let {
                 //请求操作失败异常处理
-                if (it.code() != 200) {
+                if (it.code() == 401) {
+                    //刷新令牌重试
+                    UserInfo.access_token = ""
+                    var tokenResult = instance.create(TokenApi::class.java)
+                            .refreshToken(refresh_token = UserInfo.refresh_token)
+                            .execute().body()
+
+                    tokenResult?.let {
+                        //设置refreshtoken失效时间6天
+                        tokenResult.expires_out = (DateUtils.curTime + (1000 * 60 * 60 * 24 * 6))
+                        AppPrefsUtils.putString("token", Gson().toJson(tokenResult))
+
+                        UserInfo.userId = tokenResult.userId.toLong()
+                        UserInfo.access_token = tokenResult.access_token
+                        UserInfo.refresh_token = tokenResult.refresh_token
+
+                        var newRequest = chain.request().newBuilder().addHeader("Authorization", "bearer ${UserInfo.access_token}").build()
+                        return@Interceptor chain.proceed(newRequest)
+                    }
+
+
+                } else if (it.code() != 200) {
 
                     var errMes = ""
+                    var result = it.body()?.string().toString()
 
                     try {
-                        var result = it.body()?.string().toString()
                         var errArray = JsonParser().parse(result).asJsonObject["messages"].asJsonArray
                         for ((index, ele) in errArray.withIndex()) {
                             errMes += ele.asJsonObject["message"].asString + if (errArray.size() - 1 == index) "" else ","
                         }
                     } catch (e: Exception) {
-                        throw BaseException(it.code(), "未知异常")
+                        throw BaseException(it.code(), result)
                     }
-
                     throw BaseException(it.code(), errMes)
-
+                } else {
 
                 }
             }
@@ -97,4 +130,14 @@ class RetrofitFactory private constructor() {
     //获取获取请求服务
     fun <T> create(service: Class<T>): T = retrofitGson.create(service)
 
+}
+
+interface TokenApi {
+    //刷新token
+    @FormUrlEncoded
+    @POST("oauth/token")
+    @Headers("Authorization:Basic dGNBcHA6dGNhcHBzZWNyZXQ=")
+    fun refreshToken(@Field("grant_type") grant_type: String = "refresh_token",
+                     @Field("refresh_token") refresh_token: String,
+                     @Field("scop") scop: String = "all"): Call<TokenResult>
 }

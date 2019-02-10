@@ -16,7 +16,7 @@ import xin.lrvik.taskcicleandroid.baselibrary.ext.loadCircleUrl
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseMvpFragment
 import xin.lrvik.taskcicleandroid.baselibrary.utils.AppPrefsUtils
-import xin.lrvik.taskcicleandroid.common.UserInfo
+import xin.lrvik.taskcicleandroid.baselibrary.common.UserInfo
 import xin.lrvik.taskcicleandroid.data.protocol.TaskHistory
 import xin.lrvik.taskcicleandroid.data.protocol.User
 import xin.lrvik.taskcicleandroid.data.protocol.enums.UserCategory

@@ -24,6 +24,7 @@ import xin.lrvik.easybanner.Transformer
 import xin.lrvik.easybanner.adapter.viewpager.EasyImageAdapter
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.common.BaseConstant.Companion.KEY_SP_HISTORY
+import xin.lrvik.taskcicleandroid.baselibrary.common.UserInfo
 import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.fragment.BaseMvpFragment

@@ -1,9 +1,6 @@
 package xin.lrvik.taskcicleandroid.service
 
 import io.reactivex.Observable
-import xin.lrvik.taskcicleandroid.baselibrary.data.net.RetrofitFactory
-import xin.lrvik.taskcicleandroid.common.UserInfo
-import xin.lrvik.taskcicleandroid.data.api.TaskApi
 import xin.lrvik.taskcicleandroid.data.protocol.*
 
 /**

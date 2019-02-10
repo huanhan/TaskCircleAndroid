@@ -7,12 +7,43 @@ import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
-import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseActivity
 import cn.jpush.android.api.JPushInterface
-import xin.lrvik.taskcicleandroid.common.UserInfo
+import com.google.gson.Gson
+import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
+import xin.lrvik.taskcicleandroid.baselibrary.utils.AppPrefsUtils
+import xin.lrvik.taskcicleandroid.baselibrary.common.UserInfo
+import xin.lrvik.taskcicleandroid.baselibrary.data.protocol.TokenResult
+import xin.lrvik.taskcicleandroid.baselibrary.utils.DateUtils
+import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
+import xin.lrvik.taskcicleandroid.presenter.LoginPresenter
+import xin.lrvik.taskcicleandroid.presenter.view.LoginView
 
 
-class LoginActivity : BaseActivity() {
+class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginView {
+    override fun injectComponent() {
+        DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
+        mPresenter.mView = this
+    }
+
+    override fun onResult(result: TokenResult) {
+        finish()
+        startActivity<MainActivity>()
+        //todo 设置极光别名，到时候要加入到登陆信息回调然后设置别名
+        JPushInterface.setAlias(this@LoginActivity, 0, "app_${result.userId}")
+
+        //设置refreshtoken失效时间6天
+        result.expires_out = (DateUtils.curTime + (1000 * 60 * 60 * 24 * 6))
+
+        //测试30秒后重新登录
+//        result.expires_out= (DateUtils.curTime+(1000*30))
+
+        AppPrefsUtils.putString("token", Gson().toJson(result))
+
+        UserInfo.userId = result.userId.toLong()
+        UserInfo.access_token = result.access_token
+        UserInfo.refresh_token = result.refresh_token
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,11 +65,9 @@ class LoginActivity : BaseActivity() {
 
         mBtnLogin.onClick {
             if (validation()) {
-                //todo 调用登陆逻辑
-                //todo 设置极光别名，到时候要加入到登陆信息回调然后设置别名
-                JPushInterface.setAlias(this@LoginActivity, 0, "app_${mEtMobile.text}")
-                //todo 本地对象赋值
-                UserInfo.userId = mEtMobile.text.toString().toLong()
+                mPresenter.login(mEtMobile.text.toString(), mEtPwd.text.toString())
+
+
             }
         }
     }

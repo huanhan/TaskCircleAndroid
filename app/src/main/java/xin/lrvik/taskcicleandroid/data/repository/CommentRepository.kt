@@ -2,7 +2,7 @@ package xin.lrvik.taskcicleandroid.data.repository
 
 import io.reactivex.Observable
 import xin.lrvik.taskcicleandroid.baselibrary.data.net.RetrofitFactory
-import xin.lrvik.taskcicleandroid.common.UserInfo
+import xin.lrvik.taskcicleandroid.baselibrary.common.UserInfo
 import xin.lrvik.taskcicleandroid.data.api.CommentApi
 import xin.lrvik.taskcicleandroid.data.protocol.*
 import javax.inject.Inject

@@ -2,12 +2,11 @@ package xin.lrvik.taskcicleandroid.data.repository
 
 import io.reactivex.Observable
 import xin.lrvik.taskcicleandroid.baselibrary.data.net.RetrofitFactory
-import xin.lrvik.taskcicleandroid.common.UserInfo
+import xin.lrvik.taskcicleandroid.baselibrary.common.UserInfo
 import xin.lrvik.taskcicleandroid.data.api.ChatApi
 import xin.lrvik.taskcicleandroid.data.protocol.AddChatReq
 import xin.lrvik.taskcicleandroid.data.protocol.Chat
 import xin.lrvik.taskcicleandroid.data.protocol.Page
-import xin.lrvik.taskcicleandroid.data.protocol.Result
 import javax.inject.Inject
 
 /**
@@ -28,6 +27,6 @@ class ChatRepository @Inject constructor() {
                  userId: Long,
                  taskId: String,
                  context: String): Observable<Chat> {
-        return RetrofitFactory.instance.create(ChatApi::class.java).saveChat(AddChatReq(hunterId, userId, taskId, context),UserInfo.userId)
+        return RetrofitFactory.instance.create(ChatApi::class.java).saveChat(AddChatReq(hunterId, userId, taskId, context), UserInfo.userId)
     }
 }

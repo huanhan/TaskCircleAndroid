@@ -1,7 +1,7 @@
 package xin.lrvik.taskcicleandroid.data.protocol
 
 import com.chad.library.adapter.base.entity.MultiItemEntity
-import xin.lrvik.taskcicleandroid.common.UserInfo
+import xin.lrvik.taskcicleandroid.baselibrary.common.UserInfo
 import java.sql.Timestamp
 
 /**

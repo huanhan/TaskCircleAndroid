@@ -1,9 +1,9 @@
 package xin.lrvik.taskcicleandroid.service
 
 import io.reactivex.Observable
+import xin.lrvik.taskcicleandroid.baselibrary.data.protocol.TokenResult
 import xin.lrvik.taskcicleandroid.data.protocol.*
 import xin.lrvik.taskcicleandroid.data.protocol.enums.UserGender
-import java.sql.Timestamp
 
 /**
  * Author by 豢涵, Email huanhanfu@126.com, Date on 2019/2/3.
@@ -38,4 +38,7 @@ interface UserService {
 
     fun register(username: String, password: String, imageCode: String): Observable<Result>
 
+    fun login(username: String, password: String): Observable<TokenResult>
+
+    fun refreshToken(refreshToken: String): Observable<TokenResult>
 }

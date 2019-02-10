@@ -1,7 +1,6 @@
 package xin.lrvik.taskcicleandroid.ui.adapter
 
 import android.text.format.DateFormat
-import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -12,7 +11,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.isShow
 import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
-import xin.lrvik.taskcicleandroid.common.UserInfo
+import xin.lrvik.taskcicleandroid.baselibrary.common.UserInfo
 import xin.lrvik.taskcicleandroid.data.protocol.Task
 import xin.lrvik.taskcicleandroid.data.protocol.enums.TaskState
 

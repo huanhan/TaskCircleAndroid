@@ -2,6 +2,7 @@ package xin.lrvik.taskcicleandroid.data.api
 
 import io.reactivex.Observable
 import retrofit2.http.*
+import xin.lrvik.taskcicleandroid.baselibrary.data.protocol.TokenResult
 import xin.lrvik.taskcicleandroid.data.protocol.*
 
 /**
@@ -31,5 +32,19 @@ interface UserApi {
     @POST("app/user/upAudit/{id}")
     fun upAudit(@Body req: HunterAuditReq, @Path("id") id: Long): Observable<Result>
 
+    //登录
+    //http://192.168.2.209:8080/authentication/form  //Content-Type:application/x-www-form-urlencoded;
+    @FormUrlEncoded
+    @POST("authentication/form")
+    @Headers("Authorization:Basic dGNBcHA6dGNhcHBzZWNyZXQ=")
+    fun login(@Field("username") username: String, @Field("password") password: String): Observable<TokenResult>
+
+    //刷新token
+    @FormUrlEncoded
+    @POST("oauth/token")
+    @Headers("Authorization:Basic dGNBcHA6dGNhcHBzZWNyZXQ=")
+    fun refreshToken(@Field("grant_type") grant_type: String = "refresh_token",
+                     @Field("refresh_token") refresh_token: String,
+                     @Field("scop") scop: String = "all"): Observable<TokenResult>
 
 }

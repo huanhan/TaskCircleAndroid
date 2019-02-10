@@ -1,6 +1,5 @@
 package xin.lrvik.taskcicleandroid.ui.activity
 
-import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.OrientationHelper
@@ -8,11 +7,9 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_post_task.*
 import kotlinx.android.synthetic.main.fragment_hunter_task_state.*
 import org.jetbrains.anko.*
-import org.jetbrains.anko.support.v4.startActivity
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication.Companion.context
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
-import xin.lrvik.taskcicleandroid.common.UserInfo
 import xin.lrvik.taskcicleandroid.data.protocol.HunterTask
 import xin.lrvik.taskcicleandroid.data.protocol.Page
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent

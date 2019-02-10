@@ -3,11 +3,11 @@ package xin.lrvik.taskcicleandroid.service.impl
 import io.reactivex.Observable
 import xin.lrvik.taskcicleandroid.data.protocol.HunterAudit
 import xin.lrvik.taskcicleandroid.data.protocol.Result
+import xin.lrvik.taskcicleandroid.baselibrary.data.protocol.TokenResult
 import xin.lrvik.taskcicleandroid.data.protocol.User
 import xin.lrvik.taskcicleandroid.data.protocol.enums.UserGender
 import xin.lrvik.taskcicleandroid.data.repository.UserRepository
 import xin.lrvik.taskcicleandroid.service.UserService
-import java.sql.Timestamp
 import javax.inject.Inject
 
 /**
@@ -15,7 +15,6 @@ import javax.inject.Inject
  *
  */
 class UserServiceImpl @Inject constructor() : UserService {
-
 
     @Inject
     lateinit var userRepository: UserRepository
@@ -57,5 +56,13 @@ class UserServiceImpl @Inject constructor() : UserService {
 
     override fun register(username: String, password: String, imageCode: String): Observable<Result> {
         return userRepository.register(username, password, imageCode)
+    }
+
+    override fun login(username: String, password: String): Observable<TokenResult> {
+        return userRepository.login(username, password)
+    }
+
+    override fun refreshToken(refreshToken: String): Observable<TokenResult> {
+        return userRepository.refreshToken(refreshToken)
     }
 }

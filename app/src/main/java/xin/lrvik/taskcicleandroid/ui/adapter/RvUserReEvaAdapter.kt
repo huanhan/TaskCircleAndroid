@@ -6,10 +6,8 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.iarcuschin.simpleratingbar.SimpleRatingBar
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.loadCircleUrl
-import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
 import xin.lrvik.taskcicleandroid.baselibrary.utils.DateUtils
 import xin.lrvik.taskcicleandroid.baselibrary.utils.DateUtils.FORMAT_SHORT
-import xin.lrvik.taskcicleandroid.common.UserInfo
 import xin.lrvik.taskcicleandroid.data.protocol.CommentUser
 
 /**

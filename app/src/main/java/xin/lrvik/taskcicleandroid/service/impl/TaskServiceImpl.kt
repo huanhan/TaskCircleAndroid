@@ -1,14 +1,9 @@
 package xin.lrvik.taskcicleandroid.service.impl
 
 import io.reactivex.Observable
-import retrofit2.http.Path
-import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication.Companion.context
-import xin.lrvik.taskcicleandroid.common.UserInfo.latitude
-import xin.lrvik.taskcicleandroid.common.UserInfo.longitude
 import xin.lrvik.taskcicleandroid.data.protocol.*
 import xin.lrvik.taskcicleandroid.data.repository.TaskRepository
 import xin.lrvik.taskcicleandroid.service.TaskService
-import java.sql.Timestamp
 import javax.inject.Inject
 
 /**

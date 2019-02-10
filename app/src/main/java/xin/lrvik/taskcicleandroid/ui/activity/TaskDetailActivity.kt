@@ -11,15 +11,13 @@ import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback
 import kotlinx.android.synthetic.main.activity_task_detail.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.support.v4.alert
-import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.isShow
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
 import xin.lrvik.taskcicleandroid.baselibrary.utils.DateUtils
-import xin.lrvik.taskcicleandroid.common.UserInfo
+import xin.lrvik.taskcicleandroid.baselibrary.common.UserInfo
 import xin.lrvik.taskcicleandroid.data.protocol.TaskDetail
 import xin.lrvik.taskcicleandroid.data.protocol.TaskStep
 import xin.lrvik.taskcicleandroid.data.protocol.enums.TaskState

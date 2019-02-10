@@ -1,15 +1,12 @@
 package xin.lrvik.taskcicleandroid.data.repository
 
 import io.reactivex.Observable
-import retrofit2.Call
-import retrofit2.http.*
 import xin.lrvik.taskcicleandroid.baselibrary.data.net.RetrofitFactory
-import xin.lrvik.taskcicleandroid.common.UserInfo
-import xin.lrvik.taskcicleandroid.data.api.HomeApi
+import xin.lrvik.taskcicleandroid.baselibrary.common.UserInfo
+import xin.lrvik.taskcicleandroid.baselibrary.data.protocol.TokenResult
 import xin.lrvik.taskcicleandroid.data.api.UserApi
 import xin.lrvik.taskcicleandroid.data.protocol.*
 import xin.lrvik.taskcicleandroid.data.protocol.enums.UserGender
-import java.sql.Timestamp
 import javax.inject.Inject
 
 /**
@@ -56,4 +53,14 @@ class UserRepository @Inject constructor() {
     fun register(username: String, password: String, imageCode: String): Observable<Result> {
         return RetrofitFactory.instance.create(UserApi::class.java).register(RegisterUser(username, password, imageCode))
     }
+
+    fun login(username: String, password: String): Observable<TokenResult> {
+        return RetrofitFactory.instance.create(UserApi::class.java).login(username, password)
+    }
+
+    fun refreshToken(refreshToken: String): Observable<TokenResult> {
+        return RetrofitFactory.instance.create(UserApi::class.java).refreshToken(refresh_token = refreshToken)
+    }
+
+
 }

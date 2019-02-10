@@ -14,13 +14,10 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_chat.*
 import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
-import xin.lrvik.taskcicleandroid.R.mipmap.chat
-import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
-import xin.lrvik.taskcicleandroid.baselibrary.utils.DateUtils
-import xin.lrvik.taskcicleandroid.common.UserInfo
-import xin.lrvik.taskcicleandroid.common.UserInfo.userId
+import xin.lrvik.taskcicleandroid.baselibrary.common.UserInfo
+import xin.lrvik.taskcicleandroid.baselibrary.common.UserInfo.userId
 import java.util.*
 import xin.lrvik.taskcicleandroid.data.protocol.Chat
 import xin.lrvik.taskcicleandroid.data.protocol.ChatMsg

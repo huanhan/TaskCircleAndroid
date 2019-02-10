@@ -42,20 +42,6 @@ class MainActivity : BaseActivity() {
             requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                     REQUEST_CODE1)
         }*/
-
-        RxPermissions(this@MainActivity)
-                .request(Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_PHONE_STATE,
-                        Manifest.permission.CAMERA)
-                .subscribe {
-                    if (!it) {
-                        toast("拒绝了应用需要的权限，请在应用权限内重新授予")
-                        finish()
-                    }
-
-                }
-
         initFragment()
         initView()
     }
