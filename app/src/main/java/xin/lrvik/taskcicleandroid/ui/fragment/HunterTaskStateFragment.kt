@@ -187,7 +187,6 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
                         }.show()
                     }
                     R.id.mBtChat -> {
-                        //todo 聊天
                         startActivity<ChatActivity>(ChatActivity.HUNTERID to task.hunterId!!,
                                 ChatActivity.TASKID to task.taskId!!,
                                 ChatActivity.USERID to task.userId!!)

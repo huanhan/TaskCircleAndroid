@@ -117,7 +117,6 @@ class MyReceiver : BroadcastReceiver() {
                 NotificationUtils(context).sendNotification(task.title, task.content, intent)
             }
             PushMsgState.NOTICE -> {//有关系到消息通知的
-                //todo 通知相关的推送
                 //NotificationUtils(context).sendNotification()
 
             }
@@ -136,8 +135,6 @@ class MyReceiver : BroadcastReceiver() {
                     intent.putExtra(ChatActivity.USERID, chatMsg.userId)
                     NotificationUtils(context).sendNotification(chatMsg.title, chatMsg.content, intent)
                 }
-
-
             }
             else -> {
             }

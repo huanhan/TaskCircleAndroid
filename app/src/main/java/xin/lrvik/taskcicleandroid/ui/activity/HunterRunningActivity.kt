@@ -164,7 +164,6 @@ class HunterRunningActivity : BaseMvpActivity<HunterRunningPresenter>(), HunterR
                         }.show()
                     }
                     R.id.mBtChat -> {
-                        //todo 聊天
                         startActivity<ChatActivity>(ChatActivity.HUNTERID to hunterTask.hunterId,
                                 ChatActivity.TASKID to hunterTask.taskId,
                                 ChatActivity.USERID to hunterTask.userId)

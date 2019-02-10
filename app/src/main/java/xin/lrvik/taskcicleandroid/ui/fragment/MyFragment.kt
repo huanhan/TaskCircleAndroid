@@ -69,12 +69,10 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
         }
 
         mTvUserName.onClick {
-            //todo 跳转到个人信息
             startActivity<UserDetailActivity>()
         }
 
         mIvIcon.onClick {
-            //todo 跳转到个人信息
             startActivity<UserDetailActivity>()
         }
 
@@ -83,8 +81,9 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
         }
 
         mBtExitLogin.onClick {
-            //todo 退出登陆
-//            NotificationUtils(activity!!).sendNotification("test", "测试通知")
+            AppPrefsUtils.putString("token","")
+            activity!!.finish()
+            startActivity<LoginActivity>()
         }
 
         mRlEva.onClick {

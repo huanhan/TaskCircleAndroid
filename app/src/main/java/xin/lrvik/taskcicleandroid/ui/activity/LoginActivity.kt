@@ -28,7 +28,6 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginView {
     override fun onResult(result: TokenResult) {
         finish()
         startActivity<MainActivity>()
-        //todo 设置极光别名，到时候要加入到登陆信息回调然后设置别名
         JPushInterface.setAlias(this@LoginActivity, 0, "app_${result.userId}")
 
         //设置refreshtoken失效时间6天

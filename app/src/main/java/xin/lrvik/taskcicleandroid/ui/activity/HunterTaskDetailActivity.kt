@@ -106,7 +106,6 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
         }
 
         mBtChat.onClick {
-            // todo 跳转聊天
             startActivity<ChatActivity>(ChatActivity.HUNTERID to data.hunterId,
                     ChatActivity.TASKID to data.taskId,
                     ChatActivity.USERID to data.userId)
