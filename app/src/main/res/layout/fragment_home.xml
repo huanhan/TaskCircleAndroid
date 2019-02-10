@@ -1,138 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mSwipeRefresh"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/common_white">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp">
+        android:background="@color/common_white">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp">
 
-            <TextView
-                android:id="@+id/mTvAddress"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:drawableLeft="@mipmap/location"
-                android:drawablePadding="1dp"
-                android:ellipsize="end"
-                android:maxEms="10"
-                android:singleLine="true"
-                android:text="暂无地址"
-                android:textSize="18sp" />
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/mTvAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:drawableLeft="@mipmap/location"
+                    android:drawablePadding="1dp"
+                    android:ellipsize="end"
+                    android:maxEms="10"
+                    android:singleLine="true"
+                    android:text="暂无地址"
+                    android:textSize="18sp" />
+
+                <RelativeLayout
+                    android:id="@+id/mRLSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_ellipse_gray"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_centerInParent="true"
+                        android:drawableLeft="@drawable/ic_search_gray_24dp"
+                        android:drawablePadding="3dp"
+                        android:gravity="center"
+                        android:text="搜索任务" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <xin.lrvik.easybanner.EasyViewPager
+                        android:id="@+id/mEvpBanner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:auto_play="true"
+                        app:delay_time="3000"
+                        app:is_loop="true">
+
+                    </xin.lrvik.easybanner.EasyViewPager>
+
+
+                    <xin.lrvik.easybanner.indicator.EasyDotIndicator
+                        android:id="@+id/mEdiBanner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="8dp"
+                        app:def_radius="1dp"
+                        app:sel_color="@color/colorPrimary"
+                        app:sel_radius="1dp" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <xin.lrvik.easybanner.EasyViewPager
+                    android:id="@+id/mEvpType"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"></xin.lrvik.easybanner.EasyViewPager>
+
+                <xin.lrvik.easybanner.indicator.EasyDotIndicator
+                    android:id="@+id/mEdiType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:sel_color="@color/colorPrimary" />
+            </LinearLayout>
 
             <RelativeLayout
-                android:id="@+id/mRLSearch"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/shape_ellipse_gray"
-                android:padding="5dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_centerInParent="true"
-                    android:drawableLeft="@drawable/ic_search_gray_24dp"
-                    android:drawablePadding="3dp"
-                    android:gravity="center"
-                    android:text="搜索任务" />
-            </RelativeLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="10dp"
+                    android:text="推荐任务"
+                    android:textColor="@color/common_black"
+                    android:textSize="23sp" />
 
-        </LinearLayout>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="10dp"
-            app:cardCornerRadius="5dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <xin.lrvik.easybanner.EasyViewPager
-                    android:id="@+id/mEvpBanner"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:auto_play="true"
-                    app:delay_time="3000"
-                    app:is_loop="true">
-
-                </xin.lrvik.easybanner.EasyViewPager>
-
-
-                <xin.lrvik.easybanner.indicator.EasyDotIndicator
-                    android:id="@+id/mEdiBanner"
+                <org.angmarch.views.NiceSpinner
+                    android:id="@+id/mNiceSpinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="8dp"
-                    app:def_radius="1dp"
-                    app:sel_color="@color/colorPrimary"
-                    app:sel_radius="1dp" />
+                    android:layout_alignParentRight="true" />
             </RelativeLayout>
-        </android.support.v7.widget.CardView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="vertical">
-
-            <xin.lrvik.easybanner.EasyViewPager
-                android:id="@+id/mEvpType"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/mRvRecommend"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"></xin.lrvik.easybanner.EasyViewPager>
+                android:layout_height="wrap_content">
 
-            <xin.lrvik.easybanner.indicator.EasyDotIndicator
-                android:id="@+id/mEdiType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:sel_color="@color/colorPrimary" />
+            </android.support.v7.widget.RecyclerView>
+
         </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="10dp"
-                android:text="推荐任务"
-                android:textColor="@color/common_black"
-                android:textSize="23sp" />
-
-            <org.angmarch.views.NiceSpinner
-                android:id="@+id/mNiceSpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true" />
-        </RelativeLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/mRvRecommend"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </android.support.v7.widget.RecyclerView>
-
-    </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

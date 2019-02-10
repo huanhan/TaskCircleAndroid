@@ -9,6 +9,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ImageView
 import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
@@ -22,7 +23,6 @@ import org.jetbrains.anko.support.v4.startActivityForResult
 import xin.lrvik.easybanner.Transformer
 import xin.lrvik.easybanner.adapter.viewpager.EasyImageAdapter
 import xin.lrvik.taskcicleandroid.R
-import xin.lrvik.taskcicleandroid.baselibrary.common.BaseConstant
 import xin.lrvik.taskcicleandroid.baselibrary.common.BaseConstant.Companion.KEY_SP_HISTORY
 import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
@@ -39,13 +39,19 @@ import xin.lrvik.taskcicleandroid.presenter.view.HomeView
 import xin.lrvik.taskcicleandroid.ui.activity.*
 import xin.lrvik.taskcicleandroid.ui.adapter.EvpTypeItemAdapter
 import xin.lrvik.taskcicleandroid.ui.adapter.RvRecommendAdapter
-import java.util.*
 import kotlin.collections.ArrayList
 
 
 class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
 
     override fun onHomeDataResult(data: Home) {
+        //下拉刷新
+        if (mSwipeRefresh.isRefreshing) {
+            mSwipeRefresh.isRefreshing = false
+        }
+
+        mNiceSpinner.selectedIndex=0
+
         mEvpBanner.data = data.banners
         mEvpType.data = data.taskClassifyAppDtos
         rvRecommendAdapter.setNewData(data.taskAppDtos)
@@ -114,6 +120,25 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
             }
         }
         initLocation()
+
+        mSwipeRefresh.setOnRefreshListener {
+            mPresenter.homeData()
+        }
+
+        mNiceSpinner.selectedIndex=0
+
+        mNiceSpinner.setOnItemSelectedListener(object :AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+
+            }
+
+        })
+
+        mSwipeRefresh.isRefreshing = true
         mPresenter.homeData()
 
     }
@@ -143,7 +168,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
                 if (!TextUtils.isEmpty(location.city)) {
                     UserInfo.latitude = location.latitude
                     UserInfo.longitude = location.longitude
-                    mTvAddress.text = location.street
+                    mTvAddress.text = if(!location.street.isEmpty()) location.street else "未知地址"
                     mLocationClient.stop()
                 }
             }
