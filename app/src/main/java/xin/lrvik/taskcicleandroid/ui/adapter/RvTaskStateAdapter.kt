@@ -91,8 +91,8 @@ class RvTaskStateAdapter(data: List<Task>) : BaseQuickAdapter<Task, BaseViewHold
             helper.setText(R.id.mTvDistance, "$dis")
         }
 
-        if (item.money != null) {
-            helper.setText(R.id.mTvMoney, "${item.money!!.toBigDecimal().divide(item.peopleNumber!!.toBigDecimal())}元/人")
+        if (item.originalMoney != null) {
+            helper.setText(R.id.mTvMoney, "${item.originalMoney!!.toBigDecimal().divide(item.peopleNumber!!.toBigDecimal())}元/人")
         }
 
         if (item.beginTime != null && item.deadline != null) {

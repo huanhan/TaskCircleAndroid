@@ -7,6 +7,7 @@ import xin.lrvik.taskcicleandroid.data.api.HomeApi
 import xin.lrvik.taskcicleandroid.data.protocol.Home
 import xin.lrvik.taskcicleandroid.data.protocol.Message
 import xin.lrvik.taskcicleandroid.data.protocol.Page
+import xin.lrvik.taskcicleandroid.data.protocol.Task
 import javax.inject.Inject
 
 /**
@@ -20,6 +21,12 @@ class HomeRepository @Inject constructor() {
     }
 
     fun message(page: Int, size: Int): Observable<Page<Message>> {
-        return RetrofitFactory.instance.create(HomeApi::class.java).message(page,size, UserInfo.userId)
+        return RetrofitFactory.instance.create(HomeApi::class.java).message(page, size, UserInfo.userId)
+    }
+
+    fun task(sort: String,
+             lat: Double,
+             log: Double): Observable<List<Task>> {
+        return RetrofitFactory.instance.create(HomeApi::class.java).task(sort, lat, log, UserInfo.userId)
     }
 }

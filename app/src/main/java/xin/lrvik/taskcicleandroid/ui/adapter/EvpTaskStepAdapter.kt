@@ -69,7 +69,6 @@ class EvpTaskStepAdapter(var isModify: Boolean, var activity: FragmentActivity) 
             mIvStep.loadUrl(img)
 
             mIvStep.onClick {
-                //todo 看大图
                 activity.startActivity<ImageActivity>(ImageActivity.IMGURL to img)
             }
         }

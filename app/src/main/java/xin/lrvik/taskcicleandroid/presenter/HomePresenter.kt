@@ -19,4 +19,14 @@ class HomePresenter @Inject constructor() : BasePresenter<HomeView>() {
             mView.onHomeDataResult(it)
         }
     }
+
+    fun task(sort: String, lat: Double, log: Double) {
+        if (!checkNetWork()) {
+            return
+        }
+
+        homeService.task(sort, lat, log).execute(lifecycleProvider, mView, true) {
+            mView.onTaskListResult(it)
+        }
+    }
 }

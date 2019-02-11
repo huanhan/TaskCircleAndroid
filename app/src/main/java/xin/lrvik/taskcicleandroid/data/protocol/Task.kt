@@ -21,6 +21,8 @@ class Task : Parcelable {
 
     var money: Float? = null
 
+    var originalMoney: Float? = null
+
     val state: TaskState? = null
 
     val type: TaskType? = null
@@ -40,6 +42,7 @@ class Task : Parcelable {
 
     constructor()
 
+
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {}
@@ -56,6 +59,7 @@ class Task : Parcelable {
         if (username != other.username) return false
         if (headImg != other.headImg) return false
         if (money != other.money) return false
+        if (originalMoney != other.originalMoney) return false
         if (state != other.state) return false
         if (type != other.type) return false
         if (longitude != other.longitude) return false
@@ -75,6 +79,7 @@ class Task : Parcelable {
         result = 31 * result + (username?.hashCode() ?: 0)
         result = 31 * result + (headImg?.hashCode() ?: 0)
         result = 31 * result + (money?.hashCode() ?: 0)
+        result = 31 * result + (originalMoney?.hashCode() ?: 0)
         result = 31 * result + (state?.hashCode() ?: 0)
         result = 31 * result + (type?.hashCode() ?: 0)
         result = 31 * result + (longitude?.hashCode() ?: 0)
@@ -92,6 +97,4 @@ class Task : Parcelable {
             override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
         }
     }
-
-
 }

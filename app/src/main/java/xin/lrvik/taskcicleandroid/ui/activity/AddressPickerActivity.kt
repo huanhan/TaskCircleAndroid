@@ -107,6 +107,7 @@ class AddressPickerActivity : BaseActivity() {
         hotCities.add(HotCity("广州", "广东", "101280101"))
         hotCities.add(HotCity("深圳", "广东", "101280601"))
         hotCities.add(HotCity("杭州", "浙江", "101210101"))
+        hotCities.add(HotCity("厦门", "福建", "101230201"))
         cityPicker = CityPicker.from(this)
                 .enableAnimation(true)
                 .setLocatedCity(LocatedCity("杭州", "浙江", "101210101"))

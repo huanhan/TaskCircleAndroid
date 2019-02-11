@@ -45,13 +45,17 @@ import kotlin.collections.ArrayList
 
 class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
 
+    override fun onTaskListResult(data: List<Task>) {
+        rvRecommendAdapter.setNewData(data)
+    }
+
     override fun onHomeDataResult(data: Home) {
         //下拉刷新
         if (mSwipeRefresh.isRefreshing) {
             mSwipeRefresh.isRefreshing = false
         }
 
-        mNiceSpinner.selectedIndex=0
+        mNiceSpinner.selectedIndex = 0
 
         mEvpBanner.data = data.banners
         mEvpType.data = data.taskClassifyAppDtos
@@ -87,8 +91,8 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
                     startActivity<ClassActivity>("CLASSTYPE" to (t as TaskClass).name!!)
                 }
 
-
-        mNiceSpinner.attachDataSource(listOf(SORT_TOTAL, SORT_PRICE_UP, SORT_TIME_UP, SORT_DISTANCE_UP))
+        var sorts = listOf(SORT_TOTAL, SORT_PRICE_UP, SORT_TIME_UP, SORT_DISTANCE_UP)
+        mNiceSpinner.attachDataSource(sorts)
 
         var linearLayoutManager = LinearLayoutManager(context)
         mRvRecommend.layoutManager = linearLayoutManager
@@ -96,7 +100,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
         var list = ArrayList<Task>()
         rvRecommendAdapter = RvRecommendAdapter(list)
         mRvRecommend.adapter = rvRecommendAdapter
-        rvRecommendAdapter.setEmptyView(R.layout.view_empty,mRvRecommend)
+        rvRecommendAdapter.setEmptyView(R.layout.view_empty, mRvRecommend)
         mRvRecommend.isNestedScrollingEnabled = false
         mTvAddress.onClick {
             startActivityForResult<AddressPickerActivity>(requestCode = 1)
@@ -127,15 +131,32 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
             mPresenter.homeData()
         }
 
-        mNiceSpinner.selectedIndex=0
+        mNiceSpinner.selectedIndex = 0
 
-        mNiceSpinner.setOnItemSelectedListener(object :AdapterView.OnItemSelectedListener{
+        mNiceSpinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
 
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
+                var sort = sorts[p2]
+                when (sort) {
+                    SORT_TOTAL -> {
+                        mPresenter.task("def", UserInfo.latitude, UserInfo.longitude)
+                    }
+                    SORT_PRICE_UP -> {
+                        mPresenter.task("price", UserInfo.latitude, UserInfo.longitude)
+                    }
+                    SORT_TIME_UP -> {
+                        mPresenter.task("time", UserInfo.latitude, UserInfo.longitude)
+                    }
+                    SORT_DISTANCE_UP -> {
+                        mPresenter.task("distance", UserInfo.latitude, UserInfo.longitude)
+                    }
+                    else -> {
+                        mPresenter.task("def", UserInfo.latitude, UserInfo.longitude)
+                    }
+                }
             }
 
         })
@@ -170,7 +191,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
                 if (!TextUtils.isEmpty(location.city)) {
                     UserInfo.latitude = location.latitude
                     UserInfo.longitude = location.longitude
-                    mTvAddress.text = if(!location.street.isEmpty()) location.street else "未知地址"
+                    mTvAddress.text = if (!location.street.isEmpty()) location.street else "未知地址"
                     mLocationClient.stop()
                 }
             }

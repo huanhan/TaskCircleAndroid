@@ -23,5 +23,12 @@ interface HomeApi {
             @Path("size") size: Int,
             @Path("id") id: Long): Observable<Page<Message>>
 
+    @GET("app/task/{sort}/{lat}/{log}/{id}")
+    fun task(
+            @Path("sort") sort: String,
+            @Path("lat") lat: Double,
+            @Path("log") log: Double,
+            @Path("id") id: Long): Observable<List<Task>>
+
 
 }
