@@ -16,8 +16,8 @@ class PostTaskPresenter @Inject constructor() : BasePresenter<PostTaskView>() {
         if (!checkNetWork()) {
             return
         }
-
-        taskService.getTaskClassData().execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        taskService.getTaskClassData().execute(lifecycleProvider, mView, true) {
             mView.onTaskClassResult(it)
         }
     }
@@ -26,7 +26,8 @@ class PostTaskPresenter @Inject constructor() : BasePresenter<PostTaskView>() {
         if (!checkNetWork()) {
             return
         }
-        taskService.addTask(classs, text, contentText, data).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        taskService.addTask(classs, text, contentText, data).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }
@@ -35,7 +36,8 @@ class PostTaskPresenter @Inject constructor() : BasePresenter<PostTaskView>() {
         if (!checkNetWork()) {
             return
         }
-        taskService.queryTaskDetail(id).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        taskService.queryTaskDetail(id).execute(lifecycleProvider, mView, true) {
             mView.onTaskDetailResult(it)
         }
     }
@@ -44,7 +46,8 @@ class PostTaskPresenter @Inject constructor() : BasePresenter<PostTaskView>() {
         if (!checkNetWork()) {
             return
         }
-        taskService.modifyTask(id, classs, text, contentText, data).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        taskService.modifyTask(id, classs, text, contentText, data).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }
@@ -53,7 +56,8 @@ class PostTaskPresenter @Inject constructor() : BasePresenter<PostTaskView>() {
         if (!checkNetWork()) {
             return
         }
-        taskService.deleteTask(taskId).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        taskService.deleteTask(taskId).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }
@@ -62,7 +66,8 @@ class PostTaskPresenter @Inject constructor() : BasePresenter<PostTaskView>() {
         if (!checkNetWork()) {
             return
         }
-        taskService.submitAudit(taskId).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        taskService.submitAudit(taskId).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }
@@ -71,7 +76,8 @@ class PostTaskPresenter @Inject constructor() : BasePresenter<PostTaskView>() {
         if (!checkNetWork()) {
             return
         }
-        taskService.cancelAudit(taskId).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        taskService.cancelAudit(taskId).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }

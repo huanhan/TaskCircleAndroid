@@ -63,6 +63,7 @@ class HunterReEvaFragment : BaseMvpFragment<HunterReEvaPresenter>(), HunterReEva
         mRvUserSdEvaAdapter = RvUserSdEvaAdapter(list)
         mRvRecord.adapter = mRvUserSdEvaAdapter
 
+        mRvUserSdEvaAdapter.setEmptyView(R.layout.view_empty,mRvRecord)
 
         mSwipeRefresh.setOnRefreshListener {
             curPage = 0

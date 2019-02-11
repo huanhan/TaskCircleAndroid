@@ -67,6 +67,7 @@ class MesFragment : BaseMvpFragment<MesPresenter>(), MesView {
         mAdapter = RvMesAdapter(list)
         mRvMes.adapter = mAdapter
 
+        mAdapter.setEmptyView(R.layout.view_empty,mRvMes)
         mAdapter.setOnItemClickListener { adapter, view, position ->
             //todo 公告点击事件
         }

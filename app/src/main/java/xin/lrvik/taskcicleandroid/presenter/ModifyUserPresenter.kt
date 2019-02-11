@@ -16,7 +16,8 @@ class ModifyUserPresenter @Inject constructor() : BasePresenter<ModifyUserView>(
             return
         }
 
-        userService.detail().execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        userService.detail().execute(lifecycleProvider, mView, true) {
             mView.onUserResult(it)
         }
     }
@@ -26,7 +27,8 @@ class ModifyUserPresenter @Inject constructor() : BasePresenter<ModifyUserView>(
             return
         }
 
-        userService.updateIcon(header).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        userService.updateIcon(header).execute(lifecycleProvider, mView, true) {
             mView.onImgResult(it.msg)
         }
     }
@@ -48,7 +50,8 @@ class ModifyUserPresenter @Inject constructor() : BasePresenter<ModifyUserView>(
             return
         }
 
-        userService.update(name, gender, idCard, address, school, major, interest, intro, height, weight, birthday, phone).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        userService.update(name, gender, idCard, address, school, major, interest, intro, height, weight, birthday, phone).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }

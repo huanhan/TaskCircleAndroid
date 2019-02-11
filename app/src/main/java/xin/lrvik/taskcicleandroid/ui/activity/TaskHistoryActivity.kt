@@ -54,6 +54,7 @@ class TaskHistoryActivity : AppCompatActivity() {
         mRvRecommendAdapter = RvRecommendAdapter(taskHistorys.tasks!!.reversed())
         mRvTask.adapter = mRvRecommendAdapter
 
+        mRvRecommendAdapter.setEmptyView(R.layout.view_empty,mRvTask)
         mRvRecommendAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as Task
             startActivity<TaskDetailActivity>(TaskDetailActivity.TASKID to task.id!!)

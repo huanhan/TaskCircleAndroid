@@ -62,6 +62,7 @@ class TransferFragment : BaseMvpFragment<TransferPresenter>(),TransferView {
         mTransferAdapter = RvTransferAdapter(list)
         mRvRecord.adapter = mTransferAdapter
 
+        mTransferAdapter.setEmptyView(R.layout.view_empty,mRvRecord)
 
         mSwipeRefresh.setOnRefreshListener {
             curPage = 0

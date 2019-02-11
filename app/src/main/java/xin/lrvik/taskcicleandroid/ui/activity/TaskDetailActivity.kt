@@ -183,7 +183,12 @@ class TaskDetailActivity : BaseMvpActivity<TaskDetailPresenter>(), TaskDetailVie
 
         mBtnAccept.onClick {
             if (UserInfo.isHunter) {
-                mPresenter.acceptTask(taskid)
+                alert("接取任务将扣除任务赔偿押金，是否接取？") {
+                    positiveButton("是") {
+                        mPresenter.acceptTask(taskid)
+                    }
+                    negativeButton("否") { }
+                }.show()
             } else {
                 alert("还不是猎刃，无法接取任务。是否申请猎刃权限？") {
                     positiveButton("是") { startActivity<HunterAuditActivity>() }

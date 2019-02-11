@@ -91,6 +91,7 @@ class HunterRunningActivity : BaseMvpActivity<HunterRunningPresenter>(), HunterR
 //        mRvHunterRunningAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN)
         mRvTask.adapter = mRvHunterRunningAdapter
 
+        mRvHunterRunningAdapter.setEmptyView(R.layout.view_empty,mRvTask)
         mRvHunterRunningAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as HunterTask
             startActivity<HunterTaskDetailActivity>(HunterTaskDetailActivity.TASKID to task.id!!,

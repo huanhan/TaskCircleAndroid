@@ -18,7 +18,8 @@ class HunterAuditPresenter @Inject constructor() : BasePresenter<HunterAuditView
             return
         }
 
-        userService.hunterAudit().execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        userService.hunterAudit().execute(lifecycleProvider, mView, true) {
             mView.onAuditResult(it)
         }
     }
@@ -32,7 +33,8 @@ class HunterAuditPresenter @Inject constructor() : BasePresenter<HunterAuditView
             return
         }
 
-        userService.upAudit(idCard, address, phone, idCardImgFront, idCardImgBack).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        userService.upAudit(idCard, address, phone, idCardImgFront, idCardImgBack).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }

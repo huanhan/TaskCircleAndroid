@@ -172,7 +172,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         mRvStep.adapter = mRvTaskStepAdapter
 
         mBtAddStep.onClick {
-            mRvTaskStepAdapter.addData(TaskStep("", -1, "新步骤标题", "新步骤内容", ""))
+            mRvTaskStepAdapter.addData(TaskStep("", -1, "", "", ""))
         }
 
         mRvTaskStepAdapter.setOnItemClickListener { adapter, view, position ->

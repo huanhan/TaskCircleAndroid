@@ -85,6 +85,7 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
 //        mRvHunterRunningAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN)
         mRvTask.adapter = mRvHunterTaskStateAdapter
 
+        mRvHunterTaskStateAdapter.setEmptyView(R.layout.view_empty,mRvTask)
         mRvHunterTaskStateAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as HunterTask
             startActivity<HunterTaskDetailActivity>(HunterTaskDetailActivity.TASKID to task.id!!,

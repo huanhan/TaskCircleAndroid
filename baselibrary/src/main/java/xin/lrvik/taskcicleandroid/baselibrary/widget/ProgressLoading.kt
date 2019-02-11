@@ -12,7 +12,7 @@ import xin.lrvik.taskcicleandroid.baselibrary.R
 class ProgressLoading private constructor(context: Context?, themeResId: Int) : Dialog(context, themeResId) {
     companion object {
         private lateinit var mDialog: ProgressLoading
-        private var animDrawable: AnimationDrawable? = null
+        //private var animDrawable: AnimationDrawable? = null
 
         fun create(context: Context): ProgressLoading {
             mDialog = ProgressLoading(context, R.style.LightDialog)
@@ -24,19 +24,19 @@ class ProgressLoading private constructor(context: Context?, themeResId: Int) : 
             lp.dimAmount = 0.2f
             mDialog.window.attributes = lp
 
-            val loadingView = mDialog.find<ImageView>(R.id.iv_loading)
-            animDrawable = loadingView.background as AnimationDrawable
+            //val loadingView = mDialog.find<ImageView>(R.id.iv_loading)
+            //animDrawable = loadingView.background as AnimationDrawable
             return mDialog
         }
     }
 
     fun showLoading() {
         super.show()
-        animDrawable?.start()
+        //animDrawable?.start()
     }
 
     fun hideLoading() {
         super.dismiss()
-        animDrawable?.stop()
+        //animDrawable?.stop()
     }
 }

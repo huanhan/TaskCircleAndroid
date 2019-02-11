@@ -15,8 +15,9 @@ class ReleaseTaskPresenter @Inject constructor() : BasePresenter<ReleaseTaskView
             return
         }
 
+        mView.showLoading()
         taskService.issueTask(id, money, peopleNumber, beginTime, deadline, permitAbandonMinute, longitude, latitude, address, taskRework, compensate, compensateMoney)
-                .execute(lifecycleProvider, mView, false) {
+                .execute(lifecycleProvider, mView, true) {
                     mView.onReleaseTaskResult(it)
                 }
     }

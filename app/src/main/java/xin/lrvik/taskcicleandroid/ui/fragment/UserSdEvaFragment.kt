@@ -64,6 +64,7 @@ class UserSdEvaFragment : BaseMvpFragment<UserSdEvaPresenter>(), UserSdEvaView {
         mRvUserSdEvaAdapter = RvUserSdEvaAdapter(list)
         mRvRecord.adapter = mRvUserSdEvaAdapter
 
+        mRvUserSdEvaAdapter.setEmptyView(R.layout.view_empty,mRvRecord)
 
         mSwipeRefresh.setOnRefreshListener {
             curPage = 0

@@ -15,7 +15,8 @@ class UserDetailPresenter @Inject constructor() : BasePresenter<UserDetailView>(
             return
         }
 
-        userService.detail().execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        userService.detail().execute(lifecycleProvider, mView, true) {
             mView.onUserResult(it)
         }
     }

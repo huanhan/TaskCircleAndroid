@@ -20,7 +20,8 @@ class TaskDetailPresenter @Inject constructor() : BasePresenter<TaskDetailView>(
         if (!checkNetWork()) {
             return
         }
-        taskService.queryTaskDetail(id).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        taskService.queryTaskDetail(id).execute(lifecycleProvider, mView, true) {
             mView.onTaskDetailResult(it)
         }
     }
@@ -29,7 +30,8 @@ class TaskDetailPresenter @Inject constructor() : BasePresenter<TaskDetailView>(
         if (!checkNetWork()) {
             return
         }
-        hunterTaskService.acceptTask(taskId).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        hunterTaskService.acceptTask(taskId).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }
@@ -39,7 +41,8 @@ class TaskDetailPresenter @Inject constructor() : BasePresenter<TaskDetailView>(
         if (!checkNetWork()) {
             return
         }
-        taskService.outTask(taskId).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        taskService.outTask(taskId).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }
@@ -48,7 +51,8 @@ class TaskDetailPresenter @Inject constructor() : BasePresenter<TaskDetailView>(
         if (!checkNetWork()) {
             return
         }
-        taskService.upperTask(taskId).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        taskService.upperTask(taskId).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }
@@ -57,7 +61,8 @@ class TaskDetailPresenter @Inject constructor() : BasePresenter<TaskDetailView>(
         if (!checkNetWork()) {
             return
         }
-        taskService.abandonTask(taskId).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        taskService.abandonTask(taskId).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }
@@ -66,7 +71,8 @@ class TaskDetailPresenter @Inject constructor() : BasePresenter<TaskDetailView>(
         if (!checkNetWork()) {
             return
         }
-        taskService.cancelAbandon(taskId).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        taskService.cancelAbandon(taskId).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }

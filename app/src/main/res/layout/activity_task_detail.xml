@@ -454,7 +454,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:paddingLeft="10dp"
-                                android:text="赔偿金(元/人)：" />
+                                android:text="任务失败赔偿金：" />
 
                             <TextView
                                 android:id="@+id/mTvCompensateMoney"

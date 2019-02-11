@@ -87,6 +87,7 @@ class TaskEvaActivity : BaseMvpActivity<TaskEvaPresenter>(), TaskEvaView {
         mRvTaskEvaAdapter = RvTaskEvaAdapter(list)
         mRvComment.adapter = mRvTaskEvaAdapter
 
+        mRvTaskEvaAdapter.setEmptyView(R.layout.view_empty,mRvComment)
         mSwipeRefresh.setOnRefreshListener {
             curPage = 0
             mPresenter.taskComment(taskid, curPage, pageSize)

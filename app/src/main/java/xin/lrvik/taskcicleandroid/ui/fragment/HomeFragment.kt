@@ -96,7 +96,8 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
         var list = ArrayList<Task>()
         rvRecommendAdapter = RvRecommendAdapter(list)
         mRvRecommend.adapter = rvRecommendAdapter
-        mRvRecommend.isNestedScrollingEnabled = false;
+        rvRecommendAdapter.setEmptyView(R.layout.view_empty,mRvRecommend)
+        mRvRecommend.isNestedScrollingEnabled = false
         mTvAddress.onClick {
             startActivityForResult<AddressPickerActivity>(requestCode = 1)
         }

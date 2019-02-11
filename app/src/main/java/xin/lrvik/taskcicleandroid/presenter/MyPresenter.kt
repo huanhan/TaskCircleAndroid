@@ -17,7 +17,8 @@ class MyPresenter @Inject constructor() : BasePresenter<MyView>() {
             return
         }
 
-        userService.detail().execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        userService.detail().execute(lifecycleProvider, mView, true) {
             mView.onUserResult(it)
         }
     }

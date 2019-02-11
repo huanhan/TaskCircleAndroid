@@ -15,7 +15,8 @@ class RegistPresenter @Inject constructor() : BasePresenter<RegistView>() {
             return
         }
 
-        userService.register(username, password,imageCode).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        userService.register(username, password,imageCode).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }

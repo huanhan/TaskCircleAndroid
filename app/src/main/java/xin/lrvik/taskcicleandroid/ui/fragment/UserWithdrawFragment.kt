@@ -62,6 +62,7 @@ class UserWithdrawFragment : BaseMvpFragment<UserWithdrawPresenter>(), UserWithd
         mRvUserWithdrawAdapter = RvUserWithdrawAdapter(list)
         mRvRecord.adapter = mRvUserWithdrawAdapter
 
+        mRvUserWithdrawAdapter.setEmptyView(R.layout.view_empty,mRvRecord)
 
         mSwipeRefresh.setOnRefreshListener {
             curPage = 0

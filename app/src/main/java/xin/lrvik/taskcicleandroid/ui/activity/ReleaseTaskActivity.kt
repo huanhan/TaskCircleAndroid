@@ -26,6 +26,7 @@ import xin.lrvik.taskcicleandroid.presenter.view.ReleaseTaskView
 import xin.lrvik.taskcicleandroid.ui.widget.KeyboardUtil
 import java.util.*
 import cn.qqtheme.framework.picker.OptionPicker
+import org.jetbrains.anko.alert
 
 
 class ReleaseTaskActivity : BaseMvpActivity<ReleaseTaskPresenter>(), ReleaseTaskView {
@@ -111,18 +112,24 @@ class ReleaseTaskActivity : BaseMvpActivity<ReleaseTaskPresenter>(), ReleaseTask
 
         mBtnRelease.onClick {
             if (validation()) {
-                mPresenter.issueTask(taskid,
-                        mTvTotalMoney.text.toString().toFloat(),
-                        mEtPeoNum.text.toString().toInt(),
-                        DateUtils.str2Timestamp(mTvBeginTime.text.toString()).time,
-                        DateUtils.str2Timestamp(mTvDeadline.text.toString()).time,
-                        mTvPermitAbandonMinute.text.toString().toInt(),
-                        longitude, latitude,
-                        mTvLocation.text.toString(),
-                        mSwTaskRework.isChecked,
-                        mSwCompensate.isChecked,
-                        if (mSwCompensate.isChecked) mEtCompensateMoney.text.toString().toFloat() else 0f
-                )
+                alert("即将扣除押金 ${mTvTotalMoney.text.toString().toFloat()}元，是否确认发布？") {
+                    positiveButton("是") {
+                        mPresenter.issueTask(taskid,
+                                mTvTotalMoney.text.toString().toFloat(),
+                                mEtPeoNum.text.toString().toInt(),
+                                DateUtils.str2Timestamp(mTvBeginTime.text.toString()).time,
+                                DateUtils.str2Timestamp(mTvDeadline.text.toString()).time,
+                                mTvPermitAbandonMinute.text.toString().toInt(),
+                                longitude, latitude,
+                                mTvLocation.text.toString(),
+                                mSwTaskRework.isChecked,
+                                mSwCompensate.isChecked,
+                                if (mSwCompensate.isChecked) mEtCompensateMoney.text.toString().toFloat() else 0f
+                        )
+                    }
+                    negativeButton("否") { }
+                }.show()
+
             }
 
         }

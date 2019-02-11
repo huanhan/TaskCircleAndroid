@@ -15,7 +15,8 @@ class LoginPresenter @Inject constructor() : BasePresenter<LoginView>() {
             return
         }
 
-        userService.login(username, password).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        userService.login(username, password).execute(lifecycleProvider, mView, true) {
             mView.onResult(it)
         }
     }

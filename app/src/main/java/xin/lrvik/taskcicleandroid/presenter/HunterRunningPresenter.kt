@@ -23,25 +23,38 @@ class HunterRunningPresenter @Inject constructor() : BasePresenter<HunterRunning
 
 
     fun auditSuccess(htId: String) {
-        return taskService.auditSuccess(htId).execute(lifecycleProvider, mView, false) {
+        if (!checkNetWork()) {
+            return
+        }
+        mView.showLoading()
+        taskService.auditSuccess(htId).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }
 
     fun auditFailure(id: String, context: String) {
-        return taskService.auditFailure(id, context).execute(lifecycleProvider, mView, false) {
+        if (!checkNetWork()) {
+            return
+        }
+        taskService.auditFailure(id, context).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }
 
     fun abandonPass(htId: String) {
-        return taskService.abandonPass(htId).execute(lifecycleProvider, mView, false) {
+        if (!checkNetWork()) {
+            return
+        }
+        taskService.abandonPass(htId).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }
 
     fun abandonNotPass(htId: String, context: String) {
-        return taskService.abandonNotPass(htId, context).execute(lifecycleProvider, mView, false) {
+        if (!checkNetWork()) {
+            return
+        }
+        taskService.abandonNotPass(htId, context).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }

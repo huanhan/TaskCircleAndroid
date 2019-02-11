@@ -24,7 +24,8 @@ class HunterTaskStatePresenter @Inject constructor() : BasePresenter<HunterTaskS
         if (!checkNetWork()) {
             return
         }
-        hunterTaskService.beginTask(htId).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        hunterTaskService.beginTask(htId).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }
@@ -33,7 +34,8 @@ class HunterTaskStatePresenter @Inject constructor() : BasePresenter<HunterTaskS
         if (!checkNetWork()) {
             return
         }
-        hunterTaskService.submitAudit(htId).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        hunterTaskService.submitAudit(htId).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }
@@ -42,7 +44,8 @@ class HunterTaskStatePresenter @Inject constructor() : BasePresenter<HunterTaskS
         if (!checkNetWork()) {
             return
         }
-        hunterTaskService.reworkTask(htId).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        hunterTaskService.reworkTask(htId).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }
@@ -51,7 +54,8 @@ class HunterTaskStatePresenter @Inject constructor() : BasePresenter<HunterTaskS
         if (!checkNetWork()) {
             return
         }
-        hunterTaskService.abandonTask(taskid, auditContext).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        hunterTaskService.abandonTask(taskid, auditContext).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }
@@ -60,7 +64,8 @@ class HunterTaskStatePresenter @Inject constructor() : BasePresenter<HunterTaskS
         if (!checkNetWork()) {
             return
         }
-        hunterTaskService.submitAdminAudit(htId).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        hunterTaskService.submitAdminAudit(htId).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }
@@ -69,7 +74,8 @@ class HunterTaskStatePresenter @Inject constructor() : BasePresenter<HunterTaskS
         if (!checkNetWork()) {
             return
         }
-        hunterTaskService.cancelAdminAudit(htId).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        hunterTaskService.cancelAdminAudit(htId).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }
@@ -78,7 +84,8 @@ class HunterTaskStatePresenter @Inject constructor() : BasePresenter<HunterTaskS
         if (!checkNetWork()) {
             return
         }
-        hunterTaskService.agreeAbandon(taskId).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        hunterTaskService.agreeAbandon(taskId).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }
@@ -87,7 +94,8 @@ class HunterTaskStatePresenter @Inject constructor() : BasePresenter<HunterTaskS
         if (!checkNetWork()) {
             return
         }
-        hunterTaskService.disAgreeAbandon(taskid, auditContext).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        hunterTaskService.disAgreeAbandon(taskid, auditContext).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
     }

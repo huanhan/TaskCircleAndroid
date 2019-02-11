@@ -53,6 +53,7 @@ class CashPledgeFragment : BaseMvpFragment<CashPledgePresenter>(), CashPledgeVie
         mRvCashPledgeAdapter = RvCashPledgeAdapter(list)
         mRvRecord.adapter = mRvCashPledgeAdapter
 
+        mRvCashPledgeAdapter.setEmptyView(R.layout.view_empty,mRvRecord)
         mRvCashPledgeAdapter.setOnItemClickListener { adapter, view, position ->
             var cashPledge = adapter.data[position] as CashPledge
             if(cashPledge.name=="任务"){

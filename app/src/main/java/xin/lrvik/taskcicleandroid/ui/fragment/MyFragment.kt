@@ -11,6 +11,7 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_my.*
 import org.jetbrains.anko.support.v4.startActivity
 import xin.lrvik.taskcicleandroid.R
+import xin.lrvik.taskcicleandroid.baselibrary.common.BaseConstant
 import xin.lrvik.taskcicleandroid.baselibrary.common.BaseConstant.Companion.KEY_SP_HISTORY
 import xin.lrvik.taskcicleandroid.baselibrary.ext.loadCircleUrl
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
@@ -69,10 +70,12 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
         }
 
         mTvUserName.onClick {
+            refresh=true
             startActivity<UserDetailActivity>()
         }
 
         mIvIcon.onClick {
+            refresh=true
             startActivity<UserDetailActivity>()
         }
 
@@ -81,7 +84,8 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
         }
 
         mBtExitLogin.onClick {
-            AppPrefsUtils.putString("token","")
+            AppPrefsUtils.putString("token", "")
+            AppPrefsUtils.putString(BaseConstant.KEY_SP_HISTORY, "")
             activity!!.finish()
             startActivity<LoginActivity>()
         }
@@ -95,9 +99,14 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
         }
     }
 
+    var refresh: Boolean = false
+
     override fun onResume() {
         super.onResume()
-        mPresenter.detail()
+        if (refresh) {
+            refresh = false
+            mPresenter.detail()
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -131,6 +140,6 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
         mTvLoginOrRegist.onClick {
             startActivity<LoginActivity>()
         }
-
+        mPresenter.detail()
     }
 }

@@ -15,7 +15,8 @@ class UserEvaluatePresenter @Inject constructor() : BasePresenter<UserEvaluateVi
             return
         }
 
-        commentService.evaHunter(content, start, hunterTaskId).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        commentService.evaHunter(content, start, hunterTaskId).execute(lifecycleProvider, mView, true) {
             mView.onResult(it.msg)
         }
 

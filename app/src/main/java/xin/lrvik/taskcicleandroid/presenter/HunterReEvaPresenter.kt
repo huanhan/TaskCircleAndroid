@@ -15,7 +15,8 @@ class HunterReEvaPresenter @Inject constructor() : BasePresenter<HunterReEvaView
             return
         }
 
-        commentService.evaHunterByHunter(page, size).execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        commentService.evaHunterByHunter(page, size).execute(lifecycleProvider, mView, true) {
             mView.onListResult(it)
         }
 
