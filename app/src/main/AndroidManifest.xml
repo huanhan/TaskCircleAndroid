@@ -40,8 +40,8 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="lpGqjc4WeYNlKjzoqo1xkyNbzxU0Ktg0" />
-        <activity android:name=".ui.activity.MainActivity">
-        </activity>
+
+        <activity android:name=".ui.activity.MainActivity"></activity>
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.RegistActivity" />
         <activity android:name=".ui.activity.PostTaskActivity" />
@@ -120,6 +120,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.activity.ImageActivity"></activity>
     </application>
 
 </manifest>

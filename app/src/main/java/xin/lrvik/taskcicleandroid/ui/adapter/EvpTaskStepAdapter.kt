@@ -1,6 +1,5 @@
 package xin.lrvik.taskcicleandroid.ui.adapter
 
-import android.content.pm.ActivityInfo
 import android.support.v4.app.FragmentActivity
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,17 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.leo.matisse.Glide4Engine
-import com.zhihu.matisse.Matisse
-import com.zhihu.matisse.MimeType
-import com.zhihu.matisse.filter.Filter
-import com.zhihu.matisse.internal.entity.CaptureStrategy
-import com.zhihu.matisse.sample.GifSizeFilter
+import org.jetbrains.anko.startActivity
 import xin.lrvik.easybanner.adapter.viewpager.BaseEasyViewPagerAdapter
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.data.protocol.TaskStep
+import xin.lrvik.taskcicleandroid.ui.activity.ImageActivity
 import xin.lrvik.taskcicleandroid.ui.widget.LinesEditView
 
 
@@ -26,7 +21,7 @@ import xin.lrvik.taskcicleandroid.ui.widget.LinesEditView
  * Author by 豢涵, Email huanhanfu@126.com, Date on 2019/1/6.
  *
  */
-class EvpTaskStepAdapter(var isModify: Boolean,var activity: FragmentActivity) : BaseEasyViewPagerAdapter<TaskStep>(1, 1) {
+class EvpTaskStepAdapter(var isModify: Boolean, var activity: FragmentActivity) : BaseEasyViewPagerAdapter<TaskStep>(1, 1) {
 
     override fun createView(container: ViewGroup, data: MutableList<TaskStep>): View {
         var taskStep = data[0]
@@ -66,17 +61,20 @@ class EvpTaskStepAdapter(var isModify: Boolean,var activity: FragmentActivity) :
 
             })
         } else {
-            mIvStep.isEnabled = false
+//            mIvStep.isEnabled = false
             mEtStepTitle.isEnabled = false
             mLevStepContent.id_et_input.isEnabled = false
         }
-        taskStep.img?.let {
-            mIvStep.loadUrl(taskStep.img)
+        taskStep.img?.let { img ->
+            mIvStep.loadUrl(img)
+
+            mIvStep.onClick {
+                //todo 看大图
+                activity.startActivity<ImageActivity>(ImageActivity.IMGURL to img)
+            }
         }
 
-        mIvStep.onClick {
-            //todo 看大图
-        }
+
         mEtStepTitle.text = taskStep.title
         mLevStepContent.contentText = taskStep.context
 

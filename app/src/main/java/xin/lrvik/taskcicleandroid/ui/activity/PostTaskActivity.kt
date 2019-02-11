@@ -22,12 +22,9 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.activity_post_task.*
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.dip
-import org.jetbrains.anko.margin
+import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.startActivity
-import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
@@ -176,15 +173,18 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         }
 
         mRvTaskStepAdapter.setOnItemClickListener { adapter, view, position ->
-            val dialog = TaskStepDialog.showDialog(supportFragmentManager,
-                    adapter.data as ArrayList<TaskStep>,
-                    false, position)
+            if (mode == Mode.LOOK) {
+                val dialog = TaskStepDialog.showDialog(supportFragmentManager,
+                        adapter.data as ArrayList<TaskStep>,
+                        false, position)
 
-            dialog.setOnCloseListener(object : TaskStepDialog.OnCloseListener {
-                override fun onClose() {
-                    mRvTaskStepAdapter.notifyDataSetChanged()
-                }
-            })
+                dialog.setOnCloseListener(object : TaskStepDialog.OnCloseListener {
+                    override fun onClose() {
+                        mRvTaskStepAdapter.notifyDataSetChanged()
+                    }
+                })
+            }
+
         }
 
         mRvTaskStepAdapter.setOnItemChildClickListener { adapter, view, position ->
@@ -192,15 +192,22 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
             when (view.id) {
                 R.id.mIvIcon -> {
-                    //调用图片选择器
-                    Matisse.from(this@PostTaskActivity)
-                            .choose(MimeType.ofImage())//图片类型
-                            .countable(false)//true:选中后显示数字;false:选中后显示对号
-                            .maxSelectable(1)//可选的最大数
-                            .capture(true)//选择照片时，是否显示拍照
-                            .captureStrategy(CaptureStrategy(true, "xin.lrvik.taskcicleandroid.fileprovider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
-                            .imageEngine(Glide4Engine())//图片加载引擎
-                            .forResult(REQUEST_CODE_CHOOSE)
+                    if (mode == Mode.LOOK) {
+                        if (!taskStep.img.isNullOrEmpty()) {
+                            startActivity<ImageActivity>(ImageActivity.IMGURL to taskStep.img)
+                        }
+                    } else {
+                        //调用图片选择器
+                        Matisse.from(this@PostTaskActivity)
+                                .choose(MimeType.ofImage())//图片类型
+                                .countable(false)//true:选中后显示数字;false:选中后显示对号
+                                .maxSelectable(1)//可选的最大数
+                                .capture(true)//选择照片时，是否显示拍照
+                                .captureStrategy(CaptureStrategy(true, "xin.lrvik.taskcicleandroid.fileprovider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
+                                .imageEngine(Glide4Engine())//图片加载引擎
+                                .forResult(REQUEST_CODE_CHOOSE)
+                    }
+
 
                 }
                 else -> {
@@ -269,9 +276,8 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                 mLevContext.id_et_input.isEnabled = false
                 mRvTaskStepAdapter.disableSwipeItem()
                 mRvTaskStepAdapter.disableDragItem()
-
                 mPresenter.queryTaskDetail(taskid)
-
+                mRvTaskStepAdapter.isModify = false
                 actionBar?.title = "查看任务"
 
                 mFlowlayout.setOnTagClickListener(null)
@@ -287,7 +293,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                 mLevContext.id_et_input.isEnabled = true
                 mRvTaskStepAdapter.enableSwipeItem()
                 mRvTaskStepAdapter.enableDragItem(mItemTouchHelper)
-
+                mRvTaskStepAdapter.isModify = true
                 mPresenter.queryTaskDetail(taskid)
 
                 actionBar?.title = "保存任务"
@@ -302,7 +308,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                 mLevContext.id_et_input.isEnabled = true
                 mRvTaskStepAdapter.enableSwipeItem()
                 mRvTaskStepAdapter.enableDragItem(mItemTouchHelper)
-
+                mRvTaskStepAdapter.isModify = true
                 actionBar?.title = "新建任务"
             }
         }

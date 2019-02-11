@@ -16,7 +16,7 @@ import xin.lrvik.taskcicleandroid.ui.widget.LinesEditView
  * Author by 豢涵, Email huanhanfu@126.com, Date on 2019/1/6.
  *
  */
-class RvModifyTaskStepAdapter(data: List<TaskStep>) : BaseItemDraggableAdapter<TaskStep,
+class RvModifyTaskStepAdapter(data: List<TaskStep>, var isModify: Boolean = false) : BaseItemDraggableAdapter<TaskStep,
         BaseViewHolder>(R.layout.item_modify_task_step, data) {
 
     override fun convert(helper: BaseViewHolder, item: TaskStep) {
@@ -38,6 +38,8 @@ class RvModifyTaskStepAdapter(data: List<TaskStep>) : BaseItemDraggableAdapter<T
         var mIvCheck = helper.getView<ImageView>(R.id.mIvCheck)
         var mLlModify = helper.getView<LinearLayout>(R.id.mLlModify)
         var mLldef = helper.getView<LinearLayout>(R.id.mLldef)
+
+        mIvFlag.visibility = if (isModify) View.VISIBLE else View.GONE
 
         mIvFlag.onClick {
             mLlModify.animate().scaleY(1f)
