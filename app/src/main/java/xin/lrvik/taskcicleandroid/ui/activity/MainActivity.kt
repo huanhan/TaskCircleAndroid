@@ -1,6 +1,5 @@
 package xin.lrvik.taskcicleandroid.ui.activity
 
-import android.Manifest
 import android.os.Bundle
 import android.support.design.internal.BottomNavigationMenuView
 import android.support.v4.app.Fragment
@@ -10,21 +9,39 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.common.AppManger
-import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseActivity
+import xin.lrvik.taskcicleandroid.baselibrary.common.UserInfo
+import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
+import xin.lrvik.taskcicleandroid.data.protocol.User
+import xin.lrvik.taskcicleandroid.data.protocol.enums.UserCategory
+import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
+import xin.lrvik.taskcicleandroid.presenter.MyPresenter
+import xin.lrvik.taskcicleandroid.presenter.view.MyView
 import xin.lrvik.taskcicleandroid.ui.fragment.HomeFragment
 import xin.lrvik.taskcicleandroid.ui.fragment.MesFragment
 import xin.lrvik.taskcicleandroid.ui.fragment.MyFragment
 import xin.lrvik.taskcicleandroid.ui.fragment.TaskManagerFragment
 import java.util.*
-import javax.inject.Inject
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseMvpActivity<MyPresenter>(), MyView {
+    override fun injectComponent() {
+        DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
+        mPresenter.mView = this
+    }
+
+    override fun onUserResult(data: User) {
+        UserInfo.money = data.money ?: 0f
+        UserInfo.name = data.name ?: ""
+        UserInfo.userId = data.id ?: 0
+        UserInfo.isHunter = data.category == UserCategory.HUNTER
+        UserInfo.headImg = data.headImg ?: ""
+        UserInfo.commentsNum = data.commentsNum ?: 0
+
+        initFragment()
+    }
 
     private val mStack by lazy { Stack<Fragment>() }
     private val mHomeFragment by lazy { HomeFragment() }
@@ -36,13 +53,6 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-        /*//定位权限为必须权限，用户如果禁止，则每次进入都会申请
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    REQUEST_CODE1)
-        }*/
-        initFragment()
         initView()
     }
 
@@ -82,6 +92,7 @@ class MainActivity : BaseActivity() {
             }
             return@setOnNavigationItemSelectedListener true
         }
+        mPresenter.detail()
     }
 
     private fun changeFragment(position: Int) {

@@ -36,67 +36,17 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
 
     override fun onUserResult(data: User) {
         UserInfo.money = data.money ?: 0f
+        UserInfo.name = data.name ?: ""
         UserInfo.userId = data.id ?: 0
         UserInfo.isHunter = data.category == UserCategory.HUNTER
-        mTvUserName.visibility = View.VISIBLE
-        mBtExitLogin.visibility = View.VISIBLE
-        mTvLoginOrRegist.visibility = View.GONE
+        UserInfo.headImg = data.headImg ?: ""
+        UserInfo.commentsNum = data.commentsNum ?: 0
+
         mTvUserName.text = data.name
         mTvMoney.text = "${data.money}元"
-
-        mIvIcon.loadCircleUrl(data.headImg ?: "")
-
-
-        mRlHunterAudit.visibility = if (UserInfo.isHunter) View.GONE else View.VISIBLE
-
-        var historys = AppPrefsUtils.getString(KEY_SP_HISTORY)
-        if (historys.isNullOrEmpty()) {
-            var taskHistory = TaskHistory()
-            taskHistory.size = 0
-            taskHistory.tasks = ArrayList()
-            var taskHistoryStr = Gson().toJson(taskHistory)
-            AppPrefsUtils.putString(KEY_SP_HISTORY, taskHistoryStr)
-            historys = taskHistoryStr
-        }
-
-        var taskHistorys = Gson().fromJson(historys, TaskHistory::class.java)
-
-        //历史记录从本地获取
-        mTvHistory.text = "${taskHistorys.size}"
         mTvEvaluate.text = "${data.commentsNum}条"
 
-        mRlHistory.onClick {
-            startActivity<TaskHistoryActivity>()
-        }
-
-        mTvUserName.onClick {
-            refresh=true
-            startActivity<UserDetailActivity>()
-        }
-
-        mIvIcon.onClick {
-            refresh=true
-            startActivity<UserDetailActivity>()
-        }
-
-        mRlWallet.onClick {
-            startActivity<WalletActivity>()
-        }
-
-        mBtExitLogin.onClick {
-            AppPrefsUtils.putString("token", "")
-            AppPrefsUtils.putString(BaseConstant.KEY_SP_HISTORY, "")
-            activity!!.finish()
-            startActivity<LoginActivity>()
-        }
-
-        mRlEva.onClick {
-            startActivity<UserEvaListActivity>()
-        }
-
-        mRlHunterAudit.onClick {
-            startActivity<HunterAuditActivity>()
-        }
+        mIvIcon.loadCircleUrl((if (UserInfo.headImg.isNullOrEmpty()) R.mipmap.icon_default_user else UserInfo.headImg))
     }
 
     var refresh: Boolean = false
@@ -114,9 +64,16 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        mTvUserName.visibility = View.VISIBLE
+        mBtExitLogin.visibility = View.VISIBLE
+        mTvLoginOrRegist.visibility = View.GONE
 
-        mTvUserName.visibility = View.GONE
-        mTvLoginOrRegist.visibility = View.VISIBLE
+        mRlHunterAudit.visibility = if (UserInfo.isHunter) View.GONE else View.VISIBLE
+
+        mTvUserName.text = UserInfo.name
+        mTvMoney.text = "${UserInfo.money}元"
+        mTvEvaluate.text = "${UserInfo.commentsNum}条"
+        mIvIcon.loadCircleUrl((if (UserInfo.headImg.isNullOrEmpty()) R.mipmap.icon_default_user else UserInfo.headImg))
 
         //设置系统通知
         mRlMsgSetting.onClick {
@@ -140,6 +97,54 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
         mTvLoginOrRegist.onClick {
             startActivity<LoginActivity>()
         }
-        mPresenter.detail()
+
+        var historys = AppPrefsUtils.getString(KEY_SP_HISTORY)
+        if (historys.isNullOrEmpty()) {
+            var taskHistory = TaskHistory()
+            taskHistory.size = 0
+            taskHistory.tasks = ArrayList()
+            var taskHistoryStr = Gson().toJson(taskHistory)
+            AppPrefsUtils.putString(KEY_SP_HISTORY, taskHistoryStr)
+            historys = taskHistoryStr
+        }
+
+        var taskHistorys = Gson().fromJson(historys, TaskHistory::class.java)
+
+        //历史记录从本地获取
+        mTvHistory.text = "${taskHistorys.size}"
+
+        mRlHistory.onClick {
+            startActivity<TaskHistoryActivity>()
+        }
+
+        mTvUserName.onClick {
+            refresh = true
+            startActivity<UserDetailActivity>()
+        }
+
+        mIvIcon.onClick {
+            refresh = true
+            startActivity<UserDetailActivity>()
+        }
+
+        mRlWallet.onClick {
+            startActivity<WalletActivity>()
+        }
+
+        mBtExitLogin.onClick {
+            AppPrefsUtils.putString("token", "")
+            AppPrefsUtils.putString(BaseConstant.KEY_SP_HISTORY, "")
+            activity!!.finish()
+            startActivity<LoginActivity>()
+        }
+
+        mRlEva.onClick {
+            startActivity<UserEvaListActivity>()
+        }
+
+        mRlHunterAudit.onClick {
+            startActivity<HunterAuditActivity>()
+        }
+        //mPresenter.detail()
     }
 }

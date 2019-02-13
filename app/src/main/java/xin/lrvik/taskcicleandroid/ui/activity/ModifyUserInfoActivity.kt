@@ -45,7 +45,7 @@ class ModifyUserInfoActivity : BaseMvpActivity<ModifyUserPresenter>(), ModifyUse
 
     override fun onUserResult(data: User) {
 
-        mIvIcon.loadCircleUrl(data.headImg ?: "")
+        mIvIcon.loadCircleUrl(data.headImg ?: R.mipmap.icon_default_user)
 
         mEtName.text.append(data.name)
 
@@ -164,8 +164,8 @@ class ModifyUserInfoActivity : BaseMvpActivity<ModifyUserPresenter>(), ModifyUse
             var mCrop = imageUri.path!!
             //taskStep.img = mCrop
             OssUtil.instance.putFile("test", mCrop, {
-                mPresenter.updateIcon(it)
                 runOnUiThread {
+                    mPresenter.updateIcon(it)
                     mIvIcon.loadCircleUrl(it)
                 }
             }, {

@@ -42,7 +42,6 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/mIvIcon"
-                android:text="用户名小老弟"
                 android:textColor="@color/common_white"
                 android:textSize="17sp" />
 

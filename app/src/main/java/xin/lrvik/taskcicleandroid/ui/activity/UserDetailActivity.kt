@@ -25,7 +25,7 @@ class UserDetailActivity : BaseMvpActivity<UserDetailPresenter>(), UserDetailVie
 
         mLevContext.id_et_input.isEnabled = false
 
-        mIvIcon.loadCircleUrl(data.headImg ?: "")
+        mIvIcon.loadCircleUrl(data.headImg ?: R.mipmap.icon_default_user)
 
         mTvName.text = "昵称:  " + (data.name)
         mTvGender.text = "性别:  " + (data.gender!!.gender)

@@ -18,6 +18,6 @@ data class ChatMsg(var title: String,
                    var sender: Long,
                    var taskId: String,
                    var createTime: Timestamp,
-                   val userIcon: String,
-                   val hunterIcon: String
+                   val userIcon: String?,
+                   val hunterIcon: String?
 )

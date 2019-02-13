@@ -17,7 +17,6 @@ import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
 import xin.lrvik.taskcicleandroid.baselibrary.common.UserInfo
-import xin.lrvik.taskcicleandroid.baselibrary.common.UserInfo.userId
 import java.util.*
 import xin.lrvik.taskcicleandroid.data.protocol.Chat
 import xin.lrvik.taskcicleandroid.data.protocol.ChatMsg
@@ -27,6 +26,7 @@ import xin.lrvik.taskcicleandroid.presenter.ChatPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.ChatView
 import xin.lrvik.taskcicleandroid.ui.adapter.RvChatAdapter
 import xin.lrvik.taskcicleandroid.util.NotificationUtils
+import kotlin.collections.ArrayList
 
 
 class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
@@ -40,8 +40,11 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
     }
 
     override fun onChatListResult(data: Page<Chat>) {
-        mRvChatAdapter.setNewData(data.content.reversed())
-        mRvChat.scrollToPosition(mRvChatAdapter.itemCount - 1)
+        if (!data.content.isNullOrEmpty()) {
+            data.content.reverse()
+            mRvChatAdapter.setNewData(data.content)
+            mRvChat.scrollToPosition(mRvChatAdapter.itemCount - 1)
+        }
     }
 
     override fun onResult(result: String) {
@@ -70,9 +73,9 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
 
         mRvChatAdapter.data.clear()
         if (UserInfo.userId == userid) {
-            mPresenter.chatDetail(taskid, hunterid, userid, 0, 30)
+            mPresenter.chatDetail(taskid, hunterid, userid, 0, 50)
         } else {
-            mPresenter.chatDetail(taskid, UserInfo.userId, userid, 0, 30)
+            mPresenter.chatDetail(taskid, UserInfo.userId, userid, 0, 50)
         }
         super.onResume()
     }
@@ -132,8 +135,10 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
 
     fun addData(chat: Chat) {
         if (mRvChatAdapter.data.size == 0) {
-            mRvChatAdapter.setNewData(mutableListOf(chat))
+            mRvChatAdapter.setNewData(arrayListOf(chat))
         } else {
+//            mRvChatAdapter.data.add(chat)
+//            mRvChatAdapter.notifyDataSetChanged()
             mRvChatAdapter.addData(chat)
         }
         mRvChat.scrollToPosition(mRvChatAdapter.itemCount - 1)
@@ -177,7 +182,7 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
                     //判断是否是当前任务
                     if (chatMsg.taskId == taskid) {
                         //判断当前用户是猎刃还是雇主
-                        if (UserInfo.userId == userId) {
+                        if (UserInfo.userId == userid) {
                             //说明本人是雇主，猎刃给雇主发了一条新消息
                             if (hunterid == chatMsg.sender) {
                                 //收到新消息聊天用户是当前猎刃

@@ -1,6 +1,7 @@
 package xin.lrvik.taskcicleandroid.data.protocol
 
 import com.chad.library.adapter.base.entity.MultiItemEntity
+import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.common.UserInfo
 import java.sql.Timestamp
 
@@ -22,15 +23,15 @@ data class Chat(val hunterId: Long,
     }
 
     companion object {
-        fun toChat(chatMsg: ChatMsg):Chat {
+        fun toChat(chatMsg: ChatMsg): Chat {
             return Chat(chatMsg.hunterId,
                     chatMsg.userId,
                     chatMsg.sender,
                     chatMsg.taskId,
                     chatMsg.createTime,
                     chatMsg.content,
-                    chatMsg.userIcon,
-                    chatMsg.hunterIcon)
+                    chatMsg.userIcon ?: "",
+                    chatMsg.hunterIcon ?: "")
         }
 
         val RECEIVE_TYPE = 1
