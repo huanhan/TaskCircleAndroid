@@ -16,24 +16,32 @@
             android:paddingLeft="10dp">
 
 
-            <ImageView
-                android:id="@+id/mIvIcon"
+            <RelativeLayout
+                android:id="@+id/mRlIcon"
                 android:layout_width="75dp"
-                android:layout_height="75dp"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/icon_default_user" />
+                android:layout_height="75dp">
 
+                <ImageView
+                    android:id="@+id/mIvIcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/icon_default_user" />
 
-            <TextView
-                android:id="@+id/mTvLoginOrRegist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/mIvIcon"
-                android:text="登陆/注册"
-                android:textColor="@color/common_white"
-                android:textSize="17sp" />
+                <TextView
+                    android:id="@+id/mTvHunter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/shape_ract_red"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
+                    android:text="猎刃"
+                    android:textColor="@color/common_red"
+                    android:textSize="10sp" />
+            </RelativeLayout>
+
 
             <TextView
                 android:id="@+id/mTvUserName"
@@ -41,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/mIvIcon"
+                android:layout_toRightOf="@id/mRlIcon"
                 android:textColor="@color/common_white"
                 android:textSize="17sp" />
 
@@ -50,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/mIvIcon"
+                android:layout_toRightOf="@id/mRlIcon"
                 android:orientation="vertical"
                 android:visibility="gone">
 

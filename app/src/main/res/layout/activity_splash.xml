@@ -15,4 +15,23 @@
         android:textColor="@color/common_white"
         android:textSize="50sp" />
 
+    <ImageView
+        android:id="@+id/mIvIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/logo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        />
+
+    <TextView
+        android:id="@+id/mTvInit"
+        android:layout_width="wrap_content"
+        android:layout_toRightOf="@id/mIvIcon"
+        android:layout_alignBottom="@id/mIvIcon"
+        android:text="初始化中"
+        android:textColor="@color/text_dark"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>

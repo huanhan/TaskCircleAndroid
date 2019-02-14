@@ -52,7 +52,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="20dp"
-        android:src="@mipmap/lieren"
+        android:src="@drawable/ic_directions_run_black_24dp"
         app:elevation="8dp"
         app:layout_behavior="xin.lrvik.taskcicleandroid.ui.widget.FabScrollBehavior" />
 

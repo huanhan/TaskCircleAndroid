@@ -47,6 +47,7 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
         mTvEvaluate.text = "${data.commentsNum}条"
 
         mIvIcon.loadCircleUrl((if (UserInfo.headImg.isNullOrEmpty()) R.mipmap.icon_default_user else UserInfo.headImg))
+        mTvHunter.visibility = if (UserInfo.isHunter) View.VISIBLE else View.GONE
     }
 
     var refresh: Boolean = false
@@ -66,7 +67,6 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mTvUserName.visibility = View.VISIBLE
         mBtExitLogin.visibility = View.VISIBLE
-        mTvLoginOrRegist.visibility = View.GONE
 
         mRlHunterAudit.visibility = if (UserInfo.isHunter) View.GONE else View.VISIBLE
 
@@ -74,7 +74,7 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
         mTvMoney.text = "${UserInfo.money}元"
         mTvEvaluate.text = "${UserInfo.commentsNum}条"
         mIvIcon.loadCircleUrl((if (UserInfo.headImg.isNullOrEmpty()) R.mipmap.icon_default_user else UserInfo.headImg))
-
+        mTvHunter.visibility = if (UserInfo.isHunter) View.VISIBLE else View.GONE
         //设置系统通知
         mRlMsgSetting.onClick {
             var mIntent = Intent()
@@ -91,10 +91,6 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
         }
 
         mIvIcon.onClick {
-            startActivity<LoginActivity>()
-        }
-
-        mTvLoginOrRegist.onClick {
             startActivity<LoginActivity>()
         }
 
