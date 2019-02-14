@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import kotlinx.android.synthetic.main.activity_hunter_task_detail.*
 import org.jetbrains.anko.*
+import org.jetbrains.anko.support.v4.toast
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
@@ -278,6 +279,7 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
             alert {
                 customView {
                     title = "是否放弃该任务?"
+                    message="放弃将会通知用户，用户同意放弃即可无需赔偿。强制放弃不需要经过用户同意即可放弃，若任务规定要赔偿则会进行赔偿。"
                     verticalLayout {
                         val btDisAgree = editText {
                             hint = "请输入放弃的理由"
@@ -293,6 +295,14 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
                                 return@positiveButton
                             }
                             mPresenter.abandonTask(taskid, disAgreeStr)
+                        }
+                        neutralPressed("强制放弃") {
+                            var disAgreeStr = btDisAgree.text.toString().trim()
+                            if (disAgreeStr.isEmpty() || disAgreeStr.length > 255) {
+                                toast("请输入0~255字内的理由")
+                                return@neutralPressed
+                            }
+                            mPresenter.forceAbandonTask(taskid, disAgreeStr)
                         }
                         negativeButton("否") { }
                     }

@@ -26,6 +26,7 @@ import xin.lrvik.taskcicleandroid.presenter.TaskDetailPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.TaskDetailView
 import xin.lrvik.taskcicleandroid.ui.adapter.RvAddTaskStepAdapter
 import xin.lrvik.taskcicleandroid.ui.dialog.TaskStepDialog
+import java.math.BigDecimal.ROUND_HALF_DOWN
 
 class TaskDetailActivity : BaseMvpActivity<TaskDetailPresenter>(), TaskDetailView {
 
@@ -65,8 +66,8 @@ class TaskDetailActivity : BaseMvpActivity<TaskDetailPresenter>(), TaskDetailVie
             mTvPeoNum.text = "$it"
         }
 
-        if (data.money != null && data.peopleNumber != null) {
-            mTvMoneyNum.text = "${data.money!!.toBigDecimal().divide(data.peopleNumber!!.toBigDecimal())}元/人"
+        if (data.originalMoney != null && data.peopleNumber != null) {
+            mTvMoneyNum.text = "${data.originalMoney!!.toBigDecimal().divide(data.peopleNumber!!.toBigDecimal(), ROUND_HALF_DOWN)}元/人"
         }
         data.beginTime?.let {
             mTvBeginTime.text = "${DateUtils.convertTimeToString(it)}"
@@ -186,7 +187,7 @@ class TaskDetailActivity : BaseMvpActivity<TaskDetailPresenter>(), TaskDetailVie
                 alert("接取任务将扣除任务赔偿押金，是否接取？") {
                     positiveButton("是") {
                         mPresenter.acceptTask(taskid)
-                        mBtnAccept.visibility=View.GONE
+                        mBtnAccept.visibility = View.GONE
                     }
                     negativeButton("否") { }
                 }.show()
