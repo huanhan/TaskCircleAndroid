@@ -38,8 +38,8 @@ interface CommentApi {
                    @Path("id") id: Long): Observable<Page<CommentHunter>>
 
     //根据任务id获取任务评价
-    @GET("app/comment/task/{taskid}/{page}/{size}/{id}")
-    fun taskComment(@Path("taskid") taskid: String,
+    @GET("app/comment/task/{huntertaskid}/{page}/{size}/{id}")
+    fun taskComment(@Path("huntertaskid") taskid: String,
                           @Path("page") page: Int,
                    @Path("size") size: Int,
                    @Path("id") id: Long): Observable<Page<CommentTask>>

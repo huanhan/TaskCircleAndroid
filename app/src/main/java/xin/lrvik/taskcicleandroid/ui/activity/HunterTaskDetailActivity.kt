@@ -6,7 +6,6 @@ import android.view.MenuItem
 import android.view.View
 import kotlinx.android.synthetic.main.activity_hunter_task_detail.*
 import org.jetbrains.anko.*
-import org.jetbrains.anko.support.v4.toast
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
@@ -33,7 +32,7 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
     }
 
     var mode: Mode = Mode.LOOK
-    var hunterTaskid: String = ""
+    var huntertaskid: String = ""
     var taskid: String = ""
 
     lateinit var mRvTaskStepAdapter: RvHunterTaskStepAdapter
@@ -44,10 +43,10 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
     }
 
     override fun onTaskAndStepQueryResult(data: HunterTaskAndStep) {
-        taskid = data.hunterTaskId!!
+        huntertaskid = data.hunterTaskId!!
+        taskid = data.taskId!!
         mTvTitle.text = data.name
         mTvContent.text = data.context
-        mRvTaskStepAdapter.setNewData(data.taskSteps)
         data.beginTime?.let {
             mTvBeginTime.text = "${DateUtils.convertTimeToString(it)}"
         }
@@ -61,6 +60,11 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
             }
 
             data.state?.let {
+
+                //任务步骤
+                mRvTaskStepAdapter.flag = (it == HunterTaskState.TASK_COMPLETE ||
+                        it == HunterTaskState.EXECUTE ||
+                        it == HunterTaskState.BEGIN)
 
                 isShow(mBtSubmitAudit, data.state!!, listOf(HunterTaskState.TASK_COMPLETE,
                         HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
@@ -112,11 +116,12 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
                     ChatActivity.USERID to data.userId)
         }
 
+        mRvTaskStepAdapter.setNewData(data.taskSteps)
     }
 
     override fun onResult(result: String) {
         toast(result)
-        mPresenter.query(hunterTaskid)
+        mPresenter.query(huntertaskid)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -134,7 +139,7 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
         }
 
         try {
-            hunterTaskid = intent.getStringExtra(TASKID)
+            huntertaskid = intent.getStringExtra(TASKID)
         } catch (e: Exception) {
             toast("未传递任务id")
             finish()
@@ -265,13 +270,13 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
 
         mBtBegin.onClick {
             alert("是否开始?") {
-                positiveButton("是") { mPresenter.beginTask(taskid) }
+                positiveButton("是") { mPresenter.beginTask(huntertaskid) }
                 negativeButton("否") { }
             }.show()
         }
         mBtReWork.onClick {
             alert("是否进行重做?") {
-                positiveButton("是") { mPresenter.reworkTask(taskid) }
+                positiveButton("是") { mPresenter.reworkTask(huntertaskid) }
                 negativeButton("否") { }
             }.show()
         }
@@ -279,7 +284,7 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
             alert {
                 customView {
                     title = "是否放弃该任务?"
-                    message="放弃将会通知用户，用户同意放弃即可无需赔偿。强制放弃不需要经过用户同意即可放弃，若任务规定要赔偿则会进行赔偿。"
+                    message = "放弃将会通知用户，用户同意放弃即可无需赔偿。强制放弃不需要经过用户同意即可放弃，若任务规定要赔偿则会进行赔偿。"
                     verticalLayout {
                         val btDisAgree = editText {
                             hint = "请输入放弃的理由"
@@ -294,7 +299,7 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
                                 toast("请输入0~255字内的理由")
                                 return@positiveButton
                             }
-                            mPresenter.abandonTask(taskid, disAgreeStr)
+                            mPresenter.abandonTask(huntertaskid, disAgreeStr)
                         }
                         neutralPressed("强制放弃") {
                             var disAgreeStr = btDisAgree.text.toString().trim()
@@ -302,7 +307,7 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
                                 toast("请输入0~255字内的理由")
                                 return@neutralPressed
                             }
-                            mPresenter.forceAbandonTask(taskid, disAgreeStr)
+                            mPresenter.forceAbandonTask(huntertaskid, disAgreeStr)
                         }
                         negativeButton("否") { }
                     }
@@ -311,19 +316,19 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
         }
         mBtSubmitAdminAudit.onClick {
             alert("产生纠纷或对任务有异议，请将任务提交至管理员", "是否提交至管理员?") {
-                positiveButton("是") { mPresenter.submitAdminAudit(taskid) }
+                positiveButton("是") { mPresenter.submitAdminAudit(huntertaskid) }
                 negativeButton("否") { }
             }.show()
         }
         mBtCancelAdminAudit.onClick {
             alert("是否取消提交管理员?") {
-                positiveButton("是") { mPresenter.cancelAdminAudit(taskid) }
+                positiveButton("是") { mPresenter.cancelAdminAudit(huntertaskid) }
                 negativeButton("否") { }
             }.show()
         }
         mBtAgreeAbandon.onClick {
             alert("用户提交了任务放弃申请,是否同意该申请", "是否同意用户放弃?") {
-                positiveButton("是") { mPresenter.agreeAbandon(taskid) }
+                positiveButton("是") { mPresenter.agreeAbandon(huntertaskid) }
                 negativeButton("否") { }
             }.show()
         }
@@ -347,7 +352,7 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
                                 toast("请输入0~255字内的理由")
                                 return@positiveButton
                             }
-                            mPresenter.disAgreeAbandon(taskid, disAgreeStr)
+                            mPresenter.disAgreeAbandon(huntertaskid, disAgreeStr)
                         }
                         negativeButton("否") { }
                     }
@@ -356,7 +361,7 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
         }
         mBtSubmitAudit.onClick {
             alert("是否将任务提交给用户审核?") {
-                positiveButton("是") { mPresenter.submitAudit(hunterTaskid) }
+                positiveButton("是") { mPresenter.submitAudit(huntertaskid) }
                 negativeButton("否") { }
             }.show()
         }
@@ -367,7 +372,7 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
 
 
 
-        mPresenter.query(hunterTaskid)
+        mPresenter.query(huntertaskid)
     }
 
     private fun isShow(view: View, state: HunterTaskState, list: List<HunterTaskState>) {

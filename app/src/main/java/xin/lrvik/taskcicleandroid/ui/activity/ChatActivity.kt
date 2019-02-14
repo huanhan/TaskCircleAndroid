@@ -117,7 +117,7 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
         mRvChat.adapter = mRvChatAdapter
 
 
-//        mPresenter.chatDetail(taskid, hunterid, userid, 0, 10)
+//        mPresenter.chatDetail(huntertaskid, hunterid, userid, 0, 10)
 
         mBtSend.onClick {
             if (!mEtContent.text.toString().isEmpty()) {

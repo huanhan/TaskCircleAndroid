@@ -15,7 +15,7 @@ import xin.lrvik.taskcicleandroid.data.protocol.HunterRunningStep
  * Author by 豢涵, Email huanhanfu@126.com, Date on 2019/1/6.
  *
  */
-class RvHunterTaskStepAdapter(data: List<HunterRunningStep>, val flag: Boolean) : BaseItemDraggableAdapter<HunterRunningStep,
+class RvHunterTaskStepAdapter(data: List<HunterRunningStep>, var flag: Boolean) : BaseItemDraggableAdapter<HunterRunningStep,
         BaseViewHolder>(R.layout.item_hunter_task_step, data) {
 
     override fun convert(helper: BaseViewHolder, item: HunterRunningStep) {
