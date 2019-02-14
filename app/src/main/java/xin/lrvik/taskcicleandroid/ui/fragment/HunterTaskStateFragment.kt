@@ -119,6 +119,7 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
 
                             customView {
                                 title = "是否放弃该任务?"
+                                message="放弃将会通知用户，用户同意放弃即可无需赔偿。强制放弃不需要经过用户同意即可放弃，若任务规定要赔偿则会进行赔偿。"
                                 verticalLayout {
                                     val btDisAgree = editText {
                                         hint = "请输入放弃的理由"
@@ -127,13 +128,21 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
                                         rightMargin = 15
                                         width = matchParent
                                     }
-                                    positiveButton("是") {
+                                    positiveButton("放弃") {
                                         var disAgreeStr = btDisAgree.text.toString().trim()
                                         if (disAgreeStr.isEmpty() || disAgreeStr.length > 255) {
                                             toast("请输入0~255字内的理由")
                                             return@positiveButton
                                         }
                                         mPresenter.abandonTask(task.id!!, disAgreeStr)
+                                    }
+                                    neutralPressed("强制放弃") {
+                                        var disAgreeStr = btDisAgree.text.toString().trim()
+                                        if (disAgreeStr.isEmpty() || disAgreeStr.length > 255) {
+                                            toast("请输入0~255字内的理由")
+                                            return@neutralPressed
+                                        }
+                                        mPresenter.forceAbandonTask(task.id!!, disAgreeStr)
                                     }
                                     negativeButton("否") { }
                                 }

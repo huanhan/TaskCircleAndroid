@@ -1,6 +1,7 @@
 package xin.lrvik.taskcicleandroid.service
 
 import io.reactivex.Observable
+import xin.lrvik.taskcicleandroid.baselibrary.common.UserInfo
 import xin.lrvik.taskcicleandroid.baselibrary.data.net.RetrofitFactory
 import xin.lrvik.taskcicleandroid.data.api.HunterTaskApi
 import xin.lrvik.taskcicleandroid.data.protocol.*
@@ -22,6 +23,7 @@ interface HunterTaskService {
     fun submitAudit(htId: String): Observable<Result>
     fun reworkTask(htId: String): Observable<Result>
     fun abandonTask(taskid: String, auditContext: String): Observable<Result>
+    fun forceAbandonTask(taskid: String, auditContext: String): Observable<Result>
     fun submitAdminAudit(htId: String): Observable<Result>
     fun cancelAdminAudit(htId: String): Observable<Result>
     fun agreeAbandon(taskId: String): Observable<Result>

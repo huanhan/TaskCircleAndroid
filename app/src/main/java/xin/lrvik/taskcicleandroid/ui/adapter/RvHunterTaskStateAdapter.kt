@@ -39,19 +39,21 @@ class RvHunterTaskStateAdapter(data: List<HunterTask>) : BaseQuickAdapter<Hunter
                     HunterTaskState.TASK_ABANDON,
                     HunterTaskState.TASK_BE_ABANDON))
 
-            if (mBtEva.visibility==View.VISIBLE) {
+            if (mBtEva.visibility == View.VISIBLE) {
                 isShow(mBtEva, !item.hunterCTask!! || !item.hunterCUser!!)
             }
 
             //开始按钮
             isShow(mBtBegin, it, listOf(HunterTaskState.RECEIVE))
 
+            //提交审核
             isShow(mBtSubmitAudit, it, listOf(HunterTaskState.TASK_COMPLETE,
                     HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
                     HunterTaskState.ALLOW_REWORK_ABANDON_NO_COMPENSATE,
                     HunterTaskState.NO_REWORK_NO_COMPENSATE,
                     HunterTaskState.NO_REWORK_HAVE_COMPENSATE))
 
+            //重做
             isShow(mBtReWork, it, listOf(HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
                     HunterTaskState.ALLOW_REWORK_ABANDON_NO_COMPENSATE))
 
@@ -62,6 +64,7 @@ class RvHunterTaskStateAdapter(data: List<HunterTask>) : BaseQuickAdapter<Hunter
                     HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
                     HunterTaskState.ALLOW_REWORK_ABANDON_NO_COMPENSATE,
                     HunterTaskState.NO_REWORK_NO_COMPENSATE,
+                    HunterTaskState.USER_REPULSE,
                     HunterTaskState.NO_REWORK_HAVE_COMPENSATE),
                     listOf(HunterTaskState.END_NO,
                             HunterTaskState.END_OK,
@@ -111,7 +114,7 @@ class RvHunterTaskStateAdapter(data: List<HunterTask>) : BaseQuickAdapter<Hunter
                 .addOnClickListener(R.id.mBtChat)
                 .addOnClickListener(R.id.mBtWarning)
                 .addOnClickListener(R.id.mBtEva)
-                .setVisible(R.id.mBtWarning, (!item.context.isNullOrEmpty() || !item.hunterRejectContext.isNullOrEmpty()))
+                .setVisible(R.id.mBtWarning, !item.auditContext.isNullOrEmpty())
         var imageView = helper.getView<ImageView>(R.id.mIvIcon)
         imageView.loadUrl(item.headImg ?: R.mipmap.def)
 

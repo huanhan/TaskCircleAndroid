@@ -50,6 +50,10 @@ class HunterTaskRepository @Inject constructor() {
         return RetrofitFactory.instance.create(HunterTaskApi::class.java).abandonTask(AuditContext(taskid, auditContext), UserInfo.userId)
     }
 
+    fun forceAbandonTask(taskid: String, auditContext: String): Observable<Result> {
+        return RetrofitFactory.instance.create(HunterTaskApi::class.java).forceAbandonTask(AuditContext(taskid, auditContext), UserInfo.userId)
+    }
+
     fun submitAdminAudit(htId: String): Observable<Result> {
         return RetrofitFactory.instance.create(HunterTaskApi::class.java).submitAdminAudit(htId, UserInfo.userId)
     }

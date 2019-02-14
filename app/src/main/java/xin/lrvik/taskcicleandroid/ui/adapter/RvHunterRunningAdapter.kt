@@ -25,7 +25,10 @@ class RvHunterRunningAdapter(data: List<HunterTask>) : BaseQuickAdapter<HunterTa
         val mBtAuditFailure = helper.getView<Button>(R.id.mBtAuditFailure)
         val mBtAbandonPass = helper.getView<Button>(R.id.mBtAbandonPass)
         val mBtAbandonNotPass = helper.getView<Button>(R.id.mBtAbandonNotPass)
+        val mBtWarning = helper.getView<ImageView>(R.id.mBtWarning)
         val mBtEva = helper.getView<Button>(R.id.mBtEva)
+
+        mBtWarning.visibility = if (!item.context.isNullOrEmpty() || !item.hunterRejectContext.isNullOrEmpty()) View.VISIBLE else View.GONE
 
         item.state?.let {
 
@@ -61,7 +64,7 @@ class RvHunterRunningAdapter(data: List<HunterTask>) : BaseQuickAdapter<HunterTa
                 .addOnClickListener(R.id.mBtChat)
                 .addOnClickListener(R.id.mBtWarning)
                 .addOnClickListener(R.id.mBtEva)
-                .setVisible(R.id.mBtWarning, !item.auditContext.isNullOrEmpty())
+//                .setVisible(R.id.mBtWarning, !item.auditContext.isNullOrEmpty())
         var imageView = helper.getView<ImageView>(R.id.mIvIcon)
         imageView.loadCircleUrl(item.hunterHeadImg ?: R.mipmap.def)
 

@@ -19,17 +19,17 @@
     <style name="TaskDetailButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginRight">6dp</item>
         <item name="android:background">@drawable/btn_task_state</item>
         <item name="android:gravity">center</item>
         <item name="android:minWidth">0dp</item>
         <item name="android:minHeight">0dp</item>
-        <item name="android:paddingLeft">12dp</item>
-        <item name="android:paddingTop">6dp</item>
-        <item name="android:paddingRight">12dp</item>
-        <item name="android:paddingBottom">6dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingBottom">4dp</item>
         <item name="android:textColor">#fff</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">13sp</item>
         <item name="android:visibility">gone</item>
     </style>
 </resources>

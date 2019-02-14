@@ -52,6 +52,10 @@ interface HunterTaskApi {
     @POST("app/ht/abandon/{id}")
     fun abandonTask(@Body auditContext: AuditContext, @Path("id") id: Long): Observable<Result>
 
+    //猎刃点击强制放弃任务
+    @POST("app/ht/forceAbandon/{id}")
+    fun forceAbandonTask(@Body auditContext: AuditContext, @Path("id") id: Long): Observable<Result>
+
     //猎刃点击提交管理员审核
     @GET("app/ht/admin/audit/{htId}/{id}")
     fun submitAdminAudit(@Path("htId") htId: String, @Path("id") id: Long): Observable<Result>

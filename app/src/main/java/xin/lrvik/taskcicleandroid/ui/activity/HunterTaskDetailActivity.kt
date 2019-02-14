@@ -43,7 +43,7 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
     }
 
     override fun onTaskAndStepQueryResult(data: HunterTaskAndStep) {
-        taskid = data.taskId!!
+        taskid = data.hunterTaskId!!
         mTvTitle.text = data.name
         mTvContent.text = data.context
         mRvTaskStepAdapter.setNewData(data.taskSteps)

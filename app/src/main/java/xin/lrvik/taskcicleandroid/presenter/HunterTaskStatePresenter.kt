@@ -60,6 +60,16 @@ class HunterTaskStatePresenter @Inject constructor() : BasePresenter<HunterTaskS
         }
     }
 
+    fun forceAbandonTask(taskid: String, auditContext: String) {
+        if (!checkNetWork()) {
+            return
+        }
+        mView.showLoading()
+        hunterTaskService.forceAbandonTask(taskid, auditContext).execute(lifecycleProvider, mView, true) {
+            mView.onResult(it.msg)
+        }
+    }
+
     fun submitAdminAudit(htId: String) {
         if (!checkNetWork()) {
             return

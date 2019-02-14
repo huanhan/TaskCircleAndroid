@@ -17,7 +17,6 @@ import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
 import xin.lrvik.taskcicleandroid.baselibrary.common.UserInfo
-import java.util.*
 import xin.lrvik.taskcicleandroid.data.protocol.Chat
 import xin.lrvik.taskcicleandroid.data.protocol.ChatMsg
 import xin.lrvik.taskcicleandroid.data.protocol.Page

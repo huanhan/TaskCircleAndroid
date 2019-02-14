@@ -1,9 +1,7 @@
 package xin.lrvik.taskcicleandroid.presenter
 
-import io.reactivex.Observable
 import xin.lrvik.taskcicleandroid.baselibrary.ext.execute
 import xin.lrvik.taskcicleandroid.baselibrary.presenter.BasePresenter
-import xin.lrvik.taskcicleandroid.data.protocol.Result
 import xin.lrvik.taskcicleandroid.presenter.view.HunterRunningView
 import xin.lrvik.taskcicleandroid.service.TaskService
 import javax.inject.Inject

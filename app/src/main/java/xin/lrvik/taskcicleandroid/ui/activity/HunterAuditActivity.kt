@@ -134,13 +134,13 @@ class HunterAuditActivity : BaseMvpActivity<HunterAuditPresenter>(), HunterAudit
 
     fun validation(): Boolean {
 
-        if (mEtIdcard.text.isEmpty()) {
-            toast("身份证号不能为空")
+        if (mEtIdcard.text.isEmpty()&&mEtIdcard.text.length==18) {
+            toast("请输入18位身份证号码")
             return false
         }
 
-        if (mEtPhone.text.isEmpty()) {
-            toast("电话不能为空")
+        if (mEtPhone.text.isEmpty()&&mEtPhone.text.length==11) {
+            toast("请输入11位电话号码")
             return false
         }
 

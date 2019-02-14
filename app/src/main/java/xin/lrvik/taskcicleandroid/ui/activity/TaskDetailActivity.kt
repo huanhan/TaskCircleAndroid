@@ -186,6 +186,7 @@ class TaskDetailActivity : BaseMvpActivity<TaskDetailPresenter>(), TaskDetailVie
                 alert("接取任务将扣除任务赔偿押金，是否接取？") {
                     positiveButton("是") {
                         mPresenter.acceptTask(taskid)
+                        mBtnAccept.visibility=View.GONE
                     }
                     negativeButton("否") { }
                 }.show()
