@@ -195,7 +195,7 @@
                     android:layout_marginRight="50dp"
                     android:layout_marginBottom="5dp"
                     android:layout_toRightOf="@id/mTvIdCardFront"
-                    android:src="@mipmap/picture" />
+                    android:src="@drawable/def" />
 
                 <ImageView
                     android:layout_width="20dp"
@@ -231,7 +231,7 @@
                     android:layout_marginRight="50dp"
                     android:layout_marginBottom="5dp"
                     android:layout_toRightOf="@id/mTvIdCardBack"
-                    android:src="@mipmap/picture" />
+                    android:src="@drawable/def" />
 
                 <ImageView
                     android:layout_width="20dp"

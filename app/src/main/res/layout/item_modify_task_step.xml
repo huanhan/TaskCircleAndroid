@@ -20,7 +20,7 @@
             android:layout_height="70dp"
             android:layout_gravity="center_vertical|top"
             android:scaleType="centerCrop"
-            android:src="@mipmap/picture" />
+            android:src="@drawable/def" />
 
         <LinearLayout
             android:id="@+id/mLldef"
