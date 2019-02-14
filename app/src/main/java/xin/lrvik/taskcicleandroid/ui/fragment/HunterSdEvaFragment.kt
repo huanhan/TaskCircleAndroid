@@ -18,6 +18,7 @@ import xin.lrvik.taskcicleandroid.presenter.UserReEvaPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.HunterReEvaView
 import xin.lrvik.taskcicleandroid.presenter.view.HunterSdEvaView
 import xin.lrvik.taskcicleandroid.presenter.view.UserReEvaView
+import xin.lrvik.taskcicleandroid.ui.adapter.RvHunterSdEvaAdapter
 import xin.lrvik.taskcicleandroid.ui.adapter.RvUserReEvaAdapter
 import java.util.ArrayList
 
@@ -48,7 +49,7 @@ class HunterSdEvaFragment : BaseMvpFragment<HunterSdEvaPresenter>(), HunterSdEva
 
     var curPage: Int = 0
     var pageSize: Int = 20
-    lateinit var mRvUserReEvaAdapter: RvUserReEvaAdapter
+    lateinit var mRvUserReEvaAdapter: RvHunterSdEvaAdapter
 
     override fun injectComponent() {
         DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
@@ -64,7 +65,7 @@ class HunterSdEvaFragment : BaseMvpFragment<HunterSdEvaPresenter>(), HunterSdEva
         mRvRecord.layoutManager = linearLayoutManager
         linearLayoutManager.orientation = OrientationHelper.VERTICAL
         var list = ArrayList<CommentUser>()
-        mRvUserReEvaAdapter = RvUserReEvaAdapter(list)
+        mRvUserReEvaAdapter = RvHunterSdEvaAdapter(list)
         mRvRecord.adapter = mRvUserReEvaAdapter
 
         mRvUserReEvaAdapter.setEmptyView(R.layout.view_empty,mRvRecord)

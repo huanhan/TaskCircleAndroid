@@ -19,6 +19,11 @@ import java.util.ArrayList
 
 class UserReEvaFragment : BaseMvpFragment<UserReEvaPresenter>(), UserReEvaView {
 
+
+    var curPage: Int = 0
+    var pageSize: Int = 20
+    lateinit var mRvUserReEvaAdapter: RvUserReEvaAdapter
+
     override fun onListResult(data: Page<CommentUser>) {
         mRvUserReEvaAdapter.setNewData(data.content)
 
@@ -41,10 +46,6 @@ class UserReEvaFragment : BaseMvpFragment<UserReEvaPresenter>(), UserReEvaView {
         curPage = data.pageNum
 
     }
-
-    var curPage: Int = 0
-    var pageSize: Int = 20
-    lateinit var mRvUserReEvaAdapter: RvUserReEvaAdapter
 
     override fun injectComponent() {
         DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
