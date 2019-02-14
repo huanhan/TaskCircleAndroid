@@ -98,7 +98,7 @@ class NotificationUtils(base: Context) : ContextWrapper(base) {
         //文本内容
         builder.setContentText(content)
         //小图标
-        builder.setSmallIcon(R.mipmap.ic_launcher)
+        builder.setSmallIcon(R.mipmap.logo)
         //设置点击信息后自动清除通知
         builder.setAutoCancel(true)
         return builder
@@ -138,10 +138,10 @@ class NotificationUtils(base: Context) : ContextWrapper(base) {
         //文本内容
         builder.setContentText(content)
         //小图标
-        builder.setSmallIcon(R.mipmap.ic_launcher)
+        builder.setSmallIcon(R.mipmap.logo)
         //设置大图标，未设置时使用小图标代替，拉下通知栏显示的那个图标
         //设置大图片 BitmpFactory.decodeResource(Resource res,int id) 根据给定的资源Id解析成位图
-        builder.setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
+        builder.setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.logo))
         if (progress in 1..99) {
             //一种是有进度刻度的（false）,一种是循环流动的（true）
             //设置为false，表示刻度，设置为true，表示流动
