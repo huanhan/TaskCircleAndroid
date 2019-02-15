@@ -107,6 +107,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/common_white"
                         android:hint="请填写任务标题"
+                        android:maxLength="20"
                         android:padding="10dp"
                         android:textSize="18sp" />
                 </android.support.v7.widget.CardView>

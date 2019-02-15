@@ -169,7 +169,11 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         mRvStep.adapter = mRvTaskStepAdapter
 
         mBtAddStep.onClick {
-            mRvTaskStepAdapter.addData(TaskStep("", -1, "", "", ""))
+            if (mRvTaskStepAdapter.data.size <= 15) {
+                mRvTaskStepAdapter.addData(TaskStep("", -1, "", "", ""))
+            } else {
+                toast("步骤最多不超过15步")
+            }
         }
 
         mRvTaskStepAdapter.setOnItemClickListener { adapter, view, position ->
