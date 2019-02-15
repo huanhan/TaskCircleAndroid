@@ -142,6 +142,17 @@ class ModifyUserInfoActivity : BaseMvpActivity<ModifyUserPresenter>(), ModifyUse
                 return false
             }
         }
+
+        if (mEtIdcard.text.isEmpty()&&mEtIdcard.text.length==18) {
+            toast("请输入18位身份证号码")
+            return false
+        }
+
+        if (mEtPhone.text.isEmpty()&&mEtPhone.text.length==11) {
+            toast("请输入11位电话号码")
+            return false
+        }
+
         return true
     }
 

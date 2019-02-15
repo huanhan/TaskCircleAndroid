@@ -25,6 +25,7 @@
             android:drawableLeft="@mipmap/icon_user_name"
             android:drawablePadding="@dimen/common_padding_small"
             android:hint="请输入账号"
+            android:inputType="textEmailAddress"
             android:paddingLeft="@dimen/common_padding_small" />
 
         <View style="@style/DividerFixedHeight" />

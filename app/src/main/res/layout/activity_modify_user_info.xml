@@ -88,6 +88,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
+                    android:maxLength="10"
                     android:background="@null"
                     android:hint="请输入昵称" />
 
@@ -189,6 +190,9 @@
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:background="@null"
+                    android:digits="0123456789xX"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="18"
                     android:hint="请输入身份证号码" />
 
                 <ImageView
@@ -213,6 +217,7 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
+                    android:inputType="phone"
                     android:text="电话:"
                     android:textSize="15sp" />
 
@@ -222,6 +227,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
+                    android:maxLength="11"
                     android:inputType="phone"
                     android:background="@null"
                     android:hint="请输入常用电话" />
