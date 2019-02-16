@@ -66,11 +66,14 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
                         it == HunterTaskState.EXECUTE ||
                         it == HunterTaskState.BEGIN)
 
-                isShow(mBtSubmitAudit, data.state!!, listOf(HunterTaskState.TASK_COMPLETE,
-                        HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
-                        HunterTaskState.ALLOW_REWORK_ABANDON_NO_COMPENSATE,
-                        HunterTaskState.NO_REWORK_NO_COMPENSATE,
-                        HunterTaskState.NO_REWORK_HAVE_COMPENSATE))
+                if (data.stop == true)
+                    mBtSubmitAudit.visibility = View.GONE
+                else
+                    isShow(mBtSubmitAudit, it, listOf(HunterTaskState.TASK_COMPLETE,
+                            HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
+                            HunterTaskState.ALLOW_REWORK_ABANDON_NO_COMPENSATE,
+                            HunterTaskState.NO_REWORK_NO_COMPENSATE,
+                            HunterTaskState.NO_REWORK_HAVE_COMPENSATE))
 
                 isShow(mBtBegin, it, listOf(HunterTaskState.RECEIVE))
 

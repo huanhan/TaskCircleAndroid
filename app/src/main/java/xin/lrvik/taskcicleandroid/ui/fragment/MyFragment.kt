@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_my.*
+import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.startActivity
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.common.BaseConstant
@@ -128,10 +129,16 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
         }
 
         mBtExitLogin.onClick {
-            AppPrefsUtils.putString("token", "")
-            AppPrefsUtils.putString(BaseConstant.KEY_SP_HISTORY, "")
-            activity!!.finish()
-            startActivity<LoginActivity>()
+            alert("是否确认退出登录？") {
+                positiveButton("是") {
+                    AppPrefsUtils.putString("token", "")
+                    AppPrefsUtils.putString(BaseConstant.KEY_SP_HISTORY, "")
+                    activity!!.finish()
+                    startActivity<LoginActivity>()
+                }
+                negativeButton("否") { }
+            }.show()
+
         }
 
         mRlEva.onClick {

@@ -47,11 +47,14 @@ class RvHunterTaskStateAdapter(data: List<HunterTask>) : BaseQuickAdapter<Hunter
             isShow(mBtBegin, it, listOf(HunterTaskState.RECEIVE))
 
             //提交审核
-            isShow(mBtSubmitAudit, it, listOf(HunterTaskState.TASK_COMPLETE,
-                    HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
-                    HunterTaskState.ALLOW_REWORK_ABANDON_NO_COMPENSATE,
-                    HunterTaskState.NO_REWORK_NO_COMPENSATE,
-                    HunterTaskState.NO_REWORK_HAVE_COMPENSATE))
+            if (item.stop == true)
+                mBtSubmitAudit.visibility = View.GONE
+            else
+                isShow(mBtSubmitAudit, it, listOf(HunterTaskState.TASK_COMPLETE,
+                        HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
+                        HunterTaskState.ALLOW_REWORK_ABANDON_NO_COMPENSATE,
+                        HunterTaskState.NO_REWORK_NO_COMPENSATE,
+                        HunterTaskState.NO_REWORK_HAVE_COMPENSATE))
 
             //重做
             isShow(mBtReWork, it, listOf(HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
