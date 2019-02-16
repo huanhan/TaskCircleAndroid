@@ -168,6 +168,19 @@ class ReleaseTaskActivity : BaseMvpActivity<ReleaseTaskPresenter>(), ReleaseTask
             return false
         }
 
+        var beginTime = DateUtils.str2Timestamp(mTvBeginTime.text.toString()).time
+        var deadline = DateUtils.str2Timestamp(mTvDeadline.text.toString()).time
+
+        if (beginTime <= DateUtils.curTime) {
+            toast("开始时间不能是过去的时间")
+            return false
+        }
+
+        if ((deadline - beginTime) <= (1000 * 60 * 30)) {
+            toast("开始和截至时间间隔必须大于30分钟")
+            return false
+        }
+
         if (mTvPermitAbandonMinute.text.toString() == "请选择放弃时长") {
             toast("请选择放弃时长")
             return false
@@ -246,7 +259,7 @@ class ReleaseTaskActivity : BaseMvpActivity<ReleaseTaskPresenter>(), ReleaseTask
 
         //获取当前时间
         val calendar = Calendar.getInstance()
-        var picker = DateTimePicker(this, DateTimePicker.HOUR_24);//24小时值
+        var picker = DateTimePicker(this, DateTimePicker.HOUR_24)//24小时值
         picker.setDateRangeStart(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DATE))//日期起点
         //加上2个月
         calendar.add(Calendar.MONTH, 2)
