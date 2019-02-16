@@ -85,11 +85,12 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
 //        mRvHunterRunningAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN)
         mRvTask.adapter = mRvHunterTaskStateAdapter
 
-        mRvHunterTaskStateAdapter.setEmptyView(R.layout.view_empty,mRvTask)
+        mRvHunterTaskStateAdapter.setEmptyView(R.layout.view_empty, mRvTask)
         mRvHunterTaskStateAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as HunterTask
+
             startActivity<HunterTaskDetailActivity>(HunterTaskDetailActivity.TASKID to task.id!!,
-                    HunterTaskDetailActivity.MODE to HunterTaskDetailActivity.Mode.MODIFY.name)
+                    HunterTaskDetailActivity.MODE to if (task.stop == true) HunterTaskDetailActivity.Mode.LOOK.name else HunterTaskDetailActivity.Mode.MODIFY.name)
         }
         mRvHunterTaskStateAdapter.setOnItemChildClickListener { adapter, view, position ->
             var hunterTask = adapter.data[position] as HunterTask
@@ -119,7 +120,7 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
 
                             customView {
                                 title = "是否放弃该任务?"
-                                message="放弃将会通知用户，用户同意放弃即可无需赔偿。强制放弃不需要经过用户同意即可放弃，若任务规定要赔偿则会进行赔偿。"
+                                message = "放弃将会通知用户，用户同意放弃即可无需赔偿。强制放弃不需要经过用户同意即可放弃，若任务规定要赔偿则会进行赔偿。"
                                 verticalLayout {
                                     val btDisAgree = editText {
                                         hint = "请输入放弃的理由"
