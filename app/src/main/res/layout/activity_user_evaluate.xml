@@ -46,7 +46,7 @@
                     android:gravity="left|top"
                     android:lines="5"
                     android:textSize="14sp"
-                    app:classic_hintText="请填写对任务评价内容" />
+                    app:classic_hintText="请填写对猎刃的评价内容" />
 
             </android.support.v7.widget.CardView>
 
@@ -59,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="对任务满意程度:"
+                    android:text="对猎刃的满意程度:"
                     android:textSize="18sp" />
 
                 <com.iarcuschin.simpleratingbar.SimpleRatingBar

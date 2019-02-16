@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_user_evaluate.*
+import org.jetbrains.anko.alert
 import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
@@ -78,8 +79,13 @@ class UserEvaluateActivity : BaseMvpActivity<UserEvaluatePresenter>(), UserEvalu
                 return true
             }
             R.id.save_evaluate -> {
-                if (validation()) {
-                    mPresenter.evaHunter(mLevTaskEva.contentText, mSrbStart.rating, hunterTaskId)
+                alert("是否提交评价？") {
+                    positiveButton("是") {
+                        if (validation()) {
+                            mPresenter.evaHunter(mLevTaskEva.contentText, mSrbStart.rating, hunterTaskId)
+                        }
+                    }
+                    negativeButton("否") {}
                 }
                 return true
             }
