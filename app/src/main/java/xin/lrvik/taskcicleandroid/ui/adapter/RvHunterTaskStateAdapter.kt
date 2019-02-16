@@ -101,7 +101,7 @@ class RvHunterTaskStateAdapter(data: List<HunterTask>) : BaseQuickAdapter<Hunter
         }
 
         helper.setText(R.id.mTvTaskName, item.name)
-                .setText(R.id.mTvState, item.state!!.state)
+                .setText(R.id.mTvState, if (item.stop == true) "用户放弃任务" else item.state!!.state)
                 .setText(R.id.mTvContext, item.taskContext)
                 .addOnClickListener(R.id.mBtBegin)
                 .addOnClickListener(R.id.mBtSubmitAudit)

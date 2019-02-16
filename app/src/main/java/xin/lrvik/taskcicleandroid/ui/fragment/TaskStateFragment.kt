@@ -88,7 +88,7 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
 
         mRvTaskStateAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as Task
-
+            isRefresh = true
             if (isRelease(task.state!!)) {
                 startActivity<TaskDetailActivity>(TaskDetailActivity.TASKID to task.id!!)
             } else {

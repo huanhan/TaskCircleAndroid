@@ -88,7 +88,7 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
         mRvHunterTaskStateAdapter.setEmptyView(R.layout.view_empty, mRvTask)
         mRvHunterTaskStateAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as HunterTask
-
+            isRefresh = true
             startActivity<HunterTaskDetailActivity>(HunterTaskDetailActivity.TASKID to task.id!!,
                     HunterTaskDetailActivity.MODE to if (task.stop == true) HunterTaskDetailActivity.Mode.LOOK.name else HunterTaskDetailActivity.Mode.MODIFY.name)
         }
