@@ -109,8 +109,8 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
 
             }
 
-            isShow(mBtAgreeAbandon, data.stop ?: false)
-            isShow(mBtDisAgreeAbandon, data.stop ?: false)
+            isShow(mBtAgreeAbandon, data.stop ?: false && data.state == HunterTaskState.WITH_HUNTER_NEGOTIATE)
+            isShow(mBtDisAgreeAbandon, data.stop ?: false && data.state == HunterTaskState.WITH_HUNTER_NEGOTIATE)
         }
 
         mBtChat.onClick {

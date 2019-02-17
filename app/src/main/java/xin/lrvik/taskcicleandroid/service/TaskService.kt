@@ -64,4 +64,10 @@ interface TaskService {
 
     //根据任务编号获取猎刃执行者列表
     fun hunterRunning(taskid: String, page: Int, size: Int): Observable<Page<HunterTask>>
+
+    //放弃某个猎刃任务
+    fun abandonHunterTask(htId: String): Observable<Result>
+
+    //强制放弃某个猎刃任务
+    fun forceAbandonHunterTask(htId: String): Observable<Result>
 }

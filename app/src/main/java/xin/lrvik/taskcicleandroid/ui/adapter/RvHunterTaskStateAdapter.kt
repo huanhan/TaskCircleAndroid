@@ -78,7 +78,8 @@ class RvHunterTaskStateAdapter(data: List<HunterTask>) : BaseQuickAdapter<Hunter
                     HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
                     HunterTaskState.ALLOW_REWORK_ABANDON_NO_COMPENSATE,
                     HunterTaskState.NO_REWORK_NO_COMPENSATE,
-                    HunterTaskState.NO_REWORK_HAVE_COMPENSATE))
+                    HunterTaskState.NO_REWORK_HAVE_COMPENSATE,
+                    HunterTaskState.WITH_HUNTER_NEGOTIATE))
 
             isShow(mBtCancelAdminAudit, it, listOf(HunterTaskState.COMMIT_TO_ADMIN,
                     HunterTaskState.WITH_ADMIN_NEGOTIATE,
@@ -88,9 +89,9 @@ class RvHunterTaskStateAdapter(data: List<HunterTask>) : BaseQuickAdapter<Hunter
                     HunterTaskState.NO_REWORK_HAVE_COMPENSATE,
                     HunterTaskState.NO_REWORK_NO_COMPENSATE))
 
-            isShow(mBtAgreeAbandon, item.stop ?: false)
+            isShow(mBtAgreeAbandon, it,listOf(HunterTaskState.WITH_HUNTER_NEGOTIATE))
 
-            isShow(mBtDisAgreeAbandon, item.stop ?: false)
+            isShow(mBtDisAgreeAbandon, it,listOf(HunterTaskState.WITH_HUNTER_NEGOTIATE))
 
         }
 
@@ -104,7 +105,7 @@ class RvHunterTaskStateAdapter(data: List<HunterTask>) : BaseQuickAdapter<Hunter
         }
 
         helper.setText(R.id.mTvTaskName, item.name)
-                .setText(R.id.mTvState, if (item.stop == true) "用户放弃任务" else item.state!!.state)
+                .setText(R.id.mTvState, item.state!!.state)
                 .setText(R.id.mTvContext, item.taskContext)
                 .addOnClickListener(R.id.mBtBegin)
                 .addOnClickListener(R.id.mBtSubmitAudit)

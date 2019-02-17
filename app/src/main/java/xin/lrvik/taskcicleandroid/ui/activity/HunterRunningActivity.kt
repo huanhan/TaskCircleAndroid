@@ -4,8 +4,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.OrientationHelper
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_post_task.*
-import kotlinx.android.synthetic.main.fragment_hunter_task_state.*
+import kotlinx.android.synthetic.main.activity_hunter_running.*
 import org.jetbrains.anko.*
 import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication.Companion.context
@@ -91,7 +90,7 @@ class HunterRunningActivity : BaseMvpActivity<HunterRunningPresenter>(), HunterR
 //        mRvHunterRunningAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN)
         mRvTask.adapter = mRvHunterRunningAdapter
 
-        mRvHunterRunningAdapter.setEmptyView(R.layout.view_empty,mRvTask)
+        mRvHunterRunningAdapter.setEmptyView(R.layout.view_empty, mRvTask)
         mRvHunterRunningAdapter.setOnItemClickListener { adapter, view, position ->
             var task = adapter.data[position] as HunterTask
             startActivity<HunterTaskDetailActivity>(HunterTaskDetailActivity.TASKID to task.id!!,
@@ -186,6 +185,19 @@ class HunterRunningActivity : BaseMvpActivity<HunterRunningPresenter>(), HunterR
                         startActivity<UserEvaluateActivity>(UserEvaluateActivity.HUNTERTASKID to hunterTask.id!!)
                         isRefresh = true
                     }
+                    R.id.mBtAbandon -> {//放弃按钮框
+                        alert("放弃将会通知猎刃，猎刃同意放弃即可无需赔偿。强制放弃不需要经过猎刃同意即可放弃，若任务规定要赔偿则会进行赔偿。",
+                                "是否放弃单独放弃该猎刃的任务?") {
+
+                            positiveButton("是") {
+                                mPresenter.abandonHunterTask(hunterTask.id!!)
+                            }
+                            neutralPressed("强制放弃") {
+                                mPresenter.forceAbandonHunterTask(hunterTask.id!!)
+                            }
+                            negativeButton("否") { }
+                        }.show()
+                    }
                     else -> {
 
                     }
@@ -199,9 +211,10 @@ class HunterRunningActivity : BaseMvpActivity<HunterRunningPresenter>(), HunterR
             mPresenter.hunterRunning(taskid, curPage, pageSize)
         }
 
-        mRvHunterRunningAdapter.setOnLoadMoreListener({
-            mPresenter.hunterRunning(taskid, ++curPage, pageSize)
-        }, mRvTask)
+        mRvHunterRunningAdapter.setOnLoadMoreListener(
+                {
+                    mPresenter.hunterRunning(taskid, ++curPage, pageSize)
+                }, mRvTask)
         mSwipeRefresh.isRefreshing = true
         mPresenter.hunterRunning(taskid, curPage, pageSize)
 

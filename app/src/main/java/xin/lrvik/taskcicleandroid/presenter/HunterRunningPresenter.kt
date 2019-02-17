@@ -57,4 +57,21 @@ class HunterRunningPresenter @Inject constructor() : BasePresenter<HunterRunning
         }
     }
 
+    fun abandonHunterTask(htId: String) {
+        if (!checkNetWork()) {
+            return
+        }
+        taskService.abandonHunterTask(htId).execute(lifecycleProvider, mView, true) {
+            mView.onResult(it.msg)
+        }
+    }
+
+    fun forceAbandonHunterTask(htId: String) {
+        if (!checkNetWork()) {
+            return
+        }
+        taskService.forceAbandonHunterTask(htId).execute(lifecycleProvider, mView, true) {
+            mView.onResult(it.msg)
+        }
+    }
 }

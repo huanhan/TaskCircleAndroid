@@ -100,5 +100,12 @@ interface TaskApi {
                       @Path("size") size: Int,
                       @Path("id") id: Long): Observable<Page<HunterTask>>
 
+    //用户点击审核猎刃任务放弃通过   htId 猎刃任务id
+    @GET("app/task/user/abandonHunterTask/{htId}/{id}")
+    fun abandonHunterTask(@Path("htId") htId: String, @Path("id") id: Long): Observable<Result>
+
+    //用户点击审核猎刃任务放弃通过   htId 猎刃任务id
+    @GET("app/task/user/forceAbandonHunterTask/{htId}/{id}")
+    fun forceAbandonHunterTask(@Path("htId") htId: String, @Path("id") id: Long): Observable<Result>
 
 }

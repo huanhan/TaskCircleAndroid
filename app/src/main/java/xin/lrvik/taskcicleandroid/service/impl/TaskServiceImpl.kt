@@ -11,6 +11,7 @@ import javax.inject.Inject
  *
  */
 class TaskServiceImpl @Inject constructor() : TaskService {
+
     @Inject
     lateinit var taskRepository: TaskRepository
 
@@ -99,4 +100,11 @@ class TaskServiceImpl @Inject constructor() : TaskService {
         return taskRepository.hunterRunning(taskid, page, size)
     }
 
+    override fun abandonHunterTask(htId: String): Observable<Result> {
+        return taskRepository.abandonHunterTask(htId)
+    }
+
+    override fun forceAbandonHunterTask(htId: String): Observable<Result> {
+        return taskRepository.forceAbandonHunterTask(htId)
+    }
 }

@@ -30,9 +30,11 @@ enum class HunterTaskState constructor(val state: String) {
     TASK_ABANDON("任务放弃"),
     TASK_BE_ABANDON("任务被放弃"),
     WITH_USER_NEGOTIATE("与用户协商"),
+    WITH_HUNTER_NEGOTIATE("用户申请放弃"),
     USER_REPULSE("用户拒绝猎刃放弃"),
     HUNTER_REPULSE("猎刃拒绝用户放弃"),
     COMMIT_TO_ADMIN("提交管理员放弃申请"),
-    WITH_ADMIN_NEGOTIATE("管理员参与协商");
+    WITH_ADMIN_NEGOTIATE("管理员参与协商"),
+    NONE("无状态");
 
 }

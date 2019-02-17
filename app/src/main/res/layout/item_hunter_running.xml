@@ -157,6 +157,11 @@
                 style="@style/TaskButton"
                 android:text="放弃不通过" />
 
+            <Button
+                android:id="@+id/mBtAbandon"
+                style="@style/TaskButton"
+                android:text="放弃" />
+
 
         </LinearLayout>
 

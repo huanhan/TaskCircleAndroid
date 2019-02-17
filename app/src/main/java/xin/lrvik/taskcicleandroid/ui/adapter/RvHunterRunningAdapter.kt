@@ -25,6 +25,7 @@ class RvHunterRunningAdapter(data: List<HunterTask>) : BaseQuickAdapter<HunterTa
         val mBtAuditFailure = helper.getView<Button>(R.id.mBtAuditFailure)
         val mBtAbandonPass = helper.getView<Button>(R.id.mBtAbandonPass)
         val mBtAbandonNotPass = helper.getView<Button>(R.id.mBtAbandonNotPass)
+        val mBtAbandon = helper.getView<Button>(R.id.mBtAbandon)
         val mBtWarning = helper.getView<ImageView>(R.id.mBtWarning)
         val mBtEva = helper.getView<Button>(R.id.mBtEva)
 
@@ -48,6 +49,9 @@ class RvHunterRunningAdapter(data: List<HunterTask>) : BaseQuickAdapter<HunterTa
             if (mBtEva.visibility == View.VISIBLE) {
                 isShow(mBtEva, !item.userCHunter!!)
             }
+
+            //猎刃拒绝的时候才能出现放弃按钮
+            isShow(mBtAbandon,it, listOf(HunterTaskState.HUNTER_REPULSE))
         }
 
         if (item.acceptTime != null) {
@@ -64,6 +68,7 @@ class RvHunterRunningAdapter(data: List<HunterTask>) : BaseQuickAdapter<HunterTa
                 .addOnClickListener(R.id.mBtChat)
                 .addOnClickListener(R.id.mBtWarning)
                 .addOnClickListener(R.id.mBtEva)
+                .addOnClickListener(R.id.mBtAbandon)
 //                .setVisible(R.id.mBtWarning, !item.auditContext.isNullOrEmpty())
         var imageView = helper.getView<ImageView>(R.id.mIvIcon)
         imageView.loadCircleUrl(item.hunterHeadImg ?: R.mipmap.def)

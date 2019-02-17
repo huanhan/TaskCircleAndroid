@@ -109,5 +109,13 @@ class TaskRepository @Inject constructor() {
         return RetrofitFactory.instance.create(TaskApi::class.java).hunterRunning(taskid, page, size, UserInfo.userId)
     }
 
+    fun abandonHunterTask(htId: String): Observable<Result> {
+        return RetrofitFactory.instance.create(TaskApi::class.java).abandonHunterTask(htId, UserInfo.userId)
+    }
+
+    fun forceAbandonHunterTask(htId: String): Observable<Result> {
+        return RetrofitFactory.instance.create(TaskApi::class.java).forceAbandonHunterTask(htId, UserInfo.userId)
+    }
+
 
 }
