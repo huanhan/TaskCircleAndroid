@@ -21,12 +21,12 @@ class HomeRepository @Inject constructor() {
     }
 
     fun message(page: Int, size: Int): Observable<Page<Message>> {
-        return RetrofitFactory.instance.create(HomeApi::class.java).message(page, size, UserInfo.userId)
+        return RetrofitFactory.instance.create(HomeApi::class.java).message(page, size)
     }
 
     fun task(sort: String,
              lat: Double,
              log: Double): Observable<List<Task>> {
-        return RetrofitFactory.instance.create(HomeApi::class.java).task(sort, lat, log, UserInfo.userId)
+        return RetrofitFactory.instance.create(HomeApi::class.java).task(sort, lat, log)
     }
 }

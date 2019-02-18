@@ -14,41 +14,36 @@ import xin.lrvik.taskcicleandroid.data.protocol.*
 interface CommentApi {
 
     //用户获取猎刃评论用户列表
-    @GET("app/comment/evaUserByUser/{page}/{size}/{id}")
+    @GET("app/comment/evaUserByUser/{page}/{size}")
     fun evaUserByUser(@Path("page") page: Int,
-                   @Path("size") size: Int,
-                   @Path("id") id: Long): Observable<Page<CommentUser>>
+                      @Path("size") size: Int): Observable<Page<CommentUser>>
 
     //用户获取用户评论猎刃列表
-    @GET("app/comment/evaHunterByUser/{page}/{size}/{id}")
+    @GET("app/comment/evaHunterByUser/{page}/{size}")
     fun evaHunterByUser(@Path("page") page: Int,
-                   @Path("size") size: Int,
-                   @Path("id") id: Long): Observable<Page<CommentHunter>>
+                        @Path("size") size: Int): Observable<Page<CommentHunter>>
 
     //猎刃获取猎刃评论用户列表
-    @GET("app/comment/evaUserByHunter/{page}/{size}/{id}")
+    @GET("app/comment/evaUserByHunter/{page}/{size}")
     fun evaUserByHunter(@Path("page") page: Int,
-                   @Path("size") size: Int,
-                   @Path("id") id: Long): Observable<Page<CommentUser>>
+                        @Path("size") size: Int): Observable<Page<CommentUser>>
 
     //猎刃获取用户评论猎刃列表
-    @GET("app/comment/evaHunterByHunter/{page}/{size}/{id}")
+    @GET("app/comment/evaHunterByHunter/{page}/{size}")
     fun evaHunterByHunter(@Path("page") page: Int,
-                   @Path("size") size: Int,
-                   @Path("id") id: Long): Observable<Page<CommentHunter>>
+                          @Path("size") size: Int): Observable<Page<CommentHunter>>
 
     //根据任务id获取任务评价
-    @GET("app/comment/task/{huntertaskid}/{page}/{size}/{id}")
+    @GET("app/comment/task/{huntertaskid}/{page}/{size}")
     fun taskComment(@Path("huntertaskid") taskid: String,
-                          @Path("page") page: Int,
-                   @Path("size") size: Int,
-                   @Path("id") id: Long): Observable<Page<CommentTask>>
+                    @Path("page") page: Int,
+                    @Path("size") size: Int): Observable<Page<CommentTask>>
 
     //猎刃评价用户和任务
-    @POST("app/comment/taskAndTask/{id}")
-    fun evaTaskAndTask(@Body req: HunterCommentReq, @Path("id") id: Long): Observable<Result>
+    @POST("app/comment/taskAndTask")
+    fun evaTaskAndTask(@Body req: HunterCommentReq): Observable<Result>
 
     //用户评价猎刃
-    @POST("app/comment/hunter/{id}")
-    fun evaHunter(@Body req: UserCommentReq, @Path("id") id: Long): Observable<Result>
+    @POST("app/comment/hunter")
+    fun evaHunter(@Body req: UserCommentReq): Observable<Result>
 }

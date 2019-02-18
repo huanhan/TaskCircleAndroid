@@ -17,14 +17,14 @@ import javax.inject.Inject
 class WalletRepository @Inject constructor() {
 
     fun transferList(page: Int, size: Int): Observable<Page<Transfer>> {
-        return RetrofitFactory.instance.create(WalletApi::class.java).transferList(page, size, UserInfo.userId)
+        return RetrofitFactory.instance.create(WalletApi::class.java).transferList(page, size)
     }
 
     fun userWithdrawList(page: Int, size: Int): Observable<Page<UserWithdraw>> {
-        return RetrofitFactory.instance.create(WalletApi::class.java).userWithdrawList(page, size, UserInfo.userId)
+        return RetrofitFactory.instance.create(WalletApi::class.java).userWithdrawList(page, size)
     }
 
     fun cashPledgeList(): Observable<List<CashPledge>> {
-        return RetrofitFactory.instance.create(WalletApi::class.java).cashPledgeList(UserInfo.userId)
+        return RetrofitFactory.instance.create(WalletApi::class.java).cashPledgeList()
     }
 }

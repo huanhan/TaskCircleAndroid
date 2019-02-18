@@ -17,18 +17,16 @@ interface HomeApi {
     @GET("app/resource/osstoken")
     fun osstoken(): Call<OssToken>
 
-    @GET("app/message/{page}/{size}/{id}")
+    @GET("app/message/{page}/{size}")
     fun message(
             @Path("page") page: Int,
-            @Path("size") size: Int,
-            @Path("id") id: Long): Observable<Page<Message>>
+            @Path("size") size: Int): Observable<Page<Message>>
 
-    @GET("app/task/{sort}/{lat}/{log}/{id}")
+    @GET("app/task/{sort}/{lat}/{log}")
     fun task(
             @Path("sort") sort: String,
             @Path("lat") lat: Double,
-            @Path("log") log: Double,
-            @Path("id") id: Long): Observable<List<Task>>
+            @Path("log") log: Double): Observable<List<Task>>
 
 
 }

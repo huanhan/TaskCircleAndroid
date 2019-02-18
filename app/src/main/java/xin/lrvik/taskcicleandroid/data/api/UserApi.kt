@@ -11,14 +11,14 @@ import xin.lrvik.taskcicleandroid.data.protocol.*
  */
 interface UserApi {
 
-    @GET("/app/user/{id}")
-    fun detail(@Path("id") id: Long): Observable<User>
+    @GET("/app/user")
+    fun detail(): Observable<User>
 
-    @PUT("/app/user/{id}")
-    fun update(@Body info: ModifyUser, @Path("id") id: Long): Observable<Result>
+    @PUT("/app/user")
+    fun update(@Body info: ModifyUser): Observable<Result>
 
-    @PUT("/app/user/header/{id}")
-    fun updateIcon(@Body info: ModifyUserHeader, @Path("id") id: Long): Observable<Result>
+    @PUT("/app/user/header")
+    fun updateIcon(@Body info: ModifyUserHeader): Observable<Result>
 
     @POST("app/user/register")
     fun register(@Body user: RegisterUser): Observable<Result>
@@ -26,11 +26,11 @@ interface UserApi {
     @GET("app/user/code/Image")
     fun validateCode(): Observable<Result>
 
-    @GET("app/user/hunterAudit/{id}")
-    fun hunterAudit(@Path("id") id: Long): Observable<HunterAudit>
+    @GET("app/user/hunterAudit")
+    fun hunterAudit(): Observable<HunterAudit>
 
-    @POST("app/user/upAudit/{id}")
-    fun upAudit(@Body req: HunterAuditReq, @Path("id") id: Long): Observable<Result>
+    @POST("app/user/upAudit")
+    fun upAudit(@Body req: HunterAuditReq): Observable<Result>
 
     //登录
     //http://192.168.2.209:8080/authentication/form  //Content-Type:application/x-www-form-urlencoded;

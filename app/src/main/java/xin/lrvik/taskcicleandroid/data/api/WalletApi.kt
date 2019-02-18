@@ -11,19 +11,16 @@ import xin.lrvik.taskcicleandroid.data.protocol.*
  */
 interface WalletApi {
 
-    @GET("app/finance/transfer/{page}/{size}/{id}")
+    @GET("app/finance/transfer/{page}/{size}")
     fun transferList(
             @Path("page") page: Int,
-            @Path("size") size: Int,
-            @Path("id") id: Long): Observable<Page<Transfer>>
+            @Path("size") size: Int): Observable<Page<Transfer>>
 
-    @GET("app/finance/{page}/{size}/{id}")
+    @GET("app/finance/{page}/{size}")
     fun userWithdrawList(
             @Path("page") page: Int,
-            @Path("size") size: Int,
-            @Path("id") id: Long): Observable<Page<UserWithdraw>>
+            @Path("size") size: Int): Observable<Page<UserWithdraw>>
 
-    @GET("app/finance/money/{id}")
-    fun cashPledgeList(
-            @Path("id") id: Long): Observable<List<CashPledge>>
+    @GET("app/finance/money/")
+    fun cashPledgeList(): Observable<List<CashPledge>>
 }

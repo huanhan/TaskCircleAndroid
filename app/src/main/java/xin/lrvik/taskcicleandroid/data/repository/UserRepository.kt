@@ -16,7 +16,7 @@ import javax.inject.Inject
 class UserRepository @Inject constructor() {
 
     fun detail(): Observable<User> {
-        return RetrofitFactory.instance.create(UserApi::class.java).detail(UserInfo.userId)
+        return RetrofitFactory.instance.create(UserApi::class.java).detail()
     }
 
     fun update(name: String,
@@ -31,11 +31,11 @@ class UserRepository @Inject constructor() {
                weight: Int?,
                birthday: Long?,
                phone: String): Observable<Result> {
-        return RetrofitFactory.instance.create(UserApi::class.java).update(ModifyUser(UserInfo.userId, name, gender, idCard, address, school, major, interest, intro, height, weight, birthday, phone), UserInfo.userId)
+        return RetrofitFactory.instance.create(UserApi::class.java).update(ModifyUser(UserInfo.userId, name, gender, idCard, address, school, major, interest, intro, height, weight, birthday, phone))
     }
 
     fun updateIcon(header: String): Observable<Result> {
-        return RetrofitFactory.instance.create(UserApi::class.java).updateIcon(ModifyUserHeader(UserInfo.userId, header), UserInfo.userId)
+        return RetrofitFactory.instance.create(UserApi::class.java).updateIcon(ModifyUserHeader(UserInfo.userId, header))
     }
 
     fun upAudit(idCard: String,
@@ -43,11 +43,11 @@ class UserRepository @Inject constructor() {
                 phone: String,
                 idCardImgFront: String,
                 idCardImgBack: String): Observable<Result> {
-        return RetrofitFactory.instance.create(UserApi::class.java).upAudit(HunterAuditReq(idCard, address, phone, idCardImgFront, idCardImgBack), UserInfo.userId)
+        return RetrofitFactory.instance.create(UserApi::class.java).upAudit(HunterAuditReq(idCard, address, phone, idCardImgFront, idCardImgBack))
     }
 
     fun hunterAudit(): Observable<HunterAudit> {
-        return RetrofitFactory.instance.create(UserApi::class.java).hunterAudit(UserInfo.userId)
+        return RetrofitFactory.instance.create(UserApi::class.java).hunterAudit()
     }
 
     fun register(username: String, password: String, imageCode: String): Observable<Result> {

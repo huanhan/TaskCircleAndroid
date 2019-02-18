@@ -18,15 +18,15 @@ class TaskRepository @Inject constructor() {
     }
 
     fun addTask(classs: List<Long>, text: String, contentText: String, data: MutableList<TaskStep>): Observable<Result> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).addTask(UserInfo.userId, AddTaskReq(text, contentText, classs, data))
+        return RetrofitFactory.instance.create(TaskApi::class.java).addTask(AddTaskReq(text, contentText, classs, data))
     }
 
     fun deleteTask(taskId: String): Observable<Result> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).deleteTask(taskId, UserInfo.userId)
+        return RetrofitFactory.instance.create(TaskApi::class.java).deleteTask(taskId)
     }
 
     fun modifyTask(id: String, classs: List<Long>, text: String, contentText: String, data: MutableList<TaskStep>): Observable<Result> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).modifyTask(UserInfo.userId, ModifyTaskReq(id, text, contentText, classs, data))
+        return RetrofitFactory.instance.create(TaskApi::class.java).modifyTask(ModifyTaskReq(id, text, contentText, classs, data))
     }
 
     fun queryByClassid(classsId: Long,
@@ -38,7 +38,7 @@ class TaskRepository @Inject constructor() {
     fun search(key: String,
                page: Int,
                size: Int): Observable<Page<Task>> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).search(key, page, size, UserInfo.userId)
+        return RetrofitFactory.instance.create(TaskApi::class.java).search(key, page, size)
     }
 
     fun issueTask(id: String,
@@ -53,68 +53,67 @@ class TaskRepository @Inject constructor() {
                   taskRework: Boolean,
                   compensate: Boolean,
                   compensateMoney: Float): Observable<TaskDetail> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).issueTask(UserInfo.userId,
-                IssueTaskReq(id, money, peopleNumber, beginTime, deadline, permitAbandonMinute, longitude, latitude, address, taskRework, compensate, compensateMoney))
+        return RetrofitFactory.instance.create(TaskApi::class.java).issueTask(IssueTaskReq(id, money, peopleNumber, beginTime, deadline, permitAbandonMinute, longitude, latitude, address, taskRework, compensate, compensateMoney))
     }
 
     fun queryTaskDetail(taskId: String): Observable<TaskDetail> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).queryTaskDetail(taskId, UserInfo.userId)
+        return RetrofitFactory.instance.create(TaskApi::class.java).queryTaskDetail(taskId)
     }
 
     fun queryByState(state: String, page: Int, size: Int): Observable<Page<Task>> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).queryByState(state, page, size, UserInfo.userId)
+        return RetrofitFactory.instance.create(TaskApi::class.java).queryByState(state, page, size)
     }
 
     fun submitAudit(taskId: String): Observable<Result> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).submitAudit(taskId, UserInfo.userId)
+        return RetrofitFactory.instance.create(TaskApi::class.java).submitAudit(taskId)
     }
 
     fun cancelAudit(taskId: String): Observable<Result> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).cancelAudit(taskId, UserInfo.userId)
+        return RetrofitFactory.instance.create(TaskApi::class.java).cancelAudit(taskId)
     }
 
     fun outTask(taskId: String): Observable<Result> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).outTask(taskId, UserInfo.userId)
+        return RetrofitFactory.instance.create(TaskApi::class.java).outTask(taskId)
     }
 
     fun upperTask(taskId: String): Observable<Result> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).upperTask(taskId, UserInfo.userId)
+        return RetrofitFactory.instance.create(TaskApi::class.java).upperTask(taskId)
     }
 
     fun abandonTask(taskId: String): Observable<Result> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).abandonTask(taskId, UserInfo.userId)
+        return RetrofitFactory.instance.create(TaskApi::class.java).abandonTask(taskId)
     }
 
     fun cancelAbandon(taskId: String): Observable<Result> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).cancelAbandon(taskId, UserInfo.userId)
+        return RetrofitFactory.instance.create(TaskApi::class.java).cancelAbandon(taskId)
     }
 
     fun auditSuccess(htId: String): Observable<Result> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).auditSuccess(htId, UserInfo.userId)
+        return RetrofitFactory.instance.create(TaskApi::class.java).auditSuccess(htId)
     }
 
     fun auditFailure(id: String, context: String): Observable<Result> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).auditFailure(AuditContextReq(id, context), UserInfo.userId)
+        return RetrofitFactory.instance.create(TaskApi::class.java).auditFailure(AuditContextReq(id, context))
     }
 
     fun abandonPass(htId: String): Observable<Result> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).abandonPass(htId, UserInfo.userId)
+        return RetrofitFactory.instance.create(TaskApi::class.java).abandonPass(htId)
     }
 
     fun abandonNotPass(htId: String, context: String): Observable<Result> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).abandonNotPass(AuditContextReq(htId, context), UserInfo.userId)
+        return RetrofitFactory.instance.create(TaskApi::class.java).abandonNotPass(AuditContextReq(htId, context))
     }
 
     fun hunterRunning(taskid: String, page: Int, size: Int): Observable<Page<HunterTask>> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).hunterRunning(taskid, page, size, UserInfo.userId)
+        return RetrofitFactory.instance.create(TaskApi::class.java).hunterRunning(taskid, page, size)
     }
 
     fun abandonHunterTask(htId: String): Observable<Result> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).abandonHunterTask(htId, UserInfo.userId)
+        return RetrofitFactory.instance.create(TaskApi::class.java).abandonHunterTask(htId)
     }
 
     fun forceAbandonHunterTask(htId: String): Observable<Result> {
-        return RetrofitFactory.instance.create(TaskApi::class.java).forceAbandonHunterTask(htId, UserInfo.userId)
+        return RetrofitFactory.instance.create(TaskApi::class.java).forceAbandonHunterTask(htId)
     }
 
 
