@@ -78,8 +78,7 @@ class RvHunterTaskStateAdapter(data: List<HunterTask>) : BaseQuickAdapter<Hunter
                     HunterTaskState.ALLOW_REWORK_ABANDON_HAVE_COMPENSATE,
                     HunterTaskState.ALLOW_REWORK_ABANDON_NO_COMPENSATE,
                     HunterTaskState.NO_REWORK_NO_COMPENSATE,
-                    HunterTaskState.NO_REWORK_HAVE_COMPENSATE,
-                    HunterTaskState.WITH_HUNTER_NEGOTIATE))
+                    HunterTaskState.NO_REWORK_HAVE_COMPENSATE))
 
             isShow(mBtCancelAdminAudit, it, listOf(HunterTaskState.COMMIT_TO_ADMIN,
                     HunterTaskState.WITH_ADMIN_NEGOTIATE,

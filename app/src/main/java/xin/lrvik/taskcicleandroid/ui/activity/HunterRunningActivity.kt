@@ -180,13 +180,14 @@ class HunterRunningActivity : BaseMvpActivity<HunterRunningPresenter>(), HunterR
                             positiveButton("确定") { }
                         }.show()
 
+
                     }
                     R.id.mBtEva -> {
                         startActivity<UserEvaluateActivity>(UserEvaluateActivity.HUNTERTASKID to hunterTask.id!!)
                         isRefresh = true
                     }
                     R.id.mBtAbandon -> {//放弃按钮框
-                        alert("放弃将会通知猎刃，猎刃同意放弃即可无需赔偿。强制放弃不需要经过猎刃同意即可放弃，若任务规定要赔偿则会进行赔偿。",
+                        alert("放弃将会通知猎刃，猎刃同意放弃即可无需赔偿。强制放弃不需要经过猎刃同意即可放弃，需要将任务规定的人均赏金赔偿给猎刃。",
                                 "是否放弃单独放弃该猎刃的任务?") {
 
                             positiveButton("是") {
