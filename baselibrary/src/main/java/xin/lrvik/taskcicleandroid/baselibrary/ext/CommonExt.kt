@@ -68,7 +68,7 @@ fun View.onClick(listener: View.OnClickListener): View {
 /*
     ImageView加载网络图片
  */
-fun ImageView.loadUrl(url: Any) {
+fun ImageView.loadUrl(url: Any?) {
     GlideUtils.loadUrlImage(context, url, this)
 }
 

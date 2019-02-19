@@ -25,9 +25,7 @@ class RvModifyTaskStepAdapter(data: List<TaskStep>, var isModify: Boolean = fals
 
         var mIvIcon = helper.getView<ImageView>(R.id.mIvIcon)
 
-        if (!item.img.isEmpty()) {
-            mIvIcon.loadUrl(item.img)
-        }
+        mIvIcon.loadUrl(item.img)
 
         var mTvtitle = helper.getView<TextView>(R.id.mTvtitle)
         var mTvContent = helper.getView<TextView>(R.id.mTvContent)

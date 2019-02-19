@@ -10,7 +10,7 @@ data class TaskStep(var taskId: String,
                     var step: Int,
                     var title: String,
                     var context: String,
-                    var img: String) : Parcelable {
+                    var img: String?) : Parcelable {
     constructor(source: Parcel) : this(
             source.readString(),
             source.readInt(),

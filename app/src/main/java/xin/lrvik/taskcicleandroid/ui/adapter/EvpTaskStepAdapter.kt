@@ -65,9 +65,8 @@ class EvpTaskStepAdapter(var isModify: Boolean, var activity: FragmentActivity) 
             mEtStepTitle.isEnabled = false
             mLevStepContent.id_et_input.isEnabled = false
         }
+        mIvStep.loadUrl(taskStep.img)
         taskStep.img?.let { img ->
-            mIvStep.loadUrl(img)
-
             mIvStep.onClick {
                 activity.startActivity<ImageActivity>(ImageActivity.IMGURL to img)
             }
