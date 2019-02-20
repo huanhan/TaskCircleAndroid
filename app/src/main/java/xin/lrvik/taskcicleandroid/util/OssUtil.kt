@@ -1,8 +1,6 @@
 package xin.lrvik.taskcicleandroid.util
 
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 
 import com.alibaba.sdk.android.oss.ClientException
 import com.alibaba.sdk.android.oss.OSS
@@ -51,28 +49,22 @@ class OssUtil {
         oss = OSSClient(BaseApplication.context, OSS_BASE_URL, credentialProvider)
     }
 
-    fun putFile(key: String, path: String, success: (url: String) -> Unit, faile: () -> Unit) {
-
+    fun putFile(path: String, success: (url: String) -> Unit, faile: () -> Unit) {
         //计算图片资源路径
-        var url = md5Encode(key + path + DateUtils.curTime)
-
+        var url = md5Encode(path + DateUtils.curTime)
         // 构造上传请求。
         val put = PutObjectRequest("taskcircle", url, path)
-
         // 异步上传时可以设置进度回调。
         put.progressCallback = OSSProgressCallback { request, currentSize, totalSize ->
             Log.d("PutObject", "currentSize: $currentSize totalSize: $totalSize")
         }
-
         val task = oss.asyncPutObject(put,
                 object : OSSCompletedCallback<PutObjectRequest, PutObjectResult> {
                     override fun onSuccess(request: PutObjectRequest, result: PutObjectResult) {
-
                         Log.d("PutObject", "UploadSuccess")
                         Log.d("ETag", result.eTag)
                         Log.d("RequestId", result.requestId)
                         Log.d("serverCallback", "serverCallback" + result.serverCallbackReturnBody)
-
                         success("${OSS_BASE_URL}/${url}")
                     }
 
@@ -89,7 +81,6 @@ class OssUtil {
                         }
                     }
                 })
-
         Log.d("serverCallback", "serverCallback" + task.result.serverCallbackReturnBody)
     }
 }

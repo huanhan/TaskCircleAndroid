@@ -143,12 +143,12 @@ class ModifyUserInfoActivity : BaseMvpActivity<ModifyUserPresenter>(), ModifyUse
             }
         }
 
-        if (mEtIdcard.text.isEmpty()&&mEtIdcard.text.length==18) {
+        if (mEtIdcard.text.isEmpty() && mEtIdcard.text.length == 18) {
             toast("请输入18位身份证号码")
             return false
         }
 
-        if (mEtPhone.text.isEmpty()&&mEtPhone.text.length==11) {
+        if (mEtPhone.text.isEmpty() && mEtPhone.text.length == 11) {
             toast("请输入11位电话号码")
             return false
         }
@@ -174,7 +174,7 @@ class ModifyUserInfoActivity : BaseMvpActivity<ModifyUserPresenter>(), ModifyUse
         } else if (requestCode == REQUEST_CODE_CROP && resultCode == Activity.RESULT_OK) {
             var mCrop = imageUri.path!!
             //taskStep.img = mCrop
-            OssUtil.instance.putFile("test", mCrop, {
+            OssUtil.instance.putFile(mCrop, {
                 runOnUiThread {
                     mPresenter.updateIcon(it)
                     mIvIcon.loadCircleUrl(it)

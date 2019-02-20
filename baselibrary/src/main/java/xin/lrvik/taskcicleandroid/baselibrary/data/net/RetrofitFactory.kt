@@ -56,7 +56,7 @@ class RetrofitFactory private constructor() {
             var response = chain.proceed(request)
             response?.let {
                 //请求操作失败异常处理
-                if (it.code() == 401) {
+                if (it.code() == 401) {//权限被拒绝
                     //刷新令牌重试
                     UserInfo.access_token = ""
                     var tokenResult = instance.create(TokenApi::class.java)
@@ -72,13 +72,13 @@ class RetrofitFactory private constructor() {
                         UserInfo.access_token = tokenResult.access_token
                         UserInfo.refresh_token = tokenResult.refresh_token
 
-                        var newRequest = chain.request().newBuilder().addHeader("Authorization", "bearer ${UserInfo.access_token}").build()
+                        var newRequest = chain.request()
+                                .newBuilder()
+                                .addHeader("Authorization", "bearer ${UserInfo.access_token}").build()
                         return@Interceptor chain.proceed(newRequest)
                     }
 
-
                 } else if (it.code() != 200) {
-
                     var errMes = ""
                     var result = it.body()?.string().toString()
 

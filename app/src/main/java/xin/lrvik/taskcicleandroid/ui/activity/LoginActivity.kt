@@ -29,25 +29,12 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginView {
         finish()
         startActivity<MainActivity>()
         JPushInterface.setAlias(this@LoginActivity, 0, "app_${result.userId}")
-
-        //设置refreshtoken失效时间6天
-        result.expires_out = (DateUtils.curTime + (1000 * 60 * 60 * 24 * 6))
-
-        //测试30秒后重新登录
-//        result.expires_out= (DateUtils.curTime+(1000*30))
-
+        //设置refreshtoken失效时间30天
+        result.expires_out = (DateUtils.curTime + (1000 * 60 * 60 * 24 * 30))
         AppPrefsUtils.putString("token", Gson().toJson(result))
-
         UserInfo.userId = result.userId.toLong()
         UserInfo.access_token = result.access_token
         UserInfo.refresh_token = result.refresh_token
-
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-        initView()
     }
 
     private fun initView() {
@@ -65,10 +52,14 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginView {
         mBtnLogin.onClick {
             if (validation()) {
                 mPresenter.login(mEtMobile.text.toString(), mEtPwd.text.toString())
-
-
             }
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_login)
+        initView()
     }
 
 

@@ -388,7 +388,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         } else if (requestCode == REQUEST_CODE_CROP && resultCode == Activity.RESULT_OK) {
             var mCrop = imageUri.path!!
             //taskStep.img = mCrop
-            OssUtil.instance.putFile("test", mCrop, {
+            OssUtil.instance.putFile(mCrop, {
                 taskStep.img = it
             }, {
                 runOnUiThread {

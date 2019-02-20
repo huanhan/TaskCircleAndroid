@@ -47,9 +47,9 @@ class HunterAuditActivity : BaseMvpActivity<HunterAuditPresenter>(), HunterAudit
         mIvIdCardFront.loadUrl(data.idCardImgFront ?: "")
         mIvIdCardBack.loadUrl(data.idCardImgBack ?: "")
         mMenuVisible = data.state == UserState.NORMAL
-        mTvState.text=data.state.state
-        fontImg=data.idCardImgFront ?: ""
-        backImg=data.idCardImgBack ?: ""
+        mTvState.text = data.state.state
+        fontImg = data.idCardImgFront ?: ""
+        backImg = data.idCardImgBack ?: ""
         supportInvalidateOptionsMenu()
     }
 
@@ -106,7 +106,7 @@ class HunterAuditActivity : BaseMvpActivity<HunterAuditPresenter>(), HunterAudit
         if (requestCode == REQUEST_CODE_FRONT && resultCode == Activity.RESULT_OK) {
             mSelected = Matisse.obtainPathResult(data!!)
             var imgUrl = mSelected[0]
-            OssUtil.instance.putFile("test", imgUrl, {
+            OssUtil.instance.putFile(imgUrl, {
                 fontImg = it
                 runOnUiThread {
                     mIvIdCardFront.loadUrl(it)
@@ -119,7 +119,7 @@ class HunterAuditActivity : BaseMvpActivity<HunterAuditPresenter>(), HunterAudit
         } else if (requestCode == REQUEST_CODE_BACK && resultCode == Activity.RESULT_OK) {
             mSelected = Matisse.obtainPathResult(data!!)
             var imgUrl = mSelected[0]
-            OssUtil.instance.putFile("test", imgUrl, {
+            OssUtil.instance.putFile(imgUrl, {
                 backImg = it
                 runOnUiThread {
                     mIvIdCardBack.loadUrl(it)
@@ -134,12 +134,12 @@ class HunterAuditActivity : BaseMvpActivity<HunterAuditPresenter>(), HunterAudit
 
     fun validation(): Boolean {
 
-        if (mEtIdcard.text.isEmpty()&&mEtIdcard.text.length==18) {
+        if (mEtIdcard.text.isEmpty() && mEtIdcard.text.length == 18) {
             toast("请输入18位身份证号码")
             return false
         }
 
-        if (mEtPhone.text.isEmpty()&&mEtPhone.text.length==11) {
+        if (mEtPhone.text.isEmpty() && mEtPhone.text.length == 11) {
             toast("请输入11位电话号码")
             return false
         }
