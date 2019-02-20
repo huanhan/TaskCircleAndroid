@@ -1,6 +1,7 @@
 package xin.lrvik.taskcicleandroid.ui.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
@@ -33,7 +34,7 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginView {
         }
         JPushInterface.setAlias(this@LoginActivity, 0, "app_${result.userId}")
         //设置refreshtoken失效时间30天
-        result.expires_out = (DateUtils.curTime + (1000 * 60 * 60 * 24 * 30))
+        result.expires_out = (DateUtils.curTime + (1000L * 60L * 60L * 24L * 30L))
         AppPrefsUtils.putString("token", Gson().toJson(result))
         UserInfo.userId = result.userId.toLong()
         UserInfo.access_token = result.access_token

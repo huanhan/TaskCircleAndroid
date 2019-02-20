@@ -1,5 +1,6 @@
 package xin.lrvik.taskcicleandroid.baselibrary.data.net
 
+import android.util.Log
 import com.google.gson.*
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -64,8 +65,8 @@ class RetrofitFactory private constructor() {
                             .execute().body()
 
                     tokenResult?.let {
-                        //设置refreshtoken失效时间6天
-                        tokenResult.expires_out = (DateUtils.curTime + (1000 * 60 * 60 * 24 * 6))
+                        //设置refreshtoken失效时间30天
+                        tokenResult.expires_out = (DateUtils.curTime + (1000L * 60L * 60L * 24L * 30L))
                         AppPrefsUtils.putString("token", Gson().toJson(tokenResult))
 
                         UserInfo.userId = tokenResult.userId.toLong()
@@ -74,7 +75,8 @@ class RetrofitFactory private constructor() {
 
                         var newRequest = chain.request()
                                 .newBuilder()
-                                .addHeader("Authorization", "bearer ${UserInfo.access_token}").build()
+                                .addHeader("Authorization", "bearer ${UserInfo.access_token}")
+                                .build()
                         return@Interceptor chain.proceed(newRequest)
                     }
 

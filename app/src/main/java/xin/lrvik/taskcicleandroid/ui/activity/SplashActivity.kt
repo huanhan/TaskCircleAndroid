@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.google.gson.Gson
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Observable
@@ -62,6 +63,8 @@ class SplashActivity : AppCompatActivity() {
                             UserInfo.refresh_token = tokenResult.refresh_token
                             UserInfo.userId = tokenResult.userId.toLong()
                             //根据token时间决定是否重新登录
+
+                            Log.d("test", "当前时间${DateUtils.curTime} 保存进SP的时间：${tokenResult.expires_out}" )
                             if (DateUtils.curTime > tokenResult.expires_out) {
                                 toast("登录信息失效，请重新登录")
                                 mTvInit.text="登录信息失效，请重新登录"
