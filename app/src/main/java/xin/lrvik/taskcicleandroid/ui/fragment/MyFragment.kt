@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cn.jpush.android.api.JPushInterface
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_my.*
 import org.jetbrains.anko.support.v4.alert
@@ -131,6 +132,7 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
         mBtExitLogin.onClick {
             alert("是否确认退出登录？") {
                 positiveButton("是") {
+                    JPushInterface.stopPush(activity)
                     AppPrefsUtils.putString("token", "")
                     AppPrefsUtils.putString(BaseConstant.KEY_SP_HISTORY, "")
                     activity!!.finish()

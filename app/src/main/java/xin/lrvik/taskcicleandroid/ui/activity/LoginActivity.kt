@@ -28,6 +28,9 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginView {
     override fun onResult(result: TokenResult) {
         finish()
         startActivity<MainActivity>()
+        if (JPushInterface.isPushStopped(this)) {
+            JPushInterface.resumePush(this)
+        }
         JPushInterface.setAlias(this@LoginActivity, 0, "app_${result.userId}")
         //设置refreshtoken失效时间30天
         result.expires_out = (DateUtils.curTime + (1000 * 60 * 60 * 24 * 30))
