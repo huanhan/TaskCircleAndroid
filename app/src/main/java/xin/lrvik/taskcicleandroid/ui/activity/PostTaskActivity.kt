@@ -4,12 +4,14 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.text.InputFilter
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
@@ -213,6 +215,41 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                     }
 
 
+                }
+                R.id.mIvFlag -> {
+                    alert {
+                        customView {
+                            title = "填写步骤信息"
+                            verticalLayout {
+                                val etTitle = editText {
+                                    hint = "请填写步骤标题"
+                                    filters = arrayOf<InputFilter>(InputFilter.LengthFilter(20))
+                                    setText(if (!taskStep.title.isNullOrEmpty()) taskStep.title else "")
+                                }
+                                val etContent = editText {
+                                    hint = "请填写步骤内容"
+                                    filters = arrayOf<InputFilter>(InputFilter.LengthFilter(255))
+                                    setText(if (!taskStep.title.isNullOrEmpty()) taskStep.context else "")
+                                }
+                                positiveButton("是") {
+                                    var title = etTitle.text.toString().trim()
+                                    var context = etContent.text.toString().trim()
+                                    /*if (title.isEmpty() || title.length > 20) {
+                                        toast("标题请填写20字内")
+                                        return@positiveButton
+                                    }
+                                    if (context.isEmpty() || context.length > 255) {
+                                        toast("请填写步骤内容（0~255字内）")
+                                        return@positiveButton
+                                    }*/
+                                    taskStep.title = title
+                                    taskStep.context = context
+                                    mRvTaskStepAdapter.notifyDataSetChanged()
+                                }
+                                negativeButton("否") { }
+                            }
+                        }
+                    }.show()
                 }
                 else -> {
                 }
