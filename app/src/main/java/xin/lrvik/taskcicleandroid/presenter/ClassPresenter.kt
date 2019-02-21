@@ -14,8 +14,8 @@ class ClassPresenter @Inject constructor() : BasePresenter<ClassView>() {
         if (!checkNetWork()) {
             return
         }
-
-        taskService.getTaskClassData().execute(lifecycleProvider, mView, false) {
+        mView.showLoading()
+        taskService.getTaskClassData().execute(lifecycleProvider, mView, true) {
             mView.onTaskClassResult(it)
         }
     }

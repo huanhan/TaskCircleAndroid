@@ -25,15 +25,6 @@ class VpAdapter(supportFragmentManager: FragmentManager,
         return POSITION_NONE
     }
 
-    /*override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        container.addView(fragments[position] as View)
-        return fragments[position]
-    }
-
-    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-        container.removeView(`object` as View)
-    }*/
-
     override fun getPageTitle(position: Int): CharSequence? {
         return titles[position%fragments.size]
     }

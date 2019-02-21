@@ -438,6 +438,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
     private fun createDialog() {
         if (mDialog == null) {
+            mPresenter.classData()
             mDialog = ClassificationDialog()
             mDialog!!.showDialog(supportFragmentManager)
             mDialog!!.listener = object : ClassificationDialog.OnClassificationClickListener {
@@ -449,7 +450,6 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
                     }
                 }
             }
-            mPresenter.classData()
         } else {
             mDialog!!.showDialog(supportFragmentManager)
         }
