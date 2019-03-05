@@ -9,5 +9,6 @@ data class HunterAudit (
     var phone: String? = null,
     var idCardImgFront: String? = null,
     var idCardImgBack: String? = null,
-    var state: UserState
+    var state: UserState,
+    val audits: ArrayList<Audit>? = null
 )

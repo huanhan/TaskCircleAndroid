@@ -12,7 +12,6 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy
 import kotlinx.android.synthetic.main.activity_hunter_audit.*
 import org.jetbrains.anko.toast
 import xin.lrvik.taskcicleandroid.R
-import xin.lrvik.taskcicleandroid.baselibrary.ext.loadCircleUrl
 import xin.lrvik.taskcicleandroid.baselibrary.ext.loadUrl
 import xin.lrvik.taskcicleandroid.baselibrary.ext.onClick
 import xin.lrvik.taskcicleandroid.baselibrary.ui.activity.BaseMvpActivity
@@ -21,6 +20,7 @@ import xin.lrvik.taskcicleandroid.data.protocol.enums.UserState
 import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.HunterAuditPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.HunterAuditView
+import xin.lrvik.taskcicleandroid.ui.dialog.AuditsDialog
 import xin.lrvik.taskcicleandroid.util.OssUtil
 
 class HunterAuditActivity : BaseMvpActivity<HunterAuditPresenter>(), HunterAuditView {
@@ -34,6 +34,7 @@ class HunterAuditActivity : BaseMvpActivity<HunterAuditPresenter>(), HunterAudit
 
     var backImg: String = ""
 
+    lateinit var hunterAudit: HunterAudit
 
     override fun injectComponent() {
         DaggerTaskCircleComponent.builder().activityComponent(activityComponent).build().inject(this)
@@ -41,12 +42,14 @@ class HunterAuditActivity : BaseMvpActivity<HunterAuditPresenter>(), HunterAudit
     }
 
     override fun onAuditResult(data: HunterAudit) {
+        hunterAudit = data
         mEtIdcard.setText(data.idCard ?: "")
         mEtPhone.setText(data.phone ?: "")
         mEtAddress.setText(data.address ?: "")
         mIvIdCardFront.loadUrl(data.idCardImgFront ?: "")
         mIvIdCardBack.loadUrl(data.idCardImgBack ?: "")
-        mMenuVisible = data.state == UserState.NORMAL
+        mSaveVisible = data.state == UserState.NORMAL
+        mHistoryVisible = data.audits != null && data.audits.size > 0
         mTvState.text = data.state.state
         fontImg = data.idCardImgFront ?: ""
         backImg = data.idCardImgBack ?: ""
@@ -162,12 +165,15 @@ class HunterAuditActivity : BaseMvpActivity<HunterAuditPresenter>(), HunterAudit
         return true
     }
 
-    var mMenuVisible: Boolean = false
+    var mSaveVisible: Boolean = false
+    var mHistoryVisible: Boolean = false
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.hunter_audit, menu)
-        var item = menu.getItem(0)
-        item.isVisible = mMenuVisible
+        var history = menu.getItem(0)
+        var save = menu.getItem(1)
+        history.isVisible = mHistoryVisible
+        save.isVisible = mSaveVisible
         return true
     }
 
@@ -176,6 +182,11 @@ class HunterAuditActivity : BaseMvpActivity<HunterAuditPresenter>(), HunterAudit
             android.R.id.home -> {
                 finish()
                 return true
+            }
+            R.id.audit_history -> {
+                hunterAudit.audits?.let {
+                    AuditsDialog.showDialog(supportFragmentManager, it)
+                }
             }
             R.id.save_audit -> {
                 if (validation()) {
