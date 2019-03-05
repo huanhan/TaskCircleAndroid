@@ -28,7 +28,7 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
 
     companion object {
         val MODE = "MODE"
-        val TASKID = "TASKID"
+        val TASKID = "HUNTERTASKID"
     }
 
     var mode: Mode = Mode.LOOK
@@ -115,7 +115,7 @@ class HunterTaskDetailActivity : BaseMvpActivity<HunterTaskDetailPresenter>(), H
 
         mBtChat.onClick {
             startActivity<ChatActivity>(ChatActivity.HUNTERID to data.hunterId,
-                    ChatActivity.TASKID to data.taskId,
+                    ChatActivity.HUNTERTASKID to data.hunterTaskId,
                     ChatActivity.USERID to data.userId)
         }
 

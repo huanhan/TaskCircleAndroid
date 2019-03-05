@@ -7,5 +7,5 @@ package xin.lrvik.taskcicleandroid.data.protocol
  */
 data class AddChatReq(val hunterId: Long,
                       val userId: Long,
-                      val taskId: String,
+                      val hunterTaskId: String,
                       val context: String)

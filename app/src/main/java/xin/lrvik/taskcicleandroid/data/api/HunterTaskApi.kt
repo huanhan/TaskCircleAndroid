@@ -20,8 +20,8 @@ interface HunterTaskApi {
                      @Path("size") size: Int): Observable<Page<HunterTask>>
 
     //猎刃接取任务
-    @GET("app/ht/accept/{taskId}")
-    fun acceptTask(@Path("taskId") taskId: String): Observable<Result>
+    @GET("app/ht/accept/{hunterTaskId}")
+    fun acceptTask(@Path("hunterTaskId") taskId: String): Observable<Result>
 
     //猎刃点击按钮开始任务
     @GET("app/ht/begin/{htId}")
@@ -64,8 +64,8 @@ interface HunterTaskApi {
     fun cancelAdminAudit(@Path("htId") htId: String): Observable<Result>
 
     //猎刃同意用户放弃任务
-    @GET("app/ht/abandon/success/{taskId}")
-    fun agreeAbandon(@Path("taskId") taskId: String): Observable<Result>
+    @GET("app/ht/abandon/success/{hunterTaskId}")
+    fun agreeAbandon(@Path("hunterTaskId") taskId: String): Observable<Result>
 
     //猎刃点击用户的放弃申请不通过
     @POST("app/ht/abandon/failure")

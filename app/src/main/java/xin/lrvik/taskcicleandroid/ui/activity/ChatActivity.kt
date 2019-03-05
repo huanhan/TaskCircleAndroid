@@ -53,13 +53,13 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
 
     //任务id,猎刃id，用户id
     var hunterid: Long = 0
-    lateinit var taskid: String
+    lateinit var hunterTaskId: String
     var userid: Long = 0
     lateinit var mRvChatAdapter: RvChatAdapter
 
     companion object {
         val HUNTERID = "HUNTERID"
-        val TASKID = "TASKID"
+        val HUNTERTASKID = "HUNTERTASKID"
         val USERID = "USERID"
         var isForeground = false
         val MESSAGE_RECEIVED_ACTION = "xin.lrvik.taskcicleandroid.MESSAGE_RECEIVED_ACTION"
@@ -72,9 +72,9 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
 
         mRvChatAdapter.data.clear()
         if (UserInfo.userId == userid) {
-            mPresenter.chatDetail(taskid, hunterid, userid, 0, 50)
+            mPresenter.chatDetail(hunterTaskId, hunterid, userid, 0, 50)
         } else {
-            mPresenter.chatDetail(taskid, UserInfo.userId, userid, 0, 50)
+            mPresenter.chatDetail(hunterTaskId, UserInfo.userId, userid, 0, 50)
         }
         super.onResume()
     }
@@ -100,9 +100,9 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
         }
         try {
             hunterid = intent.getLongExtra(ChatActivity.HUNTERID, 0)
-            taskid = intent.getStringExtra(ChatActivity.TASKID)
+            hunterTaskId = intent.getStringExtra(ChatActivity.HUNTERTASKID)
             userid = intent.getLongExtra(ChatActivity.USERID, 0)
-            Log.d("test", "hunterid $hunterid 任务id $taskid  userid:$userid ")
+            Log.d("test", "hunterid $hunterid 任务id $hunterTaskId  userid:$userid ")
         } catch (e: Exception) {
             toast("信息不全")
             finish()
@@ -122,9 +122,9 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
         mBtSend.onClick {
             if (!mEtContent.text.toString().isEmpty()) {
                 if (UserInfo.userId == userid) {
-                    mPresenter.saveChat(hunterid, userid, taskid, mEtContent.text.toString())
+                    mPresenter.saveChat(hunterid, userid, hunterTaskId, mEtContent.text.toString())
                 } else {
-                    mPresenter.saveChat(UserInfo.userId, userid, taskid, mEtContent.text.toString())
+                    mPresenter.saveChat(UserInfo.userId, userid, hunterTaskId, mEtContent.text.toString())
                 }
                 mEtContent.text.clear()
 
@@ -148,7 +148,7 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
         super.onNewIntent(intent)
         try {
             hunterid = intent.getLongExtra(ChatActivity.HUNTERID, 0)
-            taskid = intent.getStringExtra(ChatActivity.TASKID)
+            hunterTaskId = intent.getStringExtra(ChatActivity.HUNTERTASKID)
             userid = intent.getLongExtra(ChatActivity.USERID, 0)
 
             intent.getStringExtra("test")
@@ -179,7 +179,7 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
                     val chatMsgStr = intent.getStringExtra(CHATMSG)
                     var chatMsg = Gson().fromJson(chatMsgStr, ChatMsg::class.java)
                     //判断是否是当前任务
-                    if (chatMsg.taskId == taskid) {
+                    if (chatMsg.hunterTaskId == hunterTaskId) {
                         //判断当前用户是猎刃还是雇主
                         if (UserInfo.userId == userid) {
                             //说明本人是雇主，猎刃给雇主发了一条新消息
@@ -192,7 +192,7 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
                                 var intent = Intent(this@ChatActivity, ChatActivity::class.java)
 //                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                                 intent.putExtra(ChatActivity.HUNTERID, chatMsg.hunterId)
-                                intent.putExtra(ChatActivity.TASKID, chatMsg.taskId)
+                                intent.putExtra(ChatActivity.HUNTERTASKID, chatMsg.hunterTaskId)
                                 intent.putExtra(ChatActivity.USERID, chatMsg.userId)
 
                                 NotificationUtils(context).sendNotification(chatMsg.title, chatMsg.content, intent)
@@ -208,7 +208,7 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
                                 var intent = Intent(this@ChatActivity, ChatActivity::class.java)
 //                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                                 intent.putExtra(ChatActivity.HUNTERID, chatMsg.hunterId)
-                                intent.putExtra(ChatActivity.TASKID, chatMsg.taskId)
+                                intent.putExtra(ChatActivity.HUNTERTASKID, chatMsg.hunterTaskId)
                                 intent.putExtra(ChatActivity.USERID, chatMsg.userId)
 
                                 NotificationUtils(context).sendNotification(chatMsg.title, chatMsg.content, intent)
@@ -218,7 +218,7 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
                         var intent = Intent(this@ChatActivity, ChatActivity::class.java)
 //                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         intent.putExtra(ChatActivity.HUNTERID, chatMsg.hunterId)
-                        intent.putExtra(ChatActivity.TASKID, chatMsg.taskId)
+                        intent.putExtra(ChatActivity.HUNTERTASKID, chatMsg.hunterTaskId)
                         intent.putExtra(ChatActivity.USERID, chatMsg.userId)
 
                         NotificationUtils(context).sendNotification(chatMsg.title, chatMsg.content, intent)

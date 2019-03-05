@@ -43,7 +43,7 @@ import xin.lrvik.taskcicleandroid.ui.dialog.TaskStepDialog
 import xin.lrvik.taskcicleandroid.util.OssUtil
 import kotlin.collections.ArrayList
 
-//startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.LOOK.name, PostTaskActivity.TASKID to "20190124220137236856064")
+//startActivity<PostTaskActivity>(PostTaskActivity.MODE to PostTaskActivity.Mode.LOOK.name, PostTaskActivity.HUNTERTASKID to "20190124220137236856064")
 class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
     enum class Mode {
@@ -52,7 +52,7 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
 
     companion object {
         val MODE = "MODE"
-        val TASKID = "TASKID"
+        val TASKID = "HUNTERTASKID"
         val REQUEST_CODE_CHOOSE = 1
         val REQUEST_CODE_CROP = 2
     }

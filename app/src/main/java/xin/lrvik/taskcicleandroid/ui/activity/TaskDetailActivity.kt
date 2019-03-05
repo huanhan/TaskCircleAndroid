@@ -35,7 +35,7 @@ class TaskDetailActivity : BaseMvpActivity<TaskDetailPresenter>(), TaskDetailVie
     lateinit var taskid: String
 
     companion object {
-        val TASKID = "TASKID"
+        val TASKID = "HUNTERTASKID"
     }
 
     override fun injectComponent() {

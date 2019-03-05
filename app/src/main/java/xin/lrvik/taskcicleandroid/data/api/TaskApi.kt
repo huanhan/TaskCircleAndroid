@@ -18,8 +18,8 @@ interface TaskApi {
     fun addTask(@Body req: AddTaskReq): Observable<Result>
 
     //删除任务
-    @DELETE("app/task/remove/{taskId}")
-    fun deleteTask(@Path("taskId") taskId: String): Observable<Result>
+    @DELETE("app/task/remove/{hunterTaskId}")
+    fun deleteTask(@Path("hunterTaskId") taskId: String): Observable<Result>
 
     //修改任务
     @POST("app/task/modify")
@@ -30,8 +30,8 @@ interface TaskApi {
     fun issueTask(@Body req: IssueTaskReq): Observable<TaskDetail>
 
     //根据任务id查询任务详细
-    @GET("app/task/{taskId}")
-    fun queryTaskDetail(@Path("taskId") taskId: String): Observable<TaskDetail>
+    @GET("app/task/{hunterTaskId}")
+    fun queryTaskDetail(@Path("hunterTaskId") taskId: String): Observable<TaskDetail>
 
     //查询分类下所有的已发布任务 http://localhost:8080/app/task/issue/9/0/2
     @GET("app/task/issue/{classid}/{page}/{size}")
@@ -52,28 +52,28 @@ interface TaskApi {
                @Path("size") size: Int): Observable<Page<Task>>
 
     //将用户的任务提交给管理员审核
-    @GET("app/task/user/upAudit/{taskId}")
-    fun submitAudit(@Path("taskId") taskId: String): Observable<Result>
+    @GET("app/task/user/upAudit/{hunterTaskId}")
+    fun submitAudit(@Path("hunterTaskId") taskId: String): Observable<Result>
 
     //取消审核
-    @GET("app/task/user/di/upAudit/{taskId}")
-    fun cancelAudit(@Path("taskId") taskId: String): Observable<Result>
+    @GET("app/task/user/di/upAudit/{hunterTaskId}")
+    fun cancelAudit(@Path("hunterTaskId") taskId: String): Observable<Result>
 
     //撤回我的任务
-    @GET("app/task/out/{taskId}")
-    fun outTask(@Path("taskId") taskId: String): Observable<Result>
+    @GET("app/task/out/{hunterTaskId}")
+    fun outTask(@Path("hunterTaskId") taskId: String): Observable<Result>
 
     //用户点击重新上架按钮功能
-    @GET("app/task/put/{taskId}")
-    fun upperTask(@Path("taskId") taskId: String): Observable<Result>
+    @GET("app/task/put/{hunterTaskId}")
+    fun upperTask(@Path("hunterTaskId") taskId: String): Observable<Result>
 
     //用户点击放弃任务
-    @GET("app/task/user/abandon/{taskId}")
-    fun abandonTask(@Path("taskId") taskId: String): Observable<Result>
+    @GET("app/task/user/abandon/{hunterTaskId}")
+    fun abandonTask(@Path("hunterTaskId") taskId: String): Observable<Result>
 
     //用户点击取消放弃任务
-    @GET("app/task/user/di/abandon/{taskId}")
-    fun cancelAbandon(@Path("taskId") taskId: String): Observable<Result>
+    @GET("app/task/user/di/abandon/{hunterTaskId}")
+    fun cancelAbandon(@Path("hunterTaskId") taskId: String): Observable<Result>
 
     //用户点击审核猎刃任务通过   htId 猎刃任务id
     @GET("app/task/audit/success/{htId}")

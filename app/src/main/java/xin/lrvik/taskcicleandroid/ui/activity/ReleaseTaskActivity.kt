@@ -36,7 +36,7 @@ class ReleaseTaskActivity : BaseMvpActivity<ReleaseTaskPresenter>(), ReleaseTask
     var taskid = ""
 
     companion object {
-        const val TASKID = "TASKID"
+        const val TASKID = "HUNTERTASKID"
     }
 
     override fun injectComponent() {

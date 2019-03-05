@@ -200,7 +200,7 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
                     }
                     R.id.mBtChat -> {
                         startActivity<ChatActivity>(ChatActivity.HUNTERID to task.hunterId!!,
-                                ChatActivity.TASKID to task.taskId!!,
+                                ChatActivity.HUNTERTASKID to task.id!!,
                                 ChatActivity.USERID to task.userId!!)
                     }
                     R.id.mBtWarning -> {

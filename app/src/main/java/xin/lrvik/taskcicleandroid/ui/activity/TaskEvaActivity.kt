@@ -21,7 +21,7 @@ import java.util.ArrayList
 class TaskEvaActivity : BaseMvpActivity<TaskEvaPresenter>(), TaskEvaView {
 
     companion object {
-        val TASKID = "TASKID"
+        val TASKID = "HUNTERTASKID"
     }
 
 

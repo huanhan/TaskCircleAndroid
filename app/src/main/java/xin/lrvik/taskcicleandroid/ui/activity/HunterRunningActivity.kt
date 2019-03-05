@@ -60,7 +60,7 @@ class HunterRunningActivity : BaseMvpActivity<HunterRunningPresenter>(), HunterR
     }
 
     companion object {
-        val TASKID = "TASKID"
+        val TASKID = "HUNTERTASKID"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -166,7 +166,7 @@ class HunterRunningActivity : BaseMvpActivity<HunterRunningPresenter>(), HunterR
                     }
                     R.id.mBtChat -> {
                         startActivity<ChatActivity>(ChatActivity.HUNTERID to hunterTask.hunterId,
-                                ChatActivity.TASKID to hunterTask.taskId,
+                                ChatActivity.HUNTERTASKID to hunterTask.id,
                                 ChatActivity.USERID to hunterTask.userId)
                     }
                     R.id.mBtWarning -> {

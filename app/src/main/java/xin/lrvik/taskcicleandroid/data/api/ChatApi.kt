@@ -18,7 +18,7 @@ import xin.lrvik.taskcicleandroid.data.protocol.Result
 interface ChatApi {
 
     @GET("app/chat/{huntertaskid}/{hunterid}/{userid}/{page}/{size}")
-    fun chatDetail(@Path("huntertaskid") taskId: String,
+    fun chatDetail(@Path("huntertaskid") huntertaskid: String,
                    @Path("hunterid") hunterid: Long,
                    @Path("userid") userid: Long,
                    @Path("page") page: Int,

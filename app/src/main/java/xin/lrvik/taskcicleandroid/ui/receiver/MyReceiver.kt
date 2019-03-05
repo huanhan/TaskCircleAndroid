@@ -1,13 +1,10 @@
 package xin.lrvik.taskcicleandroid.ui.receiver
 
 import android.app.ActivityManager
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.NotificationCompat
 import android.text.TextUtils
 
 import org.json.JSONException
@@ -16,18 +13,12 @@ import org.json.JSONObject
 import cn.jpush.android.api.JPushInterface
 import com.google.gson.Gson
 import com.google.gson.JsonParser
-import xin.lrvik.taskcicleandroid.R
 import xin.lrvik.taskcicleandroid.data.protocol.ChatMsg
 import xin.lrvik.taskcicleandroid.data.protocol.PushMsgState
 import xin.lrvik.taskcicleandroid.data.protocol.TaskMsg
-import android.graphics.BitmapFactory
-import android.net.Uri
-import android.content.Context.NOTIFICATION_SERVICE
-import android.support.v4.content.ContextCompat.getSystemService
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
 import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication
-import xin.lrvik.taskcicleandroid.baselibrary.common.BaseApplication.Companion.context
 import xin.lrvik.taskcicleandroid.ui.activity.*
 import xin.lrvik.taskcicleandroid.util.NotificationUtils
 
@@ -131,7 +122,7 @@ class MyReceiver : BroadcastReceiver() {
                     var chatMsg = Gson().fromJson(extra, ChatMsg::class.java)
                     var intent = Intent(BaseApplication.context, ChatActivity::class.java)
                     intent.putExtra(ChatActivity.HUNTERID, chatMsg.hunterId)
-                    intent.putExtra(ChatActivity.TASKID, chatMsg.taskId)
+                    intent.putExtra(ChatActivity.HUNTERTASKID, chatMsg.hunterTaskId)
                     intent.putExtra(ChatActivity.USERID, chatMsg.userId)
                     NotificationUtils(context).sendNotification(chatMsg.title, chatMsg.content, intent)
                 }

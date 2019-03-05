@@ -16,7 +16,7 @@ data class ChatMsg(var title: String,
                    var userId: Long,
                    var hunterId: Long,
                    var sender: Long,
-                   var taskId: String,
+                   var hunterTaskId: String,
                    var createTime: Timestamp,
                    val userIcon: String?,
                    val hunterIcon: String?
