@@ -133,6 +133,11 @@
             android:padding="5dp">
 
             <Button
+                android:id="@+id/mBtAuditHistory"
+                style="@style/TaskButton"
+                android:text="审核历史" />
+
+            <Button
                 android:id="@+id/mBtEva"
                 style="@style/TaskButton"
                 android:text="评价" />

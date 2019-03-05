@@ -37,15 +37,17 @@ class Task : Parcelable {
 
     val deadline: Timestamp? = null
 
+    val audits: ArrayList<Audit>? = null
+
     constructor(source: Parcel) : this(
     )
 
     constructor()
 
-
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {}
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -67,6 +69,7 @@ class Task : Parcelable {
         if (peopleNumber != other.peopleNumber) return false
         if (beginTime != other.beginTime) return false
         if (deadline != other.deadline) return false
+        if (audits != other.audits) return false
 
         return true
     }
@@ -87,6 +90,7 @@ class Task : Parcelable {
         result = 31 * result + (peopleNumber ?: 0)
         result = 31 * result + (beginTime?.hashCode() ?: 0)
         result = 31 * result + (deadline?.hashCode() ?: 0)
+        result = 31 * result + (audits?.hashCode() ?: 0)
         return result
     }
 
@@ -97,4 +101,6 @@ class Task : Parcelable {
             override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
         }
     }
+
+
 }

@@ -15,6 +15,7 @@ import xin.lrvik.taskcicleandroid.injection.component.DaggerTaskCircleComponent
 import xin.lrvik.taskcicleandroid.presenter.HunterRunningPresenter
 import xin.lrvik.taskcicleandroid.presenter.view.HunterRunningView
 import xin.lrvik.taskcicleandroid.ui.adapter.RvHunterRunningAdapter
+import xin.lrvik.taskcicleandroid.ui.dialog.AuditsDialog
 import java.util.ArrayList
 
 class HunterRunningActivity : BaseMvpActivity<HunterRunningPresenter>(), HunterRunningView {
@@ -198,6 +199,11 @@ class HunterRunningActivity : BaseMvpActivity<HunterRunningPresenter>(), HunterR
                             }
                             negativeButton("否") { }
                         }.show()
+                    }
+                    R.id.mBtAuditHistory -> {
+                        task.audits?.let {
+                            AuditsDialog.showDialog(supportFragmentManager, it)
+                        }
                     }
                     else -> {
 

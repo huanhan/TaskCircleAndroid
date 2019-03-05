@@ -1,6 +1,7 @@
 package xin.lrvik.taskcicleandroid.ui.adapter
 
 import android.text.format.DateFormat
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -25,6 +26,7 @@ class RvTaskStateAdapter(data: List<Task>) : BaseQuickAdapter<Task, BaseViewHold
 
         //按钮根据状态决定是否显示
         val mReleaseMsg = helper.getView<LinearLayout>(R.id.mReleaseMsg)
+        val mBtAuditHistory = helper.getView<Button>(R.id.mBtAuditHistory)
         val mBtModify = helper.getView<Button>(R.id.mBtModify)
         val mBtDelete = helper.getView<Button>(R.id.mBtDelete)
         val mBtSubmitAudit = helper.getView<Button>(R.id.mBtSubmitAudit)
@@ -111,8 +113,17 @@ class RvTaskStateAdapter(data: List<Task>) : BaseQuickAdapter<Task, BaseViewHold
                 .addOnClickListener(R.id.mBtAbandon)
                 .addOnClickListener(R.id.mBtCancelAbandon)
                 .addOnClickListener(R.id.mBtDelete)
+                .addOnClickListener(R.id.mBtAuditHistory)
         var imageView = helper.getView<ImageView>(R.id.mIvIcon)
         imageView.loadUrl(item.headImg ?: R.mipmap.def)
+
+        item.audits?.let {
+            if (it.isNotEmpty()) {
+                mBtAuditHistory.visibility= View.VISIBLE
+            }else{
+                mBtAuditHistory.visibility= View.GONE
+            }
+        }
 
     }
 

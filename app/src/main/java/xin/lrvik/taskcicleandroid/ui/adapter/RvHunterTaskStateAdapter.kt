@@ -21,6 +21,7 @@ class RvHunterTaskStateAdapter(data: List<HunterTask>) : BaseQuickAdapter<Hunter
     override fun convert(helper: BaseViewHolder, item: HunterTask) {
 
         //按钮根据状态决定是否显示
+        val mBtAuditHistory = helper.getView<Button>(R.id.mBtAuditHistory)
         val mBtBegin = helper.getView<Button>(R.id.mBtBegin)
         val mBtSubmitAudit = helper.getView<Button>(R.id.mBtSubmitAudit)
         val mBtReWork = helper.getView<Button>(R.id.mBtReWork)
@@ -117,9 +118,18 @@ class RvHunterTaskStateAdapter(data: List<HunterTask>) : BaseQuickAdapter<Hunter
                 .addOnClickListener(R.id.mBtChat)
                 .addOnClickListener(R.id.mBtWarning)
                 .addOnClickListener(R.id.mBtEva)
+                .addOnClickListener(R.id.mBtAuditHistory)
                 .setVisible(R.id.mBtWarning, !item.auditContext.isNullOrEmpty())
         var imageView = helper.getView<ImageView>(R.id.mIvIcon)
         imageView.loadUrl(item.headImg ?: R.mipmap.def)
+
+        item.audits?.let {
+            if (it.isNotEmpty()) {
+                mBtAuditHistory.visibility= View.VISIBLE
+            }else{
+                mBtAuditHistory.visibility= View.GONE
+            }
+        }
 
     }
 

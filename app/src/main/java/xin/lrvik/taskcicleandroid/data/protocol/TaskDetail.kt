@@ -35,5 +35,6 @@ data class TaskDetail(
         var pick: Boolean,
 
         var taskClassifyAppDtos: ArrayList<TaskClass>? = null,
-        var taskSteps: ArrayList<TaskStep>? = null
+        var taskSteps: ArrayList<TaskStep>? = null,
+        val audits: Collection<Audit>? = null
 )

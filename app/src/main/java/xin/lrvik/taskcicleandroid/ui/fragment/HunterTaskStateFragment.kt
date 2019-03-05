@@ -22,6 +22,7 @@ import xin.lrvik.taskcicleandroid.ui.activity.ChatActivity
 import xin.lrvik.taskcicleandroid.ui.activity.HunterEvaluateActivity
 import xin.lrvik.taskcicleandroid.ui.activity.HunterTaskDetailActivity
 import xin.lrvik.taskcicleandroid.ui.adapter.RvHunterTaskStateAdapter
+import xin.lrvik.taskcicleandroid.ui.dialog.AuditsDialog
 import java.util.*
 
 /**
@@ -215,6 +216,11 @@ class HunterTaskStateFragment : BaseMvpFragment<HunterTaskStatePresenter>(), Hun
                     R.id.mBtEva -> {
                         startActivity<HunterEvaluateActivity>(HunterEvaluateActivity.HUNTERTASKID to task.id!!)
                         isRefresh = true
+                    }
+                    R.id.mBtAuditHistory -> {
+                        task.audits?.let {
+                            AuditsDialog.showDialog(activity!!.supportFragmentManager,it)
+                        }
                     }
                     else -> {
 

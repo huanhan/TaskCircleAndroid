@@ -22,6 +22,7 @@ import xin.lrvik.taskcicleandroid.ui.activity.PostTaskActivity
 import xin.lrvik.taskcicleandroid.ui.activity.ReleaseTaskActivity
 import xin.lrvik.taskcicleandroid.ui.activity.TaskDetailActivity
 import xin.lrvik.taskcicleandroid.ui.adapter.RvTaskStateAdapter
+import xin.lrvik.taskcicleandroid.ui.dialog.AuditsDialog
 import java.util.*
 
 /**
@@ -147,6 +148,11 @@ class TaskStateFragment : BaseMvpFragment<TaskStatePresenter>(), TaskStateView {
                             positiveButton("是") { mPresenter.cancelAbandon(taskId) }
                             negativeButton("否") { }
                         }.show()
+                    }
+                    R.id.mBtAuditHistory -> {
+                        task.audits?.let {
+                            AuditsDialog.showDialog(activity!!.supportFragmentManager,it)
+                        }
                     }
                     else -> {
                     }

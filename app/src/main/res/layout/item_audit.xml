@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/mTvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textSize="10sp"
+            android:text="时间：" />
+
+        <TextView
+            android:id="@+id/mTvType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:layout_alignParentRight="true"
+            android:text="类型：" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/mTvResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:textSize="12sp"
+        android:text="结果：" />
+
+    <TextView
+        android:id="@+id/mTvReason"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="3dp"
+        android:textSize="12sp"
+        android:text="原因：" />
+
+    <TextView
+        android:id="@+id/mTvIdea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="3dp"
+        android:textSize="12sp"
+        android:layout_marginBottom="5dp"
+        android:text="意见：" />
+
+
+    <TextView
+        android:id="@+id/mTvAuditer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="3dp"
+        android:textSize="12sp"
+        android:layout_marginBottom="5dp"
+        android:text="审核人：" />
+
+    <View style="@style/DividerFixedHeight" />
+
+
+</LinearLayout>

@@ -30,4 +30,5 @@ class HunterTask {
     val userCHunter: Boolean? = null
     val hunterCUser: Boolean? = null
     val hunterCTask: Boolean? = null
+    val audits: ArrayList<Audit>? = null
 }

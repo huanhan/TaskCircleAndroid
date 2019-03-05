@@ -24,4 +24,5 @@ class HunterTaskAndStep {
     var stop: Boolean? = null
 
     var taskSteps: ArrayList<HunterRunningStep>? = null
+    val audits: Collection<Audit>? = null
 }
