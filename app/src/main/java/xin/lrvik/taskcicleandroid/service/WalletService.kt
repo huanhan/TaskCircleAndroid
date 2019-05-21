@@ -3,6 +3,7 @@ package xin.lrvik.taskcicleandroid.service
 import io.reactivex.Observable
 import xin.lrvik.taskcicleandroid.data.protocol.CashPledge
 import xin.lrvik.taskcicleandroid.data.protocol.Page
+import xin.lrvik.taskcicleandroid.data.protocol.Result
 import xin.lrvik.taskcicleandroid.data.protocol.Transfer
 import xin.lrvik.taskcicleandroid.data.protocol.UserWithdraw
 
@@ -17,4 +18,6 @@ interface WalletService {
     fun userWithdrawList(page: Int, size: Int): Observable<Page<UserWithdraw>>
 
     fun cashPledgeList(): Observable<List<CashPledge>>
+    fun withdrawAdd(): Observable<Result>
+    fun payAdd(): Observable<Result>
 }

@@ -3,6 +3,7 @@ package xin.lrvik.taskcicleandroid.service.impl
 import io.reactivex.Observable
 import xin.lrvik.taskcicleandroid.data.protocol.CashPledge
 import xin.lrvik.taskcicleandroid.data.protocol.Page
+import xin.lrvik.taskcicleandroid.data.protocol.Result
 import xin.lrvik.taskcicleandroid.data.protocol.Transfer
 import xin.lrvik.taskcicleandroid.data.protocol.UserWithdraw
 import xin.lrvik.taskcicleandroid.data.repository.WalletRepository
@@ -27,6 +28,16 @@ class WalletServiceImpl @Inject constructor() : WalletService {
 
     override fun cashPledgeList(): Observable<List<CashPledge>> {
         return walletRepository.cashPledgeList()
+    }
+
+
+    override fun withdrawAdd(): Observable<Result> {
+        return walletRepository.withdrawAdd()
+    }
+
+
+    override fun payAdd(): Observable<Result> {
+        return walletRepository.payAdd()
     }
 
 

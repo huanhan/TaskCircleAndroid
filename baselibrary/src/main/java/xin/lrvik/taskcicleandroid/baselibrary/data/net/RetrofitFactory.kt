@@ -1,6 +1,5 @@
 package xin.lrvik.taskcicleandroid.baselibrary.data.net
 
-import android.util.Log
 import com.google.gson.*
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

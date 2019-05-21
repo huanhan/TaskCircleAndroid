@@ -6,6 +6,7 @@ import xin.lrvik.taskcicleandroid.baselibrary.common.UserInfo
 import xin.lrvik.taskcicleandroid.data.api.WalletApi
 import xin.lrvik.taskcicleandroid.data.protocol.CashPledge
 import xin.lrvik.taskcicleandroid.data.protocol.Page
+import xin.lrvik.taskcicleandroid.data.protocol.Result
 import xin.lrvik.taskcicleandroid.data.protocol.Transfer
 import xin.lrvik.taskcicleandroid.data.protocol.UserWithdraw
 import javax.inject.Inject
@@ -26,5 +27,13 @@ class WalletRepository @Inject constructor() {
 
     fun cashPledgeList(): Observable<List<CashPledge>> {
         return RetrofitFactory.instance.create(WalletApi::class.java).cashPledgeList()
+    }
+
+    fun withdrawAdd(): Observable<Result> {
+        return RetrofitFactory.instance.create(WalletApi::class.java).withdrawAdd()
+    }
+
+    fun payAdd(): Observable<Result> {
+        return RetrofitFactory.instance.create(WalletApi::class.java).payAdd()
     }
 }

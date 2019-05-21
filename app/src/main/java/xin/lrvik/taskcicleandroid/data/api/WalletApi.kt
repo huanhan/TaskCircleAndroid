@@ -2,6 +2,7 @@ package xin.lrvik.taskcicleandroid.data.api
 
 import io.reactivex.Observable
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import xin.lrvik.taskcicleandroid.data.protocol.*
 
@@ -21,6 +22,13 @@ interface WalletApi {
             @Path("page") page: Int,
             @Path("size") size: Int): Observable<Page<UserWithdraw>>
 
-    @GET("app/finance/money/")
+    @GET("app/finance/money")
     fun cashPledgeList(): Observable<List<CashPledge>>
+
+    @POST("app/finance/withdraw/add")
+    fun withdrawAdd(): Observable<Result>
+
+
+    @GET("app/finance/pay/add")
+    fun payAdd(): Observable<Result>
 }

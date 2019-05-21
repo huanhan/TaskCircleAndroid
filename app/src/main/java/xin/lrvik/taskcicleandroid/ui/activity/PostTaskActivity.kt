@@ -156,7 +156,6 @@ class PostTaskActivity : BaseMvpActivity<PostTaskPresenter>(), PostTaskView {
         mRvStep.layoutManager = LinearLayoutManager(this)
 
         var list = ArrayList<TaskStep>()
-//        list.add(TaskStep("1", 1, "默认标题", "默认内容", ""))
 
         mRvTaskStepAdapter = RvModifyTaskStepAdapter(list)
         val mItemDragAndSwipeCallback = ItemDragAndSwipeCallback(mRvTaskStepAdapter)

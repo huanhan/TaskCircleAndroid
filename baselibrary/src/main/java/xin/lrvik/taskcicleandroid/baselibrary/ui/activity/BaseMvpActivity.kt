@@ -31,6 +31,7 @@ open abstract class BaseMvpActivity<T : BasePresenter<*>> : BaseActivity(), Base
 
     override fun onError(text: String) {
         toast(text)
+        hideLoading()
     }
 
 

@@ -31,6 +31,7 @@ open abstract class BaseMvpFragment<T : BasePresenter<*>> : BaseFragment(), Base
 
     override fun onError(text: String) {
         toast(text)
+        hideLoading()
     }
 
 

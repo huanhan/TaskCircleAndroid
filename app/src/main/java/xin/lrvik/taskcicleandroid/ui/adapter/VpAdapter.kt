@@ -28,5 +28,4 @@ class VpAdapter(supportFragmentManager: FragmentManager,
     override fun getPageTitle(position: Int): CharSequence? {
         return titles[position%fragments.size]
     }
-
 }

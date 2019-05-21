@@ -152,7 +152,6 @@ class AddressPickerActivity : BaseActivity() {
             override fun onGetPoiDetailResult(p0: PoiDetailSearchResult?) {
                 Log.d("test", p0.toString())
             }
-
         })
     }
 
