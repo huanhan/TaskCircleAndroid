@@ -87,8 +87,8 @@ class ModifyUserInfoActivity : BaseMvpActivity<ModifyUserPresenter>(), ModifyUse
                     .choose(MimeType.ofImage())//图片类型
                     .countable(false)//true:选中后显示数字;false:选中后显示对号
                     .maxSelectable(1)//可选的最大数
-                    .capture(true)//选择照片时，是否显示拍照
-                    .captureStrategy(CaptureStrategy(true, "xin.lrvik.taskcicleandroid.fileprovider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
+                    .capture(false)//选择照片时，是否显示拍照
+                    .captureStrategy(CaptureStrategy(false, "xin.lrvik.taskcicleandroid.fileprovider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
                     .imageEngine(Glide4Engine())//图片加载引擎
                     .forResult(PostTaskActivity.REQUEST_CODE_CHOOSE)
         }

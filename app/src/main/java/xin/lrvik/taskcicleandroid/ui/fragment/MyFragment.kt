@@ -93,10 +93,6 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyView {
             context!!.startActivity(mIntent)
         }
 
-        mIvIcon.onClick {
-            startActivity<LoginActivity>()
-        }
-
         var historys = AppPrefsUtils.getString(KEY_SP_HISTORY)
         if (historys.isNullOrEmpty()) {
             var taskHistory = TaskHistory()
