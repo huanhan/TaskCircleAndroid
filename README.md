@@ -8,3 +8,16 @@
 - Kotlin+Anko+MVP+Rxjava2+okhttp3+Retrofit2+Dagger2+rxlifecycle+rxpermissions+Glide
 - 阿里云oss+极光推送
 
+#### 效果预览
+<p>
+<img src="https://github.com/huanhan/TaskCircleAndroid/blob/master/1.jpg" width="225" height="465" alt=""/>
+<img src="https://github.com/huanhan/TaskCircleAndroid/blob/master/2.jpg" width="225" height="465" alt=""/>
+<img src="https://github.com/huanhan/TaskCircleAndroid/blob/master/3.jpg" width="225" height="465" alt=""/>
+<img src="https://github.com/huanhan/TaskCircleAndroid/blob/master/4.jpg" width="225" height="465" alt=""/>
+<img src="https://github.com/huanhan/TaskCircleAndroid/blob/master/5.jpg" width="225" height="465" alt=""/>
+<img src="https://github.com/huanhan/TaskCircleAndroid/blob/master/6.jpg" width="225" height="465" alt=""/>
+<img src="https://github.com/huanhan/TaskCircleAndroid/blob/master/7.jpg" width="225" height="465" alt=""/>
+<img src="https://github.com/huanhan/TaskCircleAndroid/blob/master/8.jpg" width="225" height="465" alt=""/>
+<img src="https://github.com/huanhan/TaskCircleAndroid/blob/master/9.jpg" width="225" height="465" alt=""/>
+<img src="https://github.com/huanhan/TaskCircleAndroid/blob/master/10.jpg" width="225" height="465" alt=""/>
+</p>

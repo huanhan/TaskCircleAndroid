@@ -2,11 +2,7 @@ package xin.lrvik.taskcicleandroid.ui.adapter
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.app.FragmentStatePagerAdapter
-import android.support.v4.view.PagerAdapter.POSITION_NONE
-import android.view.View
-import android.view.ViewGroup
 import java.util.*
 
 class VpAdapter(supportFragmentManager: FragmentManager,

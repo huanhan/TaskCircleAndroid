@@ -174,56 +174,37 @@ class ChatActivity : BaseMvpActivity<ChatPresenter>(), ChatView {
         override fun onReceive(context: Context, intent: Intent) {
             try {
                 if (MESSAGE_RECEIVED_ACTION == intent.action) {
-                    //判断对方是否是当前消息对象，是的话增加数据，不是的话弹出通知
-
                     val chatMsgStr = intent.getStringExtra(CHATMSG)
                     var chatMsg = Gson().fromJson(chatMsgStr, ChatMsg::class.java)
-                    //判断是否是当前任务
                     if (chatMsg.hunterTaskId == hunterTaskId) {
-                        //判断当前用户是猎刃还是雇主
                         if (UserInfo.userId == userid) {
-                            //说明本人是雇主，猎刃给雇主发了一条新消息
                             if (hunterid == chatMsg.sender) {
-                                //收到新消息聊天用户是当前猎刃
-                                //将消息从新序列化会RV中
                                 addData(Chat.toChat(chatMsg))
-
                             } else {
                                 var intent = Intent(this@ChatActivity, ChatActivity::class.java)
-//                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                                 intent.putExtra(ChatActivity.HUNTERID, chatMsg.hunterId)
                                 intent.putExtra(ChatActivity.HUNTERTASKID, chatMsg.hunterTaskId)
                                 intent.putExtra(ChatActivity.USERID, chatMsg.userId)
-
                                 NotificationUtils(context).sendNotification(chatMsg.title, chatMsg.content, intent)
                             }
                         } else {
-                            //说明本人是猎刃， 雇主给猎刃发了一条新消息
                             if (userid == chatMsg.sender) {
-                                //收到新消息聊天用户是当前雇主
-                                //将消息从新序列化会RV中
                                 addData(Chat.toChat(chatMsg))
-
                             } else {
                                 var intent = Intent(this@ChatActivity, ChatActivity::class.java)
-//                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                                 intent.putExtra(ChatActivity.HUNTERID, chatMsg.hunterId)
                                 intent.putExtra(ChatActivity.HUNTERTASKID, chatMsg.hunterTaskId)
                                 intent.putExtra(ChatActivity.USERID, chatMsg.userId)
-
                                 NotificationUtils(context).sendNotification(chatMsg.title, chatMsg.content, intent)
                             }
                         }
                     } else {
                         var intent = Intent(this@ChatActivity, ChatActivity::class.java)
-//                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         intent.putExtra(ChatActivity.HUNTERID, chatMsg.hunterId)
                         intent.putExtra(ChatActivity.HUNTERTASKID, chatMsg.hunterTaskId)
                         intent.putExtra(ChatActivity.USERID, chatMsg.userId)
-
                         NotificationUtils(context).sendNotification(chatMsg.title, chatMsg.content, intent)
                     }
-
                 }
             } catch (e: Exception) {
             }

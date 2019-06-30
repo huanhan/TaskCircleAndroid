@@ -195,7 +195,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
                     mLocationClient.stop()
                 }
             }
-
         })
 
         val option = LocationClientOption()
@@ -209,7 +208,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView {
         option.setWifiCacheTimeOut(5 * 60 * 1000)
         option.setEnableSimulateGps(false)
         mLocationClient.locOption = option
-
         mLocationClient.start()
     }
 
